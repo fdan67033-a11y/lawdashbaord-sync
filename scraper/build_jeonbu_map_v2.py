@@ -21,7 +21,8 @@ try:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 except Exception:
     pass
-OC = "sp-law-study"
+import os
+OC = os.getenv("OPENLAW_OC", "")  # .env 또는 환경변수 OPENLAW_OC 로 설정
 HERE = Path(__file__).resolve().parent
 OLD_MST = "102490"
 CURRENT_LAWS = ["지방세법", "지방세기본법", "지방세징수법", "지방세특례제한법"]

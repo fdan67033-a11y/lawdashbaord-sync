@@ -10,9 +10,12 @@ data/exams_cards/
 data/exams_updated/
 study/
 
-# ===== 비밀키 / 로컬 설정 =====
+# ===== 비밀키 / 로컬 설정 / 런타임 상태 =====
 .env
 .claude/settings.local.json
+data/ui_state.json
+scraper/samples/
+*.log
 
 # ===== 생성 산출물 (재생성 가능·대용량) =====
 신탁_납세의무자_리더.html

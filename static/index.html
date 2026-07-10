@@ -734,7 +734,7 @@ body.grayDark .paneZoomLabel{color:#d7dde8}
     <h2>검색</h2>
     <div class="section">
       <label>OPEN 묶음 인증키(OC)</label>
-      <input id="oc" placeholder="예: sp-law-study">
+      <input id="oc" placeholder="발급받은 OC 키 입력">
       <label>검색대상 복수 선택</label>
       <div class="targetQuick">
         <button type="button" onclick="setTargetPreset('law')">법령</button>
@@ -1029,7 +1029,7 @@ function labelOf(m){return m.path||[m.article_number,m.article_title].filter(Boo
 async function init(){
   const cfg=await(await fetch('/api/config')).json();
   state.config=cfg; state.targets=cfg.targets||{}; state.pools=cfg.pools||{};
-  $('oc').value=localStorage.getItem('openlaw_oc')||cfg.oc||'sp-law-study';
+  $('oc').value=localStorage.getItem('openlaw_oc')||cfg.oc||'';
   try{state.linkGraph=JSON.parse(localStorage.getItem('law_manual_link_graph')||'{}')||{}}catch(e){state.linkGraph={}}
   renderTargets(cfg.selected_targets||['eflaw']);
   renderPools();

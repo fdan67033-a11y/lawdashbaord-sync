@@ -6,7 +6,7 @@ import runpy
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 os.chdir(HERE)
-# API 인증키 안전망(런처/.env 가 없어도 동작)
-os.environ.setdefault("OPENLAW_OC", "sp-law-study")
+# API 인증키(OC)는 app_law_notes_v20.pyw 가 .env 의 OPENLAW_OC 로 로드합니다.
+# .env 가 없으면 화면 상단 OC 입력란에 직접 넣어도 됩니다.
 
 runpy.run_path(os.path.join(HERE, "app_law_notes_v20.pyw"), run_name="__main__")

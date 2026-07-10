@@ -22,7 +22,8 @@ import requests
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 
-OC = "sp-law-study"
+import os
+OC = os.getenv("OPENLAW_OC", "")  # .env 또는 환경변수 OPENLAW_OC 로 설정
 HERE = Path(__file__).resolve().parent
 SAMPLES = HERE / "samples"
 SAMPLES.mkdir(exist_ok=True)

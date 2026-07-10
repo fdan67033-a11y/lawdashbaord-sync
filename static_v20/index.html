@@ -934,7 +934,7 @@ body.grayDark .lawHeader.section{background:#3b4047;color:#cbd2dc}
 
     <details class="ocBox">
       <summary>OC 인증키</summary>
-      <div class="section" style="padding-top:8px;border-top:0"><input id="oc" placeholder="예: sp-law-study"></div>
+      <div class="section" style="padding-top:8px;border-top:0"><input id="oc" placeholder="발급받은 OC 키 입력"></div>
     </details>
 
     <h2>법령명 검색 결과</h2>
@@ -1474,7 +1474,7 @@ function labelOf(m){return m.path||[m.article_number,m.article_title].filter(Boo
 async function init(){
   const cfg=await(await fetch('/api/config')).json();
   state.config=cfg; state.targets=cfg.targets||{}; state.pools=cfg.pools||{};
-  $('oc').value=localStorage.getItem('openlaw_oc')||cfg.oc||'sp-law-study';
+  $('oc').value=localStorage.getItem('openlaw_oc')||cfg.oc||'';
   try{state.linkGraph=JSON.parse(localStorage.getItem('law_manual_link_graph')||'{}')||{}}catch(e){state.linkGraph={}}
   renderTargets(cfg.selected_targets||['eflaw']);
   initWorkspaces();

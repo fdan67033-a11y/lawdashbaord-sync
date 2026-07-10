@@ -3,7 +3,7 @@ chcp 65001 >nul
 setlocal
 cd /d "%~dp0"
 title Law Dashboard Server - close this window to stop
-set "OPENLAW_OC=sp-law-study"
+rem OC 인증키는 .env(OPENLAW_OC)에서 로드됩니다. .env가 없으면 화면에서 입력하세요.
 
 echo ============================================================
 echo   Law Dashboard      http://127.0.0.1:6155

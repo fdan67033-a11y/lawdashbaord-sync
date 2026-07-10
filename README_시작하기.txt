@@ -17,11 +17,11 @@
 - 또는 "stop_law_dashboard_all.bat" 실행
 - 전역 단축키 Ctrl + Alt + 0 으로도 종료됩니다.
 
-[API 인증키 — 이미 포함됨]
-- 법제처 OPEN API 인증키(OC)가 이미 들어 있습니다.
-  · 런처가 환경변수 OPENLAW_OC = sp-law-study 로 설정하고
-  · 동봉된 .env 파일에도 같은 값이 저장돼 있습니다.
-- 다른 키를 쓰려면 .env 파일을 열어 OPENLAW_OC 값을 바꾸세요.
+[API 인증키 설정]
+- 법제처 OPEN API 인증키(OC)는 .env 파일의 OPENLAW_OC 값으로 읽습니다.
+- 처음 설치 시: .env.example 을 복사해 .env 로 만들고 OPENLAW_OC 를 본인 OC 로 채우세요.
+- .env 가 없으면 화면 상단 OC 입력란에 직접 넣어도 됩니다.
+  (.env 는 저장소(git)에 올라가지 않습니다)
 
 [폴더 구성]
 - START_법령대시보드.bat ...... 실행 런처(이걸 더블클릭)

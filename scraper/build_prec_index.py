@@ -50,7 +50,7 @@ def _load_oc() -> str:
         for line in envp.read_text(encoding="utf-8").splitlines():
             if line.strip().startswith("OPENLAW_OC"):
                 return line.split("=", 1)[1].strip().strip('"').strip("'")
-    return "sp-law-study"
+    return os.getenv("OPENLAW_OC", "")
 
 
 OC = _load_oc()
@@ -395,7 +395,7 @@ def main():
     global OC
     if args.oc:
         OC = args.oc.strip()
-    print(f"[init] OC키={'(본인키) ' if OC != 'sp-law-study' else '(데모키) '}{OC}")
+    print(f"[init] OC키={OC or '(미설정 — .env의 OPENLAW_OC 필요)'}")
 
     cfg = LAW_GROUPS[args.group]
     maps = load_maps(cfg)
