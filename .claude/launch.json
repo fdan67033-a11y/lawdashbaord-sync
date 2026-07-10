@@ -1,0 +1,19 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "law-dashboard",
+      "runtimeExecutable": "py",
+      "runtimeArgs": ["run_server.py"],
+      "port": 6155,
+      "autoPort": false
+    },
+    {
+      "name": "study",
+      "runtimeExecutable": "py",
+      "runtimeArgs": ["-3.12", "-m", "http.server", "6160", "--directory", "study"],
+      "port": 6160,
+      "autoPort": false
+    }
+  ]
+}

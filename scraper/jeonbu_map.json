@@ -1,0 +1,7686 @@
+{
+  "meta": {
+    "old_law": "지방세법",
+    "old_mst": "102490",
+    "old_upto": "2010-05-05 (2010.3.31 전부개정 직전)",
+    "current_mst": {
+      "지방세법": "282559",
+      "지방세기본법": "283257",
+      "지방세징수법": "283259",
+      "지방세특례제한법": "286607"
+    },
+    "old_article_count": 452,
+    "stats": {
+      "curated": 5,
+      "auto": 185,
+      "review": 82,
+      "none": 180
+    },
+    "note": "v2: 세목(장) 문맥 매칭. confidence high=신뢰, medium/low=검토, none=현행대응없음."
+  },
+  "rows": [
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제2조",
+          "title": "정의"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제2조",
+          "title": "정의"
+        },
+        {
+          "law": "지방세징수법",
+          "art": "제2조",
+          "title": "정의"
+        },
+        {
+          "law": "지방세법",
+          "art": "제2조",
+          "title": "정의"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제1조",
+      "old_title": "정의",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제20조",
+          "title": "해석의 기준 등"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제1조의2",
+      "old_title": "해석의 기준 등",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제4조",
+          "title": "지방자치단체의 과세권"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제2조",
+      "old_title": "지방자치단체의 과세권",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제5조",
+          "title": "지방세의 부과ㆍ징수에 관한 조례"
+        }
+      ],
+      "confidence": "medium",
+      "method": "auto-semok",
+      "old_art": "제3조",
+      "old_title": "지방세의 부과·징수에 관한 조례",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제6조",
+          "title": "지방자치단체의 장의 권한 위탁ㆍ위임 등"
+        },
+        {
+          "law": "지방세기본법",
+          "art": "제4조",
+          "title": "지방자치단체의 과세권"
+        },
+        {
+          "law": "지방세기본법",
+          "art": "제8조",
+          "title": "지방자치단체의 세목"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제4조",
+      "old_title": "지방자치단체의 장의 권한의 위임 등",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세기본법",
+          "art": "제6조",
+          "title": "지방자치단체의 장의 권한 위탁ㆍ위임 등",
+          "semok": "총칙",
+          "score": 0.491
+        },
+        {
+          "law": "지방세기본법",
+          "art": "제4조",
+          "title": "지방자치단체의 과세권",
+          "semok": "총칙",
+          "score": 0.368
+        },
+        {
+          "law": "지방세기본법",
+          "art": "제8조",
+          "title": "지방자치단체의 세목",
+          "semok": "총칙",
+          "score": 0.355
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제7조",
+          "title": "지방세의 세목"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제5조",
+      "old_title": "지방세의 세목",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "old_art": "제5조의2",
+      "old_title": "",
+      "old_semok": "총칙",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제8조",
+          "title": "지방자치단체의 세목"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제6조",
+      "old_title": "지방자치단체의 세목",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제9조",
+          "title": "특별시의 관할구역 재산세의 공동과세"
+        }
+      ],
+      "confidence": "medium",
+      "method": "auto-semok",
+      "old_art": "제6조의2",
+      "old_title": "특별시의 관할 구역 안 재산세의 공동과세",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제10조",
+          "title": "특별시분 재산세의 교부"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제6조의3",
+      "old_title": "특별시분 재산세의 교부",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "old_art": "제6조의4",
+      "old_title": "주민세와 지방소득세의 특례",
+      "old_semok": "총칙",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제7조",
+      "old_title": "공익등 사유로 인한 과세면제 및 불균일과세",
+      "old_semok": "총칙",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제8조",
+      "old_title": "수익등 사유로 인한 불균일과세 및 일부과세",
+      "old_semok": "총칙",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제9조",
+      "old_title": "과세면제등을 위한 조례",
+      "old_semok": "총칙",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제9조의2",
+      "old_title": "천재등으로 인한 감면",
+      "old_semok": "총칙",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제5조",
+          "title": "지방세지출보고서의 작성"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제9조의3",
+      "old_title": "지방세지출보고서의 작성",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제12조",
+          "title": "관계 지방자치단체의 장의 의견이 서로 다른 경우의 조치"
+        }
+      ],
+      "confidence": "medium",
+      "method": "auto-semok",
+      "old_art": "제10조",
+      "old_title": "관계지방자치단체의 장의 의견이 상치되는 경우의 조치",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제13조",
+          "title": "시ㆍ군ㆍ구를 폐지ㆍ설치ㆍ분리ㆍ병합한 경우의 과세권 승계"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제11조",
+      "old_title": "시, 군을 폐치분합한 경우의 과세권의 승계",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세기본법",
+          "art": "제13조",
+          "title": "시ㆍ군ㆍ구를 폐지ㆍ설치ㆍ분리ㆍ병합한 경우의 과세권 승계",
+          "semok": "총칙",
+          "score": 0.372
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제14조",
+          "title": "시ㆍ군ㆍ구의 경계변경을 한 경우의 과세권 승계"
+        },
+        {
+          "law": "지방세기본법",
+          "art": "제15조",
+          "title": "시ㆍ도등의 경계변경을 한 경우의 과세권 승계"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제12조",
+      "old_title": "시, 군의 경계변경을 한 경우의 과세권의 승계",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세기본법",
+          "art": "제14조",
+          "title": "시ㆍ군ㆍ구의 경계변경을 한 경우의 과세권 승계",
+          "semok": "총칙",
+          "score": 0.496
+        },
+        {
+          "law": "지방세기본법",
+          "art": "제15조",
+          "title": "시ㆍ도등의 경계변경을 한 경우의 과세권 승계",
+          "semok": "총칙",
+          "score": 0.436
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제15조",
+          "title": "시ㆍ도등의 경계변경을 한 경우의 과세권 승계"
+        }
+      ],
+      "confidence": "medium",
+      "method": "auto-semok",
+      "old_art": "제13조",
+      "old_title": "도의 경계변경을 한 경우의 과세권의 승계",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제16조",
+          "title": "대통령령의 위임"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제14조",
+      "old_title": "대통령령의 위임",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제41조",
+          "title": "법인의 합병으로 인한 납세의무의 승계"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제15조",
+      "old_title": "법인의 합병으로 인한 납세의무의 승계",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제42조",
+          "title": "상속으로 인한 납세의무의 승계"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제16조",
+      "old_title": "상속으로 인한 납세의무의 승계",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제43조",
+          "title": "상속재산의 관리인"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제17조",
+      "old_title": "상속재산의 관리인",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제44조",
+          "title": "연대납세의무"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제18조",
+      "old_title": "공유물 등에 대한 연대납세의무",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세기본법",
+          "art": "제44조",
+          "title": "연대납세의무",
+          "semok": "",
+          "score": 0.299
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제47조",
+          "title": "법인의 제2차 납세의무"
+        },
+        {
+          "law": "지방세기본법",
+          "art": "제46조",
+          "title": "출자자의 제2차 납세의무"
+        },
+        {
+          "law": "지방세기본법",
+          "art": "제45조",
+          "title": "청산인 등의 제2차 납세의무"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제19조",
+      "old_title": "제2차납세의무의 통칙",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세기본법",
+          "art": "제47조",
+          "title": "법인의 제2차 납세의무",
+          "semok": "",
+          "score": 0.214
+        },
+        {
+          "law": "지방세기본법",
+          "art": "제46조",
+          "title": "출자자의 제2차 납세의무",
+          "semok": "",
+          "score": 0.196
+        },
+        {
+          "law": "지방세기본법",
+          "art": "제45조",
+          "title": "청산인 등의 제2차 납세의무",
+          "semok": "",
+          "score": 0.188
+        },
+        {
+          "law": "지방세징수법",
+          "art": "제15조",
+          "title": "제2차 납세의무자에 대한 납부고지",
+          "semok": "",
+          "score": 0.174
+        },
+        {
+          "law": "지방세기본법",
+          "art": "제48조",
+          "title": "사업양수인의 제2차 납세의무",
+          "semok": "",
+          "score": 0.172
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제45조",
+          "title": "청산인 등의 제2차 납세의무"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제20조",
+      "old_title": "청산인등의 제2차납세의무",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "old_art": "제21조",
+      "old_title": "",
+      "old_semok": "총칙",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제46조",
+          "title": "출자자의 제2차 납세의무"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제22조",
+      "old_title": "출자자의 제2차납세의무",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제47조",
+          "title": "법인의 제2차 납세의무"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제23조",
+      "old_title": "법인의 제2차납세의무",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제48조",
+          "title": "사업양수인의 제2차 납세의무"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제24조",
+      "old_title": "사업양수인의 제2차납세의무",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세징수법",
+          "art": "제12조",
+          "title": "납세의 고지 등"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제25조",
+      "old_title": "납세의 고지",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세징수법",
+          "art": "제12조",
+          "title": "납세의 고지 등",
+          "semok": "",
+          "score": 0.372
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제58조",
+          "title": "부과취소 및 변경"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제25조의2",
+      "old_title": "부과취소 및 변경",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세징수법",
+          "art": "제22조",
+          "title": "납기 전 징수"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제26조",
+      "old_title": "납기전징수",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제26조",
+          "title": "천재지변 등으로 인한 기한의 연장"
+        }
+      ],
+      "confidence": "medium",
+      "method": "auto-semok",
+      "old_art": "제26조의2",
+      "old_title": "천재등으로 인한 기한의 연장",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제117조",
+          "title": "물납"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제26조의3",
+      "old_title": "물납",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제118조",
+          "title": "분할납부"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제26조의4",
+      "old_title": "분납",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세법",
+          "art": "제118조",
+          "title": "분할납부",
+          "semok": "재산세",
+          "score": 0.107
+        }
+      ]
+    },
+    {
+      "old_art": "제26조의5",
+      "old_title": "신용카드에 의한 지방세 납부",
+      "old_semok": "총칙",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제27조",
+      "old_title": "가산금 및 독촉",
+      "old_semok": "총칙",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제52조",
+          "title": "가산세의 부과"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제27조의2",
+      "old_title": "가산세의 부과와 면제",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세기본법",
+          "art": "제52조",
+          "title": "가산세의 부과",
+          "semok": "",
+          "score": 0.305
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제133조",
+          "title": "체납처분"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제28조",
+      "old_title": "체납처분",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제34조",
+          "title": "납세의무의 성립시기"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제29조",
+      "old_title": "납세의무의 성립시기",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제35조",
+          "title": "납세의무의 확정"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제30조",
+      "old_title": "납세의무의 확정",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제37조",
+          "title": "납부의무의 소멸"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제30조의2",
+      "old_title": "납부의무 또는 납입의무의 소멸",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세기본법",
+          "art": "제37조",
+          "title": "납부의무의 소멸",
+          "semok": "",
+          "score": 0.316
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세징수법",
+          "art": "제106조",
+          "title": "정리보류 등"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제30조의3",
+      "old_title": "결손처분",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세징수법",
+          "art": "제106조",
+          "title": "정리보류 등",
+          "semok": "",
+          "score": 0.081
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제38조",
+          "title": "부과의 제척기간"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제30조의4",
+      "old_title": "부과의 제척기간",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제39조",
+          "title": "지방세징수권의 소멸시효"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제30조의5",
+      "old_title": "지방세징수권의 소멸시효등",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세기본법",
+          "art": "제39조",
+          "title": "지방세징수권의 소멸시효",
+          "semok": "",
+          "score": 0.455
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제40조",
+          "title": "시효의 중단과 정지"
+        },
+        {
+          "law": "지방세기본법",
+          "art": "제122조",
+          "title": "공소시효의 중단"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제30조의6",
+      "old_title": "시효의 중단 및 정지",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세기본법",
+          "art": "제40조",
+          "title": "시효의 중단과 정지",
+          "semok": "",
+          "score": 0.213
+        },
+        {
+          "law": "지방세기본법",
+          "art": "제122조",
+          "title": "공소시효의 중단",
+          "semok": "",
+          "score": 0.174
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제71조",
+          "title": "지방세의 우선 징수"
+        },
+        {
+          "law": "지방세기본법",
+          "art": "제7조",
+          "title": "지방세의 세목"
+        },
+        {
+          "law": "지방세기본법",
+          "art": "제74조",
+          "title": "담보가 있는 지방세의 우선"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제31조",
+      "old_title": "지방세의 우선",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세기본법",
+          "art": "제71조",
+          "title": "지방세의 우선 징수",
+          "semok": "",
+          "score": 0.414
+        },
+        {
+          "law": "지방세기본법",
+          "art": "제7조",
+          "title": "지방세의 세목",
+          "semok": "총칙",
+          "score": 0.354
+        },
+        {
+          "law": "지방세기본법",
+          "art": "제74조",
+          "title": "담보가 있는 지방세의 우선",
+          "semok": "",
+          "score": 0.208
+        },
+        {
+          "law": "지방세기본법",
+          "art": "제102조",
+          "title": "지방세의 포탈",
+          "semok": "",
+          "score": 0.161
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제72조",
+          "title": "직접 체납처분비의 우선"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제32조",
+      "old_title": "직접체납처분비의 우선",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세징수법",
+          "art": "제4조",
+          "title": "지방자치단체의 징수금 징수의 순위"
+        },
+        {
+          "law": "지방세기본법",
+          "art": "제8조",
+          "title": "지방자치단체의 세목"
+        },
+        {
+          "law": "지방세징수법",
+          "art": "제19조",
+          "title": "지방자치단체의 징수금에 대한 납부의무 면제"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제33조",
+      "old_title": "지방자치단체의 징수금중의 우선순위",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세징수법",
+          "art": "제4조",
+          "title": "지방자치단체의 징수금 징수의 순위",
+          "semok": "총칙",
+          "score": 0.486
+        },
+        {
+          "law": "지방세기본법",
+          "art": "제8조",
+          "title": "지방자치단체의 세목",
+          "semok": "총칙",
+          "score": 0.353
+        },
+        {
+          "law": "지방세징수법",
+          "art": "제19조",
+          "title": "지방자치단체의 징수금에 대한 납부의무 면제",
+          "semok": "",
+          "score": 0.166
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제73조",
+          "title": "압류에 의한 우선"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제34조",
+      "old_title": "압류선착수로 인한 지방세의 우선",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세기본법",
+          "art": "제73조",
+          "title": "압류에 의한 우선",
+          "semok": "",
+          "score": 0.106
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제74조",
+          "title": "담보가 있는 지방세의 우선"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제35조",
+      "old_title": "담보가 있는 지방세의 우선",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제75조",
+          "title": "양도담보권자 등의 물적 납세의무"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제36조",
+      "old_title": "양도담보권자의 물적납세책임",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세기본법",
+          "art": "제75조",
+          "title": "양도담보권자 등의 물적 납세의무",
+          "semok": "",
+          "score": 0.246
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제139조",
+          "title": "납세관리인"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제37조",
+      "old_title": "납세관리인",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세징수법",
+          "art": "제5조",
+          "title": "납세증명서의 제출 및 발급"
+        }
+      ],
+      "confidence": "medium",
+      "method": "auto-semok",
+      "old_art": "제38조",
+      "old_title": "납세증명서의 제출등",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "old_art": "제39조",
+      "old_title": "",
+      "old_semok": "총칙",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세징수법",
+          "art": "제7조",
+          "title": "관허사업의 제한"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제40조",
+      "old_title": "관허사업의 제한",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세징수법",
+          "art": "제29조",
+          "title": "징수유예등의 취소"
+        },
+        {
+          "law": "지방세징수법",
+          "art": "제28조",
+          "title": "징수유예 등의 효과"
+        },
+        {
+          "law": "지방세징수법",
+          "art": "제25조의3",
+          "title": "징수유예등의 신청 및 통지"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제41조",
+      "old_title": "징수유예등의 요건",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세징수법",
+          "art": "제29조",
+          "title": "징수유예등의 취소",
+          "semok": "",
+          "score": 0.251
+        },
+        {
+          "law": "지방세징수법",
+          "art": "제28조",
+          "title": "징수유예 등의 효과",
+          "semok": "",
+          "score": 0.238
+        },
+        {
+          "law": "지방세징수법",
+          "art": "제25조의3",
+          "title": "징수유예등의 신청 및 통지",
+          "semok": "",
+          "score": 0.184
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세징수법",
+          "art": "제26조",
+          "title": "송달불능으로 인한 징수유예등과 부과 철회"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제41조의2",
+      "old_title": "고지불능으로 인한 징수유예",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세징수법",
+          "art": "제26조",
+          "title": "송달불능으로 인한 징수유예등과 부과 철회",
+          "semok": "",
+          "score": 0.241
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세징수법",
+          "art": "제27조",
+          "title": "징수유예등에 관한 담보"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제42조",
+      "old_title": "징수유예등에 관한 담보",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세징수법",
+          "art": "제26조",
+          "title": "송달불능으로 인한 징수유예등과 부과 철회"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제42조의2",
+      "old_title": "송달불능으로 인한 징수유예등과 부과 철회",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세징수법",
+          "art": "제28조",
+          "title": "징수유예 등의 효과"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제43조",
+      "old_title": "징수유예등의 효과",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세징수법",
+          "art": "제29조",
+          "title": "징수유예등의 취소"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제44조",
+      "old_title": "징수유예등의 취소",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "old_art": "제45조",
+      "old_title": "과오납금의 충당과 양도",
+      "old_semok": "총칙",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제46조",
+      "old_title": "환부이자 계산",
+      "old_semok": "총칙",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제47조",
+      "old_title": "환부이자의 기산일",
+      "old_semok": "총칙",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제48조",
+      "old_title": "",
+      "old_semok": "총칙",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제49조",
+      "old_title": "",
+      "old_semok": "총칙",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제50조",
+      "old_title": "",
+      "old_semok": "총칙",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제28조",
+          "title": "서류의 송달"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제51조",
+      "old_title": "서류의 송달",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제30조",
+          "title": "서류송달의 방법"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제51조의2",
+      "old_title": "서류송달의 방법",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제32조",
+          "title": "송달의 효력 발생"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제51조의3",
+      "old_title": "송달의 효력발생",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제33조",
+          "title": "공시송달"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제52조",
+      "old_title": "공시송달",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세징수법",
+          "art": "제17조",
+          "title": "도세 등에 대한 징수의 위임"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제53조",
+      "old_title": "도세징수의 위임",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세징수법",
+          "art": "제17조",
+          "title": "도세 등에 대한 징수의 위임",
+          "semok": "",
+          "score": 0.194
+        }
+      ]
+    },
+    {
+      "old_art": "제54조",
+      "old_title": "",
+      "old_semok": "총칙",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제55조",
+      "old_title": "",
+      "old_semok": "총칙",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세징수법",
+          "art": "제18조",
+          "title": "징수촉탁"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제56조",
+      "old_title": "징수촉탁",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세징수법",
+          "art": "제19조",
+          "title": "지방자치단체의 징수금에 대한 납부의무 면제"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제57조",
+      "old_title": "기수의 징수금 망실에 대한 납입의무 면제",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세징수법",
+          "art": "제19조",
+          "title": "지방자치단체의 징수금에 대한 납부의무 면제",
+          "semok": "",
+          "score": 0.177
+        }
+      ]
+    },
+    {
+      "old_art": "제58조",
+      "old_title": "",
+      "old_semok": "총칙",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제23조",
+          "title": "기간의 계산"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제59조",
+      "old_title": "기간의 계산",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세징수법",
+          "art": "제20조",
+          "title": "제3자의 납부"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제60조",
+      "old_title": "제3자의 납부 또는 납입",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세징수법",
+          "art": "제20조",
+          "title": "제3자의 납부",
+          "semok": "",
+          "score": 0.285
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세징수법",
+          "art": "제39조",
+          "title": "사해행위의 취소 및 원상회복"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제61조",
+      "old_title": "사해행위의 취소",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세징수법",
+          "art": "제39조",
+          "title": "사해행위의 취소 및 원상회복",
+          "semok": "",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "old_art": "제62조",
+      "old_title": "공탁",
+      "old_semok": "총칙",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세징수법",
+          "art": "제21조",
+          "title": "지방세에 관한 상계 금지"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제63조",
+      "old_title": "지방세에 관한 상계금지",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제140조",
+          "title": "세무공무원의 질문ㆍ검사권"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제64조",
+      "old_title": "세무공무원의 질문, 검사권",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세기본법",
+          "art": "제140조",
+          "title": "세무공무원의 질문ㆍ검사권",
+          "semok": "",
+          "score": 0.335
+        }
+      ]
+    },
+    {
+      "old_art": "제64조의2",
+      "old_title": "",
+      "old_semok": "총칙",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제76조",
+          "title": "납세자권리헌장의 제정 및 교부"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제65조",
+      "old_title": "납세자권리헌장의 제정 및 교부",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제81조",
+          "title": "세무조사 등에 따른 도움을 받을 권리"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제66조",
+      "old_title": "세무조사에 있어서 조력을 받을 권리",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세기본법",
+          "art": "제81조",
+          "title": "세무조사 등에 따른 도움을 받을 권리",
+          "semok": "",
+          "score": 0.195
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제78조",
+          "title": "납세자의 성실성 추정"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제67조",
+      "old_title": "납세자의 성실성 추정등",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세기본법",
+          "art": "제78조",
+          "title": "납세자의 성실성 추정",
+          "semok": "",
+          "score": 0.447
+        }
+      ]
+    },
+    {
+      "old_art": "제68조",
+      "old_title": "세무조사의 사전통지등",
+      "old_semok": "총칙",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제86조",
+          "title": "비밀유지"
+        },
+        {
+          "law": "지방세기본법",
+          "art": "제132조",
+          "title": "비밀유지 의무"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제69조",
+      "old_title": "비밀유지등",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세기본법",
+          "art": "제86조",
+          "title": "비밀유지",
+          "semok": "",
+          "score": 0.389
+        },
+        {
+          "law": "지방세기본법",
+          "art": "제132조",
+          "title": "비밀유지 의무",
+          "semok": "",
+          "score": 0.211
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세징수법",
+          "art": "제11조",
+          "title": "고액ㆍ상습체납자의 명단공개"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제69조의2",
+      "old_title": "고액·상습체납자 명단공개",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세징수법",
+          "art": "제11조",
+          "title": "고액ㆍ상습체납자의 명단공개",
+          "semok": "총칙",
+          "score": 0.418
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제88조",
+          "title": "과세전적부심사"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제70조",
+      "old_title": "과세전적부심사",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제49조",
+          "title": "수정신고"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제71조",
+      "old_title": "수정신고",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "old_art": "제71조의2",
+      "old_title": "납세자보호관",
+      "old_semok": "총칙",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제89조",
+          "title": "청구대상"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제72조",
+      "old_title": "청구대상",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제90조",
+          "title": "이의신청"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제73조",
+      "old_title": "이의신청",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제91조",
+          "title": "심판청구"
+        },
+        {
+          "law": "지방세기본법",
+          "art": "제90조",
+          "title": "이의신청"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제74조",
+      "old_title": "심사청구 및 심판청구",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세기본법",
+          "art": "제91조",
+          "title": "심판청구",
+          "semok": "",
+          "score": 0.201
+        },
+        {
+          "law": "지방세기본법",
+          "art": "제90조",
+          "title": "이의신청",
+          "semok": "",
+          "score": 0.076
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제92조",
+          "title": "관계 서류의 열람 및 의견진술권"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제74조의2",
+      "old_title": "관계서류의 열람 및 의견진술권",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제94조",
+          "title": "청구기한의 연장 등"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제75조",
+      "old_title": "청구기한의 연장등",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제95조",
+          "title": "보정요구"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제76조",
+      "old_title": "보정요구",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제96조",
+          "title": "결정 등"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제77조",
+      "old_title": "결정등",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세징수법",
+          "art": "제3조",
+          "title": "다른 법률과의 관계"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제78조",
+      "old_title": "다른 법률과의 관계",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제99조",
+          "title": "청구의 효력 등"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제79조",
+      "old_title": "청구의 효력등",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "old_art": "제80조",
+      "old_title": "감사원심사청구의 청구기간",
+      "old_semok": "총칙",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제81조",
+      "old_title": "",
+      "old_semok": "총칙",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제153조",
+          "title": "「국세기본법」 등의 준용"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제82조",
+      "old_title": "「국세기본법」등의 준용",
+      "old_semok": "총칙",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제59조",
+          "title": "끝수 계산에 관한 「국고금 관리법」의 준용"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제83조",
+      "old_title": "「국고금관리법」의 준용",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세기본법",
+          "art": "제59조",
+          "title": "끝수 계산에 관한 「국고금 관리법」의 준용",
+          "semok": "",
+          "score": 0.325
+        }
+      ]
+    },
+    {
+      "old_art": "제84조",
+      "old_title": "지방세에 관한 범칙행위에 대한 「조세범처벌법」등의 준용",
+      "old_semok": "총칙",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제85조",
+      "old_title": "포탈된 징수금의 과징",
+      "old_semok": "총칙",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제141조",
+          "title": "매각ㆍ등기ㆍ등록 관계 서류의 열람 등"
+        },
+        {
+          "law": "지방세법",
+          "art": "제38조의3",
+          "title": "면허 관계 서류의 열람"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제86조",
+      "old_title": "매각·등기·등록 관계서류의 열람 등",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세기본법",
+          "art": "제141조",
+          "title": "매각ㆍ등기ㆍ등록 관계 서류의 열람 등",
+          "semok": "",
+          "score": 0.34
+        },
+        {
+          "law": "지방세법",
+          "art": "제38조의3",
+          "title": "면허 관계 서류의 열람",
+          "semok": "등록면허세",
+          "score": 0.182
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제131조",
+          "title": "과세자료제출기관의 책임"
+        },
+        {
+          "law": "지방세기본법",
+          "art": "제127조",
+          "title": "과세자료제출기관의 범위"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제86조의2",
+      "old_title": "과세자료 제출요구 등",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세기본법",
+          "art": "제131조",
+          "title": "과세자료제출기관의 책임",
+          "semok": "",
+          "score": 0.173
+        },
+        {
+          "law": "지방세기본법",
+          "art": "제127조",
+          "title": "과세자료제출기관의 범위",
+          "semok": "",
+          "score": 0.163
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제135조",
+          "title": "지방세 업무의 정보화"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제87조",
+      "old_title": "지방세 업무의 전산처리",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세기본법",
+          "art": "제135조",
+          "title": "지방세 업무의 정보화",
+          "semok": "",
+          "score": 0.181
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제151조",
+          "title": "지방세연구기관의 설립ㆍ운영"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제88조",
+      "old_title": "지방세연구기관의 설립·운영",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세기본법",
+          "art": "제151조",
+          "title": "지방세연구기관의 설립ㆍ운영",
+          "semok": "",
+          "score": 0.384
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제152조",
+          "title": "지방세발전기금의 설치ㆍ운용"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제89조",
+      "old_title": "지방세발전기금의 설치·운용",
+      "old_semok": "총칙",
+      "candidates": [
+        {
+          "law": "지방세기본법",
+          "art": "제152조",
+          "title": "지방세발전기금의 설치ㆍ운용",
+          "semok": "",
+          "score": 0.433
+        }
+      ]
+    },
+    {
+      "old_art": "제90조",
+      "old_title": "",
+      "old_semok": "",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제91조",
+      "old_title": "",
+      "old_semok": "",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제92조",
+      "old_title": "",
+      "old_semok": "",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제93조",
+      "old_title": "",
+      "old_semok": "",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제94조",
+      "old_title": "",
+      "old_semok": "",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제95조",
+      "old_title": "",
+      "old_semok": "",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제96조",
+      "old_title": "",
+      "old_semok": "",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제97조",
+      "old_title": "",
+      "old_semok": "",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제98조",
+      "old_title": "",
+      "old_semok": "",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제99조",
+      "old_title": "",
+      "old_semok": "",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제100조",
+      "old_title": "",
+      "old_semok": "",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제101조",
+      "old_title": "",
+      "old_semok": "",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제102조",
+      "old_title": "",
+      "old_semok": "",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제103조",
+      "old_title": "",
+      "old_semok": "",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제103조의2",
+      "old_title": "",
+      "old_semok": "",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제6조",
+          "title": "정의"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제104조",
+      "old_title": "정의",
+      "old_semok": "취득세",
+      "candidates": []
+    },
+    {
+      "old_art": "제105조",
+      "old_title": "납세의무자등",
+      "old_semok": "취득세",
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제7조",
+          "title": "납세의무자 등"
+        }
+      ],
+      "confidence": "high",
+      "method": "curated",
+      "candidates": []
+    },
+    {
+      "old_art": "제106조",
+      "old_title": "국가등에 대한 비과세",
+      "old_semok": "취득세",
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제9조",
+          "title": "비과세"
+        }
+      ],
+      "confidence": "high",
+      "method": "curated",
+      "candidates": []
+    },
+    {
+      "old_art": "제107조",
+      "old_title": "용도구분에 의한 비과세",
+      "old_semok": "취득세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제73조",
+          "title": "토지수용 등으로 인한 대체취득에 대한 감면"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제92조",
+          "title": "천재지변 등으로 인한 피해에 대한 감면"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제108조",
+      "old_title": "천재등으로 인한 대체취득에 대한 비과세",
+      "old_semok": "취득세",
+      "candidates": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제73조",
+          "title": "토지수용 등으로 인한 대체취득에 대한 감면",
+          "semok": "",
+          "score": 0.228
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제92조",
+          "title": "천재지변 등으로 인한 피해에 대한 감면",
+          "semok": "",
+          "score": 0.151
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제73조",
+          "title": "토지수용 등으로 인한 대체취득에 대한 감면"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제109조",
+      "old_title": "토지수용등으로 인한 대체취득에 대한 비과세",
+      "old_semok": "취득세",
+      "candidates": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제73조",
+          "title": "토지수용 등으로 인한 대체취득에 대한 감면",
+          "semok": "",
+          "score": 0.465
+        }
+      ]
+    },
+    {
+      "old_art": "제110조",
+      "old_title": "형식적인 소유권의 취득 등에 대한 비과세",
+      "old_semok": "취득세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제110조의2",
+      "old_title": "",
+      "old_semok": "취득세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제110조의3",
+      "old_title": "",
+      "old_semok": "취득세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제110조의4",
+      "old_title": "",
+      "old_semok": "취득세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제111조",
+      "old_title": "과세표준",
+      "old_semok": "취득세",
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제10조",
+          "title": "과세표준"
+        }
+      ],
+      "confidence": "high",
+      "method": "curated",
+      "candidates": []
+    },
+    {
+      "old_art": "제112조",
+      "old_title": "세율",
+      "old_semok": "취득세",
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제11조",
+          "title": "부동산 취득의 세율"
+        },
+        {
+          "law": "지방세법",
+          "art": "제12조",
+          "title": "부동산 외 취득의 세율"
+        },
+        {
+          "law": "지방세법",
+          "art": "제13조",
+          "title": "과밀억제권역 등 취득 중과"
+        }
+      ],
+      "confidence": "high",
+      "method": "curated",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제16조",
+          "title": "세율 적용"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제112조의2",
+      "old_title": "세율적용",
+      "old_semok": "취득세",
+      "candidates": []
+    },
+    {
+      "old_art": "제112조의3",
+      "old_title": "",
+      "old_semok": "취득세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제17조",
+          "title": "면세점"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제113조",
+      "old_title": "면세점",
+      "old_semok": "취득세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제115조",
+          "title": "납기"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제114조",
+      "old_title": "납기",
+      "old_semok": "취득세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제18조",
+          "title": "징수방법"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제115조",
+      "old_title": "징수방법",
+      "old_semok": "취득세",
+      "candidates": []
+    },
+    {
+      "old_art": "제116조",
+      "old_title": "",
+      "old_semok": "취득세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제117조",
+      "old_title": "",
+      "old_semok": "취득세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제19조",
+          "title": "통보 등"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제118조",
+      "old_title": "통보등",
+      "old_semok": "취득세",
+      "candidates": []
+    },
+    {
+      "old_art": "제119조",
+      "old_title": "",
+      "old_semok": "취득세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제120조",
+      "old_title": "신고 및 납부",
+      "old_semok": "취득세",
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제20조",
+          "title": "신고 및 납부"
+        }
+      ],
+      "confidence": "high",
+      "method": "curated",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제21조",
+          "title": "부족세액의 추징 및 가산세"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제121조",
+      "old_title": "부족세액의 추징 및 가산세",
+      "old_semok": "취득세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제51조",
+          "title": "기한 후 신고"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제121조의2",
+      "old_title": "기한후 신고",
+      "old_semok": "취득세",
+      "candidates": []
+    },
+    {
+      "old_art": "제122조",
+      "old_title": "",
+      "old_semok": "취득세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제123조",
+      "old_title": "",
+      "old_semok": "취득세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제24조",
+          "title": "납세의무자"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제124조",
+      "old_title": "납세의무자",
+      "old_semok": "등록면허세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제25조",
+          "title": "납세지"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제125조",
+      "old_title": "납세지",
+      "old_semok": "등록면허세",
+      "candidates": []
+    },
+    {
+      "old_art": "제126조",
+      "old_title": "국가등에 대한 비과세",
+      "old_semok": "등록면허세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제127조",
+      "old_title": "용도구분에 의한 비과세",
+      "old_semok": "등록면허세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제127조의2",
+      "old_title": "대체취득등기에 대한 비과세",
+      "old_semok": "등록면허세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제128조",
+      "old_title": "형식적인 소유권의 취득등기등에 대한 비과세",
+      "old_semok": "등록면허세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제128조의2",
+      "old_title": "",
+      "old_semok": "등록면허세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제128조의3",
+      "old_title": "",
+      "old_semok": "등록면허세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제129조",
+      "old_title": "담보부사채의 등기등록의 특례",
+      "old_semok": "등록면허세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제27조",
+          "title": "과세표준"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제130조",
+      "old_title": "과세표준",
+      "old_semok": "등록면허세",
+      "candidates": []
+    },
+    {
+      "old_art": "제131조",
+      "old_title": "부동산등기의 세율",
+      "old_semok": "등록면허세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제132조",
+      "old_title": "선박등기의 세율",
+      "old_semok": "등록면허세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제132조의2",
+      "old_title": "자동차등록의 세율",
+      "old_semok": "등록면허세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제132조의3",
+      "old_title": "건설기계등록의 세율",
+      "old_semok": "등록면허세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제133조",
+      "old_title": "신탁재산등기의 세율",
+      "old_semok": "등록면허세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제134조",
+      "old_title": "소형선박등록의 세율",
+      "old_semok": "등록면허세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제135조",
+      "old_title": "항공기등록의 세율",
+      "old_semok": "등록면허세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제136조",
+      "old_title": "공장 및 광업재단등기의 세율",
+      "old_semok": "등록면허세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제137조",
+      "old_title": "법인등기의 세율",
+      "old_semok": "등록면허세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제138조",
+      "old_title": "대도시 지역내 법인등기등의 중과",
+      "old_semok": "등록면허세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제139조",
+      "old_title": "상호등 등기의 세율",
+      "old_semok": "등록면허세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제140조",
+      "old_title": "기타 등기의 세율",
+      "old_semok": "등록면허세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제141조",
+      "old_title": "광업권등록의 세율",
+      "old_semok": "등록면허세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제142조",
+      "old_title": "어업권 등록의 세율",
+      "old_semok": "등록면허세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제143조",
+      "old_title": "저작권 등록등의 세율",
+      "old_semok": "등록면허세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제144조",
+      "old_title": "",
+      "old_semok": "등록면허세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제145조",
+      "old_title": "특허권 등록등의 세율",
+      "old_semok": "등록면허세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제146조",
+      "old_title": "상표·서비스표등록의 세율",
+      "old_semok": "등록면허세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제147조",
+      "old_title": "",
+      "old_semok": "등록면허세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제148조",
+      "old_title": "",
+      "old_semok": "등록면허세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제149조",
+      "old_title": "",
+      "old_semok": "등록면허세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제29조",
+          "title": "같은 채권의 두 종류 이상의 등록"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제150조",
+      "old_title": "동일채권의 2종이상의 등기 또는 등록",
+      "old_semok": "등록면허세",
+      "candidates": [
+        {
+          "law": "지방세법",
+          "art": "제29조",
+          "title": "같은 채권의 두 종류 이상의 등록",
+          "semok": "등록면허세",
+          "score": 0.347
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제30조",
+          "title": "신고 및 납부"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제150조의2",
+      "old_title": "신고 및 납부",
+      "old_semok": "등록면허세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제31조",
+          "title": "특별징수"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제150조의3",
+      "old_title": "특별징수",
+      "old_semok": "등록면허세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제32조",
+          "title": "부족세액의 추징 및 가산세"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제151조",
+      "old_title": "부족세액의 추징 및 가산세",
+      "old_semok": "등록면허세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제22조",
+          "title": "등기자료의 통보"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제151조의2",
+      "old_title": "등기자료의 통보",
+      "old_semok": "등록면허세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제40조",
+          "title": "과세대상"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제152조",
+      "old_title": "과세대상",
+      "old_semok": "레저세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제41조",
+          "title": "납세의무자"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제153조",
+      "old_title": "납세의무자",
+      "old_semok": "레저세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제42조",
+          "title": "과세표준 및 세율"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제154조",
+      "old_title": "과세표준 및 세율",
+      "old_semok": "레저세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제43조",
+          "title": "신고 및 납부"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제155조",
+      "old_title": "신고 및 납부",
+      "old_semok": "레저세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제44조",
+          "title": "장부 비치의 의무"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제156조",
+      "old_title": "장부비치의 의무",
+      "old_semok": "레저세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제45조",
+          "title": "부족세액의 추징 및 가산세"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제157조",
+      "old_title": "부족세액의 추징 및 가산세",
+      "old_semok": "레저세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제46조",
+          "title": "징수사무의 보조 등"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제158조",
+      "old_title": "납세시설",
+      "old_semok": "레저세",
+      "candidates": [
+        {
+          "law": "지방세법",
+          "art": "제46조",
+          "title": "징수사무의 보조 등",
+          "semok": "레저세",
+          "score": 0.273
+        }
+      ]
+    },
+    {
+      "old_art": "제158조의2",
+      "old_title": "",
+      "old_semok": "레저세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제65조",
+          "title": "과세대상"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제159조",
+      "old_title": "과세대상",
+      "old_semok": "지방소비세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제66조",
+          "title": "납세의무자"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제159조의2",
+      "old_title": "납세의무자",
+      "old_semok": "지방소비세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제67조",
+          "title": "납세지"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제159조의3",
+      "old_title": "납세지",
+      "old_semok": "지방소비세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제68조",
+          "title": "특별징수의무자"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제159조의4",
+      "old_title": "특별징수의무자",
+      "old_semok": "지방소비세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제69조",
+          "title": "과세표준 및 세액"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제159조의5",
+      "old_title": "과세표준 및 세액",
+      "old_semok": "지방소비세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제70조",
+          "title": "신고 및 납부 등"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제159조의6",
+      "old_title": "신고 및 납부 등",
+      "old_semok": "지방소비세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제71조",
+          "title": "납입"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제159조의7",
+      "old_title": "납입",
+      "old_semok": "지방소비세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제72조",
+          "title": "부과ㆍ징수 등의 특례"
+        }
+      ],
+      "confidence": "medium",
+      "method": "auto-semok",
+      "old_art": "제159조의8",
+      "old_title": "부과·징수 등의 특례",
+      "old_semok": "지방소비세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제73조",
+          "title": "「부가가치세법」의 준용"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제159조의9",
+      "old_title": "「부가가치세법」의 준용",
+      "old_semok": "지방소비세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제23조",
+          "title": "정의"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제160조",
+      "old_title": "정의",
+      "old_semok": "등록면허세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제24조",
+          "title": "납세의무자"
+        }
+      ],
+      "confidence": "medium",
+      "method": "auto-semok",
+      "old_art": "제161조",
+      "old_title": "납세의무자 등",
+      "old_semok": "등록면허세",
+      "candidates": []
+    },
+    {
+      "old_art": "제162조",
+      "old_title": "국가등에 대한 비과세",
+      "old_semok": "등록면허세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제163조",
+      "old_title": "용도구분등에 의한 비과세",
+      "old_semok": "등록면허세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제163조의2",
+      "old_title": "",
+      "old_semok": "등록면허세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제34조",
+          "title": "세율"
+        },
+        {
+          "law": "지방세법",
+          "art": "제28조",
+          "title": "세율"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제164조",
+      "old_title": "세율",
+      "old_semok": "등록면허세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제35조",
+          "title": "신고납부 등"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제165조",
+      "old_title": "신고납부 등",
+      "old_semok": "등록면허세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제36조",
+          "title": "납세의 효력"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제166조",
+      "old_title": "납세의 효력",
+      "old_semok": "등록면허세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제37조",
+          "title": "이미 납부한 등록면허세에 대한 조치"
+        }
+      ],
+      "confidence": "medium",
+      "method": "auto-semok",
+      "old_art": "제167조",
+      "old_title": "이미 납부한 면허세에 대한 조치",
+      "old_semok": "등록면허세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제38조",
+          "title": "면허 시의 납세확인"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제168조",
+      "old_title": "면허시의 납세확인",
+      "old_semok": "등록면허세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제39조",
+          "title": "면허의 취소 등"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제169조",
+      "old_title": "면허의 취소 등",
+      "old_semok": "등록면허세",
+      "candidates": []
+    },
+    {
+      "old_art": "제170조",
+      "old_title": "준용",
+      "old_semok": "지방소득세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제171조",
+      "old_title": "",
+      "old_semok": "지방소득세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제74조",
+          "title": "정의"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제172조",
+      "old_title": "정의",
+      "old_semok": "주민세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제75조",
+          "title": "납세의무자"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제173조",
+      "old_title": "납세의무자",
+      "old_semok": "주민세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제77조",
+          "title": "비과세"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제174조",
+      "old_title": "비과세",
+      "old_semok": "주민세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제89조",
+          "title": "납세지 등"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제175조",
+      "old_title": "납세지등",
+      "old_semok": "주민세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제81조",
+          "title": "세율"
+        },
+        {
+          "law": "지방세법",
+          "art": "제84조의3",
+          "title": "세율"
+        },
+        {
+          "law": "지방세법",
+          "art": "제78조",
+          "title": "세율"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제176조",
+      "old_title": "세율",
+      "old_semok": "주민세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제79조",
+          "title": "징수방법 등"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제176조의2",
+      "old_title": "징수방법 등",
+      "old_semok": "주민세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제80조",
+          "title": "과세표준"
+        },
+        {
+          "law": "지방세법",
+          "art": "제84조의2",
+          "title": "과세표준"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제176조의3",
+      "old_title": "과세표준",
+      "old_semok": "주민세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제81조",
+          "title": "세율"
+        },
+        {
+          "law": "지방세법",
+          "art": "제84조의3",
+          "title": "세율"
+        },
+        {
+          "law": "지방세법",
+          "art": "제78조",
+          "title": "세율"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제176조의4",
+      "old_title": "세율",
+      "old_semok": "주민세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제84조의4",
+          "title": "면세점"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제176조의5",
+      "old_title": "면세점",
+      "old_semok": "주민세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제83조",
+          "title": "징수방법과 납기 등"
+        },
+        {
+          "law": "지방세법",
+          "art": "제84조의6",
+          "title": "징수방법과 납기 등"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제176조의6",
+      "old_title": "징수방법과 납기 등",
+      "old_semok": "주민세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제84조",
+          "title": "신고의무"
+        },
+        {
+          "law": "지방세법",
+          "art": "제84조의7",
+          "title": "신고의무"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제176조의7",
+      "old_title": "신고의무",
+      "old_semok": "주민세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제85조",
+          "title": "정의"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제176조의8",
+      "old_title": "정의",
+      "old_semok": "지방소득세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제86조",
+          "title": "납세의무자 등"
+        }
+      ],
+      "confidence": "medium",
+      "method": "auto-semok",
+      "old_art": "제176조의9",
+      "old_title": "납세의무자",
+      "old_semok": "지방소득세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제90조",
+          "title": "비과세"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제176조의10",
+      "old_title": "비과세",
+      "old_semok": "지방소득세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제89조",
+          "title": "납세지 등"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제176조의11",
+      "old_title": "납세지 등",
+      "old_semok": "지방소득세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제103조의20",
+          "title": "세율"
+        },
+        {
+          "law": "지방세법",
+          "art": "제92조",
+          "title": "세율"
+        },
+        {
+          "law": "지방세법",
+          "art": "제103조의3",
+          "title": "세율"
+        },
+        {
+          "law": "지방세법",
+          "art": "제103조의42",
+          "title": "세율"
+        },
+        {
+          "law": "지방세법",
+          "art": "제103조의48",
+          "title": "세율"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제176조의12",
+      "old_title": "세율",
+      "old_semok": "지방소득세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제18조",
+          "title": "징수방법"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제177조",
+      "old_title": "징수방법",
+      "old_semok": "지방소득세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제30조",
+          "title": "신고 및 납부"
+        },
+        {
+          "law": "지방세법",
+          "art": "제43조",
+          "title": "신고 및 납부"
+        },
+        {
+          "law": "지방세법",
+          "art": "제20조",
+          "title": "신고 및 납부"
+        }
+      ],
+      "confidence": "medium",
+      "method": "review",
+      "old_art": "제177조의2",
+      "old_title": "신고 및 납부",
+      "old_semok": "지방소득세",
+      "candidates": [
+        {
+          "law": "지방세법",
+          "art": "제30조",
+          "title": "신고 및 납부",
+          "semok": "등록면허세",
+          "score": 0.479
+        },
+        {
+          "law": "지방세법",
+          "art": "제43조",
+          "title": "신고 및 납부",
+          "semok": "레저세",
+          "score": 0.472
+        },
+        {
+          "law": "지방세법",
+          "art": "제20조",
+          "title": "신고 및 납부",
+          "semok": "취득세",
+          "score": 0.469
+        },
+        {
+          "law": "지방세법",
+          "art": "제60조",
+          "title": "신고 및 납부 등",
+          "semok": "담배소비세",
+          "score": 0.356
+        },
+        {
+          "law": "지방세법",
+          "art": "제70조",
+          "title": "신고 및 납부 등",
+          "semok": "지방소비세",
+          "score": 0.345
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제103조의24",
+          "title": "수정신고 등"
+        },
+        {
+          "law": "지방세법",
+          "art": "제96조",
+          "title": "수정신고 등"
+        },
+        {
+          "law": "지방세기본법",
+          "art": "제49조",
+          "title": "수정신고"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제177조의3",
+      "old_title": "수정신고납부",
+      "old_semok": "지방소득세",
+      "candidates": [
+        {
+          "law": "지방세법",
+          "art": "제103조의24",
+          "title": "수정신고 등",
+          "semok": "지방소득세",
+          "score": 0.412
+        },
+        {
+          "law": "지방세법",
+          "art": "제96조",
+          "title": "수정신고 등",
+          "semok": "지방소득세",
+          "score": 0.39
+        },
+        {
+          "law": "지방세기본법",
+          "art": "제49조",
+          "title": "수정신고",
+          "semok": "",
+          "score": 0.24
+        },
+        {
+          "law": "지방세법",
+          "art": "제35조",
+          "title": "신고납부 등",
+          "semok": "등록면허세",
+          "score": 0.198
+        },
+        {
+          "law": "지방세법",
+          "art": "제137조",
+          "title": "신고납부 등",
+          "semok": "자동차세",
+          "score": 0.193
+        }
+      ]
+    },
+    {
+      "old_art": "제177조의4",
+      "old_title": "소득세분의 신고납부 및 부과고지",
+      "old_semok": "지방소득세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제178조",
+      "old_title": "소득분의 계산방법",
+      "old_semok": "지방소득세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제179조",
+      "old_title": "소액부징수",
+      "old_semok": "지방소득세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제179조의2",
+      "old_title": "",
+      "old_semok": "지방소득세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제103조의13",
+          "title": "특별징수의무"
+        },
+        {
+          "law": "지방세법",
+          "art": "제62조의2",
+          "title": "특별징수"
+        },
+        {
+          "law": "지방세법",
+          "art": "제103조의29",
+          "title": "특별징수의무"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제179조의3",
+      "old_title": "특별징수",
+      "old_semok": "지방소득세",
+      "candidates": [
+        {
+          "law": "지방세법",
+          "art": "제103조의13",
+          "title": "특별징수의무",
+          "semok": "지방소득세",
+          "score": 0.487
+        },
+        {
+          "law": "지방세법",
+          "art": "제62조의2",
+          "title": "특별징수",
+          "semok": "담배소비세",
+          "score": 0.484
+        },
+        {
+          "law": "지방세법",
+          "art": "제103조의29",
+          "title": "특별징수의무",
+          "semok": "지방소득세",
+          "score": 0.476
+        },
+        {
+          "law": "지방세법",
+          "art": "제31조",
+          "title": "특별징수",
+          "semok": "등록면허세",
+          "score": 0.475
+        },
+        {
+          "law": "지방세법",
+          "art": "제68조",
+          "title": "특별징수의무자",
+          "semok": "지방소비세",
+          "score": 0.186
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제140조",
+          "title": "세액 통보"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제179조의4",
+      "old_title": "세액통보",
+      "old_semok": "지방소득세",
+      "candidates": []
+    },
+    {
+      "old_art": "제179조의5",
+      "old_title": "징수교부금",
+      "old_semok": "지방소득세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제103조의41",
+          "title": "과세표준"
+        },
+        {
+          "law": "지방세법",
+          "art": "제91조",
+          "title": "과세표준"
+        },
+        {
+          "law": "지방세법",
+          "art": "제103조의34",
+          "title": "과세표준"
+        },
+        {
+          "law": "지방세법",
+          "art": "제103조의47",
+          "title": "과세표준"
+        },
+        {
+          "law": "지방세법",
+          "art": "제103조",
+          "title": "과세표준"
+        },
+        {
+          "law": "지방세법",
+          "art": "제103조의19",
+          "title": "과세표준"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제179조의6",
+      "old_title": "과세표준",
+      "old_semok": "지방소득세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제103조의20",
+          "title": "세율"
+        },
+        {
+          "law": "지방세법",
+          "art": "제103조의42",
+          "title": "세율"
+        },
+        {
+          "law": "지방세법",
+          "art": "제92조",
+          "title": "세율"
+        },
+        {
+          "law": "지방세법",
+          "art": "제103조의48",
+          "title": "세율"
+        },
+        {
+          "law": "지방세법",
+          "art": "제103조의3",
+          "title": "세율"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제179조의7",
+      "old_title": "세율",
+      "old_semok": "지방소득세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제84조의4",
+          "title": "면세점"
+        },
+        {
+          "law": "지방세법",
+          "art": "제17조",
+          "title": "면세점"
+        }
+      ],
+      "confidence": "medium",
+      "method": "review",
+      "old_art": "제179조의8",
+      "old_title": "면세점",
+      "old_semok": "지방소득세",
+      "candidates": [
+        {
+          "law": "지방세법",
+          "art": "제84조의4",
+          "title": "면세점",
+          "semok": "주민세",
+          "score": 0.54
+        },
+        {
+          "law": "지방세법",
+          "art": "제17조",
+          "title": "면세점",
+          "semok": "취득세",
+          "score": 0.475
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제84조의6",
+          "title": "징수방법과 납기 등"
+        },
+        {
+          "law": "지방세법",
+          "art": "제83조",
+          "title": "징수방법과 납기 등"
+        },
+        {
+          "law": "지방세법",
+          "art": "제18조",
+          "title": "징수방법"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제179조의9",
+      "old_title": "징수방법과 납기",
+      "old_semok": "지방소득세",
+      "candidates": [
+        {
+          "law": "지방세법",
+          "art": "제84조의6",
+          "title": "징수방법과 납기 등",
+          "semok": "주민세",
+          "score": 0.491
+        },
+        {
+          "law": "지방세법",
+          "art": "제83조",
+          "title": "징수방법과 납기 등",
+          "semok": "주민세",
+          "score": 0.441
+        },
+        {
+          "law": "지방세법",
+          "art": "제18조",
+          "title": "징수방법",
+          "semok": "취득세",
+          "score": 0.194
+        },
+        {
+          "law": "지방세법",
+          "art": "제79조",
+          "title": "징수방법 등",
+          "semok": "주민세",
+          "score": 0.169
+        },
+        {
+          "law": "지방세법",
+          "art": "제116조",
+          "title": "징수방법 등",
+          "semok": "재산세",
+          "score": 0.164
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제84조의7",
+          "title": "신고의무"
+        },
+        {
+          "law": "지방세법",
+          "art": "제84조",
+          "title": "신고의무"
+        },
+        {
+          "law": "지방세법",
+          "art": "제120조",
+          "title": "신고의무"
+        }
+      ],
+      "confidence": "medium",
+      "method": "review",
+      "old_art": "제179조의10",
+      "old_title": "신고의무",
+      "old_semok": "지방소득세",
+      "candidates": [
+        {
+          "law": "지방세법",
+          "art": "제84조의7",
+          "title": "신고의무",
+          "semok": "주민세",
+          "score": 0.634
+        },
+        {
+          "law": "지방세법",
+          "art": "제84조",
+          "title": "신고의무",
+          "semok": "주민세",
+          "score": 0.582
+        },
+        {
+          "law": "지방세법",
+          "art": "제120조",
+          "title": "신고의무",
+          "semok": "재산세",
+          "score": 0.472
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제104조",
+          "title": "정의"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제180조",
+      "old_title": "정의",
+      "old_semok": "재산세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제105조",
+          "title": "과세대상"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제181조",
+      "old_title": "과세대상",
+      "old_semok": "재산세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제106조",
+          "title": "과세대상의 구분 등"
+        }
+      ],
+      "confidence": "medium",
+      "method": "auto-semok",
+      "old_art": "제182조",
+      "old_title": "과세대상의 구분",
+      "old_semok": "재산세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제107조",
+          "title": "납세의무자"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제183조",
+      "old_title": "납세의무자",
+      "old_semok": "재산세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제108조",
+          "title": "납세지"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제184조",
+      "old_title": "납세지",
+      "old_semok": "재산세",
+      "candidates": []
+    },
+    {
+      "old_art": "제184조의2",
+      "old_title": "",
+      "old_semok": "재산세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제184조의3",
+      "old_title": "",
+      "old_semok": "재산세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제185조",
+      "old_title": "국가 등에 대한 비과세",
+      "old_semok": "재산세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제109조",
+          "title": "비과세"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제186조",
+      "old_title": "용도구분에 의한 비과세",
+      "old_semok": "재산세",
+      "candidates": [
+        {
+          "law": "지방세법",
+          "art": "제109조",
+          "title": "비과세",
+          "semok": "재산세",
+          "score": 0.346
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제110조",
+          "title": "과세표준"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제187조",
+      "old_title": "과세표준",
+      "old_semok": "재산세",
+      "candidates": []
+    },
+    {
+      "old_art": "제187조의2",
+      "old_title": "",
+      "old_semok": "재산세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제111조",
+          "title": "세율"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제188조",
+      "old_title": "세율",
+      "old_semok": "재산세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제113조",
+          "title": "세율적용"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제189조",
+      "old_title": "세율적용",
+      "old_semok": "재산세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제114조",
+          "title": "과세기준일"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제190조",
+      "old_title": "과세기준일",
+      "old_semok": "재산세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제115조",
+          "title": "납기"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제191조",
+      "old_title": "납기",
+      "old_semok": "재산세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제116조",
+          "title": "징수방법 등"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제192조",
+      "old_title": "징수방법 등",
+      "old_semok": "재산세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제119조",
+          "title": "소액 징수면제"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제193조",
+      "old_title": "소액부징수",
+      "old_semok": "재산세",
+      "candidates": [
+        {
+          "law": "지방세법",
+          "art": "제119조",
+          "title": "소액 징수면제",
+          "semok": "재산세",
+          "score": 0.298
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제120조",
+          "title": "신고의무"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제194조",
+      "old_title": "신고의무",
+      "old_semok": "재산세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제121조",
+          "title": "재산세 과세대장의 비치 등"
+        }
+      ],
+      "confidence": "medium",
+      "method": "auto-semok",
+      "old_art": "제195조",
+      "old_title": "재산세과세대장 등의 비치",
+      "old_semok": "재산세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제122조",
+          "title": "세 부담의 상한"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제195조의2",
+      "old_title": "세부담의 상한",
+      "old_semok": "재산세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세기본법",
+          "art": "제137조",
+          "title": "지방세입 정보관리 전담기구의 설치 등"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제195조의3",
+      "old_title": "부동산정보관리전담기구의 설치",
+      "old_semok": "재산세",
+      "candidates": [
+        {
+          "law": "지방세기본법",
+          "art": "제137조",
+          "title": "지방세입 정보관리 전담기구의 설치 등",
+          "semok": "",
+          "score": 0.302
+        }
+      ]
+    },
+    {
+      "old_art": "제196조",
+      "old_title": "",
+      "old_semok": "재산세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제124조",
+          "title": "자동차의 정의"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제196조의2",
+      "old_title": "자동차의 정의",
+      "old_semok": "자동차세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제125조",
+          "title": "납세의무자"
+        },
+        {
+          "law": "지방세법",
+          "art": "제135조",
+          "title": "납세의무자"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제196조의3",
+      "old_title": "납세의무자",
+      "old_semok": "자동차세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제126조",
+          "title": "비과세"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제196조의4",
+      "old_title": "비과세",
+      "old_semok": "자동차세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제127조",
+          "title": "과세표준과 세율"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제196조의5",
+      "old_title": "과세표준과 세율",
+      "old_semok": "자동차세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제128조",
+          "title": "납기와 징수방법"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제196조의6",
+      "old_title": "납기와 징수방법",
+      "old_semok": "자동차세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제129조",
+          "title": "승계취득 시의 납세의무"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제196조의7",
+      "old_title": "승계취득시의 납세의무",
+      "old_semok": "자동차세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제130조",
+          "title": "수시부과 시의 세액계산"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제196조의8",
+      "old_title": "수시부과시의 세액계산",
+      "old_semok": "자동차세",
+      "candidates": []
+    },
+    {
+      "old_art": "제196조의9",
+      "old_title": "",
+      "old_semok": "자동차세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제196조의10",
+      "old_title": "",
+      "old_semok": "자동차세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제196조의11",
+      "old_title": "",
+      "old_semok": "자동차세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제131조",
+          "title": "자동차등록번호판의 영치 등"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제196조의12",
+      "old_title": "자동차등록증의 회수등",
+      "old_semok": "자동차세",
+      "candidates": [
+        {
+          "law": "지방세법",
+          "art": "제131조",
+          "title": "자동차등록번호판의 영치 등",
+          "semok": "자동차세",
+          "score": 0.377
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제132조",
+          "title": "납세증명서 등의 제시"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제196조의13",
+      "old_title": "납세증명서등의 제시",
+      "old_semok": "자동차세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제133조",
+          "title": "체납처분"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제196조의14",
+      "old_title": "체납처분",
+      "old_semok": "자동차세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제134조",
+          "title": "면세규정의 배제"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제196조의15",
+      "old_title": "면세규정의 배제",
+      "old_semok": "자동차세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제135조",
+          "title": "납세의무자"
+        }
+      ],
+      "confidence": "medium",
+      "method": "auto-semok",
+      "old_art": "제196조의16",
+      "old_title": "납세의무자 등",
+      "old_semok": "자동차세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제136조",
+          "title": "세율"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제196조의17",
+      "old_title": "세율",
+      "old_semok": "자동차세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제60조",
+          "title": "신고 및 납부 등"
+        },
+        {
+          "law": "지방세법",
+          "art": "제70조",
+          "title": "신고 및 납부 등"
+        }
+      ],
+      "confidence": "medium",
+      "method": "review",
+      "old_art": "제196조의18",
+      "old_title": "신고 및 납부 등",
+      "old_semok": "자동차세",
+      "candidates": [
+        {
+          "law": "지방세법",
+          "art": "제60조",
+          "title": "신고 및 납부 등",
+          "semok": "담배소비세",
+          "score": 0.472
+        },
+        {
+          "law": "지방세법",
+          "art": "제70조",
+          "title": "신고 및 납부 등",
+          "semok": "지방소비세",
+          "score": 0.455
+        },
+        {
+          "law": "지방세법",
+          "art": "제137조",
+          "title": "신고납부 등",
+          "semok": "자동차세",
+          "score": 0.371
+        },
+        {
+          "law": "지방세법",
+          "art": "제30조",
+          "title": "신고 및 납부",
+          "semok": "등록면허세",
+          "score": 0.36
+        },
+        {
+          "law": "지방세법",
+          "art": "제43조",
+          "title": "신고 및 납부",
+          "semok": "레저세",
+          "score": 0.359
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제138조",
+          "title": "이의신청 등의 특례"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제196조의19",
+      "old_title": "이의신청 등의 특례",
+      "old_semok": "자동차세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제139조",
+          "title": "「교통ㆍ에너지ㆍ환경세법」의 준용"
+        }
+      ],
+      "confidence": "medium",
+      "method": "auto-semok",
+      "old_art": "제196조의20",
+      "old_title": "「교통·에너지·환경세법」의 준용",
+      "old_semok": "자동차세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제140조",
+          "title": "세액 통보"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제196조의21",
+      "old_title": "세액통보",
+      "old_semok": "자동차세",
+      "candidates": []
+    },
+    {
+      "old_art": "제197조",
+      "old_title": "",
+      "old_semok": "자동차세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제198조",
+      "old_title": "",
+      "old_semok": "자동차세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제199조",
+      "old_title": "",
+      "old_semok": "자동차세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제200조",
+      "old_title": "",
+      "old_semok": "자동차세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제201조",
+      "old_title": "",
+      "old_semok": "자동차세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제202조",
+      "old_title": "",
+      "old_semok": "자동차세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제203조",
+      "old_title": "",
+      "old_semok": "자동차세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제204조",
+      "old_title": "",
+      "old_semok": "자동차세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제205조",
+      "old_title": "",
+      "old_semok": "자동차세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제206조",
+      "old_title": "",
+      "old_semok": "자동차세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제207조",
+      "old_title": "",
+      "old_semok": "자동차세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제208조",
+      "old_title": "",
+      "old_semok": "자동차세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제209조",
+      "old_title": "",
+      "old_semok": "자동차세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제210조",
+      "old_title": "",
+      "old_semok": "자동차세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제211조",
+      "old_title": "",
+      "old_semok": "자동차세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제212조",
+      "old_title": "",
+      "old_semok": "자동차세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제213조",
+      "old_title": "",
+      "old_semok": "자동차세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제214조",
+      "old_title": "",
+      "old_semok": "자동차세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제215조",
+      "old_title": "",
+      "old_semok": "자동차세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제216조",
+      "old_title": "",
+      "old_semok": "자동차세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제217조",
+      "old_title": "",
+      "old_semok": "자동차세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제218조",
+      "old_title": "",
+      "old_semok": "자동차세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제219조",
+      "old_title": "",
+      "old_semok": "자동차세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제220조",
+      "old_title": "",
+      "old_semok": "자동차세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제221조",
+      "old_title": "",
+      "old_semok": "자동차세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제222조",
+      "old_title": "",
+      "old_semok": "자동차세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제47조",
+          "title": "정의"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제223조",
+      "old_title": "정의",
+      "old_semok": "담배소비세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제48조",
+          "title": "과세대상"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제224조",
+      "old_title": "과세대상",
+      "old_semok": "담배소비세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제49조",
+          "title": "납세의무자"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제225조",
+      "old_title": "납세의무자",
+      "old_semok": "담배소비세",
+      "candidates": []
+    },
+    {
+      "old_art": "제226조",
+      "old_title": "",
+      "old_semok": "담배소비세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제50조",
+          "title": "납세지"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제227조",
+      "old_title": "납세지",
+      "old_semok": "담배소비세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제51조",
+          "title": "과세표준"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제228조",
+      "old_title": "과세표준",
+      "old_semok": "담배소비세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제52조",
+          "title": "세율"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제229조",
+      "old_title": "세율",
+      "old_semok": "담배소비세",
+      "candidates": []
+    },
+    {
+      "old_art": "제230조",
+      "old_title": "",
+      "old_semok": "담배소비세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제53조",
+          "title": "미납세 반출"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제231조",
+      "old_title": "미납세반출",
+      "old_semok": "담배소비세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제54조",
+          "title": "과세면제"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제232조",
+      "old_title": "과세면제",
+      "old_semok": "담배소비세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제55조",
+          "title": "담배의 반출신고"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제233조",
+      "old_title": "담배의 반출신고",
+      "old_semok": "담배소비세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제56조",
+          "title": "제조장 또는 보세구역에서의 반출로 보는 경우"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제233조의2",
+      "old_title": "제조장 또는 보세구역에서의 반출로 보는 경우",
+      "old_semok": "담배소비세",
+      "candidates": []
+    },
+    {
+      "old_art": "제233조의3",
+      "old_title": "개업·폐업등의 신고",
+      "old_semok": "담배소비세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제58조",
+          "title": "폐업 시의 재고담배 사용계획서 제출"
+        }
+      ],
+      "confidence": "medium",
+      "method": "auto-semok",
+      "old_art": "제233조의4",
+      "old_title": "폐업시의 재고담배의 사용계획서 제출",
+      "old_semok": "담배소비세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제59조",
+          "title": "기장의무"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제233조의5",
+      "old_title": "기장의무",
+      "old_semok": "담배소비세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제60조",
+          "title": "신고 및 납부 등"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제233조의6",
+      "old_title": "신고 및 납부 등",
+      "old_semok": "담배소비세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제99조",
+          "title": "가산세"
+        },
+        {
+          "law": "지방세법",
+          "art": "제103조의30",
+          "title": "가산세"
+        },
+        {
+          "law": "지방세법",
+          "art": "제103조의39",
+          "title": "가산세"
+        }
+      ],
+      "confidence": "medium",
+      "method": "review",
+      "old_art": "제233조의7",
+      "old_title": "가산세",
+      "old_semok": "담배소비세",
+      "candidates": [
+        {
+          "law": "지방세법",
+          "art": "제99조",
+          "title": "가산세",
+          "semok": "지방소득세",
+          "score": 0.464
+        },
+        {
+          "law": "지방세법",
+          "art": "제103조의30",
+          "title": "가산세",
+          "semok": "지방소득세",
+          "score": 0.464
+        },
+        {
+          "law": "지방세법",
+          "art": "제103조의39",
+          "title": "가산세",
+          "semok": "지방소득세",
+          "score": 0.453
+        },
+        {
+          "law": "지방세법",
+          "art": "제61조",
+          "title": "부족세액의 추징 및 가산세",
+          "semok": "담배소비세",
+          "score": 0.37
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제62조",
+          "title": "수시부과"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제233조의8",
+      "old_title": "수시부과",
+      "old_semok": "담배소비세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제63조",
+          "title": "세액의 공제 및 환급"
+        }
+      ],
+      "confidence": "medium",
+      "method": "auto-semok",
+      "old_art": "제233조의9",
+      "old_title": "세액의 공제 및 환부",
+      "old_semok": "담배소비세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제64조",
+          "title": "납세담보"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제233조의10",
+      "old_title": "납세담보",
+      "old_semok": "담배소비세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제86조",
+          "title": "납세의무자 등"
+        },
+        {
+          "law": "지방세법",
+          "art": "제7조",
+          "title": "납세의무자 등"
+        }
+      ],
+      "confidence": "medium",
+      "method": "review",
+      "old_art": "제234조",
+      "old_title": "납세의무자등",
+      "old_semok": "도축세",
+      "candidates": [
+        {
+          "law": "지방세법",
+          "art": "제86조",
+          "title": "납세의무자 등",
+          "semok": "지방소득세",
+          "score": 0.462
+        },
+        {
+          "law": "지방세법",
+          "art": "제7조",
+          "title": "납세의무자 등",
+          "semok": "취득세",
+          "score": 0.452
+        },
+        {
+          "law": "지방세법",
+          "art": "제66조",
+          "title": "납세의무자",
+          "semok": "지방소비세",
+          "score": 0.357
+        },
+        {
+          "law": "지방세법",
+          "art": "제135조",
+          "title": "납세의무자",
+          "semok": "자동차세",
+          "score": 0.35
+        },
+        {
+          "law": "지방세법",
+          "art": "제125조",
+          "title": "납세의무자",
+          "semok": "자동차세",
+          "score": 0.35
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제136조",
+          "title": "세율"
+        },
+        {
+          "law": "지방세법",
+          "art": "제78조",
+          "title": "세율"
+        },
+        {
+          "law": "지방세법",
+          "art": "제84조의3",
+          "title": "세율"
+        },
+        {
+          "law": "지방세법",
+          "art": "제103조의20",
+          "title": "세율"
+        }
+      ],
+      "confidence": "medium",
+      "method": "review",
+      "old_art": "제234조의2",
+      "old_title": "세율",
+      "old_semok": "도축세",
+      "candidates": [
+        {
+          "law": "지방세법",
+          "art": "제136조",
+          "title": "세율",
+          "semok": "자동차세",
+          "score": 0.47
+        },
+        {
+          "law": "지방세법",
+          "art": "제78조",
+          "title": "세율",
+          "semok": "주민세",
+          "score": 0.47
+        },
+        {
+          "law": "지방세법",
+          "art": "제84조의3",
+          "title": "세율",
+          "semok": "주민세",
+          "score": 0.468
+        },
+        {
+          "law": "지방세법",
+          "art": "제103조의20",
+          "title": "세율",
+          "semok": "지방소득세",
+          "score": 0.461
+        },
+        {
+          "law": "지방세법",
+          "art": "제81조",
+          "title": "세율",
+          "semok": "주민세",
+          "score": 0.46
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제18조",
+          "title": "징수방법"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제234조의3",
+      "old_title": "징수방법",
+      "old_semok": "도축세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제103조의29",
+          "title": "특별징수의무"
+        },
+        {
+          "law": "지방세법",
+          "art": "제103조의13",
+          "title": "특별징수의무"
+        },
+        {
+          "law": "지방세법",
+          "art": "제68조",
+          "title": "특별징수의무자"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제234조의4",
+      "old_title": "특별징수의 절차",
+      "old_semok": "도축세",
+      "candidates": [
+        {
+          "law": "지방세법",
+          "art": "제103조의29",
+          "title": "특별징수의무",
+          "semok": "지방소득세",
+          "score": 0.243
+        },
+        {
+          "law": "지방세법",
+          "art": "제103조의13",
+          "title": "특별징수의무",
+          "semok": "지방소득세",
+          "score": 0.236
+        },
+        {
+          "law": "지방세법",
+          "art": "제68조",
+          "title": "특별징수의무자",
+          "semok": "지방소비세",
+          "score": 0.201
+        },
+        {
+          "law": "지방세법",
+          "art": "제62조의2",
+          "title": "특별징수",
+          "semok": "담배소비세",
+          "score": 0.196
+        },
+        {
+          "law": "지방세법",
+          "art": "제31조",
+          "title": "특별징수",
+          "semok": "등록면허세",
+          "score": 0.192
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제99조",
+          "title": "가산세"
+        },
+        {
+          "law": "지방세법",
+          "art": "제103조의30",
+          "title": "가산세"
+        },
+        {
+          "law": "지방세법",
+          "art": "제103조의39",
+          "title": "가산세"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제234조의5",
+      "old_title": "가산세액",
+      "old_semok": "도축세",
+      "candidates": [
+        {
+          "law": "지방세법",
+          "art": "제99조",
+          "title": "가산세",
+          "semok": "지방소득세",
+          "score": 0.239
+        },
+        {
+          "law": "지방세법",
+          "art": "제103조의30",
+          "title": "가산세",
+          "semok": "지방소득세",
+          "score": 0.239
+        },
+        {
+          "law": "지방세법",
+          "art": "제103조의39",
+          "title": "가산세",
+          "semok": "지방소득세",
+          "score": 0.231
+        }
+      ]
+    },
+    {
+      "old_art": "제234조의6",
+      "old_title": "영수증서 교부의무",
+      "old_semok": "도축세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제134조",
+          "title": "면세규정의 배제"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제234조의7",
+      "old_title": "면세규정의 적용배제",
+      "old_semok": "도축세",
+      "candidates": [
+        {
+          "law": "지방세법",
+          "art": "제134조",
+          "title": "면세규정의 배제",
+          "semok": "자동차세",
+          "score": 0.253
+        }
+      ]
+    },
+    {
+      "old_art": "제234조의8",
+      "old_title": "",
+      "old_semok": "도축세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제234조의9",
+      "old_title": "",
+      "old_semok": "도축세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제234조의10",
+      "old_title": "",
+      "old_semok": "도축세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제234조의11",
+      "old_title": "",
+      "old_semok": "도축세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제234조의12",
+      "old_title": "",
+      "old_semok": "도축세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제234조의13",
+      "old_title": "",
+      "old_semok": "도축세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제234조의14",
+      "old_title": "",
+      "old_semok": "도축세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제234조의15",
+      "old_title": "",
+      "old_semok": "도축세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제234조의16",
+      "old_title": "",
+      "old_semok": "도축세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제234조의17",
+      "old_title": "",
+      "old_semok": "도축세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제234조의18",
+      "old_title": "",
+      "old_semok": "도축세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제234조의19",
+      "old_title": "",
+      "old_semok": "도축세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제234조의20",
+      "old_title": "",
+      "old_semok": "도축세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제234조의21",
+      "old_title": "",
+      "old_semok": "도축세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제234조의22",
+      "old_title": "",
+      "old_semok": "도축세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제234조의23",
+      "old_title": "",
+      "old_semok": "도축세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제234조의24",
+      "old_title": "",
+      "old_semok": "도축세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제234조의25",
+      "old_title": "",
+      "old_semok": "도축세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제234조의26",
+      "old_title": "",
+      "old_semok": "도축세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제234조의27",
+      "old_title": "",
+      "old_semok": "도축세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제234조의28",
+      "old_title": "",
+      "old_semok": "도축세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제234조의29",
+      "old_title": "",
+      "old_semok": "도축세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제234조의30",
+      "old_title": "",
+      "old_semok": "도축세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제234조의31",
+      "old_title": "",
+      "old_semok": "도축세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제234조의32",
+      "old_title": "",
+      "old_semok": "도축세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제234조의33",
+      "old_title": "",
+      "old_semok": "도축세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제234조의34",
+      "old_title": "",
+      "old_semok": "도축세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제234조의35",
+      "old_title": "준용",
+      "old_semok": "등록면허세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제105조",
+          "title": "과세대상"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제235조",
+      "old_title": "과세대상",
+      "old_semok": "재산세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제107조",
+          "title": "납세의무자"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제235조의2",
+      "old_title": "납세의무자",
+      "old_semok": "재산세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제110조",
+          "title": "과세표준"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제236조",
+      "old_title": "과세표준",
+      "old_semok": "재산세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제111조",
+          "title": "세율"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제237조",
+      "old_title": "세율",
+      "old_semok": "재산세",
+      "candidates": []
+    },
+    {
+      "old_art": "제238조",
+      "old_title": "부과징수",
+      "old_semok": "재산세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제238조의2",
+      "old_title": "재산세의 준용",
+      "old_semok": "재산세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제143조",
+          "title": "납세의무자"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제239조",
+      "old_title": "납세의무자",
+      "old_semok": "지역자원시설세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제42조",
+          "title": "과세표준 및 세율"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제240조",
+      "old_title": "과세표준 및 세율",
+      "old_semok": "지역자원시설세",
+      "candidates": []
+    },
+    {
+      "old_art": "제241조",
+      "old_title": "부과징수",
+      "old_semok": "지역자원시설세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제242조",
+      "old_title": "재산세의 준용",
+      "old_semok": "지역자원시설세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제243조",
+      "old_title": "",
+      "old_semok": "지역자원시설세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제244조",
+      "old_title": "",
+      "old_semok": "지역자원시설세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제245조",
+      "old_title": "",
+      "old_semok": "지역자원시설세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제245조의2",
+      "old_title": "",
+      "old_semok": "지역자원시설세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제246조",
+      "old_title": "",
+      "old_semok": "지역자원시설세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제247조",
+      "old_title": "",
+      "old_semok": "지역자원시설세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제248조",
+      "old_title": "",
+      "old_semok": "지역자원시설세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제249조",
+      "old_title": "",
+      "old_semok": "지역자원시설세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제250조",
+      "old_title": "",
+      "old_semok": "지역자원시설세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제251조",
+      "old_title": "",
+      "old_semok": "지역자원시설세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "old_art": "제252조",
+      "old_title": "",
+      "old_semok": "지역자원시설세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제142조",
+          "title": "과세대상"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제253조",
+      "old_title": "과세대상",
+      "old_semok": "지역자원시설세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제143조",
+          "title": "납세의무자"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제254조",
+      "old_title": "납세의무자",
+      "old_semok": "지역자원시설세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제145조",
+          "title": "비과세"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제255조",
+      "old_title": "비과세",
+      "old_semok": "지역자원시설세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제144조",
+          "title": "납세지"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제256조",
+      "old_title": "납세지",
+      "old_semok": "지역자원시설세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제146조",
+          "title": "과세표준과 세율"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제257조",
+      "old_title": "과세표준과 세율",
+      "old_semok": "지역자원시설세",
+      "candidates": []
+    },
+    {
+      "old_art": "제258조",
+      "old_title": "부과징수",
+      "old_semok": "지역자원시설세",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제84조의6",
+          "title": "징수방법과 납기 등"
+        },
+        {
+          "law": "지방세법",
+          "art": "제83조",
+          "title": "징수방법과 납기 등"
+        },
+        {
+          "law": "지방세법",
+          "art": "제18조",
+          "title": "징수방법"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제259조",
+      "old_title": "징수방법과 납기",
+      "old_semok": "지역자원시설세",
+      "candidates": [
+        {
+          "law": "지방세법",
+          "art": "제84조의6",
+          "title": "징수방법과 납기 등",
+          "semok": "주민세",
+          "score": 0.43
+        },
+        {
+          "law": "지방세법",
+          "art": "제83조",
+          "title": "징수방법과 납기 등",
+          "semok": "주민세",
+          "score": 0.423
+        },
+        {
+          "law": "지방세법",
+          "art": "제18조",
+          "title": "징수방법",
+          "semok": "취득세",
+          "score": 0.187
+        },
+        {
+          "law": "지방세법",
+          "art": "제79조",
+          "title": "징수방법 등",
+          "semok": "주민세",
+          "score": 0.163
+        },
+        {
+          "law": "지방세법",
+          "art": "제116조",
+          "title": "징수방법 등",
+          "semok": "재산세",
+          "score": 0.161
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제148조",
+          "title": "소액 징수면제"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제260조",
+      "old_title": "소액부징수",
+      "old_semok": "지역자원시설세",
+      "candidates": [
+        {
+          "law": "지방세법",
+          "art": "제148조",
+          "title": "소액 징수면제",
+          "semok": "지역자원시설세",
+          "score": 0.275
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제150조",
+          "title": "납세의무자"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제260조의2",
+      "old_title": "납세의무자",
+      "old_semok": "지방교육세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제151조",
+          "title": "과세표준과 세율"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제260조의3",
+      "old_title": "과세표준과 세율",
+      "old_semok": "지방교육세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제152조",
+          "title": "신고 및 납부와 부과ㆍ징수"
+        }
+      ],
+      "confidence": "medium",
+      "method": "auto-semok",
+      "old_art": "제260조의4",
+      "old_title": "신고 및 납부와 부과징수",
+      "old_semok": "지방교육세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제153조",
+          "title": "부족세액의 추징 및 가산세"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto-semok",
+      "old_art": "제260조의5",
+      "old_title": "부족세액의 추징 및 가산세",
+      "old_semok": "지방교육세",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세법",
+          "art": "제154조",
+          "title": "환급"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제260조의6",
+      "old_title": "환부",
+      "old_semok": "지방교육세",
+      "candidates": [
+        {
+          "law": "지방세법",
+          "art": "제154조",
+          "title": "환급",
+          "semok": "지방교육세",
+          "score": 0.302
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제6조",
+          "title": "자경농민의 농지 등에 대한 감면"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제261조",
+      "old_title": "자경농민의 농지 등에 대한 감면",
+      "old_semok": "",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제7조",
+          "title": "농기계류 등에 대한 감면"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제262조",
+      "old_title": "농기계류 등에 대한 감면",
+      "old_semok": "",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제8조",
+          "title": "농지확대개발을 위한 면제 등"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제263조",
+      "old_title": "농지확대개발을 위한 감면",
+      "old_semok": "",
+      "candidates": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제8조",
+          "title": "농지확대개발을 위한 면제 등",
+          "semok": "",
+          "score": 0.375
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제62조",
+          "title": "광업 지원을 위한 감면"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제36조의4",
+          "title": "전세사기피해자 지원을 위한 감면"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제264조",
+      "old_title": "영농자금 등의 융자지원을 위한 감면",
+      "old_semok": "",
+      "candidates": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제62조",
+          "title": "광업 지원을 위한 감면",
+          "semok": "",
+          "score": 0.163
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제36조의4",
+          "title": "전세사기피해자 지원을 위한 감면",
+          "semok": "",
+          "score": 0.154
+        }
+      ]
+    },
+    {
+      "old_art": "제265조",
+      "old_title": "",
+      "old_semok": "",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제14조",
+          "title": "농업협동조합 등의 농어업 관련 사업 등에 대한 감면"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제74조",
+          "title": "도시개발사업 등에 대한 감면"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제61조",
+          "title": "도시가스사업 등에 대한 감면"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제266조",
+      "old_title": "농어민관련사업 등에 대한 감면",
+      "old_semok": "",
+      "candidates": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제14조",
+          "title": "농업협동조합 등의 농어업 관련 사업 등에 대한 감면",
+          "semok": "",
+          "score": 0.225
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제74조",
+          "title": "도시개발사업 등에 대한 감면",
+          "semok": "",
+          "score": 0.207
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제61조",
+          "title": "도시가스사업 등에 대한 감면",
+          "semok": "",
+          "score": 0.198
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제85조의2",
+          "title": "지방공기업 등에 대한 감면",
+          "semok": "",
+          "score": 0.194
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제51조",
+          "title": "신문ㆍ통신사업 등에 대한 감면",
+          "semok": "",
+          "score": 0.175
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제9조",
+          "title": "자영어민 등에 대한 감면"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제267조",
+      "old_title": "자영어민 등에 대한 감면",
+      "old_semok": "",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제66조",
+          "title": "교환자동차 등에 대한 감면"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제268조",
+      "old_title": "교환자동차 등에 대한 감면",
+      "old_semok": "",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제17조",
+          "title": "장애인용 자동차에 대한 감면"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제66조",
+          "title": "교환자동차 등에 대한 감면"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제268조의2",
+      "old_title": "경형 자동차에 대한 감면",
+      "old_semok": "",
+      "candidates": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제17조",
+          "title": "장애인용 자동차에 대한 감면",
+          "semok": "",
+          "score": 0.245
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제66조",
+          "title": "교환자동차 등에 대한 감면",
+          "semok": "",
+          "score": 0.161
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제17조",
+          "title": "장애인용 자동차에 대한 감면"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제268조의3",
+      "old_title": "하이브리드자동차에 대한 감면",
+      "old_semok": "",
+      "candidates": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제17조",
+          "title": "장애인용 자동차에 대한 감면",
+          "semok": "",
+          "score": 0.192
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제31조",
+          "title": "공공임대주택 등에 대한 감면"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제31조의3",
+          "title": "장기일반민간임대주택 등에 대한 감면"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제86조",
+          "title": "주한미군 임대용 주택 등에 대한 감면"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제269조",
+      "old_title": "소규모 임대주택 등에 대한 감면",
+      "old_semok": "",
+      "candidates": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제31조",
+          "title": "공공임대주택 등에 대한 감면",
+          "semok": "",
+          "score": 0.311
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제31조의3",
+          "title": "장기일반민간임대주택 등에 대한 감면",
+          "semok": "",
+          "score": 0.237
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제86조",
+          "title": "주한미군 임대용 주택 등에 대한 감면",
+          "semok": "",
+          "score": 0.179
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제35조",
+          "title": "주택담보노후연금보증 대상 주택에 대한 감면",
+          "semok": "",
+          "score": 0.137
+        }
+      ]
+    },
+    {
+      "old_art": "제269조의2",
+      "old_title": "대한주택보증주식회사의 매입 주택 등에 대한 감면",
+      "old_semok": "",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제29조",
+          "title": "국가유공자 등에 대한 감면"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제270조",
+      "old_title": "국가유공자 등에 대한 감면",
+      "old_semok": "",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제44조의2",
+          "title": "박물관 등에 대한 감면"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제42조",
+          "title": "기숙사 등에 대한 감면"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제90조",
+          "title": "마을회 등에 대한 감면"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제271조",
+      "old_title": "노인정 등에 대한 감면",
+      "old_semok": "",
+      "candidates": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제44조의2",
+          "title": "박물관 등에 대한 감면",
+          "semok": "",
+          "score": 0.225
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제42조",
+          "title": "기숙사 등에 대한 감면",
+          "semok": "",
+          "score": 0.223
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제90조",
+          "title": "마을회 등에 대한 감면",
+          "semok": "",
+          "score": 0.212
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제71조",
+          "title": "물류단지 등에 대한 감면",
+          "semok": "",
+          "score": 0.206
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제24조",
+          "title": "연금공단 등에 대한 감면",
+          "semok": "",
+          "score": 0.196
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제44조",
+          "title": "평생교육시설 등에 대한 감면"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제63조",
+          "title": "철도시설 등에 대한 감면"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제44조의2",
+          "title": "박물관 등에 대한 감면"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제272조",
+      "old_title": "사회교육시설 등에 대한 감면",
+      "old_semok": "",
+      "candidates": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제44조",
+          "title": "평생교육시설 등에 대한 감면",
+          "semok": "",
+          "score": 0.344
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제63조",
+          "title": "철도시설 등에 대한 감면",
+          "semok": "",
+          "score": 0.251
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제44조의2",
+          "title": "박물관 등에 대한 감면",
+          "semok": "",
+          "score": 0.184
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제42조",
+          "title": "기숙사 등에 대한 감면",
+          "semok": "",
+          "score": 0.183
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제90조",
+          "title": "마을회 등에 대한 감면",
+          "semok": "",
+          "score": 0.167
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제39조",
+          "title": "국민건강보험사업 지원을 위한 감면"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제28조",
+          "title": "산업인력 등 지원을 위한 감면"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제62조",
+          "title": "광업 지원을 위한 감면"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제273조",
+      "old_title": "연금 및 건강보험 등 지원을 위한 감면",
+      "old_semok": "",
+      "candidates": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제39조",
+          "title": "국민건강보험사업 지원을 위한 감면",
+          "semok": "",
+          "score": 0.254
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제28조",
+          "title": "산업인력 등 지원을 위한 감면",
+          "semok": "",
+          "score": 0.197
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제62조",
+          "title": "광업 지원을 위한 감면",
+          "semok": "",
+          "score": 0.172
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제24조",
+          "title": "연금공단 등에 대한 감면",
+          "semok": "",
+          "score": 0.109
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제40조의2",
+          "title": "주택거래에 대한 취득세의 감면"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제273조의2",
+      "old_title": "주택거래에 대한 감면",
+      "old_semok": "",
+      "candidates": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제40조의2",
+          "title": "주택거래에 대한 취득세의 감면",
+          "semok": "",
+          "score": 0.204
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제80조",
+          "title": "공장의 지방 이전에 따른 감면"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제79조",
+          "title": "법인의 지방 이전에 대한 감면"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제274조",
+      "old_title": "법인의 지방이전에 따른 감면",
+      "old_semok": "",
+      "candidates": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제80조",
+          "title": "공장의 지방 이전에 따른 감면",
+          "semok": "",
+          "score": 0.328
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제79조",
+          "title": "법인의 지방 이전에 대한 감면",
+          "semok": "",
+          "score": 0.275
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제80조",
+          "title": "공장의 지방 이전에 따른 감면"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제274조의2",
+      "old_title": "공공기관 지방이전에 따른 감면",
+      "old_semok": "",
+      "candidates": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제80조",
+          "title": "공장의 지방 이전에 따른 감면",
+          "semok": "",
+          "score": 0.237
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제80조",
+          "title": "공장의 지방 이전에 따른 감면"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제275조",
+      "old_title": "공장의 지방이전에 따른 감면",
+      "old_semok": "",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제78조",
+          "title": "산업단지 등에 대한 감면"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제276조",
+      "old_title": "산업단지 등에 대한 감면",
+      "old_semok": "",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제75조",
+          "title": "지역개발사업에 대한 감면"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제44조의2",
+          "title": "박물관 등에 대한 감면"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제42조",
+          "title": "기숙사 등에 대한 감면"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제277조",
+      "old_title": "관광단지개발 등에 대한 감면",
+      "old_semok": "",
+      "candidates": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제75조",
+          "title": "지역개발사업에 대한 감면",
+          "semok": "",
+          "score": 0.212
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제44조의2",
+          "title": "박물관 등에 대한 감면",
+          "semok": "",
+          "score": 0.178
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제42조",
+          "title": "기숙사 등에 대한 감면",
+          "semok": "",
+          "score": 0.171
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제76조",
+          "title": "택지개발용 토지 등에 대한 감면",
+          "semok": "",
+          "score": 0.167
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제90조",
+          "title": "마을회 등에 대한 감면",
+          "semok": "",
+          "score": 0.166
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제44조의2",
+          "title": "박물관 등에 대한 감면"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제42조",
+          "title": "기숙사 등에 대한 감면"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제90조",
+          "title": "마을회 등에 대한 감면"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제277조의2",
+      "old_title": "관광호텔 등에 대한 감면",
+      "old_semok": "",
+      "candidates": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제44조의2",
+          "title": "박물관 등에 대한 감면",
+          "semok": "",
+          "score": 0.205
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제42조",
+          "title": "기숙사 등에 대한 감면",
+          "semok": "",
+          "score": 0.2
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제90조",
+          "title": "마을회 등에 대한 감면",
+          "semok": "",
+          "score": 0.199
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제78조",
+          "title": "산업단지 등에 대한 감면",
+          "semok": "",
+          "score": 0.184
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제71조",
+          "title": "물류단지 등에 대한 감면",
+          "semok": "",
+          "score": 0.184
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제28조",
+          "title": "산업인력 등 지원을 위한 감면"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제62조",
+          "title": "광업 지원을 위한 감면"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제27조",
+          "title": "근로복지공단 지원을 위한 감면"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제278조",
+      "old_title": "산업인력지원을 위한 감면",
+      "old_semok": "",
+      "candidates": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제28조",
+          "title": "산업인력 등 지원을 위한 감면",
+          "semok": "",
+          "score": 0.353
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제62조",
+          "title": "광업 지원을 위한 감면",
+          "semok": "",
+          "score": 0.231
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제27조",
+          "title": "근로복지공단 지원을 위한 감면",
+          "semok": "",
+          "score": 0.217
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제46조",
+          "title": "연구개발 지원을 위한 감면",
+          "semok": "",
+          "score": 0.212
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제70조",
+          "title": "운송사업 지원을 위한 감면",
+          "semok": "",
+          "score": 0.193
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제44조의2",
+          "title": "박물관 등에 대한 감면"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제42조",
+          "title": "기숙사 등에 대한 감면"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제90조",
+          "title": "마을회 등에 대한 감면"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제279조",
+      "old_title": "신용보증기금 등에 대한 감면",
+      "old_semok": "",
+      "candidates": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제44조의2",
+          "title": "박물관 등에 대한 감면",
+          "semok": "",
+          "score": 0.182
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제42조",
+          "title": "기숙사 등에 대한 감면",
+          "semok": "",
+          "score": 0.174
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제90조",
+          "title": "마을회 등에 대한 감면",
+          "semok": "",
+          "score": 0.171
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제62조",
+          "title": "광업 지원을 위한 감면"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제46조",
+          "title": "연구개발 지원을 위한 감면"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제70조",
+          "title": "운송사업 지원을 위한 감면"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제280조",
+      "old_title": "중소기업 등의 지원을 위한 감면",
+      "old_semok": "",
+      "candidates": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제62조",
+          "title": "광업 지원을 위한 감면",
+          "semok": "",
+          "score": 0.188
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제46조",
+          "title": "연구개발 지원을 위한 감면",
+          "semok": "",
+          "score": 0.181
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제70조",
+          "title": "운송사업 지원을 위한 감면",
+          "semok": "",
+          "score": 0.167
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제28조",
+          "title": "산업인력 등 지원을 위한 감면",
+          "semok": "",
+          "score": 0.167
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제22조의2",
+          "title": "출산 및 양육 지원을 위한 감면",
+          "semok": "",
+          "score": 0.158
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제61조",
+          "title": "도시가스사업 등에 대한 감면"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제281조",
+      "old_title": "도시가스사업 등에 대한 감면",
+      "old_semok": "",
+      "candidates": []
+    },
+    {
+      "old_art": "제282조",
+      "old_title": "기업부설연구소용 부동산에 대한 면제",
+      "old_semok": "",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제44조의2",
+          "title": "박물관 등에 대한 감면"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제24조",
+          "title": "연금공단 등에 대한 감면"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제42조",
+          "title": "기숙사 등에 대한 감면"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제283조",
+      "old_title": "법인합병 등에 대한 감면",
+      "old_semok": "",
+      "candidates": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제44조의2",
+          "title": "박물관 등에 대한 감면",
+          "semok": "",
+          "score": 0.175
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제24조",
+          "title": "연금공단 등에 대한 감면",
+          "semok": "",
+          "score": 0.175
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제42조",
+          "title": "기숙사 등에 대한 감면",
+          "semok": "",
+          "score": 0.174
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제90조",
+          "title": "마을회 등에 대한 감면",
+          "semok": "",
+          "score": 0.171
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제87조",
+          "title": "새마을금고 등에 대한 감면",
+          "semok": "",
+          "score": 0.169
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제44조의2",
+          "title": "박물관 등에 대한 감면"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제42조",
+          "title": "기숙사 등에 대한 감면"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제90조",
+          "title": "마을회 등에 대한 감면"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제284조",
+      "old_title": "사업용 항공기 등에 대한 감면",
+      "old_semok": "",
+      "candidates": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제44조의2",
+          "title": "박물관 등에 대한 감면",
+          "semok": "",
+          "score": 0.169
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제42조",
+          "title": "기숙사 등에 대한 감면",
+          "semok": "",
+          "score": 0.165
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제90조",
+          "title": "마을회 등에 대한 감면",
+          "semok": "",
+          "score": 0.16
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제24조",
+          "title": "연금공단 등에 대한 감면"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제44조의2",
+          "title": "박물관 등에 대한 감면"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제42조",
+          "title": "기숙사 등에 대한 감면"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제285조",
+      "old_title": "광업권 취득 등에 대한 감면",
+      "old_semok": "",
+      "candidates": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제24조",
+          "title": "연금공단 등에 대한 감면",
+          "semok": "",
+          "score": 0.173
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제44조의2",
+          "title": "박물관 등에 대한 감면",
+          "semok": "",
+          "score": 0.172
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제42조",
+          "title": "기숙사 등에 대한 감면",
+          "semok": "",
+          "score": 0.168
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제53조",
+          "title": "사회단체 등에 대한 감면",
+          "semok": "",
+          "score": 0.167
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제90조",
+          "title": "마을회 등에 대한 감면",
+          "semok": "",
+          "score": 0.162
+        }
+      ]
+    },
+    {
+      "old_art": "제286조",
+      "old_title": "자원 및 환경보호사업자 등에 대한 감면",
+      "old_semok": "",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제40조",
+          "title": "국민건강 증진사업자에 대한 감면"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제287조",
+      "old_title": "국민건강증진사업자 등에 대한 감면",
+      "old_semok": "",
+      "candidates": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제40조",
+          "title": "국민건강 증진사업자에 대한 감면",
+          "semok": "",
+          "score": 0.377
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제53조",
+          "title": "사회단체 등에 대한 감면"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제288조",
+      "old_title": "사회단체 등에 대한 감면",
+      "old_semok": "",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제76조",
+          "title": "택지개발용 토지 등에 대한 감면"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제84조",
+          "title": "사권 제한토지 등에 대한 감면"
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제71조",
+          "title": "물류단지 등에 대한 감면"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제289조",
+      "old_title": "공공사업용 토지 등에 대한 감면",
+      "old_semok": "",
+      "candidates": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제76조",
+          "title": "택지개발용 토지 등에 대한 감면",
+          "semok": "",
+          "score": 0.276
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제84조",
+          "title": "사권 제한토지 등에 대한 감면",
+          "semok": "",
+          "score": 0.2
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제71조",
+          "title": "물류단지 등에 대한 감면",
+          "semok": "",
+          "score": 0.186
+        },
+        {
+          "law": "지방세특례제한법",
+          "art": "제78조",
+          "title": "산업단지 등에 대한 감면",
+          "semok": "",
+          "score": 0.183
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제48조",
+          "title": "국립공원관리사업에 대한 감면"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제290조",
+      "old_title": "국립공원관리사업에 대한 감면",
+      "old_semok": "",
+      "candidates": []
+    },
+    {
+      "old_art": "제291조",
+      "old_title": "사치성재산의 감면 제외",
+      "old_semok": "",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제183조",
+          "title": "감면신청 등"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제292조",
+      "old_title": "감면신청",
+      "old_semok": "",
+      "candidates": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제183조",
+          "title": "감면신청 등",
+          "semok": "",
+          "score": 0.374
+        }
+      ]
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제179조",
+          "title": "토지에 대한 재산세의 경감율 적용"
+        }
+      ],
+      "confidence": "low",
+      "method": "review",
+      "old_art": "제293조",
+      "old_title": "토지에 대한 재산세의 경감률 적용",
+      "old_semok": "",
+      "candidates": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제179조",
+          "title": "토지에 대한 재산세의 경감율 적용",
+          "semok": "",
+          "score": 0.393
+        }
+      ]
+    },
+    {
+      "old_art": "제294조",
+      "old_title": "중복감면의 배제",
+      "old_semok": "",
+      "mapped": [],
+      "confidence": "none",
+      "method": "none",
+      "candidates": []
+    },
+    {
+      "mapped": [
+        {
+          "law": "지방세특례제한법",
+          "art": "제184조",
+          "title": "감면자료의 제출"
+        }
+      ],
+      "confidence": "high",
+      "method": "auto",
+      "old_art": "제295조",
+      "old_title": "감면자료의 제출",
+      "old_semok": "",
+      "candidates": []
+    }
+  ]
+}

@@ -1,0 +1,1746 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>법제처 JSON 업무검색 대시보드 v36.15 Full Copy</title>
+<style>
+:root{
+  --bg:#eef2f8;--panel:#fff;--line:#d8e0ec;--line2:#e8edf5;--text:#162033;
+  --muted:#667085;--blue:#2458d3;--blue2:#edf4ff;--red:#b42318;--yellow:#fff1a8;
+  --shadow:0 10px 28px rgba(16,24,40,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Malgun Gothic","Apple SD Gothic Neo",Arial,sans-serif;font-size:14px;overflow:hidden}
+button,input,select,textarea{font-family:inherit}
+button{border:0;border-radius:10px;background:#e9eef7;color:#21304d;padding:8px 11px;cursor:pointer;font-weight:700}
+button.primary{background:var(--blue);color:white}
+button.small{font-size:12px;padding:5px 8px;border-radius:8px}
+button.active{background:var(--blue);color:#fff}
+input,select,textarea{border:1px solid var(--line);border-radius:10px;padding:8px 9px;background:#fff;width:100%}
+textarea{resize:vertical;line-height:1.45}
+.topbar{height:12px;background:#1e4697}
+.app{height:calc(100vh - 12px);display:flex;gap:10px;padding:10px;min-width:980px}
+.side{width:310px;flex:0 0 310px;display:flex;flex-direction:column}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden;min-height:0}
+.panel h2{margin:0;padding:11px 13px;border-bottom:1px solid var(--line);font-size:15px;background:#fbfcff}
+.section{padding:11px 13px}
+label{display:block;color:var(--muted);font-size:12px;margin:8px 0 5px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.targetBox{display:grid;gap:6px;background:#f8fbff;border:1px solid var(--line);border-radius:12px;padding:8px;max-height:145px;overflow:auto}
+.check{display:flex;align-items:center;gap:6px;font-size:12px;color:#344054;margin:0}
+.check input{width:auto}
+.titleResults{flex:1;overflow:auto;border-top:1px solid var(--line2);min-height:140px}
+.titleItem{padding:9px 12px;border-bottom:1px solid var(--line2);cursor:pointer}
+.titleItem:hover{background:#f8fbff}
+.titleItem b{font-size:13px}
+.mini,.meta{font-size:11px;color:var(--muted);line-height:1.4}
+.status{border-top:1px solid var(--line);padding:9px 13px;color:var(--muted);font-size:12px;min-height:36px;word-break:break-all}
+.status.err{background:#fff4f2;color:var(--red)}
+.pool summary{padding:10px 13px;cursor:pointer;font-weight:800;background:#fbfcff;border-top:1px solid var(--line)}
+.poolBody{padding:11px 13px}
+.poolResults{max-height:130px;overflow:auto;border:1px solid var(--line);border-radius:12px;margin-top:8px;background:#fff}
+.poolCandidate{padding:8px 10px;border-bottom:1px solid var(--line2);cursor:pointer;font-size:12px}
+.poolCandidate:hover{background:var(--blue2)}
+
+.center{flex:1;min-width:0;display:flex;gap:0;position:relative}
+.resultsPanel{width:420px;flex:0 0 420px;display:flex;flex-direction:column;min-width:240px;max-width:720px}
+.resultsPanel.hidden{display:none}
+.toolbar{padding:10px 12px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:8px;background:#fbfcff}
+.summary{font-size:12px;color:var(--muted);margin-top:3px}
+.resultList{overflow:auto;padding:9px;flex:1}
+.resultCard{display:grid;grid-template-columns:210px minmax(260px,1fr);gap:10px;border:1px solid var(--line);border-radius:14px;background:#fff;margin-bottom:9px;padding:10px;cursor:pointer}
+.resultCard:hover{border-color:#aac0ee;background:#fbfdff}
+.resultCard.active{border-color:var(--blue);box-shadow:0 0 0 2px #dce9ff inset}
+.lawTitle{font-weight:900;font-size:14px;margin-bottom:6px}
+.tag{display:inline-block;font-size:11px;padding:2px 6px;border-radius:999px;background:#edf4ff;color:#214eb8;margin:0 3px 4px 0}
+.match{border:1px solid #f5df91;background:#fffdf2;border-radius:11px;padding:8px;margin-bottom:6px;line-height:1.48;cursor:pointer}
+.match:hover{background:#fff7cf}
+.matchPath{font-size:12px;color:#b54708;font-weight:900;margin-bottom:3px}
+mark{background:var(--yellow);padding:0 2px;border-radius:3px}
+.splitter{width:8px;flex:0 0 8px;background:transparent;cursor:col-resize;position:relative}
+.splitter::before{content:"";position:absolute;top:0;bottom:0;left:3px;width:2px;background:#cbd5e1;border-radius:999px}
+.splitter:hover::before{left:2px;width:4px;background:#8fb0f3}
+.showResults{display:none;position:absolute;left:8px;top:8px;z-index:30;border:1px solid #9db5e8;background:#edf4ff;color:#214eb8;border-radius:999px;padding:7px 10px;font-size:12px}
+.showResults.visible{display:block}
+
+.panes{flex:1;min-width:0;display:flex;gap:0}
+.lawPane{display:flex;flex-direction:column;min-width:260px;width:100%;flex:1 1 0}
+.lawPane.emptyOptional{display:none}
+.paneInner{height:100%;display:flex;flex-direction:column}
+.paneHead{padding:10px 12px;border-bottom:1px solid var(--line);background:#fbfcff}
+.paneTitle{font-weight:900;margin-bottom:5px}
+.paneTop{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.paneBtns{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}
+.paneControls{display:grid;grid-template-columns:1fr 120px 70px;gap:6px;margin-top:8px}
+.tabBar{display:flex;align-items:center;gap:6px;overflow-x:auto;padding:7px 10px;border-bottom:1px solid var(--line);background:#f7f9fc;min-height:39px}
+.lawTab{display:inline-flex;align-items:center;gap:6px;max-width:190px;padding:6px 8px;border:1px solid var(--line);border-radius:10px;background:#fff;cursor:pointer;font-size:12px;white-space:nowrap}
+.lawTab.active{background:var(--blue2);border-color:#8fb0f3;color:#214eb8;font-weight:900}
+.lawTabName{overflow:hidden;text-overflow:ellipsis}
+.lawTabClose{border:0;background:transparent;color:#667085;font-weight:900;padding:0 2px;cursor:pointer}
+.paneBadge{display:inline-block;min-width:18px;text-align:center;border-radius:999px;background:#e9eef7;color:#344054;font-size:11px;padding:1px 5px}
+.articleWrap{flex:1;min-height:0;overflow:auto;padding:10px}
+.article{border:1px solid var(--line);border-radius:14px;background:#fff;margin-bottom:9px;padding:10px}
+.article h3{font-size:14px;margin:0 0 7px;color:#21304d}
+.unit{padding:6px 8px;border-radius:9px;margin:3px 0;line-height:1.58;border:1px solid transparent;cursor:pointer}
+.unit:hover{background:#f8fbff;border-color:#dbe7ff}
+.unit.selected{background:#eaf4ff;border-color:#7da7f5;box-shadow:inset 4px 0 0 var(--blue)}
+.unitLabel{display:inline-block;min-width:40px;font-size:11px;font-weight:900;color:#52637d}
+.level-항{margin-left:14px}.level-호{margin-left:28px}.level-목{margin-left:42px}
+.empty{color:var(--muted);font-size:13px;padding:18px;text-align:center}
+.right{width:310px;flex:0 0 310px;display:flex;flex-direction:column}
+.noteContext{padding:10px 12px;background:#f8fbff;border-bottom:1px solid var(--line);font-size:12px;line-height:1.45;color:#475467}
+.noteEditor{padding:11px;border-bottom:1px solid var(--line)}
+.noteEditor textarea{min-height:95px}
+.noteList{overflow:auto;padding:9px;flex:1}
+.noteCard{border:1px solid var(--line);border-radius:13px;background:#fff;margin-bottom:8px;padding:9px}
+.noteCard.reply{margin-left:20px;border-left:4px solid #dbeafe}
+.noteTop{font-size:11px;color:var(--muted);margin-bottom:6px;display:flex;justify-content:space-between;gap:8px}
+.noteBody{font-size:13px;line-height:1.55;white-space:pre-wrap;word-break:break-word}
+.noteBody a{color:#2458d3;text-decoration:underline}
+.noteWhere{font-size:11px;color:#475467;background:#f2f4f7;border-radius:8px;padding:4px 6px;margin-top:7px;display:inline-block}
+.openTarget{display:flex;gap:6px;align-items:center;margin-top:8px}
+.openTarget button{font-size:12px;padding:5px 8px}
+@media(max-width:1350px){.right{display:none}.resultCard{grid-template-columns:1fr}.side{width:290px;flex-basis:290px}}
+
+/* v17 result compact + workspace tabs */
+.resultCard{display:block !important;grid-template-columns:none !important;padding:10px 11px !important}
+.resultHeader{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;border-bottom:1px solid var(--line2);padding-bottom:7px;margin-bottom:7px}
+.resultHeaderMain{min-width:0}
+.resultHeaderMeta{text-align:right;min-width:120px;font-size:11px;color:var(--muted);line-height:1.45}
+.resultMatches{display:grid;grid-template-columns:1fr;gap:6px}
+.match{width:100%;max-width:100%;overflow-wrap:anywhere;word-break:break-word;margin-bottom:0 !important;padding:7px 8px !important}
+.matchPath{font-size:11px}
+.resultPager{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:8px 10px;border-bottom:1px solid var(--line2);background:#fbfcff}
+.resultPager button{font-size:12px;padding:5px 8px;border-radius:8px}
+.resultPager .pageNow{font-weight:900;color:#214eb8}
+.workspaceBar{display:flex;gap:6px;align-items:center;overflow-x:auto;padding:7px 8px;border-bottom:1px solid var(--line);background:#fbfcff}
+.workspaceTab{display:inline-flex;align-items:center;gap:6px;max-width:190px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 8px;font-size:12px;cursor:pointer;white-space:nowrap}
+.workspaceTab.active{background:var(--blue2);border-color:#8fb0f3;color:#214eb8;font-weight:900}
+.workspaceTab .closeWs{border:0;background:transparent;padding:0 2px;color:#667085;font-weight:900}
+.workspaceTab .closeWs:hover{color:var(--red)}
+.workspaceAdd{font-size:12px;padding:5px 9px;border-radius:999px;background:#e9eef7}
+.panesShell{flex:1;min-width:0;display:flex;flex-direction:column}
+.panes{flex:1;min-height:0}
+
+
+/* v18 notes + page navigation */
+.titleResults{overflow:hidden !important;flex:0 0 auto;max-height:none !important}
+.titlePager,.notePager{display:flex;gap:6px;align-items:center;justify-content:center;border-top:1px solid var(--line2);padding:7px 8px;background:#fbfcff;flex-wrap:wrap}
+.titlePager button,.notePager button{font-size:12px;padding:5px 8px;border-radius:8px}
+.titlePager .pageNow,.notePager .pageNow{font-weight:900;color:#214eb8}
+.resultList{overflow:hidden !important}
+.noteList{overflow:hidden !important;flex:0 0 auto}
+.noteSortBar{display:flex;gap:6px;padding:8px 10px;border-bottom:1px solid var(--line2);background:#fbfcff;align-items:center;justify-content:space-between}
+.noteSortBar button{font-size:12px;padding:5px 8px;border-radius:8px}
+.noteSortBar button.active{background:var(--blue);color:#fff}
+.noteDelete{background:#fff4f2;color:#b42318;border:1px solid #fecdca}
+.noteScore{font-size:10px;color:#667085;margin-left:4px}
+.noteCard{position:relative}
+.resultPager{position:sticky;top:0;z-index:2}
+
+
+/* v22 FHD stable compact + gray dark */
+.app{gap:8px;padding:8px;min-width:1200px}
+.side{width:280px;flex-basis:280px}
+.right{width:270px;flex-basis:270px}
+.resultsPanel{width:350px;flex-basis:350px;min-width:260px;max-width:540px}
+.resultCard{padding:8px 9px !important;margin-bottom:7px}
+.lawTitle{font-size:13px}
+.match{font-size:12px;line-height:1.42;max-width:100%;overflow-wrap:anywhere;word-break:break-word}
+.panel h2{padding:9px 11px;font-size:14px}
+.section{padding:9px 11px}
+.targetBox{max-height:125px}
+.titleItem{padding:7px 10px}
+.articleWrap{padding:8px}
+.article{padding:8px;margin-bottom:7px}
+.article h3{font-size:13px}
+.unit{font-size:13px;line-height:1.48;padding:5px 7px}
+.noteEditor{padding:9px}
+.noteEditor textarea{min-height:82px}
+.noteCard{padding:8px;margin-bottom:7px}
+.noteBody{font-size:12px}
+#targetPane3,#pane3,#split23{display:none !important}
+.lawPane{min-width:300px}
+.paneHead{padding:8px 10px}
+.paneControls{grid-template-columns:1fr 105px 58px}
+.tabBar{padding:6px 8px;min-height:35px}
+.lawTab{max-width:165px;padding:5px 7px}
+.grayToggleBtn{font-size:12px;padding:5px 8px;border-radius:8px}
+body.grayDark{
+  --bg:#2f3338;--panel:#3b4047;--line:#555d68;--line2:#4b535e;--text:#eef1f5;
+  --muted:#bcc4cf;--blue:#8fb0ff;--blue2:#465269;--red:#ff9b9b;--yellow:#6f642e;
+  --shadow:0 10px 28px rgba(0,0,0,.24);
+  background:#2f3338;color:#eef1f5;
+}
+body.grayDark .topbar{background:#26324a}
+body.grayDark input,body.grayDark select,body.grayDark textarea{background:#454b54;color:#f2f4f7;border-color:#5e6672}
+body.grayDark input:disabled{background:#3f454d;color:#b9c0ca}
+body.grayDark button{background:#4a5260;color:#f2f4f7}
+body.grayDark button.primary,body.grayDark button.active{background:#5f7fd3;color:#fff}
+body.grayDark .panel,body.grayDark .article,body.grayDark .noteCard,body.grayDark .resultCard,body.grayDark .lawTab,body.grayDark .workspaceTab,body.grayDark .poolCandidate{background:#3b4047;color:#eef1f5}
+body.grayDark .toolbar,body.grayDark .paneHead,body.grayDark .tabBar,body.grayDark .workspaceBar,body.grayDark .resultPager,body.grayDark .titlePager,body.grayDark .notePager,body.grayDark .noteSortBar,body.grayDark .panel h2,body.grayDark .pool summary,body.grayDark .noteContext{background:#353a41}
+body.grayDark .match{background:#4b4634;border-color:#84743b}
+body.grayDark mark{background:#8b7a35;color:#fff7cc}
+body.grayDark .tag,body.grayDark .paneBadge{background:#4d5870;color:#dce8ff}
+body.grayDark .lawTab.active,body.grayDark .workspaceTab.active{background:#4e5e7a;border-color:#7898df}
+body.grayDark .empty{color:#c1c7d0}
+body.grayDark .splitter::before{background:#69727e}
+body.grayDark .splitter:hover::before{background:#93a9d8}
+body.grayDark .noteDelete{background:#5a3d3d;color:#ffd1d1;border-color:#8c5b5b}
+
+
+/* v24 display + pool scope fix */
+.scopeBox{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}
+.scopeBtn{font-size:12px;padding:7px 8px;border-radius:10px;border:1px solid transparent}
+.scopeBtn.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.scopeInfo{font-size:11px;color:var(--muted);line-height:1.45;background:#f8fbff;border:1px solid var(--line);border-radius:10px;padding:7px 8px;margin-top:6px}
+body.grayDark .scopeInfo{background:#353a41;border-color:#555d68;color:#c8d0da}
+.resultList .empty,.titleResults .empty{padding:18px 10px}
+
+
+/* v27 detail search + dark selected readability + copy button */
+.unit{
+  position:relative;
+  padding-right:7px !important;
+  overflow-wrap:anywhere;
+}
+.unitActions{
+  float:right;
+  display:inline-flex;
+  gap:4px;
+  margin-left:8px;
+  margin-bottom:2px;
+  max-width:92px;
+  flex-shrink:0;
+}
+.copyUnit{
+  position:static;
+  font-size:10px !important;
+  line-height:1 !important;
+  padding:3px 5px !important;
+  border-radius:6px !important;
+  opacity:.72;
+  background:#eef2f7 !important;
+  color:#344054 !important;
+  border:1px solid #d0d5dd !important;
+  white-space:nowrap;
+}
+.unit:hover .copyUnit{
+  opacity:1;
+}
+.linkBtn.activePick{background:#1d4ed8 !important;color:#fff !important;border-color:#1d4ed8 !important;opacity:1}
+.linkBtn.hasLinks{background:#ecfdf3 !important;color:#05603a !important;border-color:#abefc6 !important;opacity:1}
+body.linkPickMode .linkBtn{background:#fff7ed !important;color:#9a3412 !important;border-color:#fed7aa !important;opacity:1}
+.linkedBox{clear:both;margin:6px 0 0 45px;display:flex;flex-wrap:wrap;gap:5px}
+.linkedChip{font-size:11px;border:1px solid #bdd0f8;background:#eef4ff;color:#183a7a;border-radius:999px;padding:4px 7px;cursor:pointer;max-width:300px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.grayDark .copyUnit{
+  background:#59616d !important;
+  color:#f2f4f7 !important;
+  border-color:#717b89 !important;
+}
+body.grayDark .unit.selected{
+  background:#dcecff !important;
+  color:#111827 !important;
+  border-color:#9fc4ff !important;
+  box-shadow:inset 4px 0 0 #4f7dd7 !important;
+}
+body.grayDark .unit.selected .unitLabel{
+  color:#1f2937 !important;
+}
+body.grayDark .unit.selected mark{
+  background:#ffe766 !important;
+  color:#111827 !important;
+}
+body.grayDark .unit.selected .copyUnit{
+  background:#f3f4f6 !important;
+  color:#111827 !important;
+  border-color:#9ca3af !important;
+}
+.detailSearchHint{
+  font-size:11px;
+  color:var(--muted);
+  margin:4px 0 8px 2px;
+}
+
+
+/* v28 restore scroll for FHD panels */
+.side{
+  min-height:0 !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  padding-right:2px;
+}
+.titleResults{
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  max-height:240px !important;
+}
+.resultsPanel{
+  min-height:0 !important;
+}
+.resultList{
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  flex:1 1 auto !important;
+  min-height:0 !important;
+}
+.right{
+  min-height:0 !important;
+  overflow:hidden !important;
+}
+.noteList{
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  flex:1 1 auto !important;
+  min-height:0 !important;
+}
+.notePager,.titlePager,.resultPager{
+  flex:0 0 auto !important;
+}
+.status{
+  flex:0 0 auto !important;
+}
+.side::-webkit-scrollbar,
+.resultList::-webkit-scrollbar,
+.noteList::-webkit-scrollbar,
+.titleResults::-webkit-scrollbar,
+.articleWrap::-webkit-scrollbar{
+  width:10px;
+}
+.side::-webkit-scrollbar-thumb,
+.resultList::-webkit-scrollbar-thumb,
+.noteList::-webkit-scrollbar-thumb,
+.titleResults::-webkit-scrollbar-thumb,
+.articleWrap::-webkit-scrollbar-thumb{
+  background:#cbd5e1;
+  border-radius:999px;
+  border:2px solid transparent;
+  background-clip:content-box;
+}
+body.grayDark .side::-webkit-scrollbar-thumb,
+body.grayDark .resultList::-webkit-scrollbar-thumb,
+body.grayDark .noteList::-webkit-scrollbar-thumb,
+body.grayDark .titleResults::-webkit-scrollbar-thumb,
+body.grayDark .articleWrap::-webkit-scrollbar-thumb{
+  background:#747d8a;
+  border:2px solid transparent;
+  background-clip:content-box;
+}
+
+
+/* v29 partial text selection */
+.articleWrap,
+.article,
+.unit,
+.unit *,
+.noteBody,
+.match,
+.resultCard{
+  -webkit-user-select:text !important;
+  user-select:text !important;
+}
+.unit{
+  cursor:text !important;
+}
+.copyUnit,
+.copyUnit *{
+  -webkit-user-select:none !important;
+  user-select:none !important;
+  cursor:pointer !important;
+}
+.unit::selection,
+.unit *::selection,
+.article::selection,
+.article *::selection{
+  background:#bcd7ff;
+  color:#111827;
+}
+body.grayDark .unit::selection,
+body.grayDark .unit *::selection,
+body.grayDark .article::selection,
+body.grayDark .article *::selection{
+  background:#9dbbff;
+  color:#111827;
+}
+
+
+/* v30: move folded result open button so it does not cover workspace buttons */
+.showResults{
+  top:54px !important;
+  left:10px !important;
+  z-index:18 !important;
+  writing-mode:vertical-rl;
+  text-orientation:mixed;
+  padding:10px 6px !important;
+  border-radius:12px !important;
+  min-height:92px;
+  line-height:1.15;
+}
+.panesShell{
+  position:relative;
+}
+.resultsPanel.hidden ~ .splitter + .panesShell{
+  padding-left:42px;
+}
+body.grayDark .showResults{
+  background:#4e5e7a !important;
+  color:#eef4ff !important;
+  border-color:#7898df !important;
+}
+
+
+/* v31: horizontal result-open button + push workspace buttons to the right */
+.showResults{
+  top:8px !important;
+  left:10px !important;
+  z-index:18 !important;
+  writing-mode:horizontal-tb !important;
+  text-orientation:mixed !important;
+  padding:7px 10px !important;
+  border-radius:999px !important;
+  min-height:auto !important;
+  line-height:1.2 !important;
+  white-space:nowrap !important;
+}
+.resultsPanel.hidden ~ .splitter + .panesShell{
+  padding-left:0 !important;
+}
+.resultsPanel.hidden ~ .splitter + .panesShell .workspaceBar{
+  padding-left:132px !important;
+}
+body.grayDark .showResults{
+  background:#4e5e7a !important;
+  color:#eef4ff !important;
+  border-color:#7898df !important;
+}
+
+
+/* v32 4K three-pane restoration */
+.app{
+  gap:12px !important;
+  padding:12px !important;
+  min-width:1800px !important;
+}
+.side{
+  width:330px !important;
+  flex-basis:330px !important;
+}
+.right{
+  width:340px !important;
+  flex-basis:340px !important;
+}
+.resultsPanel{
+  width:460px !important;
+  flex-basis:460px !important;
+  min-width:320px !important;
+  max-width:720px !important;
+}
+.lawPane{
+  min-width:360px !important;
+}
+#targetPane3{
+  display:inline-block !important;
+}
+#pane3{
+  display:flex;
+}
+#split23{
+  display:block;
+}
+.lawPane.emptyOptional{
+  display:none;
+}
+.paneHead{
+  padding:10px 12px !important;
+}
+.articleWrap{
+  padding:10px !important;
+}
+.article{
+  padding:10px !important;
+}
+.unit{
+  font-size:14px !important;
+  line-height:1.58 !important;
+}
+.lawTab{
+  max-width:210px !important;
+}
+.workspaceTab{
+  max-width:220px !important;
+}
+
+
+/* v33 annex/form download section */
+.annexBlock{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:#fff;
+  margin:10px 0;
+  padding:10px;
+}
+.annexBlock h3{
+  margin:0 0 8px;
+  font-size:14px;
+  color:#21304d;
+}
+.annexList{
+  display:grid;
+  gap:7px;
+}
+.annexItem{
+  display:grid;
+  grid-template-columns:minmax(220px,1fr) auto;
+  gap:8px;
+  align-items:center;
+  border:1px solid var(--line2);
+  border-radius:10px;
+  padding:8px 9px;
+  background:#fbfcff;
+}
+.annexTitle{
+  font-size:13px;
+  line-height:1.4;
+  word-break:keep-all;
+}
+.annexBtns{
+  display:flex;
+  gap:5px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+.annexBtn{
+  display:inline-block;
+  text-decoration:none;
+  border-radius:8px;
+  padding:5px 8px;
+  font-size:12px;
+  font-weight:800;
+  background:#e9eef7;
+  color:#21304d;
+  border:1px solid #d8e0ec;
+}
+.annexBtn:hover{
+  background:#dfe9ff;
+}
+.annexEmpty{
+  font-size:12px;
+  color:var(--muted);
+}
+body.grayDark .annexBlock{
+  background:#3b4047;
+  border-color:#555d68;
+}
+body.grayDark .annexBlock h3{
+  color:#eef1f5;
+}
+body.grayDark .annexItem{
+  background:#353a41;
+  border-color:#4b535e;
+}
+body.grayDark .annexBtn{
+  background:#4a5260;
+  color:#f2f4f7;
+  border-color:#687181;
+}
+body.grayDark .annexBtn:hover{
+  background:#536075;
+}
+
+
+/* v34: force 4K third pane to work */
+#targetPane3{
+  display:inline-block !important;
+}
+#pane3{
+  min-width:360px !important;
+}
+#pane3.emptyOptional{
+  display:none !important;
+}
+#pane3:not(.emptyOptional){
+  display:flex !important;
+}
+#split23{
+  display:block;
+}
+#pane3.emptyOptional + *{
+  display:none;
+}
+
+
+/* v35 PDF preview cache */
+.annexBtn.preview{
+  background:#2458d3;
+  color:#fff;
+  border-color:#2458d3;
+}
+.annexStatus{
+  display:block;
+  font-size:11px;
+  color:var(--muted);
+  margin-top:3px;
+}
+.pdfPreviewOverlay{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:rgba(15,23,42,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+}
+.pdfPreviewBox{
+  width:min(1280px,94vw);
+  height:min(900px,92vh);
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:16px;
+  box-shadow:0 24px 80px rgba(0,0,0,.35);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+.pdfPreviewHead{
+  flex:0 0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:10px 12px;
+  border-bottom:1px solid var(--line);
+  background:#fbfcff;
+}
+.pdfPreviewTitle{
+  font-weight:900;
+  font-size:14px;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.pdfPreviewActions{
+  display:flex;
+  gap:6px;
+  flex:0 0 auto;
+}
+.pdfPreviewFrame{
+  flex:1 1 auto;
+  width:100%;
+  border:0;
+  background:#fff;
+}
+body.grayDark .pdfPreviewHead{
+  background:#353a41;
+}
+body.grayDark .pdfPreviewFrame{
+  background:#2f3338;
+}
+body.grayDark .annexBtn.preview{
+  background:#5f7fd3;
+  border-color:#7898df;
+}
+
+
+/* v36 FHD compact layout + 2 pane limit */
+.app{gap:8px !important;padding:8px !important;min-width:1200px !important}
+.side{width:280px !important;flex-basis:280px !important}
+.right{width:270px !important;flex-basis:270px !important}
+.resultsPanel{width:350px !important;flex-basis:350px !important;min-width:260px !important;max-width:540px !important}
+.lawPane{min-width:300px !important}
+#targetPane3,#pane3,#split23{display:none !important}
+.panel h2{padding:9px 11px !important;font-size:14px !important}
+.section{padding:9px 11px !important}
+.targetQuick{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin:4px 0 7px}.targetQuick button{font-size:11px;padding:6px 4px;border-radius:9px;border:1px solid var(--line);background:#f8fafc;color:#344054;cursor:pointer}body.grayDark .targetQuick button{background:#3b4047;color:#eef1f5;border-color:#555d68}
+.targetBox{max-height:125px !important}
+.titleItem{padding:7px 10px !important}
+.resultCard{padding:8px 9px !important;margin-bottom:7px !important}
+.lawTitle{font-size:13px !important}
+.match{font-size:12px !important;line-height:1.42 !important}
+.paneHead{padding:8px 10px !important}
+.paneControls{grid-template-columns:1fr 105px 58px !important}
+.tabBar{padding:6px 8px !important;min-height:35px !important}
+.lawTab{max-width:165px !important;padding:5px 7px !important}
+.articleWrap{padding:8px !important}
+.article{padding:8px !important;margin-bottom:7px !important}
+.article h3{font-size:13px !important}
+.unit{font-size:13px !important;line-height:1.48 !important;padding:5px 7px !important}
+.noteEditor{padding:9px !important}
+.noteEditor textarea{min-height:82px !important}
+.noteCard{padding:8px !important;margin-bottom:7px !important}
+.noteBody{font-size:12px !important}
+.annexItem{grid-template-columns:1fr !important;gap:6px !important}
+.annexBtns{justify-content:flex-start !important}
+.pdfPreviewBox{width:min(1080px,94vw) !important;height:min(760px,90vh) !important}
+
+.relatedBox{margin:7px 0 0 22px;padding:8px;border:1px dashed var(--border);border-radius:12px;background:rgba(246,248,252,.85)}
+.relatedHead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.relatedTerms{font-size:11px;color:var(--muted)}
+.relatedWeb{display:flex;flex-wrap:wrap;gap:6px}
+.relatedChip{border:1px solid #bdd0f8;background:#eef4ff;color:#183a7a;border-radius:999px;padding:5px 8px;font-size:11px;cursor:pointer;max-width:260px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.grayDark .relatedBox{background:#323740;border-color:#555b66}
+body.grayDark .relatedChip,body.grayDark .linkedChip{background:#3f516f;color:#e9f1ff;border-color:#637da8}
+body.grayDark .linkBtn.hasLinks{background:#294737 !important;color:#d1fadf !important;border-color:#4b8064 !important}
+
+
+.precHtmlFrameBox{display:flex;flex-direction:column;gap:8px;height:calc(100vh - 260px);min-height:560px;border:1px solid var(--line);border-radius:14px;background:#fff;overflow:hidden;}
+.precHtmlFrameHead{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-bottom:1px solid var(--line);font-size:12px;color:var(--muted);background:#f8fafc;}
+.precHtmlFrame{width:100%;height:100%;border:0;background:#fff;}
+
+
+/* v36.14 pasted law text pretty viewer */
+.toolRow{margin-top:8px;display:grid;grid-template-columns:1fr;gap:8px}
+.prettyBtn{background:#fff7ed;color:#9a3412;border:1px solid #fed7aa}
+.prettyBackdrop{position:fixed;inset:0;background:rgba(15,23,42,.38);z-index:1000;display:none;align-items:center;justify-content:center;padding:24px}
+.prettyBackdrop.open{display:flex}
+.prettyModal{width:min(1180px,96vw);height:min(760px,92vh);background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 24px 80px rgba(16,24,40,.26);display:flex;flex-direction:column;overflow:hidden}
+.prettyHead{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-bottom:1px solid var(--line);background:#fbfcff}
+.prettyHead b{font-size:15px}.prettyHead .mini{margin-top:3px}
+.prettyActions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+.prettyBody{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px;background:#f7f9fc}
+.prettyCol{display:flex;flex-direction:column;min-height:0;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.prettyColTitle{padding:8px 10px;border-bottom:1px solid var(--line2);font-weight:900;font-size:12px;color:#344054;background:#fbfcff}
+.prettyCol textarea{flex:1;border:0;border-radius:0;resize:none;min-height:0;font-size:13px;line-height:1.62;white-space:pre-wrap;background:#fff}
+.prettyOutput{font-family:"Malgun Gothic","Apple SD Gothic Neo",Arial,sans-serif}
+.prettyFoot{padding:9px 12px;border-top:1px solid var(--line);background:#fff;color:var(--muted);font-size:12px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+body.grayDark .prettyModal,body.grayDark .prettyCol{background:#2b3038;border-color:#454c57}
+body.grayDark .prettyHead,body.grayDark .prettyColTitle,body.grayDark .prettyFoot{background:#252a32;border-color:#454c57;color:#d7dde8}
+body.grayDark .prettyBody{background:#1f242b}
+body.grayDark .prettyCol textarea{background:#2b3038;color:#e9eef7}
+@media(max-width:900px){.prettyBody{grid-template-columns:1fr}.prettyModal{height:94vh}}
+
+
+/* v36.16: pane-by-pane font zoom */
+.paneZoomGroup{display:inline-flex;align-items:center;gap:3px;border:1px solid var(--line);background:#fff;border-radius:10px;padding:2px;margin-right:2px}
+.paneZoomGroup button{font-size:11px;padding:4px 7px;border-radius:8px;background:#f2f4f7;color:#344054}
+.paneZoomLabel{min-width:38px;text-align:center;font-size:11px;font-weight:900;color:#475467;padding:0 3px;line-height:22px}
+.articleWrap{--pane-font-size:13px}
+.articleWrap .unit{font-size:var(--pane-font-size,13px) !important;line-height:1.62 !important}
+.articleWrap .article h3{font-size:calc(var(--pane-font-size,13px) + 1px) !important;line-height:1.45 !important}
+.articleWrap .annexBlock,.articleWrap .precHtmlFrameBox{font-size:var(--pane-font-size,13px) !important}
+body.grayDark .paneZoomGroup{background:#2f3540;border-color:#555d68}
+body.grayDark .paneZoomGroup button{background:#3b4047;color:#eef1f5}
+body.grayDark .paneZoomLabel{color:#d7dde8}
+
+</style>
+</head>
+<body>
+<div class="topbar"></div>
+<div class="app">
+  <aside class="panel side">
+    <h2>검색</h2>
+    <div class="section">
+      <label>OPEN 묶음 인증키(OC)</label>
+      <input id="oc" placeholder="예: sp-law-study">
+      <label>검색대상 복수 선택</label>
+      <div class="targetQuick">
+        <button type="button" onclick="setTargetPreset('law')">법령</button>
+        <button type="button" onclick="setTargetPreset('case')">판례</button>
+        <button type="button" onclick="setTargetPreset('ordin')">조례</button>
+        <button type="button" onclick="setTargetPreset('gijang')">기장군</button>
+      </div>
+      <div class="targetBox" id="targetBox"></div>
+      <label>법령 이력 검색</label>
+      <select id="lawHistory">
+        <option value="3" selected>현행만 보기</option>
+        <option value="1,3">연혁 + 현행 보기</option>
+        <option value="1,2,3">연혁 + 시행예정 + 현행 보기</option>
+      </select>
+      <label>시행일 범위(선택)</label>
+      <input id="efYdRange" placeholder="예: 20200101~20201231 / 비우면 최신 시행일 기준">
+      <label>검색어</label>
+      <input id="query" value="" placeholder="본문과 법령명을 동시에 검색" autocomplete="off">
+      <div class="row">
+        <div><label>페이지</label><input id="page" type="number" min="1" value="1"></div>
+        <div><label>자동 표시</label><input value="페이지당 100건" disabled></div>
+      </div>
+      <div class="openTarget">
+        <span class="mini">열 위치</span>
+        <button id="targetPane1" class="active" onclick="setOpenTarget(1)">1</button>
+        <button id="targetPane2" onclick="setOpenTarget(2)">2</button>
+        <button id="targetPane3" onclick="setOpenTarget(3)">3</button><button class="grayToggleBtn" onclick="toggleGrayDark()" title="회색톤 다크모드 전환">다크</button>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <button class="primary" onclick="runSearch(false)">검색</button>
+        <button onclick="runSearch(true)">캐시 새로고침</button>
+      </div>
+      <div class="toolRow">
+        <button type="button" class="prettyBtn" onclick="openPrettyTool()">붙여넣기 정리 뷰어</button>
+      </div>
+      <label>검색 범위</label>
+      <div class="scopeBox">
+        <button type="button" id="scopeAll" class="scopeBtn active" onclick="setSearchScope(false)">전체법령</button>
+        <button type="button" id="scopePool" class="scopeBtn" onclick="setSearchScope(true)">선택한 법령 풀</button>
+      </div>
+      <div class="scopeInfo" id="scopeInfo">현재: 전체법령에서 검색합니다.</div>
+      <label class="check" style="display:none"><input id="usePool" type="checkbox"> 선택한 법령 풀 안에서만 검색</label>
+    </div>
+
+    <details class="pool">
+      <summary>법령 풀 만들기 / 관리</summary>
+      <div class="poolBody">
+        <label>풀 선택</label><select id="poolSelect" onchange="loadPool()"></select>
+        <label>풀 이름</label><input id="poolName">
+        <label>법령 검색해서 풀에 추가</label>
+        <div class="row"><input id="poolFindQuery" placeholder="예: 민법, 지방세법"><button onclick="poolFind()">검색</button></div>
+        <div class="poolResults" id="poolFindResults"></div>
+        <label>현재 풀 법령 목록</label><textarea id="poolLaws" style="min-height:86px"></textarea>
+        <div class="row3" style="margin-top:8px"><button onclick="savePool()">풀 저장</button><button onclick="newPool()">새 풀</button><button onclick="deletePool()">삭제</button></div>
+      </div>
+    </details>
+
+    <h2>법령명 검색 결과</h2>
+    <div class="titleResults" id="titleResults"><div class="empty">검색하면 이곳에 법령명 검색 결과가 표시됩니다.</div></div><div class="titlePager" id="titlePager"><button onclick="changeTitlePage(-1)">이전</button><span class="pageNow" id="titlePageNow">1</span><button onclick="changeTitlePage(1)">다음</button></div>
+    <div id="status" class="status">대기 중입니다.</div>
+  </aside>
+
+  <main class="center">
+    <button id="showResults" class="showResults" onclick="toggleResults(true)">본문검색 결과 열기</button>
+    <section class="panel resultsPanel" id="resultsPanel">
+      <div class="toolbar">
+        <div><b>본문검색 결과</b><div class="summary" id="resultSummary">검색 전입니다.</div></div>
+        <div style="display:flex;gap:6px"><button class="small" onclick="toggleResults(false)">접기</button><button class="small" onclick="exportResultsCsv()">CSV</button></div>
+      </div>
+      <div class="resultPager" id="resultPager"><span class="mini">본문검색 결과 화면</span><button onclick="changeResultSubPage(-1)">이전</button><span class="pageNow" id="pageNow">1</span><button onclick="changeResultSubPage(1)">다음</button></div><div class="resultList" id="resultList"><div class="empty">본문검색 결과가 표시됩니다.</div></div>
+    </section>
+    <div class="splitter" id="splitResult"></div>
+    <section class="panesShell">
+      <div class="workspaceBar" id="workspaceBar"></div>
+      <div class="panes" id="panes">
+        <div class="lawPane" id="pane1" data-pane="1"></div>
+        <div class="splitter" id="split12" style="display:none"></div>
+        <div class="lawPane emptyOptional" id="pane2" data-pane="2"></div>
+        <div class="splitter" id="split23" style="display:none"></div>
+        <div class="lawPane emptyOptional" id="pane3" data-pane="3"></div>
+      </div>
+    </section>
+  </main>
+
+  <aside class="panel right">
+    <h2>관련 노트</h2>
+    <div class="noteContext" id="noteContext">법령 또는 조·항·호·목을 선택하면 저장 위치가 표시됩니다.</div>
+    <div class="noteEditor">
+      <textarea id="noteBody" placeholder="노트를 입력하세요. URL은 자동으로 새 탭 링크가 됩니다."></textarea>
+      <div style="display:flex;gap:8px;margin-top:8px"><button class="primary" onclick="saveThreadNote()">노트 저장</button><button onclick="clearReply()">새 글</button></div>
+      <div class="mini" id="replyInfo" style="margin-top:6px"></div>
+    </div>
+    <div class="noteSortBar"><span class="mini">노트 정렬: 기본은 연관성순, 동점은 최신순</span><div><button id="noteSortRel" class="active" onclick="setNoteSort(\'relevance\')">연관성순</button><button id="noteSortLatest" onclick="setNoteSort(\'latest\')">최신순</button></div></div><div class="noteList" id="noteList"><div class="empty">관련 노트가 없습니다.</div></div><div class="notePager" id="notePager"><button onclick="changeNotePage(-1)">이전</button><span class="pageNow" id="notePageNow">1</span><button onclick="changeNotePage(1)">다음</button></div>
+  </aside>
+</div>
+
+
+
+<div id="prettyBackdrop" class="prettyBackdrop" onclick="if(event.target.id==='prettyBackdrop')closePrettyTool()">
+  <div class="prettyModal" role="dialog" aria-modal="true" aria-label="법령문 붙여넣기 정리 뷰어">
+    <div class="prettyHead">
+      <div><b>법령문 붙여넣기 정리 뷰어</b><div class="mini">원문을 붙여넣고 정리하면 문단·번호·법령 인용이 보기 좋게 정리됩니다.</div></div>
+      <div class="prettyActions">
+        <button onclick="formatPrettyLawText()">정리하기</button>
+        <button onclick="copyPrettyOutput()">결과 복사</button>
+        <button onclick="downloadPrettyOutput()">TXT 저장</button>
+        <button onclick="clearPrettyTool()">비우기</button>
+        <button onclick="closePrettyTool()">닫기</button>
+      </div>
+    </div>
+    <div class="prettyBody">
+      <div class="prettyCol">
+        <div class="prettyColTitle">원문 붙여넣기</div>
+        <textarea id="prettyInput" placeholder="예: 법령해석례, 판례 요지, 조문 원문, API 응답에서 복사한 긴 문장 등을 붙여넣으세요.&#10;&#10;단축키: Ctrl+Enter 정리 / Ctrl+Shift+C 결과 복사"></textarea>
+      </div>
+      <div class="prettyCol">
+        <div class="prettyColTitle">정리 결과</div>
+        <textarea id="prettyOutput" class="prettyOutput" readonly placeholder="정리 결과가 여기에 표시됩니다."></textarea>
+      </div>
+    </div>
+    <div class="prettyFoot">
+      <span>요령: 법령해석례의 긴 “이유” 문장, 조문 복사본, 판례 요지를 붙여넣으면 문단 단위로 나누어 볼 수 있습니다.</span>
+      <span id="prettyStatus">대기 중</span>
+    </div>
+  </div>
+</div>
+
+<script>
+
+const FALLBACK_TARGETS={eflaw:'현행법령(시행일)',law:'현행법령(공포일)',admrul:'행정규칙',ordin:'자치법규(전체)',ordin_gijang:'자치법규(기장군)',expc:'법령해석례',prec:'판례'};
+
+
+function applyGrayDark(){
+  const on=localStorage.getItem('grayDarkMode')==='1';
+  document.body.classList.toggle('grayDark',on);
+}
+function toggleGrayDark(){
+  const on=localStorage.getItem('grayDarkMode')==='1';
+  localStorage.setItem('grayDarkMode',on?'0':'1');
+  applyGrayDark();
+}
+
+const $=id=>document.getElementById(id);
+let state={config:null,pools:{},targets:{},linkSource:null,linkGraph:{},titleItems:[],titlePage:1,titlePageSize:6,results:[],resultPage:1,resultPageSize:5,pendingResultPage:null,openTarget:1,activePane:1,reply:null,currentPage:1,notePage:1,notePageSize:8,noteSort:'relevance',workspaces:[],activeWs:0,
+  panes:{1:{tabs:[],activeTabId:null,row:null,detail:null,ctx:null,selectedKey:''},2:{tabs:[],activeTabId:null,row:null,detail:null,ctx:null,selectedKey:''},3:{tabs:[],activeTabId:null,row:null,detail:null,ctx:null,selectedKey:''}}
+};
+function esc(s){return (s??"").toString().replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function setStatus(m,err=false){$('status').textContent=m;$('status').className=err?'status err':'status'}
+
+function prettySetStatus(msg){const el=$('prettyStatus');if(el)el.textContent=msg||''}
+function openPrettyTool(prefill=''){
+  const box=$('prettyBackdrop'); if(!box)return;
+  box.classList.add('open');
+  if(prefill){$('prettyInput').value=prefill;formatPrettyLawText();}
+  setTimeout(()=>$('prettyInput')?.focus(),50);
+}
+function closePrettyTool(){$('prettyBackdrop')?.classList.remove('open')}
+function clearPrettyTool(){if($('prettyInput'))$('prettyInput').value='';if($('prettyOutput'))$('prettyOutput').value='';prettySetStatus('비웠습니다.')}
+function normalizePrettyInput(raw){
+  let s=String(raw||'');
+  s=s.replace(/\\r\\n/g,'\n').replace(/\\n/g,'\n').replace(/\\t/g,'\t');
+  s=s.replace(/[“”]/g,'"').replace(/[‘’]/g,"'");
+  s=s.replace(/&quot;/g,'"').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
+  s=s.replace(/\r\n?/g,'\n');
+  s=s.replace(/[ \t]+/g,' ');
+  s=s.replace(/\n[ \t]+/g,'\n');
+  return s.trim();
+}
+function isPrettyHeading(line){
+  return /^(이유|주문|판단|검토|결론|요지|판시사항|판결요지|참조조문|관계 법령|관련 법령|민원요지|회답|해석례|법령해석례|질의요지|답변|검토의견|쟁점|사실관계)\s*[:：]?\s*$/.test(line)
+    || /^제\s*\d+\s*(조|장|절)\b/.test(line)
+    || /^[ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩ]+[.．]/.test(line);
+}
+function splitPrettySentences(line){
+  let x=line.trim();
+  if(!x)return [];
+  x=x.replace(/\s*(○|●|◎|◇|◆|□|■|△|▲|※)\s*/g,'\n$1 ');
+  x=x.replace(/\s+(?=(?:제\s*\d+\s*조(?:의\d+)?|「[^」]+」|[①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮]|\([0-9가-힣]+\)))/g,'\n');
+  x=x.replace(/(다|함|임|됨|음|습니다|합니다|한다|된다|있다|없다|아니다|것임|것이다|됩니다|있습니다|없습니다|않습니다|봅니다|의함)\.?(?=\s+(?:○|●|◎|◇|◆|□|■|△|▲|※|또한|다만|그리고|따라서|그러나|이에|한편|이 경우|위와|아울러|나아가|그런데|결국|즉|「|제\s*\d+\s*조))/g,'$1.\n');
+  return x.split(/\n+/).map(v=>v.trim()).filter(Boolean);
+}
+function prettyLine(line){
+  let t=line.trim();
+  t=t.replace(/^"?([^"\n]{1,20})"\s*:\s*"?/,'$1: ');
+  t=t.replace(/^법령해석례\s*"?([^"\n]{1,20})"?\s*[:：]\s*/,'법령해석례 $1\n');
+  t=t.replace(/^\{?\s*"?([^"{}]{1,20})"?\s*[:：]\s*/,'$1: ');
+  t=t.replace(/"\s*,?\s*$/,'');
+  t=t.replace(/\s+/g,' ').trim();
+  return t;
+}
+function formatPrettyLawText(){
+  const input=$('prettyInput'); const output=$('prettyOutput');
+  if(!input||!output)return;
+  const raw=normalizePrettyInput(input.value);
+  if(!raw){prettySetStatus('원문을 붙여넣어 주세요.');return;}
+  let s=raw;
+  s=s.replace(/\s*(○|●|◎|◇|◆|□|■|△|▲|※)\s*/g,'\n$1 ');
+  s=s.replace(/\s*(\[[^\]]{1,18}\])\s*/g,'\n$1 ');
+  s=s.replace(/\s*(【[^】]{1,18}】)\s*/g,'\n$1 ');
+  s=s.replace(/\s+(?=(?:제\s*\d+\s*조(?:의\d+)?\s*[\(（]|제\s*\d+\s*조(?:의\d+)?\b))/g,'\n');
+  const seed=s.split(/\n+/).map(prettyLine).filter(Boolean);
+  const out=[];
+  for(const line of seed){
+    const parts=splitPrettySentences(line);
+    for(const p0 of parts){
+      let p=prettyLine(p0); if(!p)continue;
+      if(isPrettyHeading(p)){
+        if(out.length && out[out.length-1]!=='')out.push('');
+        out.push(p.replace(/[:：]\s*$/,''));
+        out.push('─'.repeat(Math.min(36,Math.max(8,[...p].length))));
+        continue;
+      }
+      if(/^(○|●|◎|◇|◆|□|■|△|▲|※)/.test(p)){
+        if(out.length && out[out.length-1]!=='')out.push('');
+        out.push(p);
+      }else if(/^[①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮]/.test(p)){
+        out.push('  '+p);
+      }else if(/^\(?[0-9]+\)|^[가-힣]\.|^\([가-힣0-9]+\)/.test(p)){
+        out.push('    '+p);
+      }else{
+        out.push(p);
+      }
+    }
+  }
+  let result=out.join('\n').replace(/\n{3,}/g,'\n\n').trim();
+  output.value=result;
+  prettySetStatus(`정리 완료 · ${result.length.toLocaleString()}자`);
+}
+async function copyPrettyOutput(){
+  const text=$('prettyOutput')?.value||'';
+  if(!text){prettySetStatus('복사할 결과가 없습니다.');return;}
+  try{await navigator.clipboard.writeText(text);prettySetStatus('결과를 복사했습니다.')}catch(e){$('prettyOutput').select();document.execCommand('copy');prettySetStatus('결과를 복사했습니다.')}
+}
+function downloadPrettyOutput(){
+  const text=$('prettyOutput')?.value||'';
+  if(!text){prettySetStatus('저장할 결과가 없습니다.');return;}
+  const blob=new Blob([text],{type:'text/plain;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='law_text_pretty_'+new Date().toISOString().slice(0,10)+'.txt';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),500);
+  prettySetStatus('TXT 저장을 시작했습니다.');
+}
+document.addEventListener('keydown',e=>{
+  const open=$('prettyBackdrop')?.classList.contains('open');
+  if(!open)return;
+  if(e.key==='Escape'){closePrettyTool();return;}
+  if(e.ctrlKey&&e.key==='Enter'){e.preventDefault();formatPrettyLawText();return;}
+  if(e.ctrlKey&&e.shiftKey&&(e.key==='C'||e.key==='c')){e.preventDefault();copyPrettyOutput();return;}
+});
+
+function terms(){return $('query').value.trim().split(/\s+/).filter(Boolean)}
+function exactTermRegex(t){
+  const r=(t||'').replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  return new RegExp(`(^|[^0-9A-Za-z가-힣_])(${r})(?=$|[^0-9A-Za-z가-힣_])`,'gi');
+}
+function hasAnyExact(txt,arr){
+  const s=(txt||'').replace(/\s+/g,' ');
+  return !arr.length || arr.some(t=>t && exactTermRegex(t).test(s));
+}
+function hi(text,qs=terms()){
+  let h=esc(text||'');
+  for(const t of [...qs].sort((a,b)=>b.length-a.length)){
+    if(!t)continue;
+    h=h.replace(exactTermRegex(t),(m,p1,p2)=>`${p1}<mark>${p2}</mark>`);
+  }
+  return h;
+}
+function linkify(t){return esc(t||'').replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>')}
+function selectedTargets(){return Array.from(document.querySelectorAll('input[name=target]:checked')).map(x=>x.value)}
+function pane(n){return state.panes[n]}
+function blankPanes(){return {1:{tabs:[],activeTabId:null,row:null,detail:null,ctx:null,selectedKey:'',zoom:13},2:{tabs:[],activeTabId:null,row:null,detail:null,ctx:null,selectedKey:'',zoom:13},3:{tabs:[],activeTabId:null,row:null,detail:null,ctx:null,selectedKey:'',zoom:13}}}
+
+function paneZoom(n){const p=pane(n)||{};let z=Number(p.zoom||13);if(!Number.isFinite(z))z=13;z=Math.max(10,Math.min(24,z));p.zoom=z;return z}
+function paneZoomLabel(n){return paneZoom(n)+'px'}
+function setPaneZoom(n,z){const p=pane(n);if(!p)return;p.zoom=Math.max(10,Math.min(24,Number(z)||13));saveWorkspace();renderPane(n);setStatus(`${n}번 법령창 글자 크기: ${p.zoom}px`)}
+function adjustPaneZoom(n,delta){setPaneZoom(n,paneZoom(n)+(Number(delta)||0))}
+function resetPaneZoom(n){setPaneZoom(n,13)}
+function paneZoomControls(n){return `<span class="paneZoomGroup" title="이 법령창만 글자 크기를 조정합니다"><button class="small" onclick="adjustPaneZoom(${n},-1)">A-</button><span class="paneZoomLabel">${paneZoomLabel(n)}</span><button class="small" onclick="adjustPaneZoom(${n},1)">A+</button><button class="small" onclick="resetPaneZoom(${n})">100%</button></span>`}
+
+function initWorkspaces(){if(!state.workspaces.length){state.workspaces=[{name:'화면 1',panes:blankPanes(),openTarget:1,activePane:1}];state.activeWs=0;}loadWorkspace(0,false);renderWorkspaces();}
+function saveWorkspace(){const ws=state.workspaces[state.activeWs];if(!ws)return;ws.panes=state.panes;ws.openTarget=state.openTarget;ws.activePane=state.activePane;}
+function loadWorkspace(idx,save=true){if(save)saveWorkspace();state.activeWs=idx;const ws=state.workspaces[idx];state.panes=ws.panes||blankPanes();state.openTarget=ws.openTarget||1;state.activePane=ws.activePane||1;setOpenTarget(state.openTarget);[1,2,3].forEach(i=>{const p=pane(i);if(i===1||p.row||p.tabs.length){$(`pane${i}`).classList.remove('emptyOptional');$(`split${i-1}${i}`)&&( $(`split${i-1}${i}`).style.display=i>1?'block':'');renderPane(i);}else if(i>1){$(`pane${i}`).classList.add('emptyOptional');$(`pane${i}`).style.display='none';$(`split${i-1}${i}`).style.display='none';}});resizePaneFlex();renderWorkspaces();updateNoteContext();loadThreadNotes();}
+function renderWorkspaces(){const bar=$('workspaceBar');if(!bar)return;bar.innerHTML=state.workspaces.map((w,i)=>`<div class="workspaceTab ${i===state.activeWs?'active':''}" onclick="loadWorkspace(${i})"><span>${esc(w.name||('화면 '+(i+1)))}</span>${state.workspaces.length>1?`<button class="closeWs" onclick="event.stopPropagation();closeWorkspace(${i})">×</button>`:''}</div>`).join('')+`<button class="workspaceAdd" onclick="addWorkspace()">+ 화면</button>`;}
+function addWorkspace(){saveWorkspace();state.workspaces.push({name:'화면 '+(state.workspaces.length+1),panes:blankPanes(),openTarget:1,activePane:1});loadWorkspace(state.workspaces.length-1,false);}
+function closeWorkspace(i){if(state.workspaces.length<=1)return;state.workspaces.splice(i,1);if(state.activeWs>=state.workspaces.length)state.activeWs=state.workspaces.length-1;loadWorkspace(state.activeWs,false);}
+function currentPane(){return pane(state.activePane)}
+function unitKey(s){return [s.article||'',s.paragraph||'',s.ho||'',s.mok||'',s.level||'',s.text||''].join('|')}
+function labelOf(m){return m.path||[m.article_number,m.article_title].filter(Boolean).join(' ')||'조문'}
+
+async function init(){
+  const cfg=await(await fetch('/api/config')).json();
+  state.config=cfg; state.targets=cfg.targets||{}; state.pools=cfg.pools||{};
+  $('oc').value=localStorage.getItem('openlaw_oc')||cfg.oc||'sp-law-study';
+  try{state.linkGraph=JSON.parse(localStorage.getItem('law_manual_link_graph')||'{}')||{}}catch(e){state.linkGraph={}}
+  renderTargets(cfg.selected_targets||['eflaw']);
+  renderPools();
+  setSearchScope(false);
+  initWorkspaces();
+  initSplitters();
+  setTimeout(()=>{$('query')?.focus();$('query')?.select();},120);
+}
+function renderTargets(selected){const box=$('targetBox');const set=new Set(selected||['eflaw']);const targets=(state.targets&&Object.keys(state.targets).length)?state.targets:FALLBACK_TARGETS;box.innerHTML='';for(const [k,v] of Object.entries(targets)){const lab=typeof v==='string'?v:(v.label||k);box.insertAdjacentHTML('beforeend',`<label class="check"><input type="checkbox" name="target" value="${k}" ${set.has(k)?'checked':''}> ${esc(lab)}</label>`)}if(!box.innerHTML)box.innerHTML='<div class="mini">검색대상 표시 실패</div>'}
+function setTargetPreset(mode){
+  const map={law:['eflaw'],case:['prec'],ordin:['ordin'],gijang:['ordin_gijang']};
+  const arr=map[mode]||['eflaw'];
+  document.querySelectorAll('input[name=target]').forEach(x=>{x.checked=arr.includes(x.value)});
+  if(mode==='gijang' && !$('query').value.trim())setStatus('기장군 자치법규는 검색어를 비워도 목록을 불러옵니다.');
+}
+function renderPools(){const sel=$('poolSelect');sel.innerHTML='';Object.keys(state.pools).forEach(n=>sel.insertAdjacentHTML('beforeend',`<option value="${esc(n)}">${esc(n)}</option>`));loadPool();updateScopeInfo()}
+function loadPool(){const n=$('poolSelect').value;$('poolName').value=n||'';$('poolLaws').value=(state.pools[n]||[]).join('\n');updateScopeInfo()}
+function setSearchScope(usePool){$('usePool').checked=!!usePool;$('scopeAll')?.classList.toggle('active',!usePool);$('scopePool')?.classList.toggle('active',!!usePool);if(usePool){document.querySelector('details.pool')?.setAttribute('open','open')}updateScopeInfo()}
+function updateScopeInfo(){const use=$('usePool')?.checked;const pool=$('poolSelect')?.value||'(풀 없음)';const count=(state.pools&&state.pools[pool])?state.pools[pool].length:0;const info=$('scopeInfo');if(info){info.textContent=use?`현재: 「${pool}」 풀 안에서만 검색합니다. 포함 법령 ${count}개`:'현재: 선택한 검색대상 전체 법령에서 검색합니다.'}}
+function newPool(){$('poolName').value='';$('poolLaws').value='';$('poolFindResults').innerHTML=''}
+async function savePool(){const n=$('poolName').value.trim();if(!n)return setStatus('풀 이름을 입력해 주세요.',true);state.pools[n]=[...new Set($('poolLaws').value.split(/[\n,;]+/).map(x=>x.trim()).filter(Boolean))];await fetch('/api/pools',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pools:state.pools})});renderPools();$('poolSelect').value=n;loadPool();updateScopeInfo();setStatus(`법령 풀 저장: ${n}`)}
+async function deletePool(){const n=$('poolSelect').value;if(!n||!confirm(`'${n}' 풀을 삭제할까요?`))return;delete state.pools[n];await fetch('/api/pools',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pools:state.pools})});renderPools();updateScopeInfo();setStatus('삭제했습니다.')}
+async function poolFind(){const q=$('poolFindQuery').value.trim();if(!q)return;const p=baseParams();p.set('query',q);p.set('display','15');const d=await(await fetch('/api/title_search?'+p)).json();window._poolCandidates=d.items||[];$('poolFindResults').innerHTML=window._poolCandidates.length?window._poolCandidates.map((it,i)=>`<div class="poolCandidate" onclick="addPoolLaw(${i})"><b>${esc(it.name)}</b><br><span class="meta">${esc(it.target_label)} · ${esc(it.department||'')}</span></div>`).join(''):'<div class="empty">검색 결과 없음</div>'}
+function addPoolLaw(i){const it=(window._poolCandidates||[])[i];if(!it)return;const arr=$('poolLaws').value.split(/[\n,;]+/).map(x=>x.trim()).filter(Boolean);if(!arr.includes(it.name))arr.push(it.name);$('poolLaws').value=arr.join('\n')}
+function baseParams(){const p=new URLSearchParams();p.set('oc',$('oc').value.trim());selectedTargets().forEach(t=>p.append('targets',t));p.set('nw',$('lawHistory')?.value||'3');const ef=($('efYdRange')?.value||'').trim();if(ef)p.set('efyd',ef.replace(/\s+/g,''));return p}
+function setOpenTarget(n){n=Math.max(1,Math.min(3,n));state.openTarget=n;saveWorkspace();[1,2,3].forEach(i=>$(`targetPane${i}`).classList.toggle('active',i===n))}
+function ensurePaneVisible(n){if(n>1){$(`pane${n}`).classList.remove('emptyOptional');$(`split${n-1}${n}`).style.display='block'}resizePaneFlex();saveWorkspace()}
+function toggleResults(open){const hidden=open===true?false:open===false?true:!$('resultsPanel').classList.contains('hidden');$('resultsPanel').classList.toggle('hidden',hidden);$('showResults').classList.toggle('visible',hidden);$('splitResult').style.display=hidden?'none':'block';resizePaneFlex()}
+function resizePaneFlex(){const visible=[1,2,3].filter(i=>!$(`pane${i}`).classList.contains('emptyOptional'));visible.forEach(i=>{const el=$(`pane${i}`);el.style.display='flex';if(!el.style.flexBasis)el.style.flex='1 1 0'});[2,3].forEach(i=>{if($(`pane${i}`).classList.contains('emptyOptional')){$(`pane${i}`).style.display='none';}})}
+async function runSearch(refresh=false){state.currentPage=Number($('page').value||1)||1;const q=$('query').value.trim();const tg=selectedTargets();if(!q && !tg.includes('ordin_gijang'))return setStatus('검색어를 입력해 주세요.',true);if(!tg.length)return setStatus('검색대상을 하나 이상 선택해 주세요.',true);localStorage.setItem('openlaw_oc',$('oc').value.trim());setStatus('검색 중입니다.');$('titleResults').innerHTML='<div class="empty">법령명 검색 중...</div>';$('resultList').innerHTML='<div class="empty">본문 검색 중...</div>';await Promise.all([titleSearch(refresh),bodySearch(refresh)]);}
+async function titleSearch(refresh=false){const p=baseParams();p.set('query',$('query').value.trim());p.set('display','100');if(refresh)p.set('refresh','1');const d=await(await fetch('/api/title_search?'+p)).json();state.titleItems=d.items||[];state.titlePage=1;renderTitleResults();}
+function renderTitleResults(){const box=$('titleResults');const total=state.titleItems.length;if(!total){box.innerHTML='<div class="empty">법령명 검색 결과 없음</div>';$('titlePageNow').textContent='1 / 1';return}state.titlePageSize=state.titlePageSize||6;const pages=Math.max(1,Math.ceil(total/state.titlePageSize));state.titlePage=Math.max(1,Math.min(pages,state.titlePage));const start=(state.titlePage-1)*state.titlePageSize;const items=state.titleItems.slice(start,start+state.titlePageSize);box.innerHTML=items.map((it,k)=>{const i=start+k;return `<div class="titleItem" onclick="openFromTitle(${i})"><b>${hi(it.name)}</b><div class="mini">${esc(it.target_label)} · ${esc(it.department||'')}<br>시행 ${esc(it.effective_date||'')} · ID ${esc(it.law_id||'')}</div></div>`}).join('');$('titlePageNow').textContent=`${state.titlePage} / ${pages}`;}
+function changeTitlePage(delta){state.titlePageSize=state.titlePageSize||6;const pages=Math.max(1,Math.ceil((state.titleItems.length||0)/state.titlePageSize));state.titlePage=Math.max(1,Math.min(pages,state.titlePage+delta));renderTitleResults();}
+async function bodySearch(refresh=false){const p=baseParams();p.set('query',$('query').value.trim());p.set('display','100');p.set('page',$('page').value||'1');p.set('search','2');p.set('use_pool',$('usePool').checked?'1':'0');p.set('pool',$('poolSelect').value||'');if(refresh)p.set('refresh','1');let d;try{const res=await fetch('/api/search_multi?'+p);d=await res.json();}catch(e){setStatus('본문검색 호출 실패: '+e,true);$('resultList').innerHTML='<div class="empty">본문검색 호출에 실패했습니다.</div>';return}if(!d.ok){setStatus(d.error||'검색 실패',true);$('resultList').innerHTML=`<div class="empty">${esc(d.error||'검색 실패')}</div>`;return}state.results=d.items||[];state.resultPage=(state.pendingResultPage==='last'?999999:1);state.pendingResultPage=null;renderResults();$('resultSummary').textContent=`본문검색 ${state.results.length}건 · ${d.mode==='pool'?'법령 풀 검색':'전체검색'} · 결과 묶음 ${state.currentPage}`;setStatus(`검색 완료 · ${$('usePool').checked?'법령풀':'전체법령'} 기준`);updateScopeInfo()}
+function relevance(it){const q=terms();let text=(it.name||'')+' '+(it.department||'')+' '+JSON.stringify(it.matches||[]);let score=0;q.forEach(t=>{if(t&&hasAnyExact(text,[t]))score++});return score}
+function renderResults(){const box=$('resultList');if(!state.results.length){box.innerHTML='<div class="empty">본문검색 결과가 없습니다.</div>';return}state.results.sort((a,b)=>relevance(b)-relevance(a));state.resultPageSize=state.resultPageSize||5;const pages=Math.max(1,Math.ceil(state.results.length/state.resultPageSize));state.resultPage=Math.max(1,Math.min(pages,state.resultPage||1));const start=(state.resultPage-1)*state.resultPageSize;const showing=state.results.slice(start,start+state.resultPageSize);box.innerHTML=showing.map((it,k)=>{const i=start+k;const ms=(it.matches||[]).slice(0,8).map((m,mi)=>`<div class="match" onclick="event.stopPropagation();openFromMatch(${i},${mi})"><div class="matchPath">${esc(labelOf(m))}</div>${hi(m.text||'')}</div>`).join('');return `<div class="resultCard" id="result-${i}" onclick="openFromResult(${i})"><div class="resultHeader"><div class="resultHeaderMain"><div class="lawTitle">${hi(it.name)}</div><span class="tag">${esc(it.target_label||it.target)}</span>${it.effective_date?`<span class="tag">시행 ${esc(it.effective_date)}</span>`:''}</div><div class="resultHeaderMeta">${esc(it.department||'')}<br>ID ${esc(it.law_id||'')}<br>MST ${esc(it.mst||'')}</div></div><div class="resultMatches">${ms||'<span class="meta">검색어 포함 조문을 확인하지 못했습니다.</span>'}</div></div>`}).join('');$('pageNow').textContent=`묶음 ${state.currentPage} · 화면 ${state.resultPage}/${pages}`;}
+function changeResultSubPage(delta){
+  state.resultPageSize=state.resultPageSize||5;
+  const pages=Math.max(1,Math.ceil((state.results.length||0)/state.resultPageSize));
+  const next=(state.resultPage||1)+delta;
+
+  if(next>=1 && next<=pages){
+    state.resultPage=next;
+    renderResults();
+    return;
+  }
+
+  // 현재 불러온 100건의 마지막 화면을 넘기면 자동으로 다음 100건을 불러옵니다.
+  if(next>pages){
+    const nextBundle=(Number($('page').value||1)||1)+1;
+    $('page').value=nextBundle;
+    state.currentPage=nextBundle;
+    state.pendingResultPage=1;
+    setStatus('다음 검색결과 묶음을 불러오는 중입니다...');
+    runSearch(false);
+    return;
+  }
+
+  // 첫 화면에서 이전을 누르면 이전 100건 묶음의 마지막 화면으로 이동합니다.
+  if(next<1){
+    const cur=(Number($('page').value||1)||1);
+    if(cur<=1){
+      state.resultPage=1;
+      renderResults();
+      return;
+    }
+    const prevBundle=cur-1;
+    $('page').value=prevBundle;
+    state.currentPage=prevBundle;
+    state.pendingResultPage='last';
+    setStatus('이전 검색결과 묶음을 불러오는 중입니다...');
+    runSearch(false);
+  }
+}
+function changePage(delta){const n=Math.max(1,(Number($('page').value||1)||1)+delta);$('page').value=n;state.currentPage=n;runSearch(false)}
+function goPage(){const n=Math.max(1,Number($('page').value||1)||1);$('page').value=n;state.currentPage=n;runSearch(false)}
+async function openFromTitle(i){await openLaw(state.titleItems[i],state.openTarget,null)}
+async function openFromResult(i){document.querySelectorAll('.resultCard').forEach(x=>x.classList.remove('active'));$(`result-${i}`)?.classList.add('active');await openLaw(state.results[i],state.openTarget,null)}
+async function openFromMatch(i,mi){document.querySelectorAll('.resultCard').forEach(x=>x.classList.remove('active'));$(`result-${i}`)?.classList.add('active');await openLaw(state.results[i],state.openTarget,(state.results[i].matches||[])[mi]||null)}
+
+function compactTextForPrec(s){return String(s||'').replace(/[\s\W_]+/g,'')}
+function stripHtmlText(s){
+  const div=document.createElement('div'); div.innerHTML=String(s||'');
+  return (div.textContent||div.innerText||'').replace(/\s+/g,' ').trim();
+}
+function firstNonEmpty(...vals){for(const v of vals){const t=stripHtmlText(v); if(t)return t;} return ''}
+
+function splitPrecInlineLabels(txt){
+  const clean=stripHtmlText(txt);
+  if(!clean)return [];
+  const labels=['심리 및 판단','심급','세목','주문','이유','판시사항','판결요지','결정요지','요지','참조조문','참조판례','처분개요','청구주장','처분청의견','심리및판단','판단','사실관계','쟁점','관련법령','결론'];
+  const escRe=s=>String(s).replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  const pat=new RegExp('(?:[\\[【<]\\s*('+labels.map(escRe).join('|')+')\\s*[\\]】>]|(?:'+labels.map(escRe).join('|')+')\\s*[:：])','g');
+  const ms=[...clean.matchAll(pat)];
+  if(!ms.length)return [];
+  const out=[];
+  const prefix=clean.slice(0,ms[0].index).replace(/^[\s\-·;；,，]+|[\s\-·;；,，]+$/g,'');
+  if(prefix)out.push({label:'판례내용 앞부분',text:prefix});
+  const counts={};
+  for(let i=0;i<ms.length;i++){
+    const m=ms[i];
+    const rawLabel=(m[1]||m[0].replace(/[\[\]【】<>:：\s]/g,'')).trim();
+    const start=m.index+m[0].length;
+    const end=(i+1<ms.length)?ms[i+1].index:clean.length;
+    const body=clean.slice(start,end).replace(/^[\s\-·;；,，]+|[\s\-·;；,，]+$/g,'');
+    if(!body)continue;
+    counts[rawLabel]=(counts[rawLabel]||0)+1;
+    out.push({label:counts[rawLabel]===1?rawLabel:`${rawLabel} ${counts[rawLabel]}`,text:body});
+  }
+  return out;
+}
+function precSectionsFromRow(row){
+  const raw=(row&&row.raw&&typeof row.raw==='object')?row.raw:{};
+  const sections=[]; const seen=new Set();
+  const add=(label,val,splitInline=false)=>{
+    const txt=stripHtmlText(val);
+    if(!txt)return;
+    const candidates=splitInline?(splitPrecInlineLabels(txt)||[]):[];
+    const arr=candidates.length?candidates:[{label,text:txt}];
+    arr.forEach(sec=>{
+      const sig=compactTextForPrec(sec.label+sec.text).slice(0,500);
+      if(seen.has(sig))return; seen.add(sig);
+      sections.push({label:sec.label,text:sec.text});
+    });
+  };
+  [['사건명','사건명'],['사건번호','사건번호'],['선고일자','선고일자'],['법원명','법원'],['데이터출처명','데이터출처'],['세목','세목'],['판결유형','판결유형']].forEach(([k,l])=>add(l,raw[k]));
+  [['판시사항','판시사항'],['판결요지','판결요지'],['결정요지','결정요지'],['요지','요지'],['판례내용','판례내용'],['내용','내용'],['본문','본문'],['전문','전문'],['주문','주문'],['이유','이유'],['처분개요','처분개요'],['청구주장','청구주장'],['심리및판단','심리 및 판단'],['판단','판단'],['참조조문','참조조문'],['참조판례','참조판례']].forEach(([k,l])=>add(l,raw[k],['판례내용','내용','본문','전문'].includes(k)));
+  if(row?.summary)add('목록 제공 내용',row.summary);
+  (row?.matches||[]).forEach((m,idx)=>add(m.path||m.article_number||('검색결과 '+(idx+1)),m.full_text||m.text));
+  return sections;
+}
+function precHasOrderSection(detail){
+  const arts=detail?.articles||[];
+  return arts.some(a=>{
+    const title=String(a.title||a.number||'').replace(/\s+/g,'');
+    const body=String(a.body||'');
+    return title.startsWith('주문') || /(?:[\[【<]\s*주문\s*[\]】>]|\b주문\s*[:：])/.test(body);
+  });
+}
+function addPrecMissingOrderNotice(detail){
+  if(!detail||!Array.isArray(detail.articles))return detail;
+  if(!String(detail.render_type||'').startsWith('prec'))return detail;
+  if(detail.render_type==='prec_html_frame')return detail;
+  if(precHasOrderSection(detail))return detail;
+  if(detail.articles.some(a=>String(a.title||a.body||'').includes('주문 항목 없음')))return detail;
+  const title=detail?.metadata?.law_name||'판례';
+  const text='API 제공 본문에 주문 항목 없음. 이 판례는 법제처 API가 주문을 별도 항목으로 제공하지 않거나, 제공 본문에 [주문] 표지가 포함되어 있지 않은 항목입니다. 필요한 경우 상단의 [판례 원문] 또는 [API HTML]을 확인해 주세요.';
+  const seg={level:'안내',article:'주문 항목 없음',article_title:title,paragraph:'',ho:'',mok:'',text};
+  detail.articles.push({number:'주문 항목 없음',jo:'',title:'주문 항목 없음',effective_date:'',changed:'',body:text,segments:[seg],raw:{'안내':text}});
+  detail.segments=detail.articles.flatMap(a=>a.segments||[]);
+  detail.raw={...(detail.raw||{}),missing_order_notice:true};
+  return detail;
+}
+function buildPrecDetailFromRow(row, baseDetail){
+  const sections=precSectionsFromRow(row);
+  const meaningful=sections.filter(x=>compactTextForPrec(x.text).length>20);
+  if(!meaningful.length)return null;
+  const title=row?.name||baseDetail?.metadata?.law_name||'판례';
+  const meta={...(baseDetail?.metadata||{}),law_name:title,law_id:row?.law_id||baseDetail?.metadata?.law_id||'',mst:row?.mst||baseDetail?.metadata?.mst||'',department:row?.source_name||row?.department||baseDetail?.metadata?.department||'',promulgation_date:row?.promulgation_date||baseDetail?.metadata?.promulgation_date||''};
+  const articles=meaningful.map((sec,i)=>{
+    const seg={level:'판례',article:sec.label,article_title:title,paragraph:'',ho:'',mok:'',text:sec.text};
+    return {number:sec.label,jo:'',title:sec.label,effective_date:'',changed:'',body:sec.text,segments:[seg],raw:{[sec.label]:sec.text}};
+  });
+  return addPrecMissingOrderNotice({metadata:meta,articles,segments:articles.flatMap(a=>a.segments),addenda_count:0,annexes:baseDetail?.annexes||[],raw:{...(baseDetail?.raw||{}),source_from_search:true},render_type:'prec_source_row'});
+}
+function isWeakPrecDetail(detail,row){
+  if(!detail)return true;
+  if(row?.target!=='prec')return false;
+  if(detail.render_type==='prec_html_frame')return false;
+  const body=(detail.articles||[]).map(a=>a.body||'').join('\n');
+  const compact=compactTextForPrec(body);
+  const title=compactTextForPrec(row?.name||detail?.metadata?.law_name||'');
+  const bodyNoTitle=title?compact.replaceAll(title,''):compact;
+  const bad=['[안내]','일치하는 판례가 없습니다','제목/요약 수준만 반환','판례 본문을 찾지 못했습니다'];
+  if(bad.some(x=>body.includes(x)))return true;
+  const source=precSectionsFromRow(row).map(x=>x.text).join('\n');
+  const sourceCompact=compactTextForPrec(source);
+  if(sourceCompact.length>Math.max(compact.length+60,160))return true;
+  if(bodyNoTitle.length<120 && sourceCompact.length>80)return true;
+  return false;
+}
+function preferPrecDetail(row,detail){
+  if(row?.target!=='prec')return detail;
+  const sourceDetail=buildPrecDetailFromRow(row,detail);
+  const chosen=(sourceDetail && isWeakPrecDetail(detail,row))?sourceDetail:detail;
+  return addPrecMissingOrderNotice(chosen);
+}
+
+function precOriginalButtons(p){
+  const row=p?.row||{};
+  if(row.target!=='prec')return '';
+  const raw=(p?.detail&&p.detail.raw)||{};
+  const id=row.mst||row.law_id||p?.detail?.metadata?.mst||p?.detail?.metadata?.law_id||'';
+  const info=raw.prec_info_url || (id?`https://www.law.go.kr/LSW/precInfoP.do?precSeq=${encodeURIComponent(id)}`:'');
+  const service=raw.prec_service_html_url || (id?`https://www.law.go.kr/DRF/lawService.do?OC=${encodeURIComponent(($('oc')?.value||'test').trim()||'test')}&target=prec&ID=${encodeURIComponent(id)}&type=HTML`:'' );
+  return `${info?`<a class="small" href="${esc(info)}" target="_blank" rel="noopener noreferrer">판례 원문</a>`:''}${service?`<a class="small" href="${esc(service)}" target="_blank" rel="noopener noreferrer">API HTML</a>`:''}`;
+}
+function tabId(row){return [row?.target||'',row?.law_id||'',row?.mst||'',row?.name||''].join('|')}
+async function openLaw(row,targetPane,match){if(!row)return;const n=targetPane||1;ensurePaneVisible(n);state.activePane=n;const p=pane(n);const id=tabId(row);let t=p.tabs.find(x=>x.id===id);if(t){p.activeTabId=id;p.row=t.row;p.detail=t.detail;p.ctx=t.ctx;p.selectedKey=t.selectedKey||'';saveWorkspace();renderPane(n);if(match)focusMatchInPane(n,match);else loadThreadNotes();return}p.row=row;p.detail=null;p.ctx={law_name:row.name||'',target:row.target||'',law_id:row.law_id||'',mst:row.mst||'',article:'',paragraph:'',ho:'',mok:'',unit_level:'법령',unit_text:''};p.selectedKey='';renderPane(n,true);const params=new URLSearchParams({oc:$('oc').value.trim(),target:row.target||'eflaw',id:row.law_id||'',mst:row.mst||'',effective_date:row.effective_date||'',law_name:row.name||''});const d=await(await fetch('/api/detail?'+params)).json();if(!d.ok){$(`articleWrap${n}`).innerHTML=`<div class="empty">${esc(d.error||'상세 조회 실패')}</div>`;return}p.detail=preferPrecDetail(row,d.normalized);if(p.detail?.metadata?.law_name)p.ctx.law_name=p.detail.metadata.law_name;p.activeTabId=id;p.tabs.push({id,row:p.row,detail:p.detail,ctx:p.ctx,selectedKey:''});saveWorkspace();renderPane(n);if(match)focusMatchInPane(n,match);else loadThreadNotes();}
+function renderPane(n,loading=false){const p=pane(n);const el=$(`pane${n}`);const z=paneZoom(n);el.innerHTML=`<div class="panel paneInner"><div class="tabBar" id="tabBar${n}">${p.tabs.map(t=>`<div class="lawTab ${t.id===p.activeTabId?'active':''}" onclick="activateTab(${n},'${encodeURIComponent(t.id)}')"><span class="paneBadge">${n}</span><span class="lawTabName">${esc(t.row?.name||'법령')}</span><button class="lawTabClose" onclick="event.stopPropagation();closeTab(${n},'${encodeURIComponent(t.id)}')">×</button></div>`).join('')}</div><div class="paneHead"><div class="paneTop"><div><div class="paneTitle">${esc(p.row?.name||`${n}번 법령창`)}</div><div class="meta">${esc(p.row?.target_label||'')} · ${esc(p.row?.department||'')} · 시행 ${esc(p.row?.effective_date||'')}</div></div><div class="paneBtns">${paneZoomControls(n)}${precOriginalButtons(p)}<button class="small" onclick="copyPaneFullText(${n})" title="이 법령창에 열린 문서 전체를 복사">전체복사</button><button class="small" onclick="setOpenTarget(${n})">여기에 열기</button><button class="small" onclick="clearPane(${n})">닫기</button></div></div><div class="paneControls"><input id="insideFind${n}" placeholder="입력하면 포함 조문만 표시" oninput="renderPaneBody(${n})"><input id="jumpJo${n}" placeholder="예: 11 또는 제11조"><button onclick="jumpArticle(${n})">이동</button></div></div><div class="articleWrap" id="articleWrap${n}" style="--pane-font-size:${z}px">${loading?'<div class="empty">상세 본문을 불러오는 중...</div>':''}</div></div>`;if(!loading)renderPaneBody(n);updateNoteContext();}
+
+function lawFileUrl(u){
+  if(!u)return '';
+  let s=String(u).trim();
+  if(!s)return '';
+  if(s.startsWith('http://')||s.startsWith('https://'))return s;
+  if(s.startsWith('//'))return 'https:'+s;
+  if(s.startsWith('/'))return 'https://www.law.go.kr'+s;
+  return 'https://www.law.go.kr/'+s.replace(/^\.?\//,'');
+}
+function renderAnnexes(detail, findTerms=[]){
+  const list=(detail&&detail.annexes)||[];
+  if(!list.length)return '';
+  const lawName=(detail&&detail.metadata&&detail.metadata.law_name)||'법령';
+  const hasFind=findTerms&&findTerms.length;
+  const containsAll=(txt,arr)=>{
+    const s=(txt||'').replace(/\s+/g,' ');
+    const compact=s.replace(/\s+/g,'');
+    return arr.every(t=>s.includes(t)||compact.includes(t.replace(/\s+/g,'')));
+  };
+  const filtered=hasFind ? list.filter(a=>containsAll((a.title||'')+' '+(a.body||''),findTerms)) : list;
+  if(!filtered.length)return hasFind?'':'';
+  const items=filtered.map((a,i)=>{
+    const hwp=lawFileUrl(a.hwp||'');
+    const pdf=lawFileUrl(a.pdf||'');
+    const rawTitle=a.title||('별표/서식 '+(i+1));
+    const title=esc(rawTitle);
+    const lawEsc=esc(lawName);
+    const titleEsc=esc(rawTitle);
+    const pdfEsc=esc(pdf);
+    const btns=[
+      pdf?`<button class="annexBtn preview" onclick="previewAnnexPdf('${lawEsc}','${titleEsc}','${pdfEsc}')">미리보기</button>`:'',
+      pdf?`<a class="annexBtn" href="${pdfEsc}" target="_blank" rel="noopener noreferrer">PDF 다운로드</a>`:'',
+      hwp?`<a class="annexBtn" href="${esc(hwp)}" target="_blank" rel="noopener noreferrer">HWP 다운로드</a>`:''
+    ].join('');
+    const status=pdf?'PDF 미리보기 클릭 시 로컬 캐시 후 표시':'PDF 링크 없음 · HWP 등 원본 다운로드만 가능';
+    return `<div class="annexItem"><div><div class="annexTitle">${hi(title,hasFind?findTerms:terms())}</div><span class="annexStatus">${esc(status)}</span></div><div class="annexBtns">${btns||'<span class="annexEmpty">다운로드 링크 없음</span>'}</div></div>`;
+  }).join('');
+  return `<section class="annexBlock"><h3>별표·별지서식 다운로드 ${filtered.length}건</h3><div class="annexList">${items}</div></section>`;
+}
+
+async function previewAnnexPdf(lawName,title,pdfUrl){
+  if(!pdfUrl){setStatus('PDF 링크가 없습니다.',true);return;}
+  setStatus('PDF 미리보기를 준비하는 중입니다. 처음 열 때는 자동 다운로드가 진행됩니다...');
+  try{
+    const res=await fetch('/api/forms/preview',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({law_name:lawName,title:title,pdf_url:pdfUrl})
+    });
+    const data=await res.json();
+    if(!data.ok){
+      setStatus(data.error||'PDF 미리보기 준비 실패',true);
+      return;
+    }
+    showPdfPreview(data.title||title,data.file_url,data.local_path,data.cached);
+    setStatus(data.cached?'로컬 PDF를 불러왔습니다.':'PDF를 다운로드하여 로컬 캐시에 저장했습니다.');
+  }catch(e){
+    setStatus('PDF 미리보기 실패: '+e,true);
+  }
+}
+
+function ensurePdfPreviewModal(){
+  let ov=document.getElementById('pdfPreviewOverlay');
+  if(ov)return ov;
+  ov=document.createElement('div');
+  ov.id='pdfPreviewOverlay';
+  ov.className='pdfPreviewOverlay';
+  ov.innerHTML=`<div class="pdfPreviewBox">
+    <div class="pdfPreviewHead">
+      <div class="pdfPreviewTitle" id="pdfPreviewTitle">PDF 미리보기</div>
+      <div class="pdfPreviewActions">
+        <a id="pdfPreviewOpen" class="annexBtn" target="_blank" rel="noopener noreferrer">새 탭</a>
+        <button class="annexBtn" onclick="closePdfPreview()">닫기</button>
+      </div>
+    </div>
+    <iframe id="pdfPreviewFrame" class="pdfPreviewFrame"></iframe>
+  </div>`;
+  ov.addEventListener('click',e=>{if(e.target===ov)closePdfPreview();});
+  document.body.appendChild(ov);
+  return ov;
+}
+
+function showPdfPreview(title,url,localPath,cached){
+  const ov=ensurePdfPreviewModal();
+  document.getElementById('pdfPreviewTitle').textContent=(cached?'로컬 PDF · ':'PDF 미리보기 · ')+title;
+  const src=url+(url.includes('?')?'&':'?')+'t='+(Date.now());
+  document.getElementById('pdfPreviewFrame').src=src;
+  document.getElementById('pdfPreviewOpen').href=url;
+  ov.style.display='flex';
+}
+
+function closePdfPreview(){
+  const ov=document.getElementById('pdfPreviewOverlay');
+  if(!ov)return;
+  const fr=document.getElementById('pdfPreviewFrame');
+  if(fr)fr.src='about:blank';
+  ov.style.display='none';
+}
+
+function renderPaneBody(n){
+  const p=pane(n);
+  const wrap=$(`articleWrap${n}`);
+  if(!wrap)return;
+  if(!p.detail){
+    wrap.innerHTML='<div class="empty">법령을 이 창에 열 수 있습니다.</div>';
+    return;
+  }
+
+  if(p.detail.render_type==='prec_html_frame'){
+    const raw=(p.detail.raw||{});
+    const src=raw.iframe_src||'';
+    const srcdoc=raw.html_raw||'';
+    const title=(p.detail.metadata&&p.detail.metadata.law_name)||'판례 원문';
+    const openBtn=src?`<a class="annexBtn" href="${esc(src)}" target="_blank" rel="noopener noreferrer">새 탭에서 열기</a>`:'';
+    wrap.innerHTML=`<div class="precHtmlFrameBox"><div class="precHtmlFrameHead"><span>판례 HTML 원문 표시 · 국세청 계열 판례는 본문이 iframe으로 제공될 수 있습니다.</span>${openBtn}</div><iframe class="precHtmlFrame" ${src?`src="${esc(src)}"`:`srcdoc="${esc(srcdoc)}"`} title="${esc(title)}"></iframe></div>`;
+    return;
+  }
+
+  const find=($(`insideFind${n}`)?.value||'').trim().split(/\s+/).filter(Boolean);
+  const hasFind=find.length>0;
+  const containsAny=(txt,arr)=>hasAnyExact(txt,arr);
+
+  let html='';
+  let matchArticleCount=0;
+  let matchUnitCount=0;
+
+  (p.detail.articles||[]).forEach((a,ai)=>{
+    const segs=(a.segments||[]);
+    const articleText=(a.number||'')+' '+(a.title||'')+' '+segs.map(s=>s.text||'').join(' ');
+    if(hasFind && !containsAny(articleText,find)) return;
+
+    const shownSegs=hasFind ? segs.filter(s=>containsAny((s.text||'')+' '+(a.number||'')+' '+(a.title||''),find)) : segs;
+    if(hasFind && !shownSegs.length) return;
+
+    matchArticleCount++;
+    matchUnitCount+=shownSegs.length;
+
+    html+=`<section class="article" id="pane${n}-article-${esc(a.number)}" data-article="${esc(a.number)}">
+      <h3>${esc(a.number)} ${esc(a.title||'')}</h3>
+      ${shownSegs.map(s=>{
+        const si=segs.indexOf(s);
+        const key=linkUnitId(n,ai,si);
+        const links=state.linkGraph[key]||[];
+        const isSrc=state.linkSource&&state.linkSource.key===key;
+        const chips=links.length?`<div class="linkedBox">${links.map((l,li)=>`<button class="linkedChip" onclick="event.stopPropagation();openManualLink('${enc(key)}',${li})">↔ ${esc(l.label||'연결')}</button>`).join('')}</div>`:'';
+        return `<div class="unit level-${esc(s.level)} ${unitKey(s)===p.selectedKey?'selected':''}" id="pane${n}-unit-${ai}-${si}" onclick="selectUnit(${n},${ai},${si})"><span class="unitActions"><button class="copyUnit" title="이 조항호목 복사" onclick="event.stopPropagation();copyUnitText(${n},${ai},${si})">복사</button><button class="copyUnit linkBtn ${links.length?'hasLinks':''} ${isSrc?'activePick':''}" title="첫 번째 클릭 후 다른 조문 연결 클릭 시 서로 연결" onclick="event.stopPropagation();manualLinkClick(${n},${ai},${si})">연결</button></span><span class="unitLabel">${esc(s.level)}</span>${hi(s.text,hasFind?find:terms())}${chips}</div>`;
+      }).join('')}
+    </section>`;
+  });
+
+  const annexHtml=renderAnnexes(p.detail, hasFind?find:[]);
+  if(!html && !annexHtml){
+    wrap.innerHTML=hasFind
+      ? `<div class="empty">이 법령 안에서 '${esc(find.join(' '))}' 검색 결과가 없습니다.</div>`
+      : '<div class="empty">조문 정보를 찾지 못했습니다.</div>';
+    return;
+  }
+
+  if(hasFind){
+    html=`<div class="detailSearchHint">현재 법령 안 검색: ${matchArticleCount}개 조문 / ${matchUnitCount}개 조항호목 표시${annexHtml?' / 별표·서식 포함':''}</div>`+html;
+  }
+  wrap.innerHTML=html+annexHtml;
+}
+
+
+function enc(s){return encodeURIComponent(s||'')}
+function saveLinkGraph(){localStorage.setItem('law_manual_link_graph',JSON.stringify(state.linkGraph||{}))}
+function linkUnitPayload(n,ai,si){
+  const p=pane(n), a=p?.detail?.articles?.[ai], seg=a?.segments?.[si];
+  if(!p||!a||!seg)return null;
+  const row=p.row||{};
+  const article=seg.article||a.number||'';
+  const label=[row.name||p.detail?.metadata?.law_name||'문서', article, seg.paragraph, seg.ho, seg.mok].filter(Boolean).join(' ');
+  return {row:{name:row.name||p.detail?.metadata?.law_name||'',target:row.target||'',target_label:row.target_label||'',law_id:row.law_id||'',mst:row.mst||'',effective_date:row.effective_date||'',department:row.department||''},match:{article_number:article,article_title:a.title||'',text:seg.text||'',full_text:seg.text||''},label:label,unit_text:seg.text||''};
+}
+function linkUnitId(n,ai,si){const x=linkUnitPayload(n,ai,si);if(!x)return '';const r=x.row,m=x.match;return [r.target,r.law_id,r.mst,r.name,m.article_number,m.article_title,m.full_text].join('|')}
+function manualLinkClick(n,ai,si){
+  const key=linkUnitId(n,ai,si); const payload=linkUnitPayload(n,ai,si); if(!key||!payload)return;
+  if(!state.linkSource){state.linkSource={key,payload};document.body.classList.add('linkPickMode');renderPaneBody(n);setStatus('연결 시작: 이제 연결할 다른 조문/판례/조례의 [연결] 버튼을 누르세요. 같은 버튼을 다시 누르면 취소됩니다.');return;}
+  if(state.linkSource.key===key){state.linkSource=null;document.body.classList.remove('linkPickMode');renderAllPaneBodies();setStatus('연결 선택을 취소했습니다.');return;}
+  addManualLink(state.linkSource.key,state.linkSource.payload,key,payload);
+  const msg=`연결 완료: ${state.linkSource.payload.label} ↔ ${payload.label}`;
+  state.linkSource=null;document.body.classList.remove('linkPickMode');saveLinkGraph();renderAllPaneBodies();setStatus(msg);
+}
+function addManualLink(k1,p1,k2,p2){
+  state.linkGraph[k1]=state.linkGraph[k1]||[]; state.linkGraph[k2]=state.linkGraph[k2]||[];
+  if(!state.linkGraph[k1].some(x=>x.key===k2))state.linkGraph[k1].push({key:k2,...p2});
+  if(!state.linkGraph[k2].some(x=>x.key===k1))state.linkGraph[k2].push({key:k1,...p1});
+}
+function renderAllPaneBodies(){[1,2,3].forEach(i=>{try{if(pane(i)?.detail)renderPaneBody(i)}catch(e){}})}
+async function openManualLink(keyEnc,idx){
+  const key=decodeURIComponent(keyEnc||''); const link=(state.linkGraph[key]||[])[idx]; if(!link)return;
+  await openLaw(link.row,state.openTarget||state.activePane||1,link.match);
+}
+
+async function showRelated(n,ai,si){
+  const p=pane(n);
+  const a=p?.detail?.articles?.[ai];
+  const seg=a?.segments?.[si];
+  const box=$(`related-${n}-${ai}-${si}`);
+  if(!box||!seg)return;
+  if(box.style.display!=='none' && box.innerHTML.trim()){
+    box.style.display='none';
+    return;
+  }
+  box.style.display='block';
+  box.innerHTML='<div class="mini">관련 법령·기장군 조례·판례를 찾는 중입니다...</div>';
+  const title=[p.row?.name||p.detail?.metadata?.law_name||'', seg.article||'', a?.title||''].filter(Boolean).join(' ');
+  const params=new URLSearchParams({
+    oc:$('oc').value.trim(),
+    title:title,
+    text:seg.text||'',
+    source_target:p.row?.target||'',
+    source_name:p.row?.name||''
+  });
+  try{
+    const d=await(await fetch('/api/related?'+params)).json();
+    if(!d.ok){box.innerHTML=`<div class="empty">${esc(d.error||'관련 연결 검색 실패')}</div>`;return;}
+    const items=d.items||[];
+    const terms=d.terms||[];
+    if(!items.length){box.innerHTML=`<div class="empty">연결 후보가 없습니다.${terms.length?' 검색어: '+esc(terms.join(', ')):''}</div>`;return;}
+    box.innerHTML=`<div class="relatedHead"><b>관련 연결 ${items.length}건</b><span class="relatedTerms">${esc(terms.join(' · '))}</span></div><div class="relatedWeb">${items.map((it,idx)=>`<button class="relatedChip" onclick="openRelatedItem(${n},${ai},${si},${idx})">${esc(it.target_label||it.target)} · ${esc(it.name||'')} ${it.matches?.[0]?.article_number?('· '+esc(it.matches[0].article_number)):''}</button>`).join('')}</div>`;
+    box._relatedItems=items;
+  }catch(e){
+    box.innerHTML=`<div class="empty">관련 연결 검색 실패: ${esc(String(e))}</div>`;
+  }
+}
+async function openRelatedItem(n,ai,si,idx){
+  const box=$(`related-${n}-${ai}-${si}`);
+  const it=box?._relatedItems?.[idx];
+  if(!it)return;
+  const match=(it.matches||[])[0]||null;
+  await openLaw(it,state.openTarget||n,match);
+}
+
+async function copyUnitText(n,ai,si){
+  const p=pane(n);
+  const a=p?.detail?.articles?.[ai];
+  const s=a?.segments?.[si];
+  if(!s){setStatus('복사할 조항호목을 찾지 못했습니다.',true);return;}
+  const label=[p.row?.name||p.detail?.metadata?.law_name||'', s.article||'', s.paragraph||'', s.ho||'', s.mok||''].filter(Boolean).join(' ');
+  const text=(label?label+'\n':'')+(s.text||'');
+  try{
+    if(navigator.clipboard && window.isSecureContext){
+      await navigator.clipboard.writeText(text);
+    }else{
+      const ta=document.createElement('textarea');
+      ta.value=text;
+      ta.style.position='fixed';
+      ta.style.left='-9999px';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+    }
+    setStatus('조항호목을 클립보드에 복사했습니다.');
+  }catch(e){
+    setStatus('클립보드 복사 실패: '+e,true);
+  }
+}
+
+async function writeClipboardText(text, successMsg){
+  try{
+    if(navigator.clipboard && window.isSecureContext){
+      await navigator.clipboard.writeText(text);
+    }else{
+      const ta=document.createElement('textarea');
+      ta.value=text;
+      ta.style.position='fixed';
+      ta.style.left='-9999px';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+    }
+    setStatus(successMsg||'클립보드에 복사했습니다.');
+  }catch(e){
+    setStatus('클립보드 복사 실패: '+e,true);
+  }
+}
+function stripHtmlToText(html){
+  const tmp=document.createElement('div');
+  tmp.innerHTML=String(html||'');
+  tmp.querySelectorAll('script,style,noscript').forEach(x=>x.remove());
+  return (tmp.innerText||tmp.textContent||'').replace(/\n{3,}/g,'\n\n').trim();
+}
+function buildPaneFullText(n){
+  const p=pane(n);
+  if(!p||!p.detail)return '';
+  const d=p.detail;
+  const row=p.row||{};
+  const lines=[];
+  const title=(d.metadata&&d.metadata.law_name)||row.name||'';
+  if(title)lines.push(title);
+  const meta=[row.target_label||'', row.department||'', row.effective_date?('시행 '+row.effective_date):'', row.law_id?('ID '+row.law_id):'', row.mst?('MST '+row.mst):''].filter(Boolean).join(' · ');
+  if(meta)lines.push(meta);
+  if(title||meta)lines.push('');
+
+  if(d.render_type==='prec_html_frame'){
+    const raw=d.raw||{};
+    const text=stripHtmlToText(raw.html_raw||raw.html||'');
+    if(text)lines.push(text);
+    else if(raw.iframe_src)lines.push('[판례 HTML 원문은 iframe으로 제공되어 본문창 안에서 표시됩니다.]\n원문 URL: '+raw.iframe_src);
+  }
+
+  const articles=d.articles||[];
+  articles.forEach((a,idx)=>{
+    const head=[a.number||'', a.title||''].filter(Boolean).join(' ').trim();
+    if(head){
+      if(lines.length && lines[lines.length-1] !== '')lines.push('');
+      lines.push(head);
+    }else if(idx>0){
+      lines.push('');
+    }
+    (a.segments||[]).forEach(s=>{
+      const label=[s.paragraph||'', s.ho||'', s.mok||''].filter(Boolean).join(' ');
+      const body=(s.text||'').trim();
+      if(!body)return;
+      if(label && !body.startsWith(label))lines.push(label+' '+body);
+      else lines.push(body);
+    });
+    if(a.body && !(a.segments||[]).length)lines.push(String(a.body).trim());
+  });
+
+  const annexes=d.annexes||[];
+  if(annexes.length){
+    if(lines.length && lines[lines.length-1] !== '')lines.push('');
+    lines.push('[별표·별지서식]');
+    annexes.forEach((a,i)=>{
+      const title=(a.title||('별표/서식 '+(i+1))).trim();
+      const hwp=lawFileUrl(a.hwp||'');
+      const pdf=lawFileUrl(a.pdf||'');
+      lines.push(`${i+1}. ${title}`);
+      if(a.body)lines.push(String(a.body).trim());
+      if(hwp)lines.push('   HWP: '+hwp);
+      if(pdf)lines.push('   PDF: '+pdf);
+    });
+  }
+
+  const out=lines.join('\n').replace(/[ \t]+\n/g,'\n').replace(/\n{4,}/g,'\n\n\n').trim();
+  return out;
+}
+async function copyPaneFullText(n){
+  const text=buildPaneFullText(n);
+  if(!text){setStatus('전체복사할 본문이 없습니다.',true);return;}
+  const p=pane(n);
+  const name=p?.detail?.metadata?.law_name||p?.row?.name||`${n}번 법령창`;
+  await writeClipboardText(text, `「${name}」 전체 본문을 복사했습니다.`);
+}
+
+function activateTab(n,enc){const p=pane(n),id=decodeURIComponent(enc),t=p.tabs.find(x=>x.id===id);if(!t)return;p.activeTabId=id;p.row=t.row;p.detail=t.detail;p.ctx=t.ctx;p.selectedKey=t.selectedKey||'';state.activePane=n;renderPane(n);loadThreadNotes();}
+function closeTab(n,enc){const p=pane(n),id=decodeURIComponent(enc),i=p.tabs.findIndex(x=>x.id===id);if(i<0)return;p.tabs.splice(i,1);if(p.activeTabId===id){if(p.tabs.length){p.activeTabId=p.tabs[0].id;activateTab(n,encodeURIComponent(p.activeTabId));}else clearPane(n)}else renderPane(n)}
+function clearPane(n){const p=pane(n);p.tabs=[];p.activeTabId=null;p.row=null;p.detail=null;p.ctx=null;p.selectedKey='';if(n>1){$(`pane${n}`).classList.add('emptyOptional');$(`split${n-1}${n}`).style.display='none'}renderPane(n);resizePaneFlex()}
+function selectUnit(n,ai,si){
+  const selectedText=(window.getSelection&&window.getSelection().toString().trim())||'';
+  if(selectedText){
+    // 사용자가 본문 일부를 드래그 선택 중이면 노트 위치 선택으로 처리하지 않습니다.
+    return;
+  }const p=pane(n),s=p.detail.articles[ai].segments[si];p.selectedKey=unitKey(s);p.ctx={law_name:p.detail.metadata.law_name||p.row.name||'',target:p.row.target||'',law_id:p.row.law_id||'',mst:p.row.mst||'',article:s.article||'',paragraph:s.paragraph||'',ho:s.ho||'',mok:s.mok||'',unit_level:s.level||'',unit_text:s.text||''};const t=p.tabs.find(x=>x.id===p.activeTabId);if(t){t.ctx=p.ctx;t.selectedKey=p.selectedKey}state.activePane=n;saveWorkspace();renderPaneBody(n);updateNoteContext();loadThreadNotes()}
+function focusMatchInPane(n,m){const p=pane(n);let best=null,score=-1;(p.detail?.articles||[]).forEach((a,ai)=>(a.segments||[]).forEach((s,si)=>{let sc=0;if(m.article_number&&s.article===m.article_number)sc+=10;if(m.full_text&&s.text===m.full_text)sc+=30;if(m.full_text&&s.text.includes((m.full_text||'').slice(0,80)))sc+=15;if(m.text&&s.text.includes((m.text||'').replace(/[.…]/g,'').slice(0,60)))sc+=8;if(sc>score){score=sc;best={ai,si}}}));if(best){selectUnit(n,best.ai,best.si);setTimeout(()=>{$(`pane${n}-unit-${best.ai}-${best.si}`)?.scrollIntoView({behavior:'smooth',block:'center'});},80)}}
+function jumpArticle(n){const raw=($(`jumpJo${n}`).value||'').trim();if(!raw)return;const num=raw.match(/\d+/)?.[0];let found=null;document.querySelectorAll(`#articleWrap${n} .article`).forEach(a=>{const v=a.dataset.article||'';if(v.includes(raw)||(num&&v.includes('제'+Number(num)+'조')))found=found||a});if(found){found.scrollIntoView({behavior:'smooth',block:'start'});found.style.outline='3px solid #f5c542';setTimeout(()=>found.style.outline='',1400)}}
+function currentCtx(){return pane(state.activePane).ctx}
+function updateNoteContext(){const c=currentCtx();if(!c){$('noteContext').textContent='저장 위치 없음';return}const unit=[c.article,c.paragraph,c.ho,c.mok].filter(Boolean).join(' ');$('noteContext').innerHTML=`<b>${esc(c.law_name||'법령 미선택')}</b><br>${unit?esc(unit):'법령 전체'} · ${esc(c.unit_level||'법령')}`}
+function setNoteSort(sort){state.noteSort=sort;state.notePage=1;$('noteSortLatest').classList.toggle('active',sort==='latest');$('noteSortRel').classList.toggle('active',sort==='relevance');loadThreadNotes();}
+function changeNotePage(delta){state.notePage=Math.max(1,(state.notePage||1)+delta);loadThreadNotes();}
+async function loadThreadNotes(){const c=currentCtx();if(!c)return;const p=new URLSearchParams({law_name:c.law_name||'',law_id:c.law_id||'',mst:c.mst||'',article:c.article||'',sort:state.noteSort||'latest',page:String(state.notePage||1),page_size:String(state.notePageSize||8)});const d=await(await fetch('/api/thread_notes?'+p)).json();const items=d.items||[];$('notePageNow').textContent=`${d.page||1} / ${d.pages||1}`;$('noteList').innerHTML=items.length?items.map(n=>noteHtml(n)).join(''):'<div class="empty">노트가 없습니다.</div>'}
+async function deleteNote(id){if(!confirm(`#${id} 노트를 삭제할까요? 답글도 함께 삭제됩니다.`))return;const d=await(await fetch('/api/thread_notes?id='+id,{method:'DELETE'})).json();if(!d.ok)return setStatus(d.error||'노트 삭제 실패',true);setStatus('노트를 삭제했습니다.');loadThreadNotes();}
+function noteHtml(n){const where=[n.article,n.paragraph,n.ho,n.mok].filter(Boolean).join(' ')||'법령 전체';return `<div class="noteCard ${n.parent_id?'reply':''}"><div class="noteTop"><span>#${n.id} · ${esc(n.created_at)} <span class="noteScore">관련도 ${n._score??0}</span></span><span><button class="small" onclick="replyTo(${n.id})">답글</button> <button class="small noteDelete" onclick="deleteNote(${n.id})">삭제</button></span></div><div class="noteBody">${linkify(n.body)}</div><div class="noteWhere">${esc(n.law_name||'')} · ${esc(where)}</div></div>`}
+async function saveThreadNote(){const c=currentCtx();if(!c)return setStatus('먼저 법령 또는 조항호목을 선택해 주세요.',true);const body=$('noteBody').value.trim();if(!body)return setStatus('노트 내용을 입력해 주세요.',true);const payload={...c,body,parent_id:state.reply};const d=await(await fetch('/api/thread_notes',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})).json();if(!d.ok)return setStatus(d.error||'노트 저장 실패',true);$('noteBody').value='';clearReply();state.notePage=1;loadThreadNotes();setStatus('노트를 저장했습니다.')}
+function replyTo(id){state.reply=id;$('replyInfo').textContent=`#${id}에 답글 작성 중`;$('noteBody').focus()}
+function clearReply(){state.reply=null;$('replyInfo').textContent=''}
+function exportResultsCsv(){fetch('/api/export/results.csv',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({items:state.results})}).then(r=>r.blob()).then(b=>{const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='법령검색결과.csv';a.click();URL.revokeObjectURL(a.href)})}
+function initSplitters(){const bind=(id,onmove)=>{const sp=$(id);if(!sp)return;let startX=0,startW=0,left=null;sp.addEventListener('pointerdown',e=>{sp.setPointerCapture(e.pointerId);startX=e.clientX;left=sp.previousElementSibling;startW=left.getBoundingClientRect().width;document.body.style.userSelect='none'});sp.addEventListener('pointermove',e=>{if(!left||e.buttons!==1)return;onmove(e,startX,startW,left)});sp.addEventListener('pointerup',()=>{left=null;document.body.style.userSelect=''})};bind('splitResult',(e,s,w,l)=>{const nw=Math.max(240,Math.min(720,w+(e.clientX-s)));l.style.flex=`0 0 ${nw}px`});bind('split12',(e,s,w,l)=>{const nw=Math.max(260,w+(e.clientX-s));l.style.flex=`0 0 ${nw}px`});bind('split23',(e,s,w,l)=>{const nw=Math.max(260,w+(e.clientX-s));l.style.flex=`0 0 ${nw}px`})}
+document.addEventListener('DOMContentLoaded',init);
+document.addEventListener('DOMContentLoaded',initSplitters);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closePdfPreview();return}if(e.ctrlKey&&(e.key==='+'||e.key==='=')){e.preventDefault();adjustPaneZoom(state.activePane||1,1);return}if(e.ctrlKey&&(e.key==='-'||e.key==='_')){e.preventDefault();adjustPaneZoom(state.activePane||1,-1);return}if(e.key!=='Enter')return;const id=document.activeElement?.id||'';if(id.startsWith('insideFind')){e.preventDefault();return}if(id.startsWith('jumpJo')){e.preventDefault();jumpArticle(Number(id.replace('jumpJo',''))||state.activePane);return}if(['INPUT','SELECT'].includes(document.activeElement.tagName))runSearch(false)})
+
+document.addEventListener('DOMContentLoaded',()=>{applyGrayDark();});
+
+function ensure4kThreePaneVisibility(){
+  const p3=$('pane3');
+  const s23=$('split23');
+  const t3=$('targetPane3');
+  if(t3)t3.style.display='inline-block';
+  if(p3 && !p3.classList.contains('emptyOptional')) p3.style.display='flex';
+  if(s23 && p3 && !p3.classList.contains('emptyOptional')) s23.style.display='block';
+}
+document.addEventListener('DOMContentLoaded',()=>setTimeout(ensure4kThreePaneVisibility,200));
+
+
+/* v34 runtime patch: reliable pane 3 */
+(function(){
+  const oldSetOpenTarget = window.setOpenTarget;
+  window.setOpenTarget = function(n){
+    n=Math.max(1,Math.min(3,Number(n)||1));
+    state.openTarget=n;
+    if(typeof saveWorkspace==='function') saveWorkspace();
+    [1,2,3].forEach(i=>{
+      const b=document.getElementById(`targetPane${i}`);
+      if(b)b.classList.toggle('active',i===n);
+    });
+  };
+
+  window.ensurePaneVisible = function(n){
+    n=Math.max(1,Math.min(3,Number(n)||1));
+    const paneEl=document.getElementById(`pane${n}`);
+    if(paneEl){
+      paneEl.classList.remove('emptyOptional');
+      paneEl.style.display='flex';
+    }
+    if(n>1){
+      const sp=document.getElementById(`split${n-1}${n}`);
+      if(sp)sp.style.display='block';
+    }
+    if(typeof resizePaneFlex==='function') resizePaneFlex();
+  };
+
+  const oldResize = window.resizePaneFlex;
+  window.resizePaneFlex = function(){
+    [1,2,3].forEach(i=>{
+      const el=document.getElementById(`pane${i}`);
+      if(!el)return;
+      if(i===1 || !el.classList.contains('emptyOptional')){
+        el.style.display='flex';
+        if(!el.style.flexBasis)el.style.flex='1 1 0';
+      }else{
+        el.style.display='none';
+      }
+      if(i>1){
+        const sp=document.getElementById(`split${i-1}${i}`);
+        if(sp)sp.style.display=el.classList.contains('emptyOptional')?'none':'block';
+      }
+    });
+  };
+
+  document.addEventListener('DOMContentLoaded',()=>{
+    const t3=document.getElementById('targetPane3');
+    if(t3)t3.style.display='inline-block';
+  });
+})();
+
+
+/* v36 FHD runtime patch: max 2 law panes */
+(function(){
+  const MAX_PANES_FHD = 2;
+  function clampPane(n){
+    n = Number(n) || 1;
+    return Math.max(1, Math.min(MAX_PANES_FHD, n));
+  }
+  window.setOpenTarget = function(n){
+    n = clampPane(n);
+    state.openTarget = n;
+    if(typeof saveWorkspace === 'function') saveWorkspace();
+    [1,2,3].forEach(i=>{
+      const b=document.getElementById(`targetPane${i}`);
+      if(b)b.classList.toggle('active',i===n);
+    });
+  };
+  window.ensurePaneVisible = function(n){
+    n = clampPane(n);
+    const paneEl=document.getElementById(`pane${n}`);
+    if(paneEl){
+      paneEl.classList.remove('emptyOptional');
+      paneEl.style.display='flex';
+    }
+    if(n>1){
+      const sp=document.getElementById(`split${n-1}${n}`);
+      if(sp)sp.style.display='block';
+    }
+    const p3=document.getElementById('pane3');
+    const s23=document.getElementById('split23');
+    const t3=document.getElementById('targetPane3');
+    if(p3){p3.classList.add('emptyOptional');p3.style.display='none';}
+    if(s23)s23.style.display='none';
+    if(t3)t3.style.display='none';
+    if(typeof resizePaneFlex==='function') resizePaneFlex();
+  };
+  window.resizePaneFlex = function(){
+    [1,2].forEach(i=>{
+      const el=document.getElementById(`pane${i}`);
+      if(!el)return;
+      if(i===1 || !el.classList.contains('emptyOptional')){
+        el.style.display='flex';
+        if(!el.style.flexBasis)el.style.flex='1 1 0';
+      }else{
+        el.style.display='none';
+      }
+      if(i>1){
+        const sp=document.getElementById(`split${i-1}${i}`);
+        if(sp)sp.style.display=el.classList.contains('emptyOptional')?'none':'block';
+      }
+    });
+    const p3=document.getElementById('pane3');
+    const s23=document.getElementById('split23');
+    if(p3)p3.style.display='none';
+    if(s23)s23.style.display='none';
+  };
+  document.addEventListener('DOMContentLoaded',()=>{
+    const t3=document.getElementById('targetPane3');
+    const p3=document.getElementById('pane3');
+    const s23=document.getElementById('split23');
+    if(t3)t3.style.display='none';
+    if(p3){p3.classList.add('emptyOptional');p3.style.display='none';}
+    if(s23)s23.style.display='none';
+    if(typeof setOpenTarget==='function')setOpenTarget(1);
+  });
+})();
+
+</script>
+</body>
+</html>

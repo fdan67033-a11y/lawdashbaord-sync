@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>지방세관계법 운영 예규</title>
+<style>
+  :root{--bg:#f4ecd8;--paper:#fbf6e9;--ink:#2c2417;--soft:#6b5d44;--line:#e2d6b8;--accent:#8a6d2f;--hl:#fff3b0}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Serif KR","Nanum Myeongjo",serif;line-height:1.7}
+  header{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:1px solid var(--line);box-shadow:0 1px 3px rgba(60,45,20,.1)}
+  .bar{max-width:880px;margin:0 auto;padding:12px 18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .bar h1{font-size:1.1rem;margin:0;flex:1;min-width:160px}
+  .bar .sub{font-size:.72rem;color:var(--soft);font-family:system-ui,sans-serif;font-weight:400}
+  #q{border:1px solid var(--line);border-radius:8px;padding:7px 11px;font-size:.85rem;min-width:200px;background:#fff;color:var(--ink);font-family:system-ui,sans-serif}
+  .cnt{font-size:.74rem;color:var(--soft);font-family:system-ui,sans-serif}
+  main{max-width:880px;margin:0 auto;padding:22px 18px 140px}
+  .entry{margin:0 0 18px;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--paper);scroll-margin-top:80px}
+  .entry .k{display:inline-block;font-family:system-ui,sans-serif;font-size:.72rem;font-weight:800;color:#fff;background:var(--accent);border-radius:6px;padding:2px 8px;margin-right:8px;vertical-align:middle}
+  .entry .t{font-weight:800;font-size:1.02rem}
+  .entry .b{margin-top:9px;white-space:pre-wrap;word-break:break-word;font-size:1rem}
+  .entry.hl{border-color:var(--accent);box-shadow:0 0 0 3px var(--hl)}
+  mark{background:var(--hl);padding:0 1px}
+  .empty,.loading{text-align:center;color:var(--soft);margin:60px 0;font-family:system-ui,sans-serif}
+</style>
+</head>
+<body>
+<header><div class="bar">
+  <h1>지방세관계법 운영 예규 <span class="sub" id="meta"></span></h1>
+  <input id="q" placeholder="예규 검색 (제목·내용·법2-1)" oninput="onSearch()">
+  <span class="cnt" id="cnt"></span>
+</div></header>
+<main id="main"><div class="loading">⏳ 불러오는 중…</div></main>
+<script>
+const esc=s=>(s==null?'':String(s)).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const qs=new URLSearchParams(location.search);
+const KEY=qs.get('key')||'';
+const QUERY=qs.get('q')||'';
+let ALL=[];
+function hl(text,q){ text=esc(text); if(!q)return text; const qq=q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); return text.replace(new RegExp(qq,'gi'),m=>'<mark>'+m+'</mark>'); }
+function render(list,q){
+  const m=document.getElementById('main');
+  if(!list.length){ m.innerHTML='<div class="empty">결과가 없습니다.</div>'; return; }
+  m.innerHTML=list.map(e=>`<div class="entry" id="e-${esc(e.key)}" data-k="${esc(e.key)}">
+    <div><span class="k">${esc(e.key)}</span><span class="t">${hl(e.title||'',q)}</span></div>
+    <div class="b">${hl(e.body||'',q)}</div></div>`).join('');
+  document.getElementById('cnt').textContent=list.length+'개 항목';
+}
+function onSearch(){
+  const q=document.getElementById('q').value.trim();
+  if(!q){ render(ALL,''); return; }
+  const ql=q.replace(/\s/g,'');
+  const hit=ALL.filter(e=>((e.title||'')+(e.body||'')+(e.key||'')).replace(/\s/g,'').toLowerCase().includes(ql.toLowerCase()));
+  render(hit,q);
+}
+async function load(){
+  try{
+    const d=await(await fetch('/api/yegyu')).json();
+    ALL=d.entries||[];
+    const mt=d.meta||{};
+    document.getElementById('meta').textContent=`(${mt.no||''}, ${mt.date||''}) · ${mt.count||ALL.length}개 항목`;
+    document.title=(mt.name||'운영 예규');
+    render(ALL,'');
+    if(KEY){
+      const el=document.getElementById('e-'+KEY);
+      if(el){ el.classList.add('hl'); el.scrollIntoView({block:'center'}); }
+      else { document.getElementById('q').value=KEY; onSearch(); }
+    }
+    if(QUERY){
+      document.getElementById('q').value=QUERY; onSearch();
+      const f=document.querySelector('#main .entry');
+      if(f){ f.classList.add('hl'); f.scrollIntoView({block:'center'}); }
+    }
+  }catch(e){ document.getElementById('main').innerHTML='<div class="empty">불러오기 실패: '+esc(e.message||e)+'</div>'; }
+}
+load();
+</script>
+</body>
+</html>

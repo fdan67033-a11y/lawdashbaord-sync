@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>법령 리더</title>
+<style>
+  :root{
+    --bg:#f4ecd8; --paper:#fbf6e9; --ink:#2c2417; --ink-soft:#6b5d44;
+    --line:#e2d6b8; --accent:#8a6d2f; --accent2:#1a56db;
+    --note-me:#eef6ff; --note-claude:#f3eefb;
+    --sel:rgba(138,109,47,.10); --chip:#efe7d2;
+    --shadow:0 1px 3px rgba(60,45,20,.10);
+    --fs:18px; --lh:1.78;
+  }
+  html[data-theme="light"]{
+    --bg:#eef1f5; --paper:#ffffff; --ink:#1f2933; --ink-soft:#5b6776;
+    --line:#e6e9ee; --accent:#2f6d8a; --accent2:#1a56db; --shadow:0 1px 3px rgba(0,0,0,.08);
+    --sel:rgba(47,109,138,.10); --chip:#eef2f7;
+  }
+  html[data-theme="dark"]{
+    --bg:#16181d; --paper:#1f232b; --ink:#e6e8ec; --ink-soft:#9aa3b0;
+    --line:#2e343f; --accent:#d6b25e; --accent2:#7aa2ff; --shadow:0 1px 4px rgba(0,0,0,.4);
+    --note-me:#1b2735; --note-claude:#241f33; --sel:rgba(214,178,94,.14); --chip:#2b313c;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Noto Serif KR","Nanum Myeongjo",Batang,serif;
+    -webkit-font-smoothing:antialiased;line-height:var(--lh);
+    display:flex;flex-direction:column;overflow:hidden}
+  /* 상단바 */
+  header{flex:0 0 auto;z-index:30;background:var(--paper);
+    border-bottom:1px solid var(--line);box-shadow:var(--shadow)}
+  .bar{padding:10px 18px;display:flex;align-items:center;gap:10px}
+  .bar .nm{font-size:1.14rem;font-weight:800;line-height:1.25;flex:1;min-width:0;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bar .meta{font-size:.72rem;color:var(--ink-soft);font-family:system-ui,sans-serif;margin-top:2px}
+  .tools{display:flex;gap:6px;align-items:center;font-family:system-ui,sans-serif;flex-wrap:wrap;justify-content:flex-end}
+  .tgrp{display:flex;gap:3px;align-items:center;padding-right:8px;border-right:1px solid var(--line)}
+  .tgrp:last-child{border-right:0;padding-right:0}
+  .tbtn{border:1px solid var(--line);background:transparent;color:var(--ink);
+    border-radius:8px;padding:6px 9px;font-size:.8rem;cursor:pointer;white-space:nowrap}
+  .tbtn:hover{border-color:var(--accent)}
+  .tbtn.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .tbtn.slim{padding:6px 7px}
+  /* 본체 그리드 */
+  .wrap{flex:1 1 auto;display:grid;
+    grid-template-columns:minmax(14px,3.5vw) minmax(0,2fr) var(--panelw,minmax(340px,1fr));
+    overflow:hidden;min-height:0}
+  .wrap.nopanel{grid-template-columns:minmax(14px,3.5vw) minmax(0,1fr) 0}
+  /* 읽기 영역 */
+  #reader{overflow-y:auto;overflow-x:hidden;padding:26px 30px 140px}
+  .readInner{max-width:1000px;margin:0 auto}
+  .sec{margin:40px 0 8px;text-align:center;color:var(--accent);
+    font-weight:800;font-size:1.02rem;letter-spacing:.02em}
+  .sec hr{border:0;border-top:1px solid var(--line);margin:12px auto 0;width:60%}
+  article{margin:24px 0;scroll-margin-top:20px}
+  .art-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px}
+  .art-no{font-weight:800;color:var(--accent);font-size:1.06em}
+  .art-ti{font-weight:800;font-size:1.06em}
+  .art-prec{margin-left:auto;font-family:system-ui,sans-serif;font-size:.72rem;font-weight:700;
+    color:var(--accent2);border:1px solid var(--accent2);border-radius:999px;padding:1px 8px;cursor:pointer;opacity:.85}
+  .art-prec:hover{background:var(--accent2);color:#fff}
+  /* 유닛(조/항/호/목) */
+  .unit{position:relative;padding:4px 44px 4px 10px;border-left:3px solid transparent;
+    border-radius:7px;cursor:pointer;font-size:var(--fs);white-space:pre-wrap;word-break:break-word;
+    transition:background .12s}
+  .unit:hover{background:var(--sel)}
+  .unit.selected{background:var(--sel);border-left-color:var(--accent)}
+  .unit .unitLabel{display:none}
+  .unit.level-항{margin-left:.6em}
+  .unit.level-호{margin-left:1.5em;font-size:calc(var(--fs) - 1px)}
+  .unit.level-목{margin-left:2.4em;font-size:calc(var(--fs) - 1px)}
+  .refLink{color:var(--accent2);text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+  .refLink:hover{background:var(--accent2);color:#fff;border-radius:3px}
+  .refLink.refLoading{opacity:.5;cursor:progress}
+  /* 인라인 회독 뱃지 */
+  .rdBadge{position:absolute;right:6px;top:5px;min-width:24px;height:20px;padding:0 6px;
+    display:inline-flex;align-items:center;justify-content:center;gap:0;
+    font-family:system-ui,sans-serif;font-size:.68rem;font-weight:700;line-height:1;
+    border:1px solid var(--line);border-radius:999px;background:var(--paper);color:var(--ink-soft);
+    cursor:pointer;opacity:.35;transition:opacity .12s,border-color .12s}
+  .unit:hover .rdBadge,.unit.selected .rdBadge{opacity:.9}
+  .rdBadge.has{opacity:.95;border-color:var(--accent);color:var(--accent);font-weight:800}
+  .rdBadge:hover{border-color:var(--accent2);color:var(--accent2)}
+  /* 인라인 노트 */
+  .notes{margin:10px 0 0;display:grid;gap:8px}
+  .note{border:1px solid var(--line);border-left:4px solid var(--accent);
+    border-radius:8px;padding:9px 12px;background:var(--note-me);
+    font-family:system-ui,"Noto Sans KR",sans-serif;font-size:.84rem;line-height:1.6}
+  .note.claude{background:var(--note-claude);border-left-color:#7c4dff}
+  .note .nh{display:flex;gap:8px;align-items:center;margin-bottom:5px}
+  .note .badge{font-size:.66rem;font-weight:800;padding:2px 7px;border-radius:999px;background:var(--accent);color:#fff}
+  .note.claude .badge{background:#7c4dff}
+  .note .nt{font-weight:800}
+  .note .nd{margin-left:auto;font-size:.66rem;color:var(--ink-soft)}
+  .note .nb{white-space:pre-wrap;word-break:break-word}
+  .note .nb.clip{max-height:7.2em;overflow:hidden;mask-image:linear-gradient(#000 70%,transparent)}
+  .more{background:none;border:0;color:var(--accent2);cursor:pointer;font-size:.76rem;padding:3px 0 0}
+  /* ===== 오른쪽 패널 ===== */
+  #panel{overflow-y:auto;overflow-x:hidden;border-left:1px solid var(--line);
+    background:var(--paper);font-family:system-ui,"Noto Sans KR",sans-serif}
+  .wrap.nopanel #panel{display:none}
+  .pInner{padding:14px 14px 90px;display:flex;flex-direction:column;gap:12px}
+  .pSel{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--bg)}
+  .pSelHead{font-size:.72rem;color:var(--ink-soft);font-weight:700;margin-bottom:3px}
+  .pSelWhere{font-size:.92rem;font-weight:800;line-height:1.4}
+  .pSelText{font-size:.76rem;color:var(--ink-soft);margin-top:5px;max-height:4.2em;overflow:hidden;
+    line-height:1.5;white-space:pre-wrap;word-break:break-word}
+  /* 회독 컨트롤 */
+  .rdCtl{display:flex;align-items:center;gap:8px;margin-top:9px;padding-top:9px;border-top:1px dashed var(--line)}
+  .rdCtl .lab{font-size:.78rem;font-weight:700}
+  .rdCtl .cnt{font-size:1.15rem;font-weight:900;color:var(--accent);min-width:1.4em;text-align:center}
+  .rdCtl .cnt small{font-size:.6em;font-weight:700;color:var(--ink-soft)}
+  .rdBtn{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:8px;
+    width:30px;height:30px;font-size:1.05rem;font-weight:800;cursor:pointer;line-height:1}
+  .rdBtn:hover{border-color:var(--accent);color:var(--accent)}
+  .rdBtn.plus{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .rdCtl .when{margin-left:auto;font-size:.68rem;color:var(--ink-soft)}
+  /* 패널 섹션 */
+  .pSec{border:1px solid var(--line);border-radius:10px;background:var(--paper);overflow:hidden}
+  .pSec>summary{list-style:none;cursor:pointer;padding:9px 12px;font-size:.82rem;font-weight:800;
+    display:flex;align-items:center;gap:7px;background:var(--bg)}
+  .pSec>summary::-webkit-details-marker{display:none}
+  .pSec>summary .cnt{margin-left:auto;font-size:.7rem;font-weight:700;color:var(--ink-soft);
+    background:var(--chip);border-radius:999px;padding:1px 8px}
+  .pSec .body{padding:10px 12px;display:flex;flex-direction:column;gap:9px}
+  .hint{font-size:.76rem;color:var(--ink-soft);line-height:1.5}
+  /* 메모 편집기 */
+  .memoBox textarea{width:100%;min-height:74px;border:1px solid var(--line);border-radius:8px;
+    padding:9px;font-family:inherit;font-size:.86rem;line-height:1.55;background:var(--bg);color:var(--ink);resize:vertical}
+  .memoBar{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+  .pbtn{border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:8px;
+    padding:6px 11px;font-size:.8rem;font-weight:700;cursor:pointer}
+  .pbtn:hover{border-color:var(--accent)}
+  .pbtn.primary{background:var(--accent2);color:#fff;border-color:var(--accent2)}
+  .pbtn.mini{padding:3px 8px;font-size:.72rem;font-weight:700}
+  /* 노트 카드(패널) */
+  .pnote{border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:8px;
+    padding:8px 10px;background:var(--note-me);font-size:.8rem;line-height:1.55}
+  .pnote.claude{background:var(--note-claude);border-left-color:#7c4dff}
+  .pnote .top{display:flex;gap:6px;align-items:center;font-size:.68rem;color:var(--ink-soft);margin-bottom:3px}
+  .pnote .top .x{margin-left:auto;cursor:pointer;color:var(--ink-soft);border:0;background:none;font-size:.85rem}
+  .pnote .bd{white-space:pre-wrap;word-break:break-word}
+  .pnote .wh{margin-top:5px;font-size:.68rem;color:var(--ink-soft);cursor:pointer}
+  .pnote .wh:hover{color:var(--accent2);text-decoration:underline}
+  .pnote.exact{outline:1px solid var(--accent)}
+  /* 연결 검색 */
+  .schRow{display:flex;gap:6px}
+  .schRow input{flex:1;min-width:0;border:1px solid var(--line);border-radius:8px;padding:7px 9px;
+    font-size:.82rem;background:var(--bg);color:var(--ink)}
+  .segToggle{display:flex;gap:4px}
+  .segToggle button{flex:1;border:1px solid var(--line);background:transparent;color:var(--ink-soft);
+    border-radius:7px;padding:5px 0;font-size:.76rem;font-weight:700;cursor:pointer}
+  .segToggle button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .resItem{border:1px solid var(--line);border-radius:8px;padding:7px 9px;display:flex;gap:7px;align-items:flex-start}
+  .resItem .info{flex:1;min-width:0;cursor:pointer}
+  .resItem .info:hover .rTitle{color:var(--accent2);text-decoration:underline}
+  .rTitle{font-size:.8rem;font-weight:700;line-height:1.35;word-break:break-word}
+  .rMeta{font-size:.68rem;color:var(--ink-soft);margin-top:2px}
+  .rTag{display:inline-block;font-size:.62rem;font-weight:700;color:var(--ink-soft);
+    background:var(--chip);border-radius:5px;padding:0 5px;margin-right:4px}
+  .addBtn{border:1px solid var(--accent2);color:var(--accent2);background:transparent;border-radius:7px;
+    padding:3px 8px;font-size:.72rem;font-weight:800;cursor:pointer;white-space:nowrap}
+  .addBtn:hover{background:var(--accent2);color:#fff}
+  .addBtn.done{background:var(--accent2);color:#fff}
+  /* 연결 대상 칩 */
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{display:inline-flex;align-items:center;gap:5px;background:var(--chip);border:1px solid var(--line);
+    border-radius:999px;padding:3px 6px 3px 10px;font-size:.74rem;font-weight:700;max-width:100%}
+  .chip .lbl{max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .chip .x{cursor:pointer;border:0;background:none;color:var(--ink-soft);font-size:.9rem;line-height:1}
+  .chip.prec{background:transparent;border-color:var(--accent2)}
+  /* 관련법령 · 판례 버튼 */
+  .refBtns{display:flex;flex-wrap:wrap;gap:6px}
+  .refChip{border:1px solid var(--line);background:var(--bg);color:var(--accent2);border-radius:8px;
+    padding:5px 10px;font-size:.78rem;font-weight:700;cursor:pointer;max-width:100%;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .refChip:hover{background:var(--accent2);color:#fff;border-color:var(--accent2)}
+  .precCard{border:1px solid var(--line);border-radius:8px;padding:7px 9px;cursor:pointer}
+  .precCard:hover{border-color:var(--accent2)}
+  .precTop{font-size:.68rem;color:var(--ink-soft);display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+  .precRel{font-size:.62rem;font-weight:800;border-radius:5px;padding:0 5px;color:#fff}
+  .precRel.d{background:#2e9b57}.precRel.n{background:#d19a2f}.precRel.r{background:#8a8f98}
+  .precName{font-size:.78rem;font-weight:700;margin-top:2px;line-height:1.35}
+  .precSum{font-size:.7rem;color:var(--ink-soft);margin-top:2px;max-height:2.8em;overflow:hidden;line-height:1.4}
+  .precGrpHdr{font-size:.72rem;font-weight:800;color:var(--ink-soft);margin:2px 0}
+  /* 모달(질문) */
+  .mask{position:fixed;inset:0;background:rgba(20,15,5,.45);z-index:50;display:none;
+    align-items:center;justify-content:center;padding:18px}
+  .mask.on{display:flex}
+  .modal{background:var(--paper);color:var(--ink);border-radius:14px;max-width:640px;width:100%;
+    max-height:90vh;overflow:auto;box-shadow:0 12px 40px rgba(0,0,0,.3);
+    font-family:system-ui,"Noto Sans KR",sans-serif}
+  .modal .mhd{padding:16px 20px;border-bottom:1px solid var(--line)}
+  .modal .mhd h3{margin:0 0 4px;font-size:1.05rem}
+  .modal .mhd .who{font-size:.82rem;color:var(--ink-soft)}
+  .modal .mbd{padding:16px 20px;display:grid;gap:14px}
+  .tpl{display:grid;gap:7px}
+  .tpl label{display:flex;gap:9px;align-items:flex-start;padding:8px 10px;border:1px solid var(--line);
+    border-radius:8px;cursor:pointer;font-size:.86rem;line-height:1.45}
+  .tpl label:hover{border-color:var(--accent2)}
+  .tpl input{margin-top:3px}
+  .tpl .lt{font-weight:700}
+  .tpl .ld{color:var(--ink-soft);font-size:.79rem}
+  .palabel{font-size:.8rem;font-weight:700;color:var(--ink-soft)}
+  textarea#prompt{width:100%;min-height:160px;border:1px solid var(--line);border-radius:8px;
+    padding:11px;font-family:ui-monospace,Consolas,monospace;font-size:.82rem;line-height:1.5;
+    background:var(--bg);color:var(--ink);resize:vertical}
+  .mft{padding:14px 20px;border-top:1px solid var(--line);display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+  .btn{border-radius:9px;padding:9px 15px;font-size:.86rem;font-weight:700;cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--ink)}
+  .btn.primary{background:var(--accent2);color:#fff;border-color:var(--accent2)}
+  .btn.ghost{color:var(--ink-soft)}
+  .chk{display:flex;align-items:center;gap:7px;font-size:.8rem;color:var(--ink-soft);margin-right:auto}
+  .loading,.err{margin:60px auto;text-align:center;color:var(--ink-soft);font-family:system-ui,sans-serif}
+  .empty{font-size:.78rem;color:var(--ink-soft);text-align:center;padding:8px}
+  /* 토스트 */
+  #toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:#222;color:#fff;padding:11px 18px;border-radius:10px;font-family:system-ui,sans-serif;
+    font-size:.86rem;opacity:0;transition:.25s;z-index:60;pointer-events:none;max-width:90vw;text-align:center}
+  #toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+  @media(max-width:820px){ .bar .meta{display:none} }
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <button class="tbtn slim" onclick="window.close()" title="닫기">✕</button>
+    <div style="flex:1;min-width:0">
+      <div class="nm" id="lawName">법령 불러오는 중…</div>
+      <div class="meta" id="lawMeta"></div>
+    </div>
+    <div class="tools">
+      <div class="tgrp">
+        <button class="tbtn slim" onclick="setFont(-1)" title="글자 작게">A−</button>
+        <button class="tbtn slim" onclick="setFont(1)" title="글자 크게">A＋</button>
+        <button class="tbtn slim" onclick="setLH(-1)" title="줄간격 좁게">≡−</button>
+        <button class="tbtn slim" onclick="setLH(1)" title="줄간격 넓게">≡＋</button>
+      </div>
+      <div class="tgrp">
+        <button class="tbtn" id="thSepia" onclick="setTheme('sepia')">세피아</button>
+        <button class="tbtn" id="thLight" onclick="setTheme('light')">화이트</button>
+        <button class="tbtn" id="thDark" onclick="setTheme('dark')">다크</button>
+      </div>
+      <div class="tgrp">
+        <button class="tbtn on" id="toggleNotes" onclick="toggleNotes()" title="본문 아래 노트 표시 토글">📝 노트</button>
+        <button class="tbtn on" id="togglePanel" onclick="togglePanel()" title="오른쪽 작업 패널 열기/접기">📑 패널</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap" id="wrap">
+  <div></div>
+  <div id="reader"><div class="readInner"><div class="loading">⏳ 법령을 불러오는 중입니다…</div></div></div>
+  <aside id="panel">
+    <div class="pInner">
+      <!-- 선택 유닛 + 회독 -->
+      <div class="pSel" id="pSel">
+        <div class="pSelHead">선택한 단위</div>
+        <div class="pSelWhere" id="pSelWhere">조문·항·호·목을 클릭하세요</div>
+        <div class="pSelText" id="pSelText"></div>
+        <div class="rdCtl" id="rdCtl" style="display:none">
+          <span class="lab">회독</span>
+          <button class="rdBtn" onclick="bumpSel(-1)" title="−1">−</button>
+          <span class="cnt" id="rdCnt">0<small>회</small></span>
+          <button class="rdBtn plus" onclick="bumpSel(1)" title="+1 회독">＋</button>
+          <span class="when" id="rdWhen"></span>
+        </div>
+      </div>
+
+      <!-- 메모 -->
+      <details class="pSec" id="secMemo" open>
+        <summary>📝 메모 <span class="cnt" id="memoCnt"></span></summary>
+        <div class="body">
+          <div class="memoBox">
+            <textarea id="memoBody" placeholder="이 단위에 대한 메모…"></textarea>
+            <div class="memoBar" style="margin-top:6px">
+              <span class="hint" id="memoWhere" style="flex:1"></span>
+              <button class="pbtn primary" onclick="saveMemo()">저장</button>
+            </div>
+          </div>
+          <div id="memoList"></div>
+        </div>
+      </details>
+
+      <!-- 법령·판례 연결 -->
+      <details class="pSec" id="secLink" open>
+        <summary>🔗 법령·판례 연결 <span class="cnt" id="linkCnt"></span></summary>
+        <div class="body">
+          <div id="pendChips" class="chips"></div>
+          <div class="segToggle">
+            <button id="lmLaw" class="on" onclick="setLinkMode('law')">법령</button>
+            <button id="lmPrec" onclick="setLinkMode('prec')">판례</button>
+          </div>
+          <div class="schRow">
+            <input id="linkQ" placeholder="검색어 입력 후 Enter" onkeydown="if(event.key==='Enter')runLinkSearch()">
+            <button class="pbtn" onclick="runLinkSearch()">검색</button>
+          </div>
+          <div id="linkRes" style="display:flex;flex-direction:column;gap:7px"></div>
+        </div>
+      </details>
+
+      <!-- 관련 판례(자동) -->
+      <details class="pSec" id="secPrec">
+        <summary>⚖ 관련 판례 <span class="cnt" id="precCnt"></span></summary>
+        <div class="body" id="precBody"><div class="empty">조문을 선택하세요.</div></div>
+      </details>
+
+      <!-- 관련 법령(본문 인용) -->
+      <details class="pSec" id="secRef" open>
+        <summary>📎 관련 법령(본문 인용) <span class="cnt" id="refCnt"></span></summary>
+        <div class="body" id="refBody"><div class="empty">조문을 선택하세요.</div></div>
+      </details>
+    </div>
+  </aside>
+</div>
+
+<!-- 질문 모달 -->
+<div class="mask" id="mask" onclick="if(event.target===this)closeAsk()">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="mhd">
+      <h3>🤖 이 조문을 Claude에게 물어볼까요?</h3>
+      <div class="who" id="askWho"></div>
+    </div>
+    <div class="mbd">
+      <div>
+        <div class="palabel" style="margin-bottom:7px">질문 템플릿 — 원하는 항목을 선택하세요 (여러 개 가능)</div>
+        <div class="tpl" id="tplBox"></div>
+      </div>
+      <div>
+        <div class="palabel" style="margin-bottom:6px">보낼 질문 (자유 편집 가능)</div>
+        <textarea id="prompt" spellcheck="false"></textarea>
+      </div>
+    </div>
+    <div class="mft">
+      <label class="chk"><input type="checkbox" id="alsoInbox" checked> 인박스에도 저장</label>
+      <button class="btn ghost" onclick="closeAsk()">취소</button>
+      <button class="btn" onclick="doCopy(false)">복사만</button>
+      <button class="btn primary" onclick="doCopy(true)">복사하고 닫기</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const TEMPLATES = [
+  {id:'gist',    on:true,  lt:'취지·요건·쟁점 (기본)', ld:'입법 취지·목적, 핵심 요건과 효과, 실무 해석 쟁점',
+    text:'이 조문의 취지·목적(왜 이렇게 규정했는지), 핵심 요건과 효과, 그리고 실무에서 자주 문제되는 해석 쟁점을 설명해줘.'},
+  {id:'easy',    on:false, lt:'쉬운 풀이', ld:'비전문가도 이해하도록 쉬운 말+일상 예시',
+    text:'이 조문을 법을 모르는 사람도 이해할 수 있게 쉬운 말과 일상적인 예시를 들어 풀어서 설명해줘.'},
+  {id:'related', on:false, lt:'관련 조문·판례', ld:'관련 조문·시행령·판례·해석례 연결',
+    text:'이 조문과 관련된 다른 조문, 시행령·시행규칙, 그리고 판례·해석례를 연결해서 정리해줘.'},
+  {id:'case',    on:false, lt:'사례 적용', ld:'구체적 사례 상황에 적용',
+    text:'이 조문이 실제 사례에 어떻게 적용되는지 구체적인 예시 상황을 들어 설명해줘.'},
+  {id:'history', on:false, lt:'개정 연혁·취지', ld:'주요 개정 연혁과 배경',
+    text:'이 조문의 주요 개정 연혁과 각 개정의 취지·배경을 정리해줘.'},
+  {id:'practice',on:false, lt:'실무 체크포인트', ld:'실무자가 놓치기 쉬운 주의사항',
+    text:'이 조문과 관련해 실무자가 놓치기 쉬운 체크포인트와 주의사항을 정리해줘.'},
+];
+
+const qs = new URLSearchParams(location.search);
+const P = {
+  target: qs.get('target') || 'eflaw',
+  law_id: qs.get('id') || qs.get('law_id') || '',
+  mst: qs.get('mst') || '',
+  name: qs.get('name') || qs.get('law_name') || '',
+  efyd: qs.get('efyd') || qs.get('effective_date') || '',
+  art: qs.get('art') || '',
+};
+let LAW_NAME = P.name;
+let ARTS = [];               // normalized.articles
+let READINGS = {};           // unit_part -> {count, when}
+let SEL = null;              // {ai, si, ctx, unitPart, artIdx}
+let PENDING = [];            // 연결 대상 refs
+let NOTES_BY_ID = {};
+let LINK_MODE = 'law';
+let curAsk = null;
+
+const esc = s => (s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const $ = id => document.getElementById(id);
+
+/* ===== 환경설정 ===== */
+function setTheme(t){ document.documentElement.setAttribute('data-theme',t); localStorage.setItem('reader_theme',t);
+  for(const [k,id] of [['sepia','thSepia'],['light','thLight'],['dark','thDark']])
+    $(id).classList.toggle('on', k===t); }
+function setFont(d){ let v=parseFloat(localStorage.getItem('reader_fs')||'18')+d*1; v=Math.max(14,Math.min(28,v));
+  localStorage.setItem('reader_fs',v); document.documentElement.style.setProperty('--fs',v+'px'); }
+function setLH(d){ let v=parseFloat(localStorage.getItem('reader_lh')||'1.78')+d*0.12; v=Math.max(1.3,Math.min(2.6,+v.toFixed(2)));
+  localStorage.setItem('reader_lh',v); document.documentElement.style.setProperty('--lh',v); }
+let notesOn = true;
+function toggleNotes(){ notesOn=!notesOn; $('toggleNotes').classList.toggle('on',notesOn);
+  document.querySelectorAll('.notes').forEach(n=>n.style.display=notesOn?'':'none'); }
+let panelOn = true;
+function togglePanel(){ panelOn=!panelOn; $('wrap').classList.toggle('nopanel',!panelOn);
+  $('togglePanel').classList.toggle('on',panelOn); localStorage.setItem('reader_panel',panelOn?'1':'0'); }
+(function initPrefs(){
+  setTheme(localStorage.getItem('reader_theme')||'sepia');
+  const fs=localStorage.getItem('reader_fs'); if(fs)document.documentElement.style.setProperty('--fs',fs+'px');
+  const lh=localStorage.getItem('reader_lh'); if(lh)document.documentElement.style.setProperty('--lh',lh);
+  if(localStorage.getItem('reader_panel')==='0'){ panelOn=false; $('wrap').classList.add('nopanel'); $('togglePanel').classList.remove('on'); }
+})();
+
+function toast(msg){ const t=$('toast'); t.textContent=msg; t.classList.add('on');
+  clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('on'),2600); }
+
+function readerWin(){ const sw=screen.availWidth||1440, sh=screen.availHeight||900;
+  const w=Math.round(sw*0.92), h=Math.round(sh*0.92), l=Math.round((sw-w)/2), t=Math.round((sh-h)/2);
+  return `width=${w},height=${h},left=${l},top=${t},scrollbars=yes,resizable=yes`; }
+
+/* ===== 데이터 로드 ===== */
+async function load(){
+  if(!P.mst && !P.law_id){ $('reader').innerHTML='<div class="err">법령 식별자(mst 또는 id)가 없습니다.</div>'; return; }
+  try{
+    const dp = fetch('/api/detail?'+new URLSearchParams({target:P.target,id:P.law_id,mst:P.mst,name:P.name,efyd:P.efyd})).then(r=>r.json());
+    const np = fetch('/api/reader_notes?'+new URLSearchParams({law_id:P.law_id,mst:P.mst,law_name:P.name})).then(r=>r.json()).catch(()=>({by_article:{}}));
+    const rp = fetch('/api/readings?'+new URLSearchParams({law_id:P.law_id,mst:P.mst,law_name:P.name})).then(r=>r.json()).catch(()=>({by_unit:{}}));
+    const [d,n,rr] = await Promise.all([dp,np,rp]);
+    if(!d.ok){ $('reader').innerHTML='<div class="err">법령을 불러오지 못했습니다: '+esc(d.error||'')+'</div>'; return; }
+    READINGS = {}; const bu=(rr&&rr.by_unit)||{}; for(const k in bu) READINGS[k]={count:bu[k]};
+    render(d.normalized, (n&&n.by_article)||{});
+  }catch(e){
+    $('reader').innerHTML='<div class="err">오류: '+esc(e.message||e)+'</div>';
+  }
+}
+
+function normArt(num){ return String(num||'').replace(/\s/g,''); }
+function unitPartOf(s){ return [s.article||'',s.paragraph||'',s.ho||'',s.mok||'',s.level||''].map(x=>String(x).trim()).join('|'); }
+
+/* 이미 esc된 문자열에 본문 인용 링크(refLink) 삽입 — 대시보드 renderUnitText와 동일한 규칙 */
+const REF_SPLIT=/(<a\b[^>]*>[^<]*<\/a>)/;
+function renderUnitText(text, links){
+  let h=esc(text||'');
+  if(links&&links.length){
+    for(const lk of links){
+      const needle=esc(lk.text||''); if(!needle)continue;
+      const parts=h.split(REF_SPLIT); let done=false;
+      for(let i=0;i<parts.length&&!done;i++){
+        if(parts[i].startsWith('<a '))continue;
+        const idx=parts[i].indexOf(needle);
+        if(idx>=0){
+          const attrs=lk.law_id
+            ?`data-lawid="${esc(lk.law_id)}" data-isordin="${lk.is_ordin?'1':''}" data-jo="${esc(lk.jo||'')}" data-type="${esc(lk.type||'')}" data-text="${esc(lk.text||'')}"`
+            :`data-seq="${esc(lk.seq||'')}" data-type="${esc(lk.type||'')}" data-text="${esc(lk.text||'')}"`;
+          const a=`<a class="refLink" ${attrs} onclick="event.stopPropagation();onRefClick(this)" title="클릭=새 리더로 열기">${needle}</a>`;
+          parts[i]=parts[i].slice(0,idx)+a+parts[i].slice(idx+needle.length); done=true;
+        }
+      }
+      h=parts.join('');
+    }
+  }
+  return h;
+}
+
+function render(norm, notesByArt){
+  const meta = norm.metadata||{};
+  LAW_NAME = meta.law_name || P.name || '법령';
+  document.title = LAW_NAME + ' — 법령 리더';
+  $('lawName').textContent = LAW_NAME;
+  const mbits=[meta.effective_date?('시행 '+meta.effective_date):'', meta.revision_type||'', meta.department||''].filter(Boolean);
+  $('lawMeta').textContent = mbits.join(' · ');
+
+  ARTS = norm.articles||[];
+  const html = ARTS.map((a,ai)=>{
+    if(a.is_header || (!a.number && a.title)){
+      return `<div class="sec">${esc(a.title||'')}<hr></div>`;
+    }
+    const num = esc(a.number||'');
+    const key = normArt(a.number);
+    let segs = a.segments||[];
+    if(!segs.length && a.body) segs=[{level:'조',article:a.number,paragraph:'',ho:'',mok:'',text:a.body}];
+    const hasLinks = Array.isArray(a.links)&&a.links.length;
+    const precBtn = ''; // 판례 배지는 로드 후 부착
+    const segHtml = segs.map((s,si)=>{
+      const part = unitPartOf(s);
+      const rc = (READINGS[part]&&READINGS[part].count)||0;
+      const badge = `<button class="rdBadge ${rc?'has':''}" data-part="${esc(part)}" onclick="bumpInline(event,${ai},${si})" title="클릭 +1회독 · Shift+클릭 −1">${rc?rc+'회':'○'}</button>`;
+      return `<div class="unit level-${esc(s.level||'조')}" id="u-${ai}-${si}" onclick="selectUnit(${ai},${si})"
+        ><span class="unitLabel">${esc(s.level||'')}</span>${renderUnitText(s.text, a.links)}${badge}</div>`;
+    }).join('');
+    const notes = (notesByArt[key]||notesByArt[num]||[]);
+    const notesHtml = notes.length ? `<div class="notes">${notes.map(noteCard).join('')}</div>` : '';
+    return `<article id="art-${ai}" data-art="${num}" data-artkey="${esc(key)}">
+      <div class="art-h"><span class="art-no">${num}</span><span class="art-ti">${a.title?esc(a.title):''}</span>
+        <span class="art-prec" id="artprec-${ai}" style="display:none" onclick="event.stopPropagation();gotoPrecFor(${ai})"></span></div>
+      ${segHtml}
+      ${notesHtml}
+      <div style="text-align:right;margin-top:6px">
+        <button class="tbtn slim" style="font-size:.74rem" onclick='openAsk(${ai})'>🤖 Claude에게 묻기</button>
+      </div>
+    </article>`;
+  }).join('');
+  $('reader').innerHTML = `<div class="readInner">${html || '<div class="err">조문이 없습니다.</div>'}</div>`;
+
+  loadPrecBadges();
+  if(P.art){ const idx=ARTS.findIndex(a=>normArt(a.number)===normArt(P.art)); if(idx>=0) scrollToArt(idx,true); }
+}
+
+function scrollToArt(ai, flash){
+  const el=$('art-'+ai); if(!el)return;
+  el.scrollIntoView({behavior:'smooth',block:'start'});
+  if(flash){ el.style.transition='background .3s'; el.style.background='var(--sel)'; setTimeout(()=>el.style.background='',1400); }
+}
+
+function noteCard(nt){
+  const claude = (nt.source==='claude');
+  const who = claude?'🤖 Claude':'🙋 나';
+  const body = esc(nt.body||'');
+  const long = (nt.body||'').length>220;
+  return `<div class="note ${claude?'claude':''}">
+    <div class="nh"><span class="badge">${who}</span>
+      ${nt.title?`<span class="nt">${esc(nt.title)}</span>`:''}
+      <span class="nd">${esc((nt.created_at||'').slice(0,16))}</span></div>
+    <div class="nb ${long?'clip':''}">${body}</div>
+    ${long?`<button class="more" onclick="this.previousElementSibling.classList.toggle('clip');this.textContent=this.previousElementSibling.classList.contains('clip')?'더보기':'접기'">더보기</button>`:''}
+  </div>`;
+}
+
+/* ===== 회독 ===== */
+async function postReading(ctx, delta){
+  try{
+    const d = await (await fetch('/api/readings',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(Object.assign({law_name:LAW_NAME,law_id:P.law_id,mst:P.mst,delta}, ctx))})).json();
+    return d && d.ok ? d.count : null;
+  }catch(e){ return null; }
+}
+function ctxFromSeg(s){
+  return {article:s.article||'',paragraph:s.paragraph||'',ho:s.ho||'',mok:s.mok||'',unit_level:s.level||''};
+}
+async function bumpInline(ev,ai,si){
+  ev.stopPropagation();
+  const dec = ev.shiftKey ? -1 : 1;
+  let segs=ARTS[ai].segments||[]; if(!segs.length&&ARTS[ai].body)segs=[{level:'조',article:ARTS[ai].number,text:ARTS[ai].body}];
+  const s=segs[si]; if(!s)return;
+  const part=unitPartOf(s);
+  const cnt=await postReading(ctxFromSeg(s), dec);
+  if(cnt===null){ toast('회독 저장 실패'); return; }
+  READINGS[part]={count:cnt, when:'now'};
+  refreshBadge(ai,si);
+  if(SEL && SEL.ai===ai && SEL.si===si) renderRdCtl();
+}
+async function bumpSel(dec){
+  if(!SEL)return;
+  const s=selSeg(); if(!s)return;
+  const part=SEL.unitPart;
+  const cnt=await postReading(ctxFromSeg(s), dec);
+  if(cnt===null){ toast('회독 저장 실패'); return; }
+  READINGS[part]={count:cnt, when:'now'};
+  refreshBadge(SEL.ai,SEL.si); renderRdCtl();
+}
+function refreshBadge(ai,si){
+  const u=$('u-'+ai+'-'+si); if(!u)return;
+  const b=u.querySelector('.rdBadge'); if(!b)return;
+  const rc=(READINGS[b.dataset.part]&&READINGS[b.dataset.part].count)||0;
+  b.textContent = rc?rc+'회':'○'; b.classList.toggle('has',!!rc);
+}
+function renderRdCtl(){
+  const ctl=$('rdCtl'); if(!SEL){ ctl.style.display='none'; return; }
+  ctl.style.display='';
+  const rc=(READINGS[SEL.unitPart]&&READINGS[SEL.unitPart].count)||0;
+  $('rdCnt').innerHTML=rc+'<small>회</small>';
+}
+
+/* ===== 유닛 선택 ===== */
+function selSeg(){ if(!SEL)return null; let segs=ARTS[SEL.ai].segments||[];
+  if(!segs.length&&ARTS[SEL.ai].body)segs=[{level:'조',article:ARTS[SEL.ai].number,text:ARTS[SEL.ai].body}];
+  return segs[SEL.si]||null; }
+function selectUnit(ai,si){
+  const selText=(window.getSelection&&window.getSelection().toString().trim())||'';
+  if(selText)return;   // 본문 드래그 중이면 무시
+  let segs=ARTS[ai].segments||[]; if(!segs.length&&ARTS[ai].body)segs=[{level:'조',article:ARTS[ai].number,paragraph:'',ho:'',mok:'',text:ARTS[ai].body}];
+  const s=segs[si]; if(!s)return;
+  document.querySelectorAll('.unit.selected').forEach(u=>u.classList.remove('selected'));
+  const u=$('u-'+ai+'-'+si); if(u)u.classList.add('selected');
+  SEL={ai,si,artIdx:ai,unitPart:unitPartOf(s),
+    ctx:{law_name:LAW_NAME,target:P.target,law_id:P.law_id,mst:P.mst,
+      article:s.article||'',paragraph:s.paragraph||'',ho:s.ho||'',mok:s.mok||'',
+      unit_level:s.level||'',unit_text:s.text||''}};
+  renderSelHead(s); renderRdCtl(); loadMemo(); renderArticleRefs(ai); loadPrecForSel();
+}
+function whereLabel(c){ return [c.article,c.paragraph&&('제'+c.paragraph+'항'),c.ho&&('제'+c.ho+'호'),c.mok&&(c.mok+'목')].filter(Boolean).join(' ')||'법령 전체'; }
+function renderSelHead(s){
+  const c=SEL.ctx;
+  $('pSelWhere').textContent = whereLabel(c);
+  $('pSelText').textContent = s.text||'';
+  $('memoWhere').textContent = whereLabel(c)+' · '+(c.unit_level||'');
+}
+
+/* ===== 메모(노트) ===== */
+async function loadMemo(){
+  const c=SEL&&SEL.ctx; if(!c){ $('memoList').innerHTML=''; return; }
+  const p=new URLSearchParams({law_name:c.law_name||'',law_id:c.law_id||'',mst:c.mst||'',article:c.article||'',paragraph:c.paragraph||'',ho:c.ho||'',mok:c.mok||'',sort:'relevance',page:'1',page_size:'20'});
+  let d; try{ d=await(await fetch('/api/thread_notes?'+p)).json(); }catch(e){ $('memoList').innerHTML='<div class="empty">불러오기 실패</div>'; return; }
+  const items=(d.items||[]);
+  NOTES_BY_ID={}; items.forEach(n=>NOTES_BY_ID[n.id]=n);
+  $('memoCnt').textContent = items.length?items.length:'';
+  $('memoList').innerHTML = items.length ? items.map(n=>pnoteHtml(n,c)).join('') : '<div class="empty">이 조문에 저장된 메모가 없습니다.</div>';
+}
+function refMatchesUnit(r,c){ return String(r.article||'')===String(c.article||'')
+    && String(r.paragraph||'')===String(c.paragraph||'') && String(r.ho||'')===String(c.ho||'') && String(r.mok||'')===String(c.mok||''); }
+function pnoteHtml(n,c){
+  const isAI=(n.source==='claude');
+  const where=[n.article,n.paragraph&&('제'+n.paragraph+'항'),n.ho&&('제'+n.ho+'호'),n.mok&&(n.mok+'목')].filter(Boolean).join(' ')||'법령 전체';
+  const exact=(Array.isArray(n.refs)?n.refs:[]).some(r=>refMatchesUnit(r,c))|| (String(n.paragraph||'')===String(c.paragraph||'')&&String(n.ho||'')===String(c.ho||''));
+  const extraRefs=(Array.isArray(n.refs)?n.refs:[]).filter(r=>(r.law_id||r.mst)&&r.law_name);
+  const refBtns=extraRefs.length?`<div class="refBtns" style="margin-top:5px">${extraRefs.slice(0,6).map((r,ri)=>`<button class="refChip" onclick="openNoteRef(${n.id},${ri})">${esc((r.target==='prec'?'⚖ ':'')+ (r.law_name||'연결'))}${r.article?(' '+esc(r.article)):''}</button>`).join('')}</div>`:'';
+  return `<div class="pnote ${isAI?'claude':''} ${exact?'exact':''}">
+    <div class="top">${isAI?'🤖':'✍️'} #${n.id} · ${esc((n.created_at||'').slice(5,16))}
+      <button class="x" title="삭제" onclick="delNote(${n.id})">🗑</button></div>
+    <div class="bd">${linkify(n.body||'')}</div>
+    <div class="wh">📂 ${esc(where)}</div>
+    ${refBtns}
+  </div>`;
+}
+async function saveMemo(){
+  if(!SEL){ toast('먼저 조문·항을 선택하세요'); return; }
+  const c=SEL.ctx;
+  let body=$('memoBody').value.trim();
+  const refs=[Object.assign({},c)].concat(PENDING.map(r=>Object.assign({},r)));
+  if(!body && PENDING.length) body='🔗 '+PENDING.map(r=>r.law_name).filter(Boolean).join(', ');
+  if(!body){ toast('메모 내용을 입력하거나 연결 대상을 추가하세요'); return; }
+  const payload=Object.assign({},c,{body,source:'me',refs});
+  let d; try{ d=await(await fetch('/api/thread_notes',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})).json(); }
+  catch(e){ toast('저장 실패'); return; }
+  if(!d.ok){ toast(d.error||'저장 실패'); return; }
+  $('memoBody').value=''; PENDING=[]; renderPending();
+  toast('메모를 저장했습니다'+(refs.length>1?(' · 연결 '+(refs.length-1)+'건'):''));
+  loadMemo();
+}
+async function delNote(id){
+  if(!confirm('#'+id+' 메모를 삭제할까요?'))return;
+  try{ const d=await(await fetch('/api/thread_notes?id='+id,{method:'DELETE'})).json(); if(!d.ok){toast(d.error||'삭제 실패');return;} }catch(e){ toast('삭제 실패'); return; }
+  toast('삭제했습니다'); loadMemo();
+}
+function openNoteRef(id,ri){
+  const n=NOTES_BY_ID[id]; if(!n)return;
+  const refs=(Array.isArray(n.refs)?n.refs:[]).filter(r=>(r.law_id||r.mst)&&r.law_name);
+  const r=refs[ri]; if(!r)return;
+  openInReader({target:r.target||'eflaw',law_id:r.law_id||'',mst:r.mst||'',name:r.law_name||'법령'}, r.article||'');
+}
+
+/* ===== 연결(법령·판례 검색 → refs) ===== */
+function setLinkMode(m){ LINK_MODE=m; $('lmLaw').classList.toggle('on',m==='law'); $('lmPrec').classList.toggle('on',m==='prec');
+  $('linkQ').placeholder = m==='law'?'법령명 검색 후 Enter':'판례(사건명·사건번호) 검색 후 Enter'; $('linkRes').innerHTML=''; }
+async function runLinkSearch(){
+  const q=$('linkQ').value.trim(); if(!q){ toast('검색어를 입력하세요'); return; }
+  const box=$('linkRes'); box.innerHTML='<div class="empty">검색 중…</div>';
+  let url;
+  if(LINK_MODE==='law'){
+    const p=new URLSearchParams({query:q,display:'15'}); ['eflaw','ordin','ordin_gijang'].forEach(t=>p.append('targets',t));
+    url='/api/search_multi?'+p;
+  }else{
+    const p=new URLSearchParams({query:q,display:'15'}); p.append('targets','prec'); url='/api/search_multi?'+p;
+  }
+  let d; try{ d=await(await fetch(url)).json(); }catch(e){ box.innerHTML='<div class="empty">검색 실패</div>'; return; }
+  const items=(d.items||[]);
+  if(!items.length){ box.innerHTML='<div class="empty">결과가 없습니다.</div>'; return; }
+  box.innerHTML=items.map((r,i)=>{
+    const ref={target:r.target||(LINK_MODE==='prec'?'prec':'eflaw'),law_name:r.name||'',law_id:r.law_id||'',mst:r.mst||'',article:'',effective_date:r.effective_date||''};
+    window._linkRes=window._linkRes||[]; window._linkRes[i]=ref;
+    const tag=esc(r.target_label||(LINK_MODE==='prec'?'판례':'법령'));
+    return `<div class="resItem">
+      <div class="info" onclick="openInReader(window._linkRes[${i}],'')"><div class="rTitle">${LINK_MODE==='prec'?'⚖ ':''}${esc(r.name||'')}</div>
+        <div class="rMeta"><span class="rTag">${tag}</span>${esc(r.department||'')}${r.effective_date?(' · '+esc(r.effective_date)):''}</div></div>
+      <button class="addBtn" onclick="addRefFromRes(${i},this)">＋연결</button>
+    </div>`;
+  }).join('');
+}
+function addRefFromRes(i,btn){
+  const r=(window._linkRes||[])[i]; if(!r)return;
+  addPending(r); if(btn){ btn.textContent='추가됨'; btn.classList.add('done'); }
+}
+function addPending(ref){
+  const key=[ref.target,ref.law_id,ref.mst,ref.law_name,ref.article].join('|');
+  if(PENDING.some(r=>[r.target,r.law_id,r.mst,r.law_name,r.article].join('|')===key)){ toast('이미 추가됨'); return; }
+  PENDING.push(ref); renderPending(); toast('연결 대상에 추가 — 메모 저장 시 함께 연결됩니다');
+  $('secLink').open=true; $('secMemo').open=true;
+}
+function renderPending(){
+  $('linkCnt').textContent = PENDING.length?PENDING.length:'';
+  $('pendChips').innerHTML = PENDING.map((r,i)=>`<span class="chip ${r.target==='prec'?'prec':''}"><span class="lbl">${esc((r.target==='prec'?'⚖ ':'')+(r.law_name||'연결'))}${r.article?(' '+esc(r.article)):''}</span><button class="x" onclick="rmPending(${i})" title="제거">×</button></span>`).join('');
+}
+function rmPending(i){ PENDING.splice(i,1); renderPending(); }
+
+/* ===== 관련 판례(자동) ===== */
+let _precCache={};
+async function loadPrecForSel(){
+  const c=SEL&&SEL.ctx; const body=$('precBody');
+  if(!c){ body.innerHTML='<div class="empty">조문을 선택하세요.</div>'; return; }
+  const cacheKey=(c.law_name||'')+'|'+(c.article||'');
+  if(_precCache[cacheKey]){ renderPrec(_precCache[cacheKey]); return; }
+  body.innerHTML='<div class="empty">불러오는 중…</div>';
+  let d; try{ d=await(await fetch('/api/article_precedents?'+new URLSearchParams({law:c.law_name||'',art:c.article||''}))).json(); }
+  catch(e){ body.innerHTML='<div class="empty">불러오기 실패</div>'; return; }
+  if(!d.available){ body.innerHTML='<div class="empty">이 법령은 판례 인덱스가 없습니다.</div>'; $('precCnt').textContent=''; return; }
+  _precCache[cacheKey]=d; renderPrec(d);
+}
+function precCardHtml(p,tier){
+  window._precItems=window._precItems||[]; const i=window._precItems.push(p)-1;
+  const rel=tier==='direct'?'<span class="precRel d">직접</span>':tier==='near'?'<span class="precRel n">근접</span>':'<span class="precRel r">관련</span>';
+  const dd=(p.decided||'').toString(); const dt=/^\d{8}$/.test(dd)?(dd.slice(0,4)+'.'+dd.slice(4,6)+'.'+dd.slice(6,8)):dd;
+  return `<div class="precCard" onclick="openPrec(${i})" title="클릭=새 리더로 판례 열기">
+    <div class="precTop">${rel} <b>${esc(p.court||'')}</b> ${esc(p.case_no||'')} <span>${esc(dt)}</span>
+      <button class="addBtn" style="margin-left:auto" onclick="event.stopPropagation();addPrecRef(${i},this)">＋연결</button></div>
+    <div class="precName">${esc(p.case_name||'')}</div>
+    ${p.summary?`<div class="precSum">${esc(p.summary)}</div>`:''}
+  </div>`;
+}
+function renderPrec(d){
+  window._precItems=[];
+  const dir=d.direct||[],near=d.near||[],rel=d.related||[];
+  $('precCnt').textContent = dir.length?dir.length:'';
+  const grp=(t,arr,tier)=>arr.length?`<div class="precGrpHdr">${t} (${arr.length})</div>`+arr.map(p=>precCardHtml(p,tier)).join(''):'';
+  const h=grp('🟢 직접',dir,'direct')+grp('🟡 근접',near,'near')+grp('⚪ 관련',rel,'related');
+  $('precBody').innerHTML = (dir.length+near.length+rel.length)?h:'<div class="empty">이 조문에 연결된 판례가 없습니다.</div>';
+}
+function openPrec(i){ const p=(window._precItems||[])[i]; if(!p)return;
+  openInReader({target:'prec',law_id:p.prec_id,mst:p.prec_id,name:((p.case_no?p.case_no+' ':'')+(p.case_name||'판례'))},''); }
+function addPrecRef(i,btn){ const p=(window._precItems||[])[i]; if(!p)return;
+  addPending({target:'prec',law_name:((p.case_no?p.case_no+' ':'')+(p.case_name||'판례')),law_id:p.prec_id,mst:p.prec_id,article:''});
+  if(btn){btn.textContent='추가됨';btn.classList.add('done');} }
+
+/* 조문별 판례 수 배지 */
+async function loadPrecBadges(){
+  try{
+    const d=await(await fetch('/api/article_prec_counts?law='+encodeURIComponent(LAW_NAME))).json();
+    if(!d.available||!d.counts)return;
+    const norm=s=>{const m=(s||'').match(/제?\s*(\d+)\s*조(?:\s*의\s*(\d+))?/);return m?('제'+m[1]+'조'+(m[2]?'의'+m[2]:'')):(s||'');};
+    ARTS.forEach((a,ai)=>{ const cnt=d.counts[norm(a.number)]; const el=$('artprec-'+ai);
+      if(cnt&&el){ el.textContent='⚖ '+cnt; el.style.display=''; el.title=a.number+' 관련 판례 '+cnt+'건'; } });
+  }catch(e){}
+}
+function gotoPrecFor(ai){
+  let segs=ARTS[ai].segments||[]; if(!segs.length&&ARTS[ai].body)segs=[{level:'조',article:ARTS[ai].number,text:ARTS[ai].body}];
+  if(segs.length){ selectUnit(ai,0); $('secPrec').open=true; $('secPrec').scrollIntoView({behavior:'smooth',block:'nearest'}); }
+}
+
+/* ===== 관련 법령(본문 인용 하이퍼링크) 버튼 ===== */
+function renderArticleRefs(ai){
+  const a=ARTS[ai]; const links=Array.isArray(a.links)?a.links:[];
+  $('refCnt').textContent = links.length?links.length:'';
+  if(!links.length){ $('refBody').innerHTML='<div class="empty">이 조문에는 본문 인용 링크가 없습니다.</div>'; return; }
+  window._artLinks=links;
+  $('refBody').innerHTML='<div class="refBtns">'+links.map((lk,i)=>{
+    const t=(lk.text||'').replace(/\s+/g,' ').trim();
+    return `<button class="refChip" onclick="openArtLink(${i})" title="새 리더로 열기">${esc(t)}${lk.jo?(' '+esc(lk.jo)):''}</button>`;
+  }).join('')+'</div>';
+}
+function openArtLink(i){ const lk=(window._artLinks||[])[i]; if(!lk)return; onRefClickObj(lk); }
+
+/* ===== 인용 링크 해석 → 새 리더 팝업 ===== */
+async function resolveByName(name){
+  if(!name)return null;
+  try{ const p=new URLSearchParams({query:name}); p.append('targets','eflaw'); p.set('display','10');
+    const d=await(await fetch('/api/title_search?'+p)).json(); const items=d.items||[];
+    const flat=s=>(s||'').replace(/\s+/g,''); const hit=items.find(x=>flat(x.name)===flat(name))||items[0];
+    if(hit)return {mst:hit.mst,law_id:hit.law_id||hit.mst,name:hit.name,target:hit.target||'eflaw',efyd:hit.effective_date||''};
+  }catch(e){}
+  return null;
+}
+async function refTarget(seq){
+  try{ const rt=await(await fetch('/api/ref_target?seq='+encodeURIComponent(seq))).json();
+    if(!rt.ok)return null;
+    if(rt.mst)return {mst:rt.mst,law_id:rt.mst,name:rt.law_name,jo:rt.jo,target:'eflaw'};
+    if(rt.by_name&&rt.law_name){const t=await resolveByName(rt.law_name);if(t){t.jo=rt.jo||'';return t;}}
+  }catch(e){}
+  return null;
+}
+function onRefClick(el){ onRefClickObj({
+  law_id:el.dataset.lawid||'', is_ordin:el.dataset.isordin==='1', jo:el.dataset.jo||'',
+  seq:el.dataset.seq||'', type:el.dataset.type||'', text:el.dataset.text||el.textContent||''}, el); }
+async function onRefClickObj(lk, el){
+  if(el){ if(el.classList.contains('refLoading'))return; el.classList.add('refLoading'); }
+  try{
+    const raw=(lk.text||'').trim();
+    const cleanName=raw.replace(/[「」]/g,'').replace(/\s*제\d+조.*$/,'').trim();
+    let tgt=null, jo=lk.jo||'';
+    if(lk.law_id){
+      tgt={target:lk.is_ordin?'ordin':'eflaw', law_id:lk.law_id, mst:'', name:cleanName||raw||'법령'};
+    }else if(lk.seq){
+      tgt=await refTarget(lk.seq); if(tgt)jo=jo||tgt.jo||'';
+      if(!tgt&&cleanName)tgt=await resolveByName(cleanName);
+    }else if(/^「.+」$/.test(raw)){
+      tgt=await resolveByName(raw.replace(/[「」]/g,'').trim());
+    }else if(cleanName){
+      tgt=await resolveByName(cleanName);
+    }
+    if(!tgt||(!tgt.mst&&!tgt.law_id)){ toast('인용 대상 법령을 찾지 못했습니다: '+(cleanName||raw)); return; }
+    openInReader({target:tgt.target||'eflaw',law_id:tgt.law_id||tgt.mst||'',mst:tgt.mst||'',name:tgt.name||cleanName||'법령'}, jo);
+  }catch(e){ toast('인용 이동 실패'); }
+  finally{ if(el)el.classList.remove('refLoading'); }
+}
+function openInReader(row, art){
+  if(!row||(!row.mst&&!row.law_id)){ toast('열 수 없는 대상입니다'); return; }
+  const efyd=row.efyd||row.effective_date||'';
+  const u='/reader?'+new URLSearchParams({target:row.target||'eflaw',id:row.law_id||'',mst:row.mst||'',name:row.name||row.law_name||'',efyd,art:art||''});
+  window.open(u, 'lawreader_'+(row.mst||row.law_id||Math.random()), readerWin());
+}
+
+/* ===== 질문 모달 ===== */
+function buildPrompt(art, picks){
+  const head = `다음 법조문을 설명해줘.\n\n[${LAW_NAME}] ${art.number||''}${art.title?(' ('+art.title+')'):''}`;
+  const content = `\n\n■ 조문 내용:\n${art.body||''}`;
+  const reqs = picks.length ? ('\n\n■ 요청사항:\n'+picks.map(t=>'- '+t).join('\n')) : '';
+  return head+content+reqs;
+}
+function refreshPrompt(){
+  const picks = TEMPLATES.filter(t=>$('tpl_'+t.id).checked).map(t=>t.text);
+  $('prompt').value = buildPrompt(curAsk, picks);
+}
+function openAsk(idx){
+  const a = ARTS[idx]; if(!a) return;
+  curAsk = {number:a.number||'', title:a.title||'', body:a.body||(a.segments||[]).map(s=>s.text).join('\n')};
+  $('askWho').textContent = `${LAW_NAME}  ${a.number||''}${a.title?(' ('+a.title+')'):''}`;
+  $('tplBox').innerHTML = TEMPLATES.map(t=>
+    `<label><input type="checkbox" id="tpl_${t.id}" ${t.on?'checked':''} onchange="refreshPrompt()">
+      <span><span class="lt">${esc(t.lt)}</span><br><span class="ld">${esc(t.ld)}</span></span></label>`).join('');
+  refreshPrompt();
+  $('mask').classList.add('on');
+}
+function closeAsk(){ $('mask').classList.remove('on'); }
+async function copyText(text){
+  try{ if(navigator.clipboard && window.isSecureContext){ await navigator.clipboard.writeText(text); return true; } }catch(e){}
+  try{ const ta=document.createElement('textarea'); ta.value=text; ta.style.position='fixed'; ta.style.left='-9999px';
+    document.body.appendChild(ta); ta.focus(); ta.select(); const ok=document.execCommand('copy'); ta.remove(); return ok; }catch(e){ return false; }
+}
+async function doCopy(close){
+  const text = $('prompt').value;
+  const ok = await copyText(text);
+  let extra='';
+  if($('alsoInbox').checked){
+    try{
+      await fetch('/api/ask_inbox',{method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({law_name:LAW_NAME, article:curAsk.number, title:curAsk.title, prompt:text})});
+      extra=' · 인박스 저장됨';
+    }catch(e){ extra=' · (인박스 저장 실패)'; }
+  }
+  toast((ok?'✅ 클립보드에 복사됨 — Claude 창에 붙여넣기(Ctrl+V)':'복사 실패(직접 선택해 복사하세요)')+extra);
+  if(close && ok) closeAsk();
+}
+
+function linkify(t){ return esc(t||'').replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" class="refLink" target="_blank" rel="noopener">$1</a>'); }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape')closeAsk(); });
+
+load();
+</script>
+</body>
+</html>

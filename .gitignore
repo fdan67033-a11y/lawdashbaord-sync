@@ -1,0 +1,31 @@
+# ===== 대용량 데이터 / DB (코드와 분리 — 서버에서 별도 동기화) =====
+*.db
+*.db-wal
+*.db-shm
+data/cache/
+data/exams/
+data/exams_drm_staging/
+data/exams_text/
+data/exams_cards/
+data/exams_updated/
+study/
+
+# ===== 비밀키 / 로컬 설정 =====
+.env
+.claude/settings.local.json
+
+# ===== 생성 산출물 (재생성 가능·대용량) =====
+신탁_납세의무자_리더.html
+신탁_납세의무자_올타상담.md
+신탁_납세의무자_리딩팩.md
+
+# ===== 파이썬 / OS / 임시 =====
+__pycache__/
+*.pyc
+*.pyo
+~$*
+*.tmp
+scratch_*
+.venv/
+venv/
+node_modules/

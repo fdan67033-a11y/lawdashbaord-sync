@@ -1,0 +1,158 @@
+{
+  "last_study_screen": {
+    "version": 19,
+    "savedAt": "2026-05-28T02:40:00.888Z",
+    "form": {
+      "oc": "sp-law-study",
+      "query": "지방세법",
+      "page": "1",
+      "currentPage": 1,
+      "lawHistory": "3",
+      "efYdRange": "",
+      "poolSelect": "서무·복무·회계",
+      "usePool": false,
+      "targets": [
+        "eflaw"
+      ],
+      "grayDark": true,
+      "resultsHidden": true,
+      "titlePage": 1,
+      "resultPage": 1,
+      "notePage": 1,
+      "noteSort": "relevance",
+      "openTarget": 1,
+      "activePane": 1
+    },
+    "activeWs": 0,
+    "selectedPanePriority": [
+      1,
+      2
+    ],
+    "panes": {
+      "1": {
+        "row": {
+          "name": "지방세법",
+          "target": "eflaw",
+          "target_label": "현행법령(시행일)",
+          "api_target": "eflaw",
+          "law_id": "001649",
+          "mst": "282559",
+          "effective_date": "2026-04-24",
+          "department": "행정안전부",
+          "promulgation_date": "2025-12-31",
+          "promulgation_no": "21308",
+          "revision_type": "일부개정",
+          "detail_link": "/DRF/lawService.do?OC=sp-law-study&target=eflaw&MST=282559&type=HTML&mobileYn=&efYd=20260424"
+        },
+        "tabs": [
+          {
+            "id": "eflaw|001649|282559|지방세법",
+            "row": {
+              "name": "지방세법",
+              "target": "eflaw",
+              "target_label": "현행법령(시행일)",
+              "api_target": "eflaw",
+              "law_id": "001649",
+              "mst": "282559",
+              "effective_date": "2026-04-24",
+              "department": "행정안전부",
+              "promulgation_date": "2025-12-31",
+              "promulgation_no": "21308",
+              "revision_type": "일부개정",
+              "detail_link": "/DRF/lawService.do?OC=sp-law-study&target=eflaw&MST=282559&type=HTML&mobileYn=&efYd=20260424"
+            },
+            "ctx": {
+              "law_name": "지방세법",
+              "target": "eflaw",
+              "law_id": "001649",
+              "mst": "282559",
+              "article": "제7조",
+              "paragraph": "⑪",
+              "unit_level": "항",
+              "unit_text": "⑪ 배우자 또는 직계존비속의 부동산등을 취득하는 경우에는 증여로 취득한 것으로 본다. 다만, 다음 각 호의 어느 하나에 해당하는 경우에는 그 취득한 부동산등 전체를 유상으로 취득한 것으로 본다. <신설 2014.1.1, 2015.12.29, 2025.12.31>"
+            },
+            "selectedKey": "제7조|⑪|||항|⑪ 배우자 또는 직계존비속의 부동산등을 취득하는 경우에는 증여로 취득한 것으로 본다. 다만, 다음 각 호의 어느 하나에 해당하는 경우에는 그 취득한 부동산등 전체를 유상으로 취득한 것으로 본다. <신설 2014.1.1, 2015.12.29, 2025.12.31>"
+          }
+        ],
+        "activeTabId": "eflaw|001649|282559|지방세법",
+        "ctx": {
+          "law_name": "지방세법",
+          "target": "eflaw",
+          "law_id": "001649",
+          "mst": "282559",
+          "article": "제7조",
+          "paragraph": "⑪",
+          "unit_level": "항",
+          "unit_text": "⑪ 배우자 또는 직계존비속의 부동산등을 취득하는 경우에는 증여로 취득한 것으로 본다. 다만, 다음 각 호의 어느 하나에 해당하는 경우에는 그 취득한 부동산등 전체를 유상으로 취득한 것으로 본다. <신설 2014.1.1, 2015.12.29, 2025.12.31>"
+        },
+        "selectedKey": "제7조|⑪|||항|⑪ 배우자 또는 직계존비속의 부동산등을 취득하는 경우에는 증여로 취득한 것으로 본다. 다만, 다음 각 호의 어느 하나에 해당하는 경우에는 그 취득한 부동산등 전체를 유상으로 취득한 것으로 본다. <신설 2014.1.1, 2015.12.29, 2025.12.31>",
+        "insideFind": "",
+        "jumpJo": "",
+        "scrollTop": 3238,
+        "visible": true
+      },
+      "2": {
+        "row": {
+          "name": "건축법 시행규칙",
+          "target": "eflaw",
+          "target_label": "현행법령(시행일)",
+          "api_target": "eflaw",
+          "law_id": "006191",
+          "mst": "283727",
+          "effective_date": "2026-02-27",
+          "department": "국토교통부",
+          "promulgation_date": "2026-02-27",
+          "promulgation_no": "01567",
+          "revision_type": "일부개정",
+          "detail_link": "/DRF/lawService.do?OC=sp-law-study&target=eflaw&MST=283727&type=HTML&mobileYn=&efYd=20260227"
+        },
+        "tabs": [
+          {
+            "id": "eflaw|006191|283727|건축법 시행규칙",
+            "row": {
+              "name": "건축법 시행규칙",
+              "target": "eflaw",
+              "target_label": "현행법령(시행일)",
+              "api_target": "eflaw",
+              "law_id": "006191",
+              "mst": "283727",
+              "effective_date": "2026-02-27",
+              "department": "국토교통부",
+              "promulgation_date": "2026-02-27",
+              "promulgation_no": "01567",
+              "revision_type": "일부개정",
+              "detail_link": "/DRF/lawService.do?OC=sp-law-study&target=eflaw&MST=283727&type=HTML&mobileYn=&efYd=20260227"
+            },
+            "ctx": {
+              "law_name": "건축법 시행규칙",
+              "target": "eflaw",
+              "law_id": "006191",
+              "mst": "283727",
+              "unit_level": "법령"
+            },
+            "selectedKey": ""
+          }
+        ],
+        "activeTabId": "eflaw|006191|283727|건축법 시행규칙",
+        "ctx": {
+          "law_name": "건축법 시행규칙",
+          "target": "eflaw",
+          "law_id": "006191",
+          "mst": "283727",
+          "unit_level": "법령"
+        },
+        "selectedKey": "",
+        "insideFind": "",
+        "jumpJo": "",
+        "scrollTop": 442.6666564941406,
+        "visible": true
+      }
+    },
+    "scrolls": {
+      "resultList": 0,
+      "titleResults": 0,
+      "noteList": 0
+    },
+    "serverSavedAt": "2026-05-28T11:40:00.896484"
+  }
+}
