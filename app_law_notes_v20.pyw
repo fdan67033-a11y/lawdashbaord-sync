@@ -76,6 +76,15 @@ FORMS_DIR = DATA_DIR / "forms"
 GIJANG_MANUAL_PATH = BASE_DIR / "gijang_ordinances_manual.json"
 DB_PATH = DATA_DIR / "dashboard.db"
 POOLS_PATH = DATA_DIR / "law_pools.json"
+
+# 회독·노트 git 동기화 모듈(sync_util.py) — 없거나 실패해도 앱은 동작
+import sys as _sys
+if str(BASE_DIR) not in _sys.path:
+    _sys.path.insert(0, str(BASE_DIR))
+try:
+    import sync_util
+except Exception:
+    sync_util = None
 UI_STATE_PATH = DATA_DIR / "ui_state.json"
 HANJA_DICT_PATH = BASE_DIR / "hanja_dict.json"
 DATA_DIR.mkdir(exist_ok=True)
@@ -3537,6 +3546,38 @@ def api_article_yegyu() -> Response:
     items = idx.get((canon, level, art_base), []) if canon else []
     return jsonify({"ok": True, "available": bool(canon), "law": canon, "art": art_base,
                     "count": len(items), "items": items})
+
+
+# ---------------------------------------------------------------------------
+# 회독·노트 git 동기화 (sync_util.py) — 킬 때 pull / 종료 시 push + 인앱 토글
+# ---------------------------------------------------------------------------
+@app.route("/api/sync/status")
+def api_sync_status() -> Response:
+    if not sync_util:
+        return jsonify({"ok": True, "available": False})
+    cfg = sync_util.load_config()
+    remote = sync_util.has_remote()
+    _, porcelain = sync_util._git("status", "--porcelain")
+    return jsonify({"ok": True, "available": True, "auto": bool(cfg.get("auto")),
+                    "last_sync": cfg.get("last_sync"), "has_remote": remote,
+                    "dirty": bool(porcelain.strip())})
+
+
+@app.route("/api/sync/toggle", methods=["POST"])
+def api_sync_toggle() -> Response:
+    if not sync_util:
+        return jsonify({"ok": False, "error": "sync 모듈 없음"})
+    cfg = sync_util.load_config()
+    cfg["auto"] = bool((request.get_json(force=True) or {}).get("on"))
+    sync_util.save_config(cfg)
+    return jsonify({"ok": True, "auto": cfg["auto"]})
+
+
+@app.route("/api/sync/now", methods=["POST"])
+def api_sync_now() -> Response:
+    if not sync_util:
+        return jsonify({"ok": False, "error": "sync 모듈 없음"})
+    return jsonify(sync_util.do_sync())
 
 
 @app.route("/api/pools", methods=["GET", "POST"])

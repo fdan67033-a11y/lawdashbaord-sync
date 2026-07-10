@@ -937,6 +937,18 @@ body.grayDark .lawHeader.section{background:#3b4047;color:#cbd2dc}
       <div class="section" style="padding-top:8px;border-top:0"><input id="oc" placeholder="발급받은 OC 키 입력"></div>
     </details>
 
+    <details class="ocBox syncBox" id="syncBox">
+      <summary>🔄 동기화 <span class="mini" id="syncBadge"></span></summary>
+      <div class="section" style="padding-top:8px;border-top:0">
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer">
+          <input type="checkbox" id="syncAuto" onchange="toggleSyncAuto(this.checked)"> 자동 동기화
+          <span class="mini">(킬 때 pull · 닫을 때 push)</span>
+        </label>
+        <div style="margin-top:7px"><button class="small" id="syncNowBtn" onclick="syncNow()">🔄 지금 동기화</button></div>
+        <div class="mini" id="syncStatus" style="margin-top:6px;line-height:1.5">상태 확인 중…</div>
+      </div>
+    </details>
+
     <h2>법령명 검색 결과</h2>
     <div class="titleResults" id="titleResults"><div class="empty">검색하면 이곳에 법령명 검색 결과가 표시됩니다.</div></div><div class="titlePager" id="titlePager"><button onclick="changeTitlePage(-1)">이전</button><span class="pageNow" id="titlePageNow">1</span><button onclick="changeTitlePage(1)">다음</button></div>
     <div id="status" class="status">대기 중입니다.</div>
@@ -1481,9 +1493,41 @@ async function init(){
   initSplitters();
   toggleResults(false);
   loadHanjaDict();
+  loadSyncStatus();
   if(localStorage.getItem('notesCollapsed')!=='0')$('rightPanel')?.classList.add('collapsed');renderWorkspaces();syncRightSplitter();
   if(!(await maybeOpenFromUrl())) await restoreLastSession();
   setTimeout(()=>{$('query')?.focus();$('query')?.select();},120);
+}
+/* ===== 회독·노트 동기화 (git) ===== */
+async function loadSyncStatus(){
+  try{
+    const d=await(await fetch('/api/sync/status')).json();
+    const st=$('syncStatus'), badge=$('syncBadge'), auto=$('syncAuto');
+    if(!st) return;
+    if(!d.available){ st.textContent='sync 모듈 없음'; if(badge)badge.textContent=''; return; }
+    if(auto) auto.checked=!!d.auto;
+    if(badge) badge.textContent=d.auto?'ON':'';
+    const parts=[d.has_remote?'원격 연결됨':'⚠ 원격 없음'];
+    if(d.last_sync) parts.push('마지막: '+d.last_sync);
+    if(d.dirty) parts.push('※ 미저장 변경 있음');
+    st.innerHTML=parts.join('<br>');
+  }catch(e){ const st=$('syncStatus'); if(st) st.textContent='상태 조회 실패'; }
+}
+async function toggleSyncAuto(on){
+  try{ await fetch('/api/sync/toggle',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({on:!!on})}); }catch(e){}
+  setStatus(on?'자동 동기화 켬 — 킬 때 pull / 닫을 때 push':'자동 동기화 끔');
+  loadSyncStatus();
+}
+async function syncNow(){
+  const btn=$('syncNowBtn'), st=$('syncStatus');
+  if(btn){ btn.disabled=true; btn.textContent='동기화 중…'; }
+  if(st) st.textContent='pull → push 진행 중…';
+  try{
+    const d=await(await fetch('/api/sync/now',{method:'POST'})).json();
+    setStatus(d.ok?'✅ 동기화 완료':'⚠ 동기화 일부 실패(콘솔 로그 확인)', !d.ok);
+  }catch(e){ setStatus('동기화 실패: '+(e.message||e), true); }
+  if(btn){ btn.disabled=false; btn.textContent='🔄 지금 동기화'; }
+  loadSyncStatus();
 }
 function renderTargets(selected){const box=$('targetBox');const set=new Set(selected||['eflaw']);const targets=(state.targets&&Object.keys(state.targets).length)?state.targets:FALLBACK_TARGETS;box.innerHTML='';for(const [k,v] of Object.entries(targets)){const lab=typeof v==='string'?v:(v.label||k);box.insertAdjacentHTML('beforeend',`<label class="check"><input type="checkbox" name="target" value="${k}" ${set.has(k)?'checked':''}> ${esc(lab)}</label>`)}if(!box.innerHTML)box.innerHTML='<div class="mini">검색대상 표시 실패</div>'}
 function setTargetPreset(mode){

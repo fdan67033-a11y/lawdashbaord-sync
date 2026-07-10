@@ -14,6 +14,7 @@ study/
 .env
 .claude/settings.local.json
 data/ui_state.json
+data/sync/sync_config.json
 scraper/samples/
 *.log
 
