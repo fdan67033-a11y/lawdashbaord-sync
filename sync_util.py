@@ -53,7 +53,7 @@ def export_data():
     SYNC_DIR.mkdir(parents=True, exist_ok=True)
     con = sqlite3.connect(DB_PATH)
     con.row_factory = sqlite3.Row
-    data = {"_meta": {"exported_at": _now()}}
+    data = {}  # 타임스탬프 등 넣지 않음 → 데이터 동일하면 파일 동일 → 불필요한 커밋 방지
     try:
         existing = {r[0] for r in con.execute("SELECT name FROM sqlite_master WHERE type='table'")}
         for t in TABLES:
