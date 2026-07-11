@@ -4598,6 +4598,48 @@ def health() -> Response:
     return jsonify({"ok": True, "db": str(DB_PATH), "cache_dir": str(CACHE_DIR), "pools": str(POOLS_PATH)})
 
 
+# ── 한자 엔진(형태소+161k 대사전) 즉석 변환: gold 미보유 세그먼트 폴백 ──────
+_HJ_ENGINE = {"fn": None, "err": None}
+
+
+def _load_hanja_engine():
+    """hanja_engine(형태소 기반 로컬 변환기)을 지연 로드. DB/파일에 아무것도 쓰지 않는다."""
+    if _HJ_ENGINE["fn"] is not None or _HJ_ENGINE["err"] is not None:
+        return
+    try:
+        import sys as _sys
+        eng_dir = str(BASE_DIR.parent / "hanja_engine")
+        if eng_dir not in _sys.path:
+            _sys.path.insert(0, eng_dir)
+        from convert import convert_text as _ct  # noqa
+        _ct("초기화")  # kiwi/사전 웜업
+        _HJ_ENGINE["fn"] = _ct
+    except Exception as e:  # 엔진 미설치 등 — 대시보드 본기능엔 영향 없음
+        _HJ_ENGINE["err"] = str(e)
+
+
+@app.route("/api/hanja/convert", methods=["POST"])
+def api_hanja_convert() -> Response:
+    """텍스트 배열을 로컬 엔진으로 즉석 국한문 변환. 어디에도 저장하지 않음(임시).
+    gold한자 버튼이 gold 맵에 없는 세그먼트를 채울 때 사용(빈틈없는 변환)."""
+    _load_hanja_engine()
+    if _HJ_ENGINE["fn"] is None:
+        return jsonify({"ok": False, "error": f"엔진 로드 실패: {_HJ_ENGINE['err']}"}), 500
+    payload = request.get_json(force=True, silent=True) or {}
+    texts = payload.get("texts") or []
+    outputs, flagged = [], []
+    for t in texts:
+        try:
+            r = _HJ_ENGINE["fn"](str(t))
+            outputs.append(r["output"])
+            if r.get("homographs") or r.get("unknown"):
+                flagged.append({"text": str(t)[:60], "homographs": r.get("homographs", []),
+                                "unknown": r.get("unknown", [])})
+        except Exception:
+            outputs.append(str(t))  # 실패 시 원문 유지(안전)
+    return jsonify({"ok": True, "outputs": outputs, "flagged": flagged[:50]})
+
+
 # ── 문제(기출) 대시보드: study/ 폴더를 /quiz 로 서빙 ───────────────────────
 QUIZ_DIR = BASE_DIR / "study"
 

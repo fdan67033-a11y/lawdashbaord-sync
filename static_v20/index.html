@@ -1965,7 +1965,8 @@ async function toggleHanjaConv(n){
       p.hanjaConvKey=key;
     }
     p.hanjaConvOn=true;p.hanjaOn=false;
-    setStatus(`漢字 변환(국한문 혼용) 표시 — 사전 ${Object.keys(state.hanjaDict||{}).length}개 적용. 미수록 단어는 한글로 남습니다.`);
+    await fillConvMapGaps(p);
+    setStatus(`gold한자 표시 — Claude gold 정답 우선, 미보유분은 로컬 엔진(161k 대사전) 보완.`);
   }else{p.hanjaConvOn=false;}
   const cb=document.getElementById('hjConvBtn'+n);if(cb)cb.classList.toggle('active',p.hanjaConvOn);
   const hb=document.getElementById('hanjaBtn'+n);if(hb)hb.classList.toggle('active',p.hanjaOn);
@@ -1980,6 +1981,33 @@ async function refreshHanjaConvMapIfStale(p){
   try{const d=await(await fetch('/api/hanja/law?law_key='+encodeURIComponent(key))).json();p.hanjaConvMap=d.map||{};}
   catch(e){p.hanjaConvMap={};}
   p.hanjaConvKey=key;
+  await fillConvMapGaps(p);
+}
+async function fillConvMapGaps(p){
+  // gold 맵에 없는 세그먼트를 로컬 엔진(형태소+161k 대사전)으로 즉석 변환해 메모리에만 병합.
+  // gold 우선(교사 정답), 나머지는 엔진 — '빈틈없는' gold한자 표시. 저장 안 함.
+  if(!p.hanjaConvOn||!p.detail)return;
+  const norm=t=>(t||'').replace(/\s+/g,' ').trim();
+  const seen=new Set(), missing=[];
+  for(const a of (p.detail.articles||[])){
+    const cand=[a.title||''];
+    for(const s of (a.segments||[]))cand.push(s.text||'');
+    for(const t0 of cand){
+      const t=norm(t0); if(!t||seen.has(t))continue; seen.add(t);
+      const nf=t.normalize?t.normalize('NFC'):t;
+      if(p.hanjaConvMap[t]==null&&p.hanjaConvMap[nf]==null)missing.push(t);
+    }
+  }
+  if(!missing.length)return;
+  setStatus(`gold 미보유 ${missing.length}개 세그먼트를 엔진 변환 중…`);
+  try{
+    const d=await(await fetch('/api/hanja/convert',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({texts:missing})})).json();
+    if(d.ok&&Array.isArray(d.outputs)){
+      let filled=0;
+      missing.forEach((t,i)=>{const o=d.outputs[i];if(o&&o!==t){p.hanjaConvMap[t]=o;filled++;}});
+      setStatus(`gold한자 표시 — gold 정답 + 엔진 보완 ${filled}개 세그먼트`);
+    }else{setStatus('엔진 변환 실패: '+(d.error||'알 수 없음')+' — gold 보유분만 표시',true);}
+  }catch(e){setStatus('엔진 변환 실패: '+e+' — gold 보유분만 표시',true);}
 }
 function annotateHanja(root){
   if(!root||!state.hanjaReSrc)return;
