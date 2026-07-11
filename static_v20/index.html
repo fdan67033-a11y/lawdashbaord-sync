@@ -1913,7 +1913,7 @@ function renderPaneBody(n){
     html=`<div class="detailSearchHint">현재 법령 안 검색: ${matchArticleCount}개 조문 / ${matchUnitCount}개 조항호목 표시${annexHtml?' / 별표·서식 포함':''}</div>`+html;
   }
   if(html&&html.indexOf('class="article"')>=0){
-    html=`<div class="artCopyBar"><label class="artAll"><input type="checkbox" onchange="selectAllArts(${n},this.checked)"> 전체 선택</label><button class="small artCopyBtn" onclick="copySelectedArts(${n})">선택 조문 복사 <span class="selCnt" id="selCount${n}">0</span></button><button class="small ${p.hanjaConvOn?'active':''}" id="hjConvBtn${n}" onclick="toggleHanjaConv(${n})" title="이 법령의 한자 변환판(국한문 혼용) 보기/끄기. Claude가 저장한 완전변환 결과가 있으면 그것을 사용">漢字 변환</button><button class="small" onclick="reqHanjaConvert(${n})" title="이 법령 전 조문을 Claude가 빈틈없이 국한문 혼용으로 변환하도록 요청(큐 저장). 이후 채팅에서 '한자 변환해줘' 하면 변환·저장됨">🈶 Claude변환요청</button><button class="small printBtn" onclick="openPrintPreview(${n})" title="선택한 조문 인쇄·미리보기·PDF·내보내기">🖨 인쇄</button><button class="small" onclick="openReader(${n})" title="이 법령을 보기 좋은 테마의 전체화면 리더로 열기(조문 아래 노트 인라인 + 조문별 Claude 질문)">🖥 전체화면</button></div>`+html;
+    html=`<div class="artCopyBar"><label class="artAll"><input type="checkbox" onchange="selectAllArts(${n},this.checked)"> 전체 선택</label><button class="small artCopyBtn" onclick="copySelectedArts(${n})">선택 조문 복사 <span class="selCnt" id="selCount${n}">0</span></button><button class="small ${p.hanjaConvOn?'active':''}" id="hjConvBtn${n}" onclick="toggleHanjaConv(${n})" title="이 법령의 gold 한자 변환판(국한문 혼용) 보기/끄기. Claude가 만들어 저장한 완전변환(gold) 결과를 사용">gold한자</button><button class="small" onclick="reqHanjaConvert(${n})" title="이 법령 전 조문을 Claude가 빈틈없이 국한문 혼용으로 변환하도록 요청(큐 저장). 이후 채팅에서 '한자 변환해줘' 하면 변환·저장됨">🈶 Claude변환요청</button><button class="small printBtn" onclick="openPrintPreview(${n})" title="선택한 조문 인쇄·미리보기·PDF·내보내기">🖨 인쇄</button><button class="small" onclick="openReader(${n})" title="이 법령을 보기 좋은 테마의 전체화면 리더로 열기(조문 아래 노트 인라인 + 조문별 Claude 질문)">🖥 전체화면</button></div>`+html;
   }
   wrap.innerHTML=html+annexHtml;
   if(p.hanjaOn)annotateHanja(wrap);
@@ -1943,7 +1943,7 @@ function toggleHanja(n){
 }
 function hjLawKey(row){return [(row&&row.law_id)||'',(row&&row.mst)||''].join('|');}
 function hjMixWord(text){if(!text||!state.hanjaRe)return text||'';state.hanjaRe.lastIndex=0;return text.replace(state.hanjaRe,m=>(state.hanjaDict&&state.hanjaDict[m])||m);}
-function hjMix(text,convMap){if(convMap&&convMap[text]!=null)return convMap[text];return hjMixWord(text);}
+function hjMix(text,convMap){if(convMap){if(convMap[text]!=null)return convMap[text];if(text&&text.normalize){const nf=text.normalize('NFC');if(nf!==text&&convMap[nf]!=null)return convMap[nf];}}return hjMixWord(text);}
 async function reqHanjaConvert(n){
   const p=pane(n); if(!p.row){setStatus('먼저 법령을 여세요.',true);return;}
   const r=p.row; const name=r.name||(p.detail&&p.detail.metadata&&p.detail.metadata.law_name)||'';
