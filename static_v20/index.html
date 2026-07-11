@@ -1741,7 +1741,7 @@ function caseToolButtons(p){
   return out;
 }
 function tabId(row){return [row?.target||'',row?.law_id||'',row?.mst||'',row?.name||''].join('|')}
-async function openLaw(row,targetPane,match){if(!row)return;const n=targetPane||1;ensurePaneVisible(n);state.activePane=n;const p=pane(n);const id=tabId(row);let t=p.tabs.find(x=>x.id===id);if(t){p.activeTabId=id;p.row=t.row;p.detail=t.detail;p.ctx=t.ctx;p.selectedKey=t.selectedKey||'';saveWorkspace();renderPane(n);if(match)focusMatchInPane(n,match);else loadThreadNotes();return}p.row=row;p.detail=null;p.ctx={law_name:row.name||'',target:row.target||'',law_id:row.law_id||'',mst:row.mst||'',article:'',paragraph:'',ho:'',mok:'',unit_level:'법령',unit_text:''};p.selectedKey='';renderPane(n,true);const params=new URLSearchParams({oc:$('oc').value.trim(),target:row.target||'eflaw',id:row.law_id||'',mst:row.mst||'',effective_date:row.effective_date||'',law_name:row.name||''});const d=await(await fetch('/api/detail?'+params)).json();if(!d.ok){$(`articleWrap${n}`).innerHTML=`<div class="empty">${esc(d.error||'상세 조회 실패')}</div>`;return}p.detail=preferPrecDetail(row,d.normalized);if(p.detail?.metadata?.law_name){p.ctx.law_name=p.detail.metadata.law_name;const mn=p.detail.metadata.law_name;if(!row.name||/^(제\d+조|같은\s|이\s법|전조)/.test(row.name)){row.name=mn;p.row.name=mn;}}p.activeTabId=id;p.tabs.push({id,row:p.row,detail:p.detail,ctx:p.ctx,selectedKey:''});saveWorkspace();renderPane(n);if(match)focusMatchInPane(n,match);else loadThreadNotes();}
+async function openLaw(row,targetPane,match){if(!row)return;const n=targetPane||1;ensurePaneVisible(n);state.activePane=n;const p=pane(n);const id=tabId(row);let t=p.tabs.find(x=>x.id===id);if(t){p.activeTabId=id;p.row=t.row;p.detail=t.detail;p.ctx=t.ctx;p.selectedKey=t.selectedKey||'';await refreshHanjaConvMapIfStale(p);saveWorkspace();renderPane(n);if(match)focusMatchInPane(n,match);else loadThreadNotes();return}p.row=row;p.detail=null;p.ctx={law_name:row.name||'',target:row.target||'',law_id:row.law_id||'',mst:row.mst||'',article:'',paragraph:'',ho:'',mok:'',unit_level:'법령',unit_text:''};p.selectedKey='';renderPane(n,true);const params=new URLSearchParams({oc:$('oc').value.trim(),target:row.target||'eflaw',id:row.law_id||'',mst:row.mst||'',effective_date:row.effective_date||'',law_name:row.name||''});const d=await(await fetch('/api/detail?'+params)).json();if(!d.ok){$(`articleWrap${n}`).innerHTML=`<div class="empty">${esc(d.error||'상세 조회 실패')}</div>`;return}p.detail=preferPrecDetail(row,d.normalized);if(p.detail?.metadata?.law_name){p.ctx.law_name=p.detail.metadata.law_name;const mn=p.detail.metadata.law_name;if(!row.name||/^(제\d+조|같은\s|이\s법|전조)/.test(row.name)){row.name=mn;p.row.name=mn;}}p.activeTabId=id;p.tabs.push({id,row:p.row,detail:p.detail,ctx:p.ctx,selectedKey:''});await refreshHanjaConvMapIfStale(p);saveWorkspace();renderPane(n);if(match)focusMatchInPane(n,match);else loadThreadNotes();}
 function renderPane(n,loading=false){const p=pane(n);const el=$(`pane${n}`);const z=paneZoom(n);el.innerHTML=`<div class="panel paneInner"><div class="tabBar" id="tabBar${n}">${p.tabs.map(t=>`<div class="lawTab ${t.id===p.activeTabId?'active':''}" onclick="activateTab(${n},'${encodeURIComponent(t.id)}')"><span class="paneBadge">${n}</span><span class="lawTabName">${esc(t.row?.name||'법령')}</span><button class="lawTabClose" onclick="event.stopPropagation();closeTab(${n},'${encodeURIComponent(t.id)}')">×</button></div>`).join('')}</div><div class="paneHead"><div class="paneTop"><div><div class="paneTitle">${esc(p.row?.name||`${n}번 법령창`)}</div><div class="meta">${esc(p.row?.target_label||'')} · ${esc(p.row?.department||'')} · 시행 ${esc(p.row?.effective_date||'')}</div></div><div class="paneBtns">${paneZoomControls(n)}${precOriginalButtons(p)}${caseToolButtons(p)}<button class="small ${p.hanjaOn?'active':''}" id="hanjaBtn${n}" onclick="toggleHanja(${n})" title="한자 루비 병기 켜기/끄기 (漢字)">漢</button><button class="small" onclick="copyPaneFullText(${n})" title="이 법령창에 열린 문서 전체를 복사">전체복사</button><button class="small" onclick="setOpenTarget(${n})">여기에 열기</button><button class="small" onclick="clearPane(${n})">닫기</button></div></div><div class="paneControls"><input id="insideFind${n}" placeholder="입력하면 포함 조문만 표시" oninput="renderPaneBody(${n})"><input id="jumpJo${n}" placeholder="예: 11 또는 제11조"><button onclick="jumpArticle(${n})">이동</button></div></div><div class="articleWrap" id="articleWrap${n}" style="--pane-font-size:${z}px">${loading?'<div class="empty">상세 본문을 불러오는 중...</div>':''}</div></div>`;if(!loading)renderPaneBody(n);updateNoteContext();}
 
 function lawFileUrl(u){
@@ -1970,6 +1970,16 @@ async function toggleHanjaConv(n){
   const cb=document.getElementById('hjConvBtn'+n);if(cb)cb.classList.toggle('active',p.hanjaConvOn);
   const hb=document.getElementById('hanjaBtn'+n);if(hb)hb.classList.toggle('active',p.hanjaOn);
   renderPaneBody(n);
+}
+async function refreshHanjaConvMapIfStale(p){
+  // 탭 전환/새 법령 열기 시 이전 법령의 hanjaConvMap이 남아있으면(law_key 불일치)
+  // 漢字 변환이 켜진 상태에서도 세그먼트가 전부 미스매치되어 룰 엔진으로만 렌더된다.
+  if(!p.hanjaConvOn||!p.row)return;
+  const key=hjLawKey(p.row);
+  if(p.hanjaConvKey===key)return;
+  try{const d=await(await fetch('/api/hanja/law?law_key='+encodeURIComponent(key))).json();p.hanjaConvMap=d.map||{};}
+  catch(e){p.hanjaConvMap={};}
+  p.hanjaConvKey=key;
 }
 function annotateHanja(root){
   if(!root||!state.hanjaReSrc)return;
@@ -2336,7 +2346,9 @@ async function copyPaneFullText(n){
   await writeClipboardText(text, `「${name}」 전체 본문을 복사했습니다.`);
 }
 
-function activateTab(n,enc){const p=pane(n),id=decodeURIComponent(enc),t=p.tabs.find(x=>x.id===id);if(!t)return;p.activeTabId=id;p.row=t.row;p.detail=t.detail;p.ctx=t.ctx;p.selectedKey=t.selectedKey||'';state.activePane=n;renderPane(n);loadThreadNotes();if(window.onUnitSelected)onUnitSelected();}
+async function activateTab(n,enc){const p=pane(n),id=decodeURIComponent(enc),t=p.tabs.find(x=>x.id===id);if(!t)return;p.activeTabId=id;p.row=t.row;p.detail=t.detail;p.ctx=t.ctx;p.selectedKey=t.selectedKey||'';state.activePane=n;
+  await refreshHanjaConvMapIfStale(p);
+  renderPane(n);loadThreadNotes();if(window.onUnitSelected)onUnitSelected();}
 function closeTab(n,enc){const p=pane(n),id=decodeURIComponent(enc),i=p.tabs.findIndex(x=>x.id===id);if(i<0)return;p.tabs.splice(i,1);if(p.activeTabId===id){if(p.tabs.length){p.activeTabId=p.tabs[0].id;activateTab(n,encodeURIComponent(p.activeTabId));}else clearPane(n)}else renderPane(n)}
 function clearPane(n){const p=pane(n);p.tabs=[];p.activeTabId=null;p.row=null;p.detail=null;p.ctx=null;p.selectedKey='';if(n>1){$(`pane${n}`).classList.add('emptyOptional');$(`split${n-1}${n}`).style.display='none'}renderPane(n);resizePaneFlex()}
 function selectUnit(n,ai,si){
