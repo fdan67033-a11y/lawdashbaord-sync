@@ -4598,6 +4598,51 @@ def health() -> Response:
     return jsonify({"ok": True, "db": str(DB_PATH), "cache_dir": str(CACHE_DIR), "pools": str(POOLS_PATH)})
 
 
+# ── 문제(기출) 대시보드: study/ 폴더를 /quiz 로 서빙 ───────────────────────
+QUIZ_DIR = BASE_DIR / "study"
+
+
+@app.route("/quiz")
+@app.route("/quiz/")
+def quiz_index() -> Response:
+    return send_from_directory(str(QUIZ_DIR), "index.html")
+
+
+@app.route("/quiz/<path:filename>")
+def quiz_files(filename: str) -> Response:
+    return send_from_directory(str(QUIZ_DIR), filename)
+
+
+@app.route("/api/quiz_note", methods=["POST"])
+def api_quiz_note() -> Response:
+    """문제 해설(claude_qa.json) 저장/수정 — 단일 키 머지(사용자 편집 보존)."""
+    payload = request.get_json(force=True) or {}
+    qid = str(payload.get("id") or "").strip()
+    if not qid:
+        return jsonify({"error": "no id"}), 400
+    path = QUIZ_DIR / "claude_qa.json"
+    try:
+        data: Dict[str, Any] = {}
+        if path.exists():
+            try:
+                data = json.loads(path.read_text(encoding="utf-8-sig")) or {}
+            except Exception:
+                data = {}
+        if payload.get("delete"):
+            data.pop(qid, None)
+        else:
+            cur = data.get(qid)
+            entry: Dict[str, Any] = cur if isinstance(cur, dict) else {}
+            for k in ("ts", "e", "model", "laws", "refs"):
+                if k in payload:
+                    entry[k] = payload[k]
+            data[qid] = entry
+        path.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+        return jsonify({"ok": True, "entry": data.get(qid)})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 def _start_ctrl_alt_0_shutdown_hotkey() -> None:
     """Windows에서 Ctrl+Alt+0을 누르면 현재 대시보드 서버 프로세스를 종료합니다."""
     if os.name != "nt":
