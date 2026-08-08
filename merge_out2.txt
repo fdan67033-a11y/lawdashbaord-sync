@@ -1,0 +1,13 @@
+=== 기출 병합  ===
+병합 대상 파일 수: 1
+기존 문제 수: 13203, 최대 ID: 13307
+  [OK] nomy_2020_1차_노동법Ⅱ.json - 25문제
+
+중복 문제 제외: 1개
+  - 노무사 노동법Ⅱ 2020 문14
+
+병합 예정 문제 수: 24
+병합 후 총 문제 수: 13227
+
+백업: C:\Users\jeons\Downloads\todo_manual_dashboard\법령_기출_대시보드\study\questions.json.bak.20260625_145303
+저장 완료: questions.json (17477 KB, 13227문제)

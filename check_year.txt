@@ -1,0 +1,4 @@
+year Å¸ÀÔ: {'str': 11131, 'int': 2096}
+  year='2017' type=str
+  year='2017' type=str
+  year='2017' type=str
