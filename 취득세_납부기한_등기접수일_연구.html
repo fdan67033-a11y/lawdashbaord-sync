@@ -104,6 +104,9 @@ td.c,th.c{text-align:center}
 .ref a{color:var(--pc);text-decoration:none;border-bottom:1px dotted color-mix(in srgb,var(--pc) 40%,transparent)}
 .ref a:hover{background:var(--chip)}
 .ref .k{font-weight:700}
+a.dashlink{color:var(--pc);font-weight:700;text-decoration:none;border-bottom:1px dashed color-mix(in srgb,var(--pc) 55%,transparent);white-space:nowrap}
+a.dashlink::before{content:"⚖\00a0";font-weight:400}
+a.dashlink:hover{background:var(--chip);border-radius:4px}
 .mini{font-size:12.3px;color:var(--faint)}
 #top-btn{position:fixed;right:20px;bottom:20px;z-index:30;border:1px solid var(--line);background:var(--card);
  color:var(--muted);border-radius:12px;width:42px;height:42px;font-size:14px;cursor:pointer;box-shadow:var(--shadow)}
@@ -128,7 +131,8 @@ td.c,th.c{text-align:center}
 <a href="#s10"><i>⑩</i>종합 — 발생·존속·부산물</a>
 <a href="#s11"><i>⑪</i>반론과 응답, 판단 유보</a>
 <a href="#s12"><i>⑫</i>사실관계 정정 두 가지</a>
-<a href="#s13"><i>⑬</i>참고문헌</a>
+<a href="#gloss"><i>⑬</i>부록 — 세목 성격 용어 사전</a>
+<a href="#s13"><i>⑭</i>참고문헌</a>
 </nav>
 <div id="main">
 <header>
@@ -193,16 +197,31 @@ td.c,th.c{text-align:center}
 
 <h2 id="s4"><span class="no">④</span>계보 추적 — 1911년에서 2020년까지</h2>
 
-<p>이 조항이 어디서 왔는지는 문서로 추적된다. 결정적인 사실은, <b>"등기 전 납부"는 취득세의 발명품이 아니라 등록세의 유전자</b>라는 것이다.</p>
+<p>이 조항이 어디서 왔는지는 문서로 추적된다. 결정적인 사실은, <b>"등기 전 납부"는 취득세의 발명품이 아니라 등록세의 유전자</b>라는 것이다. (여기서부터 행위세·형식세·유통세 같은 성격 용어가 계속 나온다 — 낯설면 <b>⑬ 부록의 용어 사전</b>을 먼저 읽고 와도 된다.)</p>
 
 <div class="tl">
-<div class="ev"><span class="yr">1911</span><span class="tt">등록세, 국세로 창설</span><span class="dt">등기·등록이라는 <b>행위 자체</b>를 과세물건으로 하는 형식세. 1977년 지방세로 이양.</span></div>
+<div class="ev"><span class="yr">1911</span><span class="tt">등록세, 조선총독부가 국세로 창설</span><span class="dt">등기·등록이라는 <b>행위 자체</b>를 과세물건으로 하는 형식세. 다만 첫해에는 <b>회사의 등록에만</b> 과세했다(제령 「회사의 등록세에 관한 건」). 본격 법제인 <b>「조선등록세령」은 이듬해 1912.3.22.(제령 제16호)</b> — 조선민사령·조선부동산등기령과 함께 온 민사법제 정비 패키지였고, <b>부동산 등기에 대한 과세는 1913년부터</b> 확대됐다. 흔히 말하는 "1911년 조선등록세령 제정"은 두 법령을 합쳐 부른 부정확한 서술이다.</span></div>
+</div>
+
+<div class="note"><b>부연 — 등록세는 어디서 왔나 (계보 소급)</b><br>
+조선총독부의 등록세는 <b>일본 등록세법(明治29년, 1896.3.28. 법률 제27호, 같은 해 4.1. 시행)</b>의 식민지 이식이다. 일본은 등기법·상법·판권법·특허법 등에 흩어져 있던 등록 수수료를 청일전쟁 후 재원 확보를 위해 <b>단일 조세로 통합</b>하면서(수수료 약 177만엔을 폐지하고 세수 680만엔을 예정), 부동산·선박 등기는 가액의 천분비 정률, 자격 등록은 정액, 납부는 인지(印紙)로 설계했다 — 오늘날 등록면허세의 정률·정액 병용 구조가 그대로다.
+<br><br>더 위로 올라가면: 문서를 관청에 등록시켜 공시력을 주고 그 대가를 받는 발상은 <b>로마법의 insinuatio</b>(콘스탄티누스기 증여 등록 의무화, 유스티니아누스는 500솔리디 초과 증여에 요구)까지 닿고, 프랑스가 이를 제도화했다 — <b>1539 빌레르코트레 왕령</b>(증여의 공부 등록 의무화) → <b>1693 루이 14세의 contrôle des actes</b>(전쟁 재정난에 공증문서 통제세로 본격 재정수단화) → <b>1790.12. 프랑스혁명 제헌의회의 droit d'enregistrement</b>(구체제 공과를 폐지하고 단일 근대 등록세로 재창설, 1791.2.1. 시행). 납부수단인 인지는 별개의 자매 계보다: <b>1624 네덜란드</b>(전비 조달 공모로 발명) → 1673 프랑스 → <b>1694 영국 Stamp Act</b> → 1873 일본 인지세.
+<br><br><b>정직한 한계</b> — "일본이 프랑스에서 차용했다"는 직접 문헌 증거(입법자의 외국법 참조 기록)는 확인되지 않았다. 1896년 법의 제안이유에는 국내 재정 논리만 보인다. 확정된 것은 전제 인프라인 <b>등기제도(1886년 등기법)가 프로이센·프랑스법 모델</b>이라는 점까지고, "구조는 프랑스형(등록행위 정률과세)·납부는 인지(영국형)의 혼합"이라는 유형론은 학술 강연록 단일출처다. 그래서 정확한 서술은 이렇다: <mark>개념적 원류는 프랑스 enregistrement으로 소급되지만, 일본의 1896년 입법 자체는 유럽 공통의 등록·인지 과세 기술을 재정 목적으로 종합한 것</mark>. 이후 경로는 사료로 확정된다 — 1911/1912 조선 이식 → 해방 후 존속 → <b>1950.12.1. 대한민국 등록세법(법률 제167호)</b>으로 대체(통용되는 '1949년 제정설'은 확인 안 됨) → 1960.1.1. 재제정(법률 제528호) → 1977 지방 이양(아래) → 2011 통합. 일본도 1967년 등록세법을 <b>등록면허세법</b>으로 전부개정했으니, 한국의 2011년 개편은 44년 늦은 평행 진화인 셈이다.</div>
+
+<div class="tl">
+<div class="ev big"><span class="yr">1976.12.31 → 1977.1.1</span><span class="tt">등록세, 국세에서 도세(지방세)로 — 부가가치세 개편의 후폭풍</span><span class="dt">인과 사슬이 법령 원문으로 확정된다. <b>부가가치세법 제정(1976.12.22. 법률 제2934호, 1977.7.1. 시행)</b>이 영업세·유흥음식세 등 <b>8개 간접세를 통폐합</b>하면서, 지방세수의 큰 축이던 <b>유흥음식세가 부가가치세에 흡수</b>될 처지가 됐다. 그 보전책으로 <b>지방세법 개정(1976.12.31. 법률 제2945호, 1977.1.1. 시행)</b> 한 건 안에서 <b>유흥음식세는 국세로 넘기고, 국세 등록세는 도세로 받아오는 세목 맞교환</b>이 이뤄졌다(등록세법은 이 법 부칙으로 폐지, 조문은 지방세법 제137조 계열로 흡수). 같은 개정에서 자동차세·마권세·도축세·주민세가 도세→시군세로 내려가고 사업소세가 신설됐다. 이양 시행일을 1977.7.1.로 적은 자료는 부가가치세 시행일과 혼동한 오류다. 또 하나의 흔한 혼동: 마권세·자동차세 등 4개 세목의 지방 이양은 1977년이 아니라 <b>1961.12.2. 「국세와 지방세의 조정 등에 관한 법률」(법률 제780호)</b> 때의 일이다. — 이렇게 등록세가 지방으로 온 지 34년 만에, 2011년 취득세와 한 몸이 된다.</span></div>
 <div class="ev"><span class="yr">1993.12</span><span class="tt">대법원 92누15833</span><span class="dt">"등록세는 신고에 의하여 과세표준이 확정되는 신고납세방식의 조세이고 그 신고납부시기는 <b>적어도 등기 또는 등록 전</b>." — 행위세이므로 행위 전에 걷는 것이 세목의 본질.</span></div>
 <div class="ev big"><span class="yr">1994.12.22</span><span class="tt">구 지방세법 제150조의2 신설</span><span class="dt">등록세 신고납부 의무화 — "등기 또는 등록을 하기 전까지." 오늘날 제20조 제4항의 직계 조상.</span></div>
 <div class="ev"><span class="yr">1998</span><span class="tt">시행령 제104조의2</span><span class="dt">"등기 또는 등록의 신청서를 등기소 또는 등록관청에 <b>접수하는 날까지</b>를 말한다" — '접수일' 기준은 이때 이미 확립.</span></div>
 <div class="ev big"><span class="yr">2010.3.31</span><span class="tt">지방세법 전부개정 (법률 제10221호, 2011.1.1. 시행)</span><span class="dt">등록세 중 취득 관련 과세대상을 취득세로 통합. 제150조의2가 제20조 제4항으로 <b>사실상 복사·이식</b>되는데, 등록세 조문에 있던 위임 문구("대통령령이 정하는 바에 의하여")는 <b>누락</b>된 채 옮겨졌다. 공식 개정이유는 세목 간소화·납세편의(신고기한 30일→60일 연장)만 말할 뿐, 이 조항의 설계 의도는 <b>한 줄도 설명하지 않았다.</b></span></div>
 <div class="ev"><span class="yr">2010.12.27</span><span class="tt">시행도 전에 나온 완충 입법 (법률 제10416호)</span><span class="dt">"취득세와 등록세가 취득세로 통합됨에 따라 <b>일시 납부 부담을 완화</b>" — 2011~2013년 한시 분할납부 특례(제20조의2). 입법자가 '등기 전 전액 일시납'을 설계 목표가 아니라 <b>통합의 부작용</b>으로 인식했다는 방증.</span></div>
 <div class="ev"><span class="yr">2011~2013</span><span class="tt">경과조치 — 50 대 50</span><span class="dt">개인의 주택 등 취득 시 납부세액의 <b>50%(구 등록세분 상당)는 등기 전까지</b>, 나머지 50%는 취득일부터 60일 이내 분납. '등기 전 납부' 의무의 정체가 구 등록세의 몫이었다는 <b>직접 증거.</b></span></div>
+</div>
+
+<div class="note"><b>그렇다면 통합 전에는 어떻게 냈나 — 시계가 두 개였다</b><br>
+통합 전에는 등기 시점에 <b>등록세 2%만</b> 내면 등기가 됐다. 구 부동산등기법의 각하사유도 '등록세 미납'만 걸었고, 등기소에 내는 영수필확인서도 <b>등록세</b> 영수필확인서였다. 취득세 2%는 등기와 무관하게 <b>취득일부터 30일</b>이라는 자기 시계로 돌았다 — 잔금 5일째 등기하면 그날은 등록세만, 취득세는 30일째까지 내면 됐다는 뜻이다. 취득세에 등기 연동 기한이 생긴 것은 2010 전부개정이 등록세 조문을 복사해 온 순간이 처음이다. 그러니 "통합으로 일시 납부 부담이 생겼다"는 개정이유의 정확한 의미는, <b>따로 돌던 두 시계가 등기 접수일 하나로 합쳐지면서 4.6% 전액이 그날 일시에 도래하게 됐다</b>는 것이고, 2011~13년 분납 특례는 잠시 옛 구조(등기 때 절반 + 60일 내 절반)로 되돌려 준 완충이었다. 다만 실무에서는 통합 전에도 법무사가 잔금일에 두 세금을 한꺼번에 처리하는 경우가 많아 체감 차이는 크지 않았고, 등기를 아예 하지 않는 미등기 전매는 별도의 중가산세 조항(구법 제121조 제2항)이 담당했다.</div>
+
+<div class="tl">
 <div class="ev"><span class="yr">2015.12.29</span><span class="tt">자구 정비 (법률 제13636호)</span><span class="dt">제4항 개정 태그 존재(등재 포함 등 자구 정비로 추정, 원문 미확인). 기한 구조 변경 아님.</span></div>
 <div class="ev"><span class="yr">2017.5.24</span><span class="tt">대전고법(청주) 2016누10672 — 시행령 무효 판결</span><span class="dt">'접수일 기준'을 정한 시행령 제35조가 <b>법률유보 위반으로 무효</b>라고 판단. 근거가 흥미롭다 — 구 등록세 조문에는 위임 문구가 있었는데 취득세 제20조 제4항에는 없다는 "큰 차이." 2010년 이식의 조잡함이 6년 뒤 소송으로 터진 것.</span></div>
 <div class="ev big"><span class="yr">2018.12.31</span><span class="tt">법률로 격상 (법률 제16194호)</span><span class="dt">법률 문언 자체를 "등기 또는 등록 신청서를 등기·등록관서에 <b>접수하는 날까지</b>"로 명문화. 2019.2.8. 시행령 제35조 삭제. 하급심 무효 판결이 촉발한 <b>명확화 입법.</b></span></div>
@@ -346,7 +365,75 @@ td.c,th.c{text-align:center}
 
 <p>정정 2가 이 연구에서 갖는 의미는 작지 않다. 명문화 국면에서 채택된 논리 — 다툼 없는 공부상 시점의 확정 — 는 정확히 가설 A의 논리다. 질문자의 직관은 "2011년 기한을 당긴 이유"로는 기각되지만, <b>"2018년 기한의 표현을 다듬은 이유"로는 입법사에서 실현되었다.</b> 그리고 2018년은 입법자가 이 조항을 폐지할 수도 있었던 재심의 기회였는데 오히려 법률로 격상했다는 점에서, 연혁적 잔재(C)가 담보 기능(B)을 이유로 묵시적으로 재승인된 순간으로 읽을 수 있다.</p>
 
-<h2 id="s13"><span class="no">⑬</span>참고문헌</h2>
+<h2 id="gloss"><span class="no">⑬</span>부록 — 세목의 성격을 말하는 용어 사전</h2>
+
+<div class="lead">
+"행위세이므로 행위 전에 걷는 것이 세목의 본질" — 이 문서의 논증은 결국 세목의 <b>성격 용어</b> 몇 개 위에 서 있다.
+용어를 정확히 잡으면 결론이 한 문장으로 압축된다:
+<mark>행위세·형식세의 시간 규율(행위 전 납부)이, 실질 기준의 유통세인 취득세 속으로 이식되어 남은 것이 제20조 제4항</mark>이다.
+아래 다섯 그룹은 취득세·등록세 실무에서 실제로 판단을 가르는 순서로 배열했다.
+</div>
+
+<h3>그룹 1 · 무엇에 매기는가 — 과세물건의 전통 4분류</h3>
+<p>세금은 담세력(부담할 능력)을 <b>어디서 포착하느냐</b>로 크게 넷으로 나눈다. 취득세가 어느 칸에 있는지가 모든 성격 논의의 출발점이다.</p>
+<div class="tblwrap"><table>
+<thead><tr><th>분류</th><th>담세력을 포착하는 지점</th><th>대표 세목</th><th>특징</th></tr></thead>
+<tbody>
+<tr><td>수득세</td><td>소득이 <b>들어올 때</b></td><td>소득세·법인세·지방소득세</td><td>담세력을 가장 정확히 재지만, 파악·검증이 가장 어렵다</td></tr>
+<tr><td>재산세(보유세)</td><td>재산을 <b>가지고 있는 상태</b></td><td>재산세·종합부동산세·자동차세(소유분)</td><td>매년 반복 과세. 과세물건이 그 자리에 있어 징수가 가장 안전하다(당해세 우선)</td></tr>
+<tr><td>소비세</td><td>돈을 <b>쓸 때</b></td><td>부가가치세·개별소비세·담배소비세</td><td>소비 지출에서 담세력을 추정. 간접세 형태가 보통</td></tr>
+<tr><td><b>유통세(이전과세)</b></td><td>재화가 <b>넘어가는 순간</b></td><td><b>취득세</b>·등록면허세·인지세·증권거래세</td><td>담세력을 직접 재지 않고 <b>"이만한 거래를 한다는 사실 자체"에서 추정</b>한다</td></tr>
+</tbody>
+</table></div>
+<p>대법원이 취득세에 대해 반복해 온 정식(定式)이 이 칸을 요약한다 — 취득세는 <b>"재화의 이전이라는 사실 자체를 포착하여 거기에 담세력을 인정하고 부과하는 유통세"</b>다. 취득자가 그 물건으로 이익을 봤는지, 곧 되팔았는지, 취득 직후 멸실됐는지를 묻지 않는 논리의 뿌리가 여기다. 개론적으로 재산세(보유세)가 '상태'에 매기는 세금이라면 취득세는 '사건'에 매기는 세금이고, 그래서 납기 구조(매년 정기 대 사건 후 60일)가 갈라진다.</p>
+
+<h3>그룹 2 · 행위세 / 형식세 / 실질 — 이 문서의 핵심 축</h3>
+<div class="tblwrap"><table>
+<thead><tr><th>용어</th><th>뜻</th><th>실무에서 이렇게 나타난다</th></tr></thead>
+<tbody>
+<tr><td>행위세</td><td>특정 <b>행위 자체</b>가 과세물건인 세금. 등록면허세(등기·등록 행위), 인지세(과세문서 작성 행위)</td><td>행위가 곧 과세요건의 완성이므로 <b>행위 전·행위 시 납부가 세목의 본질</b>이다. 구 등록세의 '등기 전 납부'는 기한을 당긴 것이 아니라 <b>그때가 유일한 징수 시점</b>이었던 것(④의 1993년 대법원 92누15833)</td></tr>
+<tr><td>형식세</td><td>원인의 유·무효, 실질 귀속을 <b>묻지 않고</b> 공부상 외형(등기의 존재)만 포착해 과세</td><td>등기가 나중에 원인무효로 <b>말소되어도 등록세 과세는 유효</b>하다. "등기 또는 등록이라는 단순한 사실의 존재를 과세대상으로 한다"(92누15833). 접수일이라는 공부상 시점 하나로 가산세가 판정되는 것(⑤)도 형식세적 운영의 연장</td></tr>
+<tr><td>실질 기준<br>(사실상 취득주의)</td><td>형식(등기)이 아니라 <b>실질(대금 지급 등 지배력 취득)</b>로 과세요건을 판단. 지방세법 제7조 제2항</td><td>취득세의 기본 성격. 등기 없이도 잔금을 치르면 과세되고, 반대로 등기가 있어도 실질이 없으면 다툼이 된다. '사회통념상 대금의 거의 전부' 종합판단 판례군(⑤)이 이 기준의 비용</td></tr>
+</tbody>
+</table></div>
+<div class="note"><b>이 문서의 긴장 구조</b> — 취득세는 실질 기준 세목인데, 그 안에 형식세·행위세의 시간 규율(제20조 제4항)이 이식되어 동거하고 있다. 등기하는 건은 형식(접수일)으로, 등기 없는 건은 실질(사실상 취득일)로 기한이 정해지는 이원 구조가 그 흔적이다.</div>
+
+<h3>그룹 3 · 누가 왜 부담하는가 — 응익과 응능</h3>
+<div class="tblwrap"><table>
+<thead><tr><th>용어</th><th>뜻</th><th>실무에서 이렇게 나타난다</th></tr></thead>
+<tbody>
+<tr><td>응익과세<br>(응익원칙)</td><td>행정서비스에서 받는 <b>이익에 상응</b>해 부담(benefit principle). <b>지방세의 기초 논리</b></td><td>재산세 — 소방·도로·상하수도·도시계획이 그 부동산의 가치를 지탱하므로, 그 지역 재산 보유자가 부담. 지방세가 응익 논리를 쓰는 이유는 편익의 <b>지역 귀속</b>이 분명하기 때문</td></tr>
+<tr><td>응능과세</td><td><b>부담 능력에 따라</b> 과세(ability to pay). 누진세율의 근거</td><td>국세 소득세의 논리. 지방세는 응능보다 응익·정액·비례 구조가 많다</td></tr>
+<tr><td>수수료적 성격</td><td>국가 서비스 이용의 <b>대가</b> 성격이 섞인 조세</td><td>등록면허세 — 등기부·공부라는 국가 등록 서비스 이용의 대가 성격. 말소등기·변경등기 등에 <b>건당 정액</b> 항목이 많은 이유이고, '등기 전 납부'(선불)가 자연스러웠던 또 하나의 배경</td></tr>
+</tbody>
+</table></div>
+
+<h3>그룹 4 · 어떻게 확정하고 걷는가</h3>
+<div class="tblwrap"><table>
+<thead><tr><th>용어</th><th>뜻</th><th>실무에서 이렇게 나타난다</th></tr></thead>
+<tbody>
+<tr><td>신고납부<br>(신고납세)</td><td><b>납세자의 신고</b>로 세액이 확정되는 방식</td><td>취득세·등록면허세. 무신고 20%·과소신고 10% 가산세는 이 방식의 실효성을 담보하는 장치다(헌재 2004헌가31이 등록세 가산세를 합헌으로 본 첫째 논거 — ⑥). '법정신고기한'이라는 개념이 존재하는 것도 이 방식뿐</td></tr>
+<tr><td>부과과세<br>(보통징수)</td><td><b>과세관청의 고지</b>로 세액이 확정되는 방식</td><td>재산세·자동차세. 납세자가 할 일은 고지서를 받고 내는 것뿐. <b>일본 부동산취득세가 이 방식</b>이라 등기 관문 없이도 걷힌다(⑧) — 방식 선택이 관문의 필요성을 좌우한다는 것이 이 문서의 비교법 논점</td></tr>
+<tr><td>특별징수</td><td>지방세판 원천징수 — 징수 편의가 있는 자에게 걷게 함</td><td>지방소득세 특별징수 등. 취득세와는 무관하나 용어 혼동 방지용</td></tr>
+</tbody>
+</table></div>
+
+<h3>그룹 5 · 그 밖의 짝 개념들</h3>
+<div class="tblwrap"><table>
+<thead><tr><th>짝</th><th>구분 기준</th><th>취득세·등록세 쪽 사정</th></tr></thead>
+<tbody>
+<tr><td>직접세 / 간접세</td><td>세부담이 남에게 전가되는가</td><td>취득세·재산세는 직접세. 부가가치세는 간접세</td></tr>
+<tr><td>보통세 / 목적세</td><td>세수의 용도가 특정되어 있는가</td><td>취득세는 보통세. <b>지방교육세·농어촌특별세·지역자원시설세는 목적세</b> — 고지서 세 줄의 아랫줄 둘이 목적세다</td></tr>
+<tr><td>독립세 / 부가세(附加稅)</td><td>스스로 과세표준을 갖는가, 다른 세금(본세)에 얹히는가</td><td>지방교육세·농특세는 취득세액에 얹히는 <b>부가세(surtax)</b>. 부가가치세(VAT)와 한글이 같아 실무 혼동이 잦다 — 문서로 쓸 때는 附加稅/부가가치세를 구분해 표기</td></tr>
+<tr><td>종가세 / 종량세</td><td>가액 기준인가, 건수·수량 기준인가</td><td>취득세는 종가세(과세표준 × 세율). 등록면허세의 말소·변경등기 등 <b>건당 정액</b> 항목은 종량세적 — 수수료적 성격(그룹 3)의 흔적</td></tr>
+<tr><td>물세 / 인세</td><td>물건 중심인가, 사람(인적 사정) 중심인가</td><td>취득세·재산세는 물세 — 물건 기준으로 과세하고 소유자의 인적 사정은 원칙적으로 묻지 않는다. 고급오락장을 임차인이 차려도 건물주에게 과세되는 구조가 물세적 발상</td></tr>
+<tr><td>국세 / 지방세<br>(도세 / 시·군세)</td><td>과세 주체</td><td>취득세는 특별시·광역시·도세, 재산세는 시·군·구세. 광역시 안의 군(예: 기장군)에는 지방세기본법 제8조의 세목 배분 특례가 있으므로 소속 자치단체 기준으로 확인</td></tr>
+</tbody>
+</table></div>
+
+<div class="okbox"><b>용어로 다시 읽는 이 문서</b> — 등록세는 <b>행위세·형식세·수수료적 성격</b>이라 '등기 전 납부'가 본질이었다(④). 취득세는 <b>실질 기준의 유통세</b>라 그런 규율이 본질적으로 필요 없다 — 일본이 같은 세목을 <b>부과과세</b>로 관문 없이 걷는 것이 그 증거다(⑧). 2011년 통합은 이 서로 다른 성격의 두 세목을 한 조문 체계에 넣었고, 행위세의 시간 규율이 제20조 제4항으로 남았다. 그것이 <b>지금은 조세채권 보전 관문</b>으로 기능하며 살아남아 있다(⑥·⑩).</div>
+
+<h2 id="s13"><span class="no">⑭</span>참고문헌</h2>
 
 <h3>법령·입법자료</h3>
 <ul class="ref">
@@ -360,6 +447,7 @@ td.c,th.c{text-align:center}
 </ul>
 
 <h3>판례·결정례</h3>
+<p class="mini">본문 속 사건번호에 붙은 <b>⚖ 링크</b>는 법제처 대시보드(localhost:6155)가 켜져 있으면 판례 본문을 대시보드 뷰어(한자변환·노트 포함)로 바로 연다. 대시보드가 꺼져 있으면 아래 외부 링크를 이용할 것. 헌재 결정·조세심판원 결정은 판례DB 대상이 아니라 외부 링크만 제공한다.</p>
 <ul class="ref">
 <li><a href="https://casenote.kr/대법원/2017두47403" target="_blank" rel="noopener">대법원 2020.10.15. 선고 2017두47403</a> — 접수일 기준 확정, 등록세 연혁 승계 설시 · <a href="https://www.law.go.kr/LSW/precInfoP.do?precSeq=214823" target="_blank" rel="noopener">원심: 대전고법(청주) 2017.5.24. 선고 2016누10672</a>(시행령 무효 판단)</li>
 <li><a href="https://casenote.kr/대법원/92누15833" target="_blank" rel="noopener">대법원 1993.12.24. 선고 92누15833</a> — 등록세 신고납부시기는 "적어도 등기 또는 등록 전"</li>
@@ -395,12 +483,77 @@ td.c,th.c{text-align:center}
 <li><a href="https://www.e-newsp.com/mobile/article.html?no=27876" target="_blank" rel="noopener">경기도 미등기 전매 적발 보도</a> — 취득세 180억 추징 사례</li>
 </ul>
 
+<h3>계보·연혁 사료 (④의 부연 관련)</h3>
+<ul class="ref">
+<li><a href="https://archives.go.kr/next/newsearch/listSubjectDescription.do?id=008144" target="_blank" rel="noopener">국가기록원 국정분야주제별검색 '등록세'</a> — 1911 창설(회사 등록 한정)·1913 부동산 확대·1977 지방 이양 경위</li>
+<li><a href="https://db.history.go.kr/id/gb_1912_03_22_c00010" target="_blank" rel="noopener">국사편찬위원회 한국사DB — 조선총독부 관보 1912.3.22.</a> — 「조선등록세령」(제령 제16호) 공포 원문</li>
+<li><a href="https://hourei.ndl.go.jp/simple/detail?lawId=0000003366&current=-1" target="_blank" rel="noopener">日本法令索引(국립국회도서관) — 登録税法</a> 明治29.3.28. 법률 제27호 · <a href="https://jahis.law.nagoya-u.ac.jp/lawdb/l/129a0027" target="_blank" rel="noopener">나고야대 법령DB 조문 원문</a></li>
+<li><a href="https://www.law.go.kr/LSW/lsSideInfoP.do?lsNm=%EC%A7%80%EB%B0%A9%EC%84%B8%EB%B2%95&urlMode=lsRvsDocInfoR&ancYd=19761231&ancNo=02945&chrClsCd=010202" target="_blank" rel="noopener">지방세법 개정(1976.12.31. 법률 제2945호) 개정이유</a> — 등록세 도세 이관·유흥음식세 국세 전환·등록세법 폐지</li>
+<li><span class="k">부가가치세법 제정</span>(1976.12.22. 법률 제2934호, 1977.7.1. 시행) · <span class="k">국세와 지방세의 조정 등에 관한 법률</span>(1961.12.2. 법률 제780호) · <span class="k">등록세법</span>(1950.12.1. 법률 제167호 / 1960.1.1. 법률 제528호) — 국가법령정보센터 연혁법령</li>
+<li><a href="https://encykorea.aks.ac.kr/Article/E0017121" target="_blank" rel="noopener">한국민족문화대백과 '등기'</a> — 1912 조선부동산등기령의 일본법 의용, 1960 부동산등기법까지의 경로</li>
+<li class="mini">※ 프랑스 enregistrement 계보(1539 빌레르코트레·1693 contrôle des actes·1790 창설법)는 FranceArchives 등 프랑스 사료로, 일본의 외국모델 참조 여부는 中里実 강연록(税大ジャーナル 11호, 단일출처·연도 오기 있음)으로 확인 — ④ 부연의 '정직한 한계' 참조. 1911년 제령 「회사의 등록세에 관한 건」의 제령 번호는 단일출처(일본어 위키문헌 제령목록) 상태다.</li>
+</ul>
+
 <div class="note"><b>한계 고지</b> — 이 문서는 2026년 8월 기준 웹으로 접근 가능한 자료에 기초한 조사이며, 국회 심사보고서 원문 등 일부 1차 자료는 미확인 상태다(⑪ 판단 유보 목록). 학술 인용은 초록·본문 중 확인된 범위로 한정했다. 실무 적용 전에는 반드시 현행 조문과 유권해석을 확인할 것.</div>
 
 </div>
 <button id="top-btn" title="맨 위로" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 <script>
 try{if(localStorage.getItem('rsdark')==='1')document.documentElement.classList.add('dark')}catch(e){}
+/* 사건번호 → 법제처 대시보드 딥링크 (openrow) */
+(function(){
+  var DASH='http://localhost:6155';   // 집컴 터널 주소로 바꾸려면 여기만 수정
+  var CASES={
+    '2017두47403':{id:'212661',court:'대법원',name:'취득세등부과처분취소'},
+    '2016누10672':{id:'214823',court:'대전고등법원(청주)',name:'취득세등부과처분취소'},
+    '92누15833':{id:'109662',court:'대법원',name:'등록세가산세등부과처분취소'},
+    '98두17685':{id:'229123',court:'대법원',name:'등록세등부과처분취소'},
+    '2014두43110':{id:'194226',court:'대법원',name:'취득세등부과처분취소'},
+    '2013두2778':{id:'170144',court:'대법원',name:'취득세등 부과처분 취소'}
+  };
+  function url(no){
+    var c=CASES[no];
+    var row={target:'prec',law_id:c.id,mst:c.id,name:no+' '+c.name,target_label:'판례'};
+    return DASH+'/?openrow='+encodeURIComponent(JSON.stringify(row));
+  }
+  var re=new RegExp('('+Object.keys(CASES).join('|')+')','g');
+  var walker=document.createTreeWalker(document.getElementById('main'),NodeFilter.SHOW_TEXT,{
+    acceptNode:function(n){
+      if(!re.test(n.nodeValue)){re.lastIndex=0;return NodeFilter.FILTER_REJECT}
+      re.lastIndex=0;
+      var p=n.parentElement;
+      while(p){if(p.tagName==='A'||p.tagName==='SCRIPT'||p.tagName==='STYLE')return NodeFilter.FILTER_REJECT;p=p.parentElement}
+      return NodeFilter.FILTER_ACCEPT;
+    }});
+  var targets=[];while(walker.nextNode())targets.push(walker.currentNode);
+  targets.forEach(function(n){
+    var frag=document.createDocumentFragment(),txt=n.nodeValue,last=0,m;
+    re.lastIndex=0;
+    while((m=re.exec(txt))){
+      frag.appendChild(document.createTextNode(txt.slice(last,m.index)));
+      var a=document.createElement('a');
+      a.className='dashlink';a.href=url(m[1]);a.target='_blank';a.rel='noopener';
+      a.title=CASES[m[1]].court+' — 법제처 대시보드에서 판례 본문 열기';
+      a.textContent=m[1];
+      frag.appendChild(a);last=m.index+m[1].length;
+    }
+    frag.appendChild(document.createTextNode(txt.slice(last)));
+    n.parentNode.replaceChild(frag,n);
+  });
+  /* 참고문헌 항목에도 ⚖ 대시보드 배지 부착(기존 외부 링크는 그대로 두고 옆에 추가) */
+  Object.keys(CASES).forEach(function(no){
+    document.querySelectorAll('.ref li').forEach(function(li){
+      if(li.textContent.indexOf(no)<0)return;
+      if(li.querySelector('a.dashlink'))return;
+      var a=document.createElement('a');
+      a.className='dashlink';a.href=url(no);a.target='_blank';a.rel='noopener';
+      a.title=CASES[no].court+' '+no+' — 대시보드에서 열기';
+      a.textContent='대시보드';
+      li.appendChild(document.createTextNode(' · '));
+      li.appendChild(a);
+    });
+  });
+})();
 var links=[].slice.call(document.querySelectorAll('#nav a'));
 var map={};links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a});
 var cur=null;

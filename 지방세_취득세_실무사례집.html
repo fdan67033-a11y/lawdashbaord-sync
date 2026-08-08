@@ -4942,8 +4942,11 @@ function fs(d){var cur=parseFloat(getComputedStyle(document.documentElement).get
   document.documentElement.style.setProperty('--fs',v);try{localStorage.setItem('acqfs',v)}catch(e){}}
 function toggleCompact(){var on=document.body.classList.toggle('compact');
   document.getElementById('cbtn').classList.toggle('on',on);}
-/* 근거 조문 → 국가법령정보센터 링크 */
+/* 근거 조문 → 법제처 대시보드(/open) 링크 — 조문 옆에 바로 메모를 남기기 위함.
+   집컴 터널 주소로 바꾸려면 DASH 한 줄만 수정. 대시보드가 꺼져 있으면 링크가 안 열리니
+   그때는 국가법령정보센터에서 직접 확인. */
 (function(){
+  var DASH='http://localhost:6155';
   var LAWS=['지방세특례제한법 시행령','지방세특례제한법','지방세법 시행규칙','지방세법 시행령','지방세법',
             '지방세기본법 시행령','지방세기본법','지방세징수법','농어촌특별세법','지방교육세법',
             '부동산 거래신고 등에 관한 법률','부동산등기 특별조치법','부동산등기법','건축법 시행령','건축법',
@@ -4953,8 +4956,8 @@ function toggleCompact(){var on=document.body.classList.toggle('compact');
   document.querySelectorAll('#main .cite').forEach(function(el){
     if(el.querySelector('a'))return;
     el.innerHTML=el.innerHTML.replace(re,function(m,law,jo){
-      var u='https://www.law.go.kr/'+encodeURIComponent('법령')+'/'+encodeURIComponent(law)+'/'+encodeURIComponent(jo);
-      return '<a class="lawlink" href="'+u+'" target="_blank" rel="noopener">'+m+'</a>';
+      var u=DASH+'/open?law='+encodeURIComponent(law)+'&jo='+encodeURIComponent(jo);
+      return '<a class="lawlink" href="'+u+'" target="_blank" rel="noopener" title="'+law+' '+jo+' — 법제처 대시보드에서 열기(노트 가능)">'+m+'</a>';
     });
   });
 })();
