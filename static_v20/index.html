@@ -2884,5 +2884,63 @@ if(typeof bodySearch==='function'){ const _o=bodySearch; bodySearch=async functi
 if(typeof openFromResult==='function'){ const _o=openFromResult; openFromResult=async function(i){ const it=(state.results||[])[i]; if(it&&it._olta){ openOltaRef(it._olta.board, it._olta.ntt_id); return; } return _o(i); }; }
 if(typeof openFromMatch==='function'){ const _o=openFromMatch; openFromMatch=async function(i,mi){ const it=(state.results||[])[i]; if(it&&it._olta){ openOltaRef(it._olta.board, it._olta.ntt_id); return; } return _o(i,mi); }; }
 </script>
+
+<!-- 드래그+우클릭 → 한자학습(포트 8000) 연동. 자체 완결형 모듈. -->
+<script>
+(function () {
+  const HJ_BASE = "http://" + (location.hostname || "localhost") + ":8000";
+  const HANJA_RE = /[㐀-䶿一-鿿豈-﫿]/;
+  const isHanja = c => HANJA_RE.test(c);
+  const st = document.createElement("style");
+  st.textContent = `
+  #hj-menu2{position:fixed;z-index:99999;background:#fff;color:#111;border:1px solid #ccc;border-radius:12px;
+    box-shadow:0 10px 34px #0005;padding:8px;max-width:320px;display:none;font-family:sans-serif}
+  #hj-menu2 .hj-h{font-size:.72rem;color:#888;padding:2px 6px 6px}
+  #hj-menu2 .hj-chips{display:flex;flex-wrap:wrap;gap:6px;max-height:220px;overflow-y:auto}
+  #hj-menu2 .hj-chip{font-size:1.35rem;line-height:1;padding:8px 11px;border-radius:9px;border:1px solid #ccc;
+    background:#f5f5f5;cursor:pointer;color:#111}
+  #hj-menu2 .hj-chip:hover{background:#e8f3f0;border-color:#0f6e5d}
+  #hj-menu2 .hj-all{margin-top:7px;font-size:.78rem;color:#0f6e5d;cursor:pointer;text-align:center;padding:5px;border-top:1px solid #eee}
+  #hj-toast2{position:fixed;left:50%;bottom:46px;transform:translateX(-50%);z-index:100000;background:#222d;color:#fff;
+    padding:9px 16px;border-radius:20px;font-size:.85rem;font-family:sans-serif;opacity:0;transition:opacity .2s;pointer-events:none}
+  #hj-toast2.on{opacity:1}`;
+  document.head.appendChild(st);
+  const menu = document.createElement("div"); menu.id = "hj-menu2"; document.body.appendChild(menu);
+  const toastEl = document.createElement("div"); toastEl.id = "hj-toast2"; document.body.appendChild(toastEl);
+  let tt; function toast(m){toastEl.textContent=m;toastEl.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>toastEl.classList.remove("on"),2200);}
+  function closeMenu(){menu.style.display="none";}
+  async function jumpHanja(ch){
+    try{
+      const d=await fetch(HJ_BASE+"/api/open_target",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({char:ch})}).then(r=>r.json());
+      if(!d.ok){toast(`한자학습에 없는 글자: ${ch}`);return;}
+      if(d.watching===false){window.open(HJ_BASE+"/#c="+encodeURIComponent(ch),"hanjahak");toast(`한자학습 새 창: ${ch}`);}
+      else toast(`한자학습 → ${ch} (열린 창에서 전환)`);
+    }catch(e){toast("한자학습 앱이 실행 중이 아닙니다 (start.bat 실행)");}
+  }
+  document.addEventListener("contextmenu",e=>{
+    const sel=(window.getSelection().toString()||"").trim();
+    if(!sel){closeMenu();return;}
+    const uniq=[...new Set([...sel].filter(isHanja))];
+    if(!uniq.length){closeMenu();return;}
+    e.preventDefault();
+    const chips=uniq.map(c=>`<button class="hj-chip" data-c="${c}">${c}</button>`).join("");
+    const allBtn=uniq.length>1?`<div class="hj-all" data-all="1">전부 순서대로 보내기 (${uniq.length}자)</div>`:"";
+    menu.innerHTML=`<div class="hj-h">한자학습으로 보내기</div><div class="hj-chips">${chips}</div>${allBtn}`;
+    menu.style.display="block";
+    const mw=320,mh=menu.offsetHeight||200;
+    menu.style.left=Math.min(e.clientX,window.innerWidth-mw-12)+"px";
+    menu.style.top=Math.min(e.clientY,window.innerHeight-mh-12)+"px";
+  });
+  menu.addEventListener("click",e=>{
+    const chip=e.target.closest(".hj-chip");
+    if(chip){jumpHanja(chip.dataset.c);closeMenu();return;}
+    if(e.target.closest(".hj-all")){const cs=[...menu.querySelectorAll(".hj-chip")].map(b=>b.dataset.c);
+      (async()=>{for(const c of cs){await jumpHanja(c);await new Promise(r=>setTimeout(r,350));}})();closeMenu();}
+  });
+  document.addEventListener("mousedown",e=>{if(!menu.contains(e.target))closeMenu();});
+  document.addEventListener("scroll",closeMenu,true);
+  document.addEventListener("keydown",e=>{if(e.key==="Escape")closeMenu();});
+})();
+</script>
 </body>
 </html>

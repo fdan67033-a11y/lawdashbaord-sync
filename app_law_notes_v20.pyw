@@ -108,6 +108,21 @@ try:
 except Exception:
     app.config["JSON_SORT_KEYS"] = False
 
+
+# 로컬 다른 앱(예: 지방세연구원 뷰어 localhost:8017)에서 gold한자 변환 API를
+# 호출할 수 있도록 CORS 허용 + OPTIONS 프리플라이트 처리.
+@app.after_request
+def _add_cors(resp):
+    resp.headers["Access-Control-Allow-Origin"] = "*"
+    resp.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS, DELETE"
+    resp.headers["Access-Control-Allow-Headers"] = "Content-Type"
+    return resp
+
+
+@app.route("/api/<path:_any>", methods=["OPTIONS"])
+def _cors_preflight(_any):
+    return ("", 204)
+
 QUICK_LAWS = [
     "지방세기본법", "지방세기본법 시행령", "지방세기본법 시행규칙",
     "지방세법", "지방세법 시행령", "지방세법 시행규칙",
