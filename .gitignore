@@ -33,3 +33,16 @@ scratch_*
 .venv/
 venv/
 node_modules/
+
+# ===== 2026-08-08 자동커밋 사고 재발 방지: 백업·일회성 작업파일 =====
+*.bak
+*.bak-*
+*.bak_*
+data/dashboard.db.bak*
+_*.py
+_*.txt
+*_report*.txt
+gap_*.txt
+merge_out*.txt
+check_*.py
+check_*.txt
