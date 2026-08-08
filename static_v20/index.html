@@ -1035,6 +1035,12 @@ details.precGroup>summary{font-size:12px;font-weight:700;color:#344054;cursor:po
 .unit.level-판례 br+br{content:'';display:block;margin-top:2px}
 .precNum{display:inline-block;font-weight:800;color:#1a56db;background:#eaf0ff;border-radius:6px;padding:0 7px;margin:2px 4px 2px 0}
 .precCite{color:#6941c6;background:#f6f2ff;border-radius:4px;padding:0 3px}
+.caseLink{color:#0e7490;border-bottom:1px dashed #0e7490;cursor:pointer}
+.caseLink:hover{background:#e0f2fe}
+.prLawLink{color:#1a56db;border-bottom:1px dashed #93b0f5;cursor:pointer}
+.prLawLink:hover{background:#eaf0ff}
+.precCite .caseLink{color:inherit;border-bottom-color:#b197e8}
+.refLoading{opacity:.5;pointer-events:none}
 .yegyuBadge{display:inline-block;margin-left:6px;font-size:11px;font-weight:700;color:#0a7d55;background:#e7f7ef;border:1px solid #b8e6d0;border-radius:10px;padding:0 7px;cursor:pointer;vertical-align:middle}
 .yegyuBadge:hover,.yegyuBadge.on{background:#0a7d55;color:#fff}
 .yegyuBox{margin:6px 0 10px;border-left:3px solid #0a7d55;background:#f2fbf7;border-radius:0 8px 8px 0;padding:8px 12px}
@@ -1902,7 +1908,7 @@ function renderPaneBody(n){
         const isSrc=state.linkSource&&state.linkSource.key===key;
         const chips=links.length?`<div class="linkedBox">${links.map((l,li)=>`<button class="linkedChip" onclick="event.stopPropagation();openManualLink('${enc(key)}',${li})">↔ ${esc(l.label||'연결')}</button>`).join('')}</div>`:'';
         let inner=convOn?esc(hjMix(s.text,convMap)):renderUnitText(s.text, a.links, hasFind?find:terms());
-        if(s.level==='판례'&&(s.text||'').length>300)inner=precReadable(inner);
+        if(s.level==='판례')inner=(s.text||'').length>300?precReadable(inner):precLinkify(inner);
         return `<div class="unit level-${esc(s.level)} ${unitKey(s)===p.selectedKey?'selected':''}" id="pane${n}-unit-${ai}-${si}" onclick="selectUnit(${n},${ai},${si})"><input type="checkbox" class="unitCheck" data-ai="${ai}" data-si="${si}" title="이 항/호/목 선택" onclick="event.stopPropagation()" onchange="onUnitCheck(${n},${ai},${si})"><span class="unitLabel">${esc(s.level)}</span>${inner}${chips}</div>`;
       }).join('')}
     </section>`;
@@ -1949,21 +1955,140 @@ function toggleHanja(n){
   else{renderPaneBody(n);}
 }
 function hjLawKey(row){return [(row&&row.law_id)||'',(row&&row.mst)||''].join('|');}
-/* 판례 본문 가독화(표시 전용): 문장('…다.') 단위 줄바꿈 + 쟁점번호·판례인용 강조.
-   이미 이스케이프된 안전한 html 문자열을 받아 <br>/<span>만 삽입한다. 원본 데이터 불변. */
+/* ===== 판례 본문 가독화 + 상호링크 (표시 전용 — 원본 데이터 불변) =====
+   · 문장('…다.') 단위 줄바꿈, 쟁점번호 배지, 판례 인용 하이라이트
+   · 사건번호(92누14816, 조심2019지2526 등) 클릭 → 대시보드 안에서 그 판례/결정례 열기
+   · 법령명+조문(지방세법 제128조의2, 같은법시행령 제7조 등) 클릭 → 해당 조문으로 열기
+   · '구 OO법(1993.12.27. … 개정되기 전의 것)'은 그 개정 이전 연혁법령 버전으로 열기 */
+function _mapTextParts(t,fn){return String(t).split(/(<[^>]*>)/g).map(s=>s.charAt(0)==='<'?s:fn(s)).join('');}
+
+/* 사건번호 링크: 사건부호 화이트리스트(행정 누·두·구, 민사 다, 형사 도, 헌재 헌가~, 조심 지역코드 등) */
+const _CASE_MARK_RE=/(조심\s?)?(?<!제)(\d{2,4})(누|두|구합|구단|구|다|도|허|지|부|서|중|광|전|대|가합|가단|나|카|마|바|재|헌[가-사]|심사|감심)(\d{1,6})(?![\d가-힣])/g;
+function _linkifyCaseNos(t){
+  return _mapTextParts(t,s=>s.replace(_CASE_MARK_RE,(m,ts,yy,mk,no)=>
+    `<a class="caseLink" data-case="${(ts?'조심':'')+yy+mk+no}" onclick="event.stopPropagation();openCaseCite(this)" title="이 판례 열기">${m}</a>`));
+}
+
+/* 법령명+제N조 링크 (같은법/동법 대용어는 직전 법령명으로 해소, 구법 괄호의 개정일을 연혁 탐색에 사용) */
+const _LAW_CITE_RE=/(구\s+)?((?:[가-힣]{2,24}?(?:기본법|특례법|촉진법|처벌법|세법|소송법|등기법|보상법|법률|규칙|조례|법))|같은\s*법|같은법|동\s*법|이\s*법)?(시행령|시행규칙|\s+시행령|\s+시행규칙)?(\s*\(([^)<]{0,70}?)개정되기\s*전의\s*것\))?\s*(제\d{1,4}조(?:의\d{1,3})?)/g;
+/* 판례 원문 붙여쓰기로 접속어가 법령명에 달라붙는 것 정리: '있는지방세법'→'지방세법' */
+const _LAW_LEAD_STRIP=/^(있는|없는|한편|따라서|따라|또한|의하면|의하여|의하는|의한|규정하고|규정한|소정의|정하는|정한|현행|당시)+/;
+function _cleanLawName(n){let p=n;while(_LAW_LEAD_STRIP.test(p)){const q=p.replace(_LAW_LEAD_STRIP,'');if(q.length<3||q===p)break;p=q;}return p;}
+function _linkifyLawCites(t){
+  let last='';
+  const baseOf=n=>n.replace(/\s*(시행령|시행규칙)$/,'').trim();
+  return _mapTextParts(t,s=>s.replace(_LAW_CITE_RE,(m,gu,nm,shy,par,parIn,jo)=>{
+    let name='';
+    const anaphor=nm&&/^(같은\s*법|같은법|동\s*법|이\s*법)$/.test(nm);
+    if(nm&&!anaphor)name=_cleanLawName(nm.trim());
+    else if(anaphor&&last)name=baseOf(last);
+    else if(!nm&&shy&&last)name=baseOf(last);
+    else if(!nm&&!shy){ if(!last)return m; name=last; }   // "…, 제9조" 연속 인용 → 직전 법령
+    if(!name)return m;
+    if(shy)name=name+' '+shy.trim();
+    last=name;
+    let old='';
+    if(par){const dm=(parIn||'').match(/(\d{4})\.\s*(\d{1,2})\.\s*(\d{1,2})/);
+      if(dm)old=dm[1]+String(dm[2]).padStart(2,'0')+String(dm[3]).padStart(2,'0');}
+    return `<a class="prLawLink" data-law="${esc(name)}" data-jo="${esc(jo)}" data-old="${old}" onclick="event.stopPropagation();openLawCiteEl(this)" title="${esc(name)} ${esc(jo)} 열기${old?' (당시 연혁법령)':''}">${m}</a>`;
+  }));
+}
+
+function precLinkify(t){
+  t=t.replace(/\(\s*((?:당원|대법원|헌법재판소|각급법원|서울고등법원|조세심판원)[^()<]{0,80}?(?:판결|결정)[^()<]{0,10}?)\)/g,
+    '(<span class="precCite">$1</span>)');                                          // 판례 인용 하이라이트
+  t=_linkifyCaseNos(t);
+  t=_linkifyLawCites(t);
+  return t;
+}
+
 function precReadable(html){
   if(!html) return html;
-  let t=String(html);
-  t=t.replace(/(다\.)(&quot;|")?\s+(?=[^\s])/g,(m,a,q)=>a+(q||'')+'<br><br>');   // 문장 경계
+  let t=precLinkify(String(html));
+  t=t.replace(/(다\.)(&quot;|")?\s+(?=[^\s<])/g,(m,a,q)=>a+(q||'')+'<br><br>');   // 문장 경계
   t=t.replace(/(^|<br><br>)(\d{1,2}\.\s*)(제\d+,?\s*\d*점|상고이유|결론)?/g,
     (m,pre,num,rest)=>pre+'<span class="precNum">'+num+(rest||'')+'</span>');      // 쟁점 번호
-  t=t.replace(/\(\s*((?:당원|대법원|헌법재판소|서울고등법원|조세심판원)[^()<]{0,80}?(?:판결|결정)[^()<]{0,10}?)\)/g,
-    '(<span class="precCite">$1</span>)');                                          // 판례 인용
   // 만연체 완화: 인용 괄호 뒤 쉼표, 담화 표지 앞에서 줄 나눔(표시만)
   t=t.replace(/(<\/span>\)[,、])\s+/g,'$1<br>');
   t=t.replace(/([,)])\s+(그러나|따라서|한편|또한|나아가|살피건대|그렇다면|그러므로|이와\s*같이)\s/g,'$1<br>$2 ');
   t=t.replace(/(하였으나,|하였는바,|것인바,|배척하였는바,|인정한 다음,|승인을 받은 다음|주장에 대하여,|의하면,)\s*/g,'$1<br>');
   return t;
+}
+
+/* 사건번호 → 판례/조심결정 열기 (title_search로 해석 후 재사용 팝업) */
+async function openCaseCite(el){
+  const q=(el.dataset.case||el.textContent||'').replace(/\s+/g,'');
+  if(!q||el.classList.contains('refLoading'))return;
+  el.classList.add('refLoading');setStatus('판례 찾는 중: '+q);
+  try{
+    const isSim=q.indexOf('조심')===0;
+    const tries=isSim?[['ttSpecialDecc',q],['ttSpecialDecc',q.replace(/^조심/,'')],['prec',q]]
+                     :[['prec',q],['ttSpecialDecc',q]];
+    for(const [tg,qq] of tries){
+      const p=new URLSearchParams({oc:$('oc')?$('oc').value.trim():'',query:qq,display:'5'});
+      p.append('targets',tg);
+      const d=await(await fetch('/api/title_search?'+p)).json();
+      const items=d.items||[];
+      const hit=items.find(x=>((x.name||'')+' '+(x.case_no||'')).replace(/\s+/g,'').indexOf(qq)>=0)||items[0];
+      if(hit){
+        const row={target:tg,law_id:hit.law_id||hit.mst||'',mst:hit.mst||hit.law_id||'',name:hit.name||q,
+                   target_label:tg==='prec'?'판례':'조세심판원 결정례',department:'',effective_date:''};
+        openRowInNewWindow(row,1,null,true);setStatus('판례 열기: '+(hit.name||q));return;
+      }
+    }
+    setStatus('판례를 찾지 못했습니다: '+q,true);
+  }catch(e){setStatus('판례 열기 실패: '+e,true);}
+  finally{el.classList.remove('refLoading');}
+}
+
+/* 구법: 개정일 이전에 공포된 마지막 연혁 버전 해석.
+   실측(2026-08-08): 연혁은 nw=1, 공포일 범위는 ancyd=시작~끝, 결과는 normalized.items. */
+async function resolveOldLaw(name,ymd){
+  try{
+    const p=new URLSearchParams({oc:$('oc')?$('oc').value.trim():'',target:'eflaw',query:name,
+      display:'50',nw:'1',ancyd:'19000101~'+ymd,sort:'efdes'});
+    const d=await(await fetch('/api/search?'+p)).json();
+    const items=(d.normalized&&d.normalized.items)||d.items||[];
+    const flat=s=>(s||'').replace(/\s+/g,'');
+    return items.find(x=>flat(x.name)===flat(name))||items[0]||null;
+  }catch(e){return null;}
+}
+
+/* 법령 인용 클릭: 구법이면 연혁 버전, 아니면 현행 → 해당 조문으로 점프 */
+async function openLawCiteEl(el){
+  if(el.classList.contains('refLoading'))return;
+  const name=el.dataset.law,jo=el.dataset.jo,old=el.dataset.old;
+  el.classList.add('refLoading');setStatus('법령 찾는 중: '+name+' '+jo);
+  try{
+    if(old){
+      const it=await resolveOldLaw(name,old);
+      if(it&&(it.mst||it.law_id)){
+        const row={target:'eflaw',law_id:it.law_id||it.mst,mst:it.mst||it.law_id,name:it.name||name,
+                   effective_date:it.effective_date||'',target_label:'현행법령(시행일)',department:''};
+        openRowInNewWindow(row,1,{article_number:jo},true);
+        setStatus(`연혁법령 열기: ${it.name||name}(${it.effective_date||'당시 시행'}) ${jo}`);return;
+      }
+      setStatus('당시 연혁법령을 못 찾아 현행으로 엽니다: '+name);
+    }
+    let tgt=await resolveByName(name);
+    let target='law';
+    if(!tgt){ // 법률이 아니면 행정규칙/자치법규에서 탐색 (예: 경기도도세부과징수규칙)
+      for(const tg of ['admrul','ordin']){
+        const p=new URLSearchParams({oc:$('oc')?$('oc').value.trim():'',query:name,display:'5'});
+        p.append('targets',tg);
+        const d=await(await fetch('/api/title_search?'+p)).json();
+        const items=d.items||[];const flat=s=>(s||'').replace(/\s+/g,'');
+        const hit=items.find(x=>flat(x.name)===flat(name))||items[0];
+        if(hit){tgt={mst:hit.mst,law_id:hit.law_id||hit.mst,name:hit.name};target=tg;break;}
+      }
+    }
+    if(!tgt||!(tgt.mst||tgt.law_id)){setStatus('법령을 찾지 못했습니다: '+name,true);return;}
+    const row={target:target,law_id:tgt.law_id||tgt.mst,mst:tgt.mst||tgt.law_id,name:tgt.name||name,
+               target_label:'',department:'',effective_date:''};
+    openRowInNewWindow(row,1,{article_number:jo},true);
+    setStatus(`법령 열기: ${tgt.name||name} ${jo}`);
+  }catch(e){setStatus('법령 열기 실패: '+e,true);}
+  finally{el.classList.remove('refLoading');}
 }
 function hjMixWord(text){if(!text||!state.hanjaRe)return text||'';state.hanjaRe.lastIndex=0;return text.replace(state.hanjaRe,m=>(state.hanjaDict&&state.hanjaDict[m])||m);}
 function hjMix(text,convMap){if(convMap){if(convMap[text]!=null)return convMap[text];if(text&&text.normalize){const nf=text.normalize('NFC');if(nf!==text&&convMap[nf]!=null)return convMap[nf];}}return hjMixWord(text);}
