@@ -1,0 +1,374 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>지방계약법 × 고지서 계약·지출 리더</title><style>
+:root{--bg:#fbfcff;--fg:#1a1f29;--tagbg:#eef3ff;--tagfg:#3b5bb5;--meta:#6b6b77;--sec:#3b5bb5;--boxbg:#f6f8fc;--ansbd:#7aa7e6;--ah:#5577aa;--line:#e5e9f2;--side:#f0f3fa;--hover:#e9eefb;--ok:#1b7f5c;--warn:#9a6b00;--hl:#fff3cd}
+html.dark{--bg:#2f3338;--fg:#eef1f5;--tagbg:#3a4458;--tagfg:#a8c7ff;--meta:#bcc4cf;--sec:#a8c7ff;--boxbg:#272b30;--ansbd:#4a90d9;--ah:#9fb6d4;--line:#3a4048;--side:#272b30;--hover:#353b43;--ok:#6cc9a2;--warn:#e0b45c;--hl:#3a3418}
+*{box-sizing:border-box}
+body{font-family:"맑은 고딕","Malgun Gothic",sans-serif;margin:0;background:var(--bg);color:var(--fg);line-height:1.75;display:flex}
+#side{width:280px;flex:0 0 280px;height:100vh;position:sticky;top:0;overflow-y:auto;background:var(--side);border-right:1px solid var(--line);padding:16px 12px}
+#side h3{font-size:14px;margin:2px 6px 12px}
+#side .tot{font-size:12px;color:var(--meta);margin:0 6px 12px}
+#side a{display:flex;justify-content:space-between;gap:8px;text-decoration:none;color:var(--fg);font-size:13px;padding:7px 9px;border-radius:8px}
+#side a:hover{background:var(--hover)}
+#side a.active{background:var(--tagbg);color:var(--tagfg);font-weight:700}
+#side .cnt{color:var(--meta);font-size:12px}
+#main{flex:1;min-width:0;padding:20px 28px 80px;max-width:980px}
+#top{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+#top h1.pg{font-size:20px;margin:0 8px 0 0}
+#q{flex:1;min-width:180px;padding:8px 12px;font-size:14px;border:1px solid var(--line);border-radius:8px;background:var(--boxbg);color:var(--fg)}
+.btn{padding:7px 12px;font-size:13px;border:1px solid var(--line);border-radius:8px;background:var(--boxbg);color:var(--fg);cursor:pointer}
+.btn:hover{background:var(--hover)}
+section{margin:26px 0}
+section>h2.sec{font-size:17px;color:var(--sec);border-bottom:2px solid var(--sec);padding-bottom:6px;margin:0 0 14px}
+article{margin:0 0 18px}
+article h2{font-size:15px;margin:0 0 6px}
+.tag{display:inline-block;background:var(--tagbg);color:var(--tagfg);font-size:11.5px;padding:1px 8px;border-radius:99px;margin-right:6px;vertical-align:1px;font-weight:700}
+.box{background:var(--boxbg);border:1px solid var(--line);border-left:3px solid var(--ansbd);border-radius:8px;padding:12px 16px;font-size:14px;white-space:pre-wrap}
+.meta{font-size:12px;color:var(--meta);margin-top:4px}
+.meta a{color:var(--ah)}
+.hidden{display:none!important}
+#empty{display:none;color:var(--meta);padding:30px;text-align:center}
+table{border-collapse:collapse;width:100%;font-size:13.5px;background:var(--boxbg)}
+th{background:var(--tagbg);color:var(--fg);text-align:left;padding:7px 10px;border:1px solid var(--line);font-size:12.5px;white-space:nowrap}
+td{padding:6px 10px;border:1px solid var(--line);vertical-align:top}
+.twrap{overflow-x:auto;border-radius:8px;border:1px solid var(--line);margin:8px 0}
+.amt{font-weight:800;white-space:nowrap;font-variant-numeric:tabular-nums}
+.up{color:var(--warn)} .dn{color:var(--ok)}
+tr.hlrow td{background:var(--hl)}
+.track{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px 0}
+@media(max-width:860px){.track{grid-template-columns:1fr}}
+.track .box{border-left-color:var(--sec)}
+.track b.tt{display:block;font-size:14px;margin-bottom:6px;color:var(--sec)}
+.step{margin:3px 0;padding-left:14px;text-indent:-14px}
+.kbd{background:var(--tagbg);border-radius:4px;padding:0 6px;font-size:12.5px;font-weight:700;color:var(--tagfg)}
+@media print{#side,#top .btn,#q{display:none}#main{padding:0;max-width:none}body{display:block}}
+</style></head><body>
+<nav id="side"><h3>🗂 목차</h3><div class="tot">지방계약법 × 고지서 계약·지출 · 기장군 기준<br>전 조문 법제처 API 원문 검증 (2026.7.11)</div>
+<a href="#s_대시" data-sec="s_대시">📊 금액 기준 대시보드<span class="cnt">2</span></a>
+<a href="#s_트랙" data-sec="s_트랙">🔀 두 가지 실무 트랙<span class="cnt">2</span></a>
+<a href="#s_계약법" data-sec="s_계약법">Ⅰ. 지방계약법·시행령·규칙<span class="cnt">7</span></a>
+<a href="#s_회계" data-sec="s_회계">Ⅱ. 지방회계법·훈령<span class="cnt">7</span></a>
+<a href="#s_예규" data-sec="s_예규">Ⅲ. 입찰·계약 집행기준(예규)<span class="cnt">3</span></a>
+<a href="#s_기장" data-sec="s_기장">Ⅳ. 기장군 자치법규<span class="cnt">4</span></a>
+<a href="#s_단가" data-sec="s_단가">Ⅴ. 단가계약 × 건별 품의<span class="cnt">6</span></a>
+<a href="#s_주의" data-sec="s_주의">⚠ 주의·점검 포인트<span class="cnt">4</span></a>
+</nav>
+<div id="main">
+<div id="top"><h1 class="pg">지방계약법 × 고지서 계약·지출 리더</h1>
+<input id="q" placeholder="제목 검색… (예: 500, 수의, 일상경비)">
+<button class="btn" onclick="toggleTheme()">🌓 테마</button>
+<button class="btn" onclick="window.print()">🖨 인쇄</button></div>
+<div id="empty">검색 결과 없음</div>
+
+<section id="s_대시"><h2 class="sec">📊 금액 기준 대시보드 (물품·용역, 기장군 세무과 관점)</h2>
+
+<article data-t="금액 사다리 기준선 200 500 2000 5000 1억 대시보드">
+<h2><span class="tag">한눈에</span>금액 사다리 — 이 선을 넘으면 무엇이 달라지나</h2>
+<div class="twrap"><table>
+<tr><th style="width:110px">기준선</th><th>이하일 때 (＝간단)</th><th>초과일 때 (＝절차 추가)</th><th style="width:230px">근거</th></tr>
+<tr><td class="amt">200만원</td><td class="dn">재정합의 없이 집행</td><td class="up">재무과 <b>재정합의</b> 필요 (공사·용역·물품)</td><td>기장군 회계관리규칙 별표5</td></tr>
+<tr class="hlrow"><td class="amt">500만원</td><td class="dn"><b>일상경비</b> — 과 자체 지출 (일상경비출납원)</td><td class="up"><b>지출원(재무과)</b> 지출</td><td>훈령 §32② 단서 → <b>기장군 규칙 §5④</b> (※법령 아님, 군 규칙의 숫자)</td></tr>
+<tr><td class="amt">2,000만원</td><td class="dn"><b>1인 견적</b> 수의 가능 · 과장 전결 품의</td><td class="up">2인 이상 <b>전자견적</b>(공개수의) — 여성·장애인기업 등은 5천만까지 1인</td><td>영 §30①2호 · 전결규칙 별표1</td></tr>
+<tr class="hlrow"><td class="amt">5,000만원</td><td class="dn"><b>계약서 생략</b> 가능 · 과장(분임재무관) <b>자체 계약</b> 한도</td><td class="up">계약서 작성 + <b>재무과 계약의뢰</b> → e호조</td><td>영 §50①1호 · 기장군 회계규칙 별표3 · 훈령 §32②본문</td></tr>
+<tr><td class="amt">1억원</td><td class="dn">소기업·소상공인 2인 견적 수의 가능</td><td class="up">원칙 일반경쟁입찰</td><td>영 §25①5호라목 · 법 §9</td></tr>
+<tr><td class="amt">(공사)</td><td colspan="2">종합 4억 / 전문 2억 / 기타 1억6천 이하 수의 가능</td><td>영 §25①5호가목</td></tr>
+</table></div>
+<p class="meta">노란 줄 = 기장군 세무과 실무의 갈림길 두 곳. 수의계약 자체의 법적 근거는 「지방계약법 시행령」 제25조①5호<b>나목</b>(물품·용역 2천만원 이하) 등 — 실물 공문의 "제25조제1항제5호나목 수의계약" 표기가 이것.</p>
+</article>
+
+<article data-t="고지서 실무 매핑 품의 계약서 개인정보">
+<h2><span class="tag">매핑</span>세무과 실무 ↔ 근거 1:1</h2>
+<div class="twrap"><table>
+<tr><th>실무</th><th>근거</th></tr>
+<tr><td>계약서 없이 처리</td><td>법 §14①단서 → 영 §50①1호 (5천만원 이하 생략)</td></tr>
+<tr><td>품의서만 작성 (＝지출원인행위)</td><td>지방회계법 §29 + 시행규칙 §48 단서(재무회계 규칙 서식이면 증빙 갈음)</td></tr>
+<tr><td>재무과 의뢰 없이 세무과 자체 발주</td><td>기장군 회계규칙 별표3 (분임재무관: 물품·용역 5천만 이하)</td></tr>
+<tr><td>재산세 정기분 수의계약사유서</td><td>예규 제5장 제3절 4.라 + 별지 제5호 서식</td></tr>
+<tr><td>개인정보위탁계약 별도 체결</td><td>개인정보보호법 §26① (계약서 생략과 무관하게 항상 필수 — 정확한 실무)</td></tr>
+<tr><td>'발송' 단어 제외</td><td>우편법 §2 (서신 송달 국가 독점 — 업체는 출력·봉함·우체국 접수까지)</td></tr>
+</table></div>
+</article>
+</section>
+
+<section id="s_트랙"><h2 class="sec">🔀 두 가지 실무 트랙 — 모두 적법</h2>
+<article data-t="세무과 트랙 일상경비 재무과 지출">
+<h2><span class="tag">비교</span>세무과 방식 vs 타과 방식</h2>
+<div class="track">
+<div class="box"><b class="tt">🅐 세무과 트랙 (간이 — 5천만 이하 전제)</b>
+<div class="step">① 품의서 작성 (재산세 정기분이면 <b>수의계약사유서</b> 첨부 — 근거란: 영 §25①5호나목)</div>
+<div class="step">② 개인정보위탁계약서 별도 체결</div>
+<div class="step">③-a <span class="kbd">≤500만</span> 일상경비 — <b>과 자체 지출</b></div>
+<div class="step">③-b <span class="kbd">>500만</span> <b>재무과(지출원) 지출</b></div>
+<div class="step">※ 계약서 생략(영 §50), 200만 이상은 재정합의 먼저</div></div>
+<div class="box"><b class="tt">🅑 타과 트랙 (원칙 — 훈령 §32② 본문)</b>
+<div class="step">① '용역계약' 명시 → <b>재무과 계약의뢰</b> (집행 요구)</div>
+<div class="step">② e호조 <b>계약 품의 등록</b> (지방재정법 §96의2① — 재정업무 전반 시스템 처리 의무)</div>
+<div class="step">③ 계약부서 즉시 계약체결 (훈령 §32③)</div>
+<div class="step">④ <b>계약체결사항 알림</b> — 법령상 명칭 아님, e호조 업무단계. 실체는 체결현황 지체없이 시스템 입력(영 §124②) + 홈페이지 5년 공개</div></div>
+</div>
+</article>
+</section>
+
+<section id="s_계약법"><h2 class="sec">Ⅰ. 지방계약법 · 시행령 · 시행규칙 (원문 검증)</h2>
+
+<article data-t="지방계약법 14 계약서의 작성 생략">
+<h2>지방계약법 14 계약서의 작성 및 계약의 성립</h2>
+<div class="box">① 지방자치단체의 장 또는 계약담당자는 계약을 체결하려는 경우에는 계약의 목적, 계약금액, 이행기간, 계약보증금, 위험부담, 지연배상금(遲延賠償金), 그 밖에 필요한 사항을 명백히 적은 계약서를 작성하여야 한다. 다만, 대통령령으로 정하는 경우에는 계약서의 작성을 생략할 수 있다.</div>
+<div class="meta">법률 제19634호 · <a href="https://www.law.go.kr/법령/지방자치단체를당사자로하는계약에관한법률/제14조" target="_blank">law.go.kr</a></div>
+</article>
+
+<article data-t="지방계약법 시행령 50 계약서 작성 생략 5천만원">
+<h2>지방계약법 시행령 50 계약서 작성의 생략</h2>
+<div class="box">① 법 제14조제1항 단서에 따라 계약서의 작성을 생략할 수 있는 경우는 다음 각 호와 같다.
+  1. 계약금액이 5천만원 이하인 계약을 체결하는 경우
+  2. 경매에 부치는 경우
+  3. 물품을 매각할 때 매수인이 즉시 대금을 내고 그 물품을 인수하는 경우
+  4. 국가기관과 계약을 체결하거나 다른 지방자치단체와 계약을 체결하는 경우
+  5. 전기ㆍ가스ㆍ수도의 공급계약 등 그 계약의 성질상 계약서를 작성할 필요가 없는 경우</div>
+<div class="meta">대통령령 제36338호(시행 2026.6.3.) · <a href="https://www.law.go.kr/법령/지방자치단체를당사자로하는계약에관한법률시행령/제50조" target="_blank">law.go.kr</a></div>
+</article>
+
+<article data-t="지방계약법 시행규칙 48 증거서류 청구서 각서 품의서">
+<h2>지방계약법 시행규칙 48 계약서의 작성을 생략하는 경우</h2>
+<div class="box">지방자치단체의 장 또는 계약담당자는 영 제50조에 따라 계약서의 작성을 생략하는 경우에는 계약상대자로부터 청구서, 각서, 협정서, 승낙사항 등 계약 성립의 증거가 될 수 있는 서류를 제출받아 갖춰 두어야 한다. 다만, 그 지방자치단체의 재무회계에 관한 규칙에서 따로 정하는 회계경리에 관한 서식에 따른 경우에는 그러하지 아니하다.</div>
+<div class="meta">행정안전부령 제625호(시행 2026.7.1.) — 단서가 "품의서(회계경리 서식)만으로 처리"의 직접 근거 · <a href="https://www.law.go.kr/법령/지방자치단체를당사자로하는계약에관한법률시행규칙/제48조" target="_blank">law.go.kr</a></div>
+</article>
+
+<article data-t="지방계약법 시행령 25 수의계약 소액 나목 2천만원">
+<h2>지방계약법 시행령 25①5호 수의계약(소액)</h2>
+<div class="box">5. 다음 각 목의 어느 하나에 해당하는 계약
+  가. 「건설산업기본법」에 따른 건설공사(전문공사 제외)로서 추정가격이 4억원 이하인 공사, 전문공사로서 추정가격이 2억원 이하인 공사 및 그 밖의 공사 관련 법령에 따른 공사로서 추정가격이 1억6천만원 이하인 공사에 대한 계약
+  나. 추정가격이 2천만원 이하인 물품의 제조ㆍ구매계약 또는 용역계약
+  (다목: 청년창업기업 5천만원 이하 / 라목: 소기업·소상공인 1억원 이하 / 마·바목: 1억원 이하 / 사목: 임대차 등 5천만원 이하)</div>
+<div class="meta">가·나목은 원문 그대로, 다~사목은 요지 · 실물 공문의 근거 조문 = <b>나목</b> · <a href="https://www.law.go.kr/법령/지방자치단체를당사자로하는계약에관한법률시행령/제25조" target="_blank">law.go.kr</a></div>
+</article>
+
+<article data-t="지방계약법 시행령 30 견적서 1인 견적 2인">
+<h2>지방계약법 시행령 30 견적서 제출</h2>
+<div class="box">① 지방자치단체의 장 또는 계약담당자는 수의계약을 체결하려는 경우에는 2인 이상으로부터 견적서를 받아야 한다. 다만, 다음 각 호의 어느 하나에 해당하는 경우에는 1인으로부터 받은 견적서에 의할 수 있다.
+  (제2호) 추정가격이 2천만원 이하인 공사, 물품의 제조ㆍ구매 및 용역의 경우. 다만, 다음 각 목의 어느 하나에 해당하는 기업 또는 조합과 계약을 체결하는 경우에는 추정가격이 5천만원 이하인 경우로 한다. (여성기업·장애인기업 등)</div>
+<div class="meta">"2천만 초과 = 나라장터 2인 전자견적"이 실무에서 '공개'라 불리는 절차 · <a href="https://www.law.go.kr/법령/지방자치단체를당사자로하는계약에관한법률시행령/제30조" target="_blank">law.go.kr</a></div>
+</article>
+
+<article data-t="지방계약법 43 계약과정의 공개">
+<h2>지방계약법 43 계약과정의 공개</h2>
+<div class="box">① 지방자치단체의 장 또는 계약담당자는 발주계획, 입찰, 계약, 설계변경 및 그로 인한 계약금액의 조정, 감독, 검사, 대가의 지급 등 입찰, 계약, 계약의 이행과 관련되는 사항 중 대통령령으로 정하는 사항을 공개하여야 한다.</div>
+<div class="meta">조문 제목은 '계약과정의 공개'(시행령 제124조 제목이 '계약정보의 공개') · <a href="https://www.law.go.kr/법령/지방자치단체를당사자로하는계약에관한법률/제43조" target="_blank">law.go.kr</a></div>
+</article>
+
+<article data-t="지방계약법 시행령 124 계약정보의 공개 e호조 입력 5년">
+<h2>지방계약법 시행령 124 계약정보의 공개</h2>
+<div class="box">① 지방자치단체의 장 또는 계약담당자는 법 제43조에 따라 다음 각 호의 사항을 해당 지방자치단체의 인터넷 홈페이지에 공개하여야 한다. 1. 발주계획 … 2. 입찰공고(제30조제2항 본문에 따라 2인 이상으로부터 견적서를 제출받은 수의계약의 공고를 포함한다)의 내용 … 4. 계약체결의 현황(하도급 현황을 포함한다) …
+② 지방자치단체의 장 또는 계약담당자는 제1항 각 호의 사항을 지정정보처리장치 또는 「지방재정법」 제96조의2제1항에 따른 정보시스템에 지체없이 입력하여야 한다.
+④ 제1항에 따른 계약정보의 공개는 계약이행 완료일부터 5년 이상 하여야 한다.</div>
+<div class="meta">②항이 "e호조 등록 의무"의 직접 근거 · <a href="https://www.law.go.kr/법령/지방자치단체를당사자로하는계약에관한법률시행령/제124조" target="_blank">law.go.kr</a></div>
+</article>
+</section>
+
+<section id="s_회계"><h2 class="sec">Ⅱ. 지방회계법 · 시행령 · 회계관리훈령</h2>
+
+<article data-t="지방회계법 29 지출원인행위 품의">
+<h2>지방회계법 29 지출원인행위</h2>
+<div class="box">① 지방자치단체의 지출 원인이 되는 계약이나 그 밖의 행위(이하 "지출원인행위"라 한다)는 지방자치단체의 장이 하되, 소속 공무원에게 위임하여 지출원인행위를 하게 할 수 있다.
+② 지방자치단체의 장이나 그 위임을 받은 공무원(이하 "재무관"이라 한다)이 지출원인행위를 할 때에는 법령, 조례 및 규칙에서 정하는 바에 따라 배정된 예산의 범위에서 하여야 한다.</div>
+<div class="meta">품의·발주 = 지출원인행위의 문서화 · 법률 제21065호 · <a href="https://www.law.go.kr/법령/지방회계법/제29조" target="_blank">law.go.kr</a></div>
+</article>
+
+<article data-t="지방회계법 34 일상경비 지급">
+<h2>지방회계법 34 관서의 일상경비등의 지급</h2>
+<div class="box">① 지방자치단체의 장은 일상경비등을 그 성질상 현금으로 지급하지 아니하면 사무 수행에 지장을 줄 우려가 있다고 인정하는 경우에는 제44조제3항에 따른 일상경비등 출납원이 현금을 지급할 수 있도록 지출원으로 하여금 필요한 자금을 지급하게 할 수 있다.
+④ 일상경비등의 범위와 지급 절차 등은 대통령령으로 정한다.</div>
+<div class="meta"><a href="https://www.law.go.kr/법령/지방회계법/제34조" target="_blank">law.go.kr</a></div>
+</article>
+
+<article data-t="지방회계법 44 출납원 일상경비등 출납원">
+<h2>지방회계법 44③ 출납원 구분</h2>
+<div class="box">③ 출납원은 수입대체경비 출납원, 수입금출납원, 일상경비등 출납원, 세입세출외현금 출납원 및 물품 출납원 등으로 구분한다.</div>
+<div class="meta">과에서 자체 지급하는 주체 = 일상경비등 출납원 · <a href="https://www.law.go.kr/법령/지방회계법/제44조" target="_blank">law.go.kr</a></div>
+</article>
+
+<article data-t="지방회계법 시행령 38 일상경비 범위 500만원 없음">
+<h2>지방회계법 시행령 38 일상경비 등의 범위 <span class="tag">중요</span></h2>
+<div class="box">① 법 제34조제1항에 따라 … 일상경비등 출납원에게 자금을 지급하게 할 수 있는 일상경비 등은 다음 각 호와 같다. … 15. 민간이전경비, 보상금, 용역비 및 물품구입비
+② 제1항 각 호에 해당하는 경비의 교부한도는 다음 각 호의 구분에 따른다. … 3. 제1항제2호ㆍ제3호ㆍ제7호ㆍ제9호ㆍ제11호ㆍ제12호ㆍ제14호 및 제15호의 경비: 각각 필요금액</div>
+<div class="meta">⚠ 시행령 전 판본(2022~2026) 검색 결과 <b>"건당 500만원" 문구 0건</b> — 500만원은 시행령이 아니라 아래 훈령→기장군 규칙 사슬에서 나옴 · <a href="https://www.law.go.kr/법령/지방회계법시행령/제38조" target="_blank">law.go.kr</a></div>
+</article>
+
+<article data-t="회계관리훈령 32 지출의 절차 집행 요구 계약의뢰 기준액">
+<h2>회계관리훈령 32 지출의 절차 <span class="tag">갈림길</span></h2>
+<div class="box">② 각 실ㆍ과장은 공사ㆍ제조ㆍ용역의 도급, 물건의 매입ㆍ수리ㆍ운반 등에 관하여는 회계업무담당과장 또는 계약담당과장에게 그 집행을 요구하여야 한다. 다만, 일상경비등으로서 지방자치단체의 장이 정하는 기준액 범위 내에서 지급하는 것은 그러하지 아니하다.
+③ 회계업무담당과장 또는 계약업무담당과장은 제2항의 요구를 받았을 때에는 즉시 소정의 절차에 따라 계약을 체결하여야 한다.</div>
+<div class="meta">행정안전부훈령 제446호(시행 2026.7.6.) — ②본문 = 타과의 '계약의뢰' 근거, ②단서의 "기준액" = 기장군이 500만원으로 정한 자리 · <a href="https://www.law.go.kr/행정규칙/지방자치단체회계관리에관한훈령" target="_blank">law.go.kr</a></div>
+</article>
+
+<article data-t="회계관리훈령 11 예산집행품의 전결 생략">
+<h2>회계관리훈령 11 예산집행품의</h2>
+<div class="box">① 지방자치단체의 장은 다음 각 호의 범위 내에서 부단체장, 실ㆍ국장, 실ㆍ과장 등에게 예산집행 품의를 각각 전결로 처리하게 할 수 있으며, 그 전결 기준은 따로 정한다.
+⑤ …다음 각 호의 1에 해당하는 경우에는 예산집행 품의를 생략할 수 있다. … 6. 일상경비 교부 등</div>
+<div class="meta">전결 기준 위임 → 기장군 회계관리규칙 §5·별표4, 전결규칙 별표1</div>
+</article>
+
+<article data-t="지방재정법 96조의2 e호조 정보시스템">
+<h2>지방재정법 96조의2 지방재정정보화 (e호조 근거)</h2>
+<div class="box">① 지방자치단체의 장은 대통령령으로 정하는 사유가 없으면 지방재정에 관한 업무 전반을 행정안전부장관이 정하는 정보시스템을 통하여 처리하여야 한다.</div>
+<div class="meta">e호조 사용 의무의 법률 근거(지방회계법에는 시스템 조문 없음) · <a href="https://www.law.go.kr/법령/지방재정법/제96조의2" target="_blank">law.go.kr</a></div>
+</article>
+</section>
+
+<section id="s_예규"><h2 class="sec">Ⅲ. 지방자치단체 입찰 및 계약 집행기준 (행안부 예규 제372호, 시행 2026.7.1.)</h2>
+
+<article data-t="수의계약 요청 사유서 별지 5 예규">
+<h2>제5장 제3절 4.라 — 수의계약 요청 사유서 <span class="tag">그 서식</span></h2>
+<div class="box">라. 사업부서에서는 수의계약 요청 시 &lt;별지 5&gt;에 따른 수의계약 요청 사유서를 작성하여 사업부서장의 확인을 거친 후 계약담당부서에 제출해야 한다.
+
+[별지 제5호 서식] 수의계약 요청 사유서: 계약건명 / 소요예산 / 계약업체 / 수의계약 법적근거 / 수의계약 사유 (담당·팀장·부서장 서명) → ○○ 재무관(분임재무관) 귀하</div>
+<div class="meta">재산세 정기분 때 작성하는 사유서의 공식 근거·서식. 법적근거란에는 통상 "영 제25조①5호나목" 기재</div>
+</article>
+
+<article data-t="수의계약 내역 공개 예규 제8절">
+<h2>제5장 제8절 — 수의계약 내역 공개</h2>
+<div class="box">가. 수의계약을 체결한 경우 계약정보 공개시 아래의 공개내역서 서식을 첨부하여야 한다. (수의계약사유란: ※ 관련 법령 근거 및 구체적인 사유를 반드시 명시)
+나. 다만, 지정정보처리장치를 이용하여 2인 이상 견적서를 제출받아 수의계약을 체결하였거나 다른 법령 등에 따라 공개할 수 없는 사유에 해당되는 경우에는 수의계약 내역을 공개하지 아니할 수 있다.</div>
+<div class="meta">나.의 반대해석: <b>1인 견적 소액수의도 공개 대상</b></div>
+</article>
+
+<article data-t="계약정보 공개 5년 홈페이지 연계">
+<h2>제1장 제1절 8.가 — 계약정보의 공개</h2>
+<div class="box">가. 지방자치단체의 장 또는 계약담당자는 법 제43조 및 시행령 제124조에 따라 아래 사항을 시행령 제6조의2에 따른 지정정보처리장치와 「지방재정법」 제96조의2 제1항에 따른 정보시스템 등과 연계하여 계약이행 완료일로부터 5년 이상 해당 지방자치단체의 인터넷 홈페이지에 공개하여야 한다.</div>
+<div class="meta"><a href="https://www.law.go.kr/행정규칙/지방자치단체입찰및계약집행기준" target="_blank">law.go.kr 예규 전문</a></div>
+</article>
+</section>
+
+<section id="s_기장"><h2 class="sec">Ⅳ. 기장군 자치법규</h2>
+
+<article data-t="기장군 회계관리 규칙 5조 500만원 품의 전결">
+<h2>기장군 회계관리에 관한 규칙 §5 예산집행 품의 전결 <span class="tag">500만원의 출처</span></h2>
+<div class="box">① 군수는 「지방자치단체 회계관리에 관한 훈령」 제11조제1항에 따른 범위 내에서 다음 각 호에 대하여 부군수, 국장, 실·단·과장에게 예산집행 품의를 각각 전결로 하게 할 수 있다. 1. 추정금액 2억원 이하의 공사 또는 토지의 매입 2. 추정금액 1억원 이하의 제조ㆍ용역 또는 물건의 매입 3. 제1호와 제2호 외의 것으로서 5천만원 이하의 집행에 관한 사항
+④ (1건당 추정금액 500만원 이하 — 과장 전결 기준)</div>
+<div class="meta">규칙 제680호(2024.10.2.) · 실무의 500만원 경계가 명문화된 곳 · <a href="https://www.law.go.kr/자치법규/부산광역시기장군회계관리에관한규칙" target="_blank">law.go.kr 자치법규</a></div>
+</article>
+
+<article data-t="기장군 회계관리 규칙 별표3 분임재무관 5천만 직무위임">
+<h2>기장군 회계관리규칙 별표3 — 재무관 직무위임 범위 <span class="tag">자체 발주 근거</span></h2>
+<div class="box">분임재무관(본청 실·과장) 자체 처리 범위:
+  1. 공사 또는 토지의 매입 — 본청 추정금액 1억원 이하
+  2. 물품의 제조, 용역 또는 물건의 매입 — 본청 추정금액 5천만원 이하
+  3. 급여 등 인건비·의무적 경비의 지출, 조달물자의 구매, 일상경비의 교부 — 전액
+  4. 그 밖의 것 — 본청 추정금액 1천만원 이하</div>
+<div class="meta">세무과장이 재무과 계약의뢰 없이 고지서 출력(5천만 이하)을 자체 발주할 수 있는 직접 근거</div>
+</article>
+
+<article data-t="기장군 회계관리 규칙 별표5 재정합의 200만원">
+<h2>기장군 회계관리규칙 별표5 — 재무과 재정합의 대상</h2>
+<div class="box">1. 공사ㆍ용역계약과 관련된 경비 — 추정금액 200만원 이상
+2. 물품 제조ㆍ구매 — 추정금액 200만원 이상
+3. 시책추진 또는 기관운영업무추진비 — 50만원 이상</div>
+<div class="meta">과 자체 일상경비 지출 건이라도 200만원 이상이면 재무과 재정합의 필요</div>
+</article>
+
+<article data-t="기장군 사무전결처리 규칙 별표1 예산집행 계약체결 품의">
+<h2>기장군 사무 전결처리 규칙 별표1 (제706호, 2026.4.10.)</h2>
+<div class="box">[공통 12. 예산집행 품의] 군수: 공사 2억 초과·제조/용역 1억 초과·기타 5천만 초과 / 부군수: 공사 2억 이하·제조/용역 1억 이하·기타 5천만 이하 / 국장: 공사 1억 이하·제조/용역 5천만 이하·기타 3천만 이하 / 실·단·과장: 1건당 2천만원 이하 및 봉급·수당 등 의무지출
+[재무과 계약사무 7. 계약체결 품의(원인행위)] 국장: 공사 1억 초과·물품/용역 5천만 초과 / 실·과장: 공사 1억 이하·물품/용역 5천만 이하 (여비·업무추진비·일반운영비 중 관서운영 필요사항은 실·과장 위임)</div>
+<div class="meta"><a href="https://www.law.go.kr/자치법규/부산광역시기장군사무전결처리규칙" target="_blank">law.go.kr 자치법규</a> · 별표는 첨부파일(xls)로 제공</div>
+</article>
+</section>
+
+<section id="s_단가"><h2 class="sec">Ⅴ. 단가계약 × 건별 품의 — "1년 한 업체면 단가계약 해야 한다?"</h2>
+
+<article data-t="단가계약 해야 한다 규정 있나 결론">
+<h2><span class="tag">결론</span>"단가계약을 해야 한다"는 의무 규정은 없다 — 그런데 왜 그런 말이 나오나</h2>
+<div class="box">지방계약법 제25조는 단가계약을 "체결할 <b>수 있다</b>"고 정한 <b>임의규정</b>이다. 어디에도 "1년간 한 업체와 하려면 단가계약을 해야 한다"는 조문은 없다.
+
+다만 그 말의 실체가 되는 <b>실제 규정 2개</b>가 있다:
+① <b>추정가격 산정 규칙</b>(시행령 §7 1호) — 일정 기간 계속되는 수요는 "추정단가 × 예정물량"으로 추정가격을 산정 → 수의계약 가능 여부·견적 방식(1인/2인/입찰)은 <b>건별 금액이 아니라 연간 총량 기준</b>으로 판단해야 한다.
+② <b>분할발주 금지</b> — 단일 사업을 부당하게 분할하거나 <b>시기적으로 나누어</b> 체결하는 것 금지(용역·물품 포함, 예규).
+
+즉 "연간 계속 쓸 업체면, 연간 총량으로 계약방법을 정하고 쪼개지 말라 → 그 정석적 형태가 연간 단가계약"이라는 실무 조언이 "단가계약 해야 한다"로 압축돼 전달된 것.</div>
+</article>
+
+<article data-t="지방계약법 25 단가계약 할 수 있다">
+<h2>지방계약법 25 단가계약 <span class="tag">임의규정</span></h2>
+<div class="box">① 지방자치단체의 장 또는 계약담당자는 일정한 기간 계속하여 제조ㆍ구매ㆍ수리ㆍ보수ㆍ복구ㆍ가공ㆍ매매ㆍ공급ㆍ사용 등의 계약을 체결할 필요가 있을 때에는 해당 회계연도 예산의 범위에서 미리 단가(單價)에 대하여 계약을 체결할 수 있다.
+② 제1항에 따른 단가계약의 범위ㆍ절차ㆍ기준, 그 밖에 필요한 사항은 대통령령으로 정한다.</div>
+<div class="meta">"할 수 있다" = 의무 아님 · <a href="https://www.law.go.kr/법령/지방자치단체를당사자로하는계약에관한법률/제25조" target="_blank">law.go.kr</a></div>
+</article>
+
+<article data-t="지방계약법 시행령 79 단가계약 범위 절차">
+<h2>지방계약법 시행령 79 단가계약</h2>
+<div class="box">① 법 제25조에 따라 단가계약을 체결할 수 있는 경우는 다음 각 호와 같다.
+  1. 물품의 제조ㆍ구매ㆍ수리ㆍ가공
+  2. 시설물의 보수ㆍ복구
+  3. 전기ㆍ가스ㆍ수도의 공급
+  4. 그 밖에 공급ㆍ사용ㆍ임차ㆍ매매 등의 계약
+② 지방자치단체의 장 또는 계약담당자는 제1항에 따라 단가계약을 체결하려는 경우에는 입찰 전에 계약목적물의 특성, 계약수량 및 이행기간 등 필요한 기준 및 절차 등을 정하여야 하며, 이를 입찰에 참가하려는 자가 열람할 수 있도록 하여야 한다.</div>
+<div class="meta">고지서 출력 = 1호(물품 제조) 또는 4호(공급 등) 해당 · <a href="https://www.law.go.kr/법령/지방자치단체를당사자로하는계약에관한법률시행령/제79조" target="_blank">law.go.kr</a></div>
+</article>
+
+<article data-t="시행령 7조 추정가격 산정 단가 예정물량 연간 총량">
+<h2>지방계약법 시행령 7 추정가격의 산정 <span class="tag">핵심</span></h2>
+<div class="box">(제1호) 단가계약의 경우: 제조ㆍ구매ㆍ수리ㆍ보수ㆍ복구ㆍ가공ㆍ매매ㆍ공급ㆍ사용 등의 추정단가에 예정물량을 곱한 금액</div>
+<div class="meta">연간 계속 수요의 추정가격 = <b>단가 × 연간 예정물량</b> → 2천만(1인 견적)·5천만(계약서 생략) 판단도 이 연간 총액으로. 건별 금액으로 쪼개 판단하면 이 조항과 충돌 · <a href="https://www.law.go.kr/법령/지방자치단체를당사자로하는계약에관한법률시행령/제7조" target="_blank">law.go.kr</a></div>
+</article>
+
+<article data-t="분할발주 금지 단일 사업 시기적 분할 예규 77조">
+<h2>분할발주 금지 — 시행령 77①(공사) + 예규(용역·물품 확장)</h2>
+<div class="box">시행령 제77조①: 동일 구조물 공사·단일공사는 시기적으로 분할하거나 구조별·공종별로 분할하지 않고 일괄 계약 체결(공사).
+
+예규 「지방자치단체 입찰 및 계약 집행기준」: 계약담당자는 <b>용역·물품 계약에 대하여도 단일 사업을 부당하게 분할하거나 시기적으로 나누어 체결하지 않도록</b> 해야 한다.</div>
+<div class="meta">같은 업체·같은 업무를 연중 건별 반복 발주하면 "시기적 분할" 지적 소지가 생기는 근거 · <a href="https://www.law.go.kr/행정규칙/지방자치단체입찰및계약집행기준" target="_blank">예규 전문</a></div>
+</article>
+
+<article data-t="건별 품의 vs 연간 단가계약 비교 실무 적용 고지서 삭제확인서">
+<h2><span class="tag">실무</span>세무과 고지서에 적용하면 — 건별 품의 vs 연간 단가계약</h2>
+<div class="twrap"><table>
+<tr><th></th><th>현행: 건별 품의</th><th>정석: 연간 단가계약 1건</th></tr>
+<tr><td>구조</td><td>건 발생 시마다 품의(+수의계약사유서) → 지출. 개인정보위탁계약은 연초 1회</td><td>연초에 "장당 ○원" 단가로 계약 1건(1.1~12.31) → 발생 물량만큼 발주·정산</td></tr>
+<tr><td>계약방법 판단 기준</td><td>건별 금액 (각 건 2천만 이하 → 1인 견적)</td><td><b>연간 총액</b>(단가×예정물량) — 2천만 이하면 1인 견적, 초과면 2인 전자견적</td></tr>
+<tr><td>적법성</td><td>각 건이 시기·수요상 <b>정당하게 분리</b>되면 가능(체납 발생분 등 물량 확정 불가 수요). 강서구가 이 방식</td><td>법 §25·영 §79의 전형적 대상. 대구 서구 "연간단가", 대전 서구 "수의계약(단가)" 공고가 실례</td></tr>
+<tr><td>리스크</td><td>같은 업체·같은 업무 연중 반복 시 ①"시기적 분할" 지적 ②연간 합계가 2천만 초과인데 건별 1인 견적으로 우회한 모양 → 감사 취약</td><td>연간 물량 예측이 어긋나면 변경계약 필요. 절차는 한 번에 끝나 오히려 단순</td></tr>
+<tr><td>계약서</td><td>영 §50(5천만 이하)으로 생략 가능</td><td>연간 총액 5천만 이하면 역시 생략 가능하나, 단가·정산조건 명확화 위해 <b>작성이 일반적</b>(실물 공문 사례도 계약 체결형)</td></tr>
+</table></div>
+<div class="box">권장 정리: ① 연초에 물량 예측이 가능한 것(정기분+독촉+체납 통상 물량)은 <b>연간 단가계약 1건</b>으로 묶고 ② 예측 불가한 돌발 수요만 건별 처리 ③ 어느 쪽이든 <b>개인정보위탁계약(연 1회) + 파기(삭제)확인서</b>는 현행대로 유지 — 삭제확인서는 개인정보보호법 §26·표준위탁계약서의 파기·반환 의무 이행으로, 지금 하고 있는 것이 정확한 실무다.</div>
+</article>
+</section>
+
+<section id="s_주의"><h2 class="sec">⚠ 주의·점검 포인트</h2>
+
+<article data-t="500만원 법령 아님 지자체별 상이 부산진 해운대 1천만">
+<h2>① "500만원"은 법령의 숫자가 아니다</h2>
+<div class="box">법률·시행령 어디에도 없음(시행령 전 판본 검색 0건). 훈령 §32② 단서가 "지자체장이 정하는 기준액"으로 위임 → 기장군 규칙이 500만원으로 설정. 지자체마다 다름: 군산시 500만원 / 부산진구·해운대구 1천만원. 문서에 인용할 때는 "기장군 회계관리에 관한 규칙"을 근거로 쓸 것.</div>
+</article>
+
+<article data-t="계약체결사항 알림 e호조 명칭">
+<h2>② "계약체결사항 알림"은 법령 명칭이 아니다</h2>
+<div class="box">지방계약법령·훈령·예규 전문 검색 결과 해당 명칭의 조문 없음. e호조 시스템의 표준 업무단계 명칭이며, 법적 실체 = 지방재정법 §96의2①(시스템 처리 의무) + 훈령 §32②③(집행요구→체결) + 영 §124②(체결현황 지체없이 입력).</div>
+</article>
+
+<article data-t="1인 견적 수의 내역 공개 대상">
+<h2>③ 1인 견적 소액수의도 내역 공개 대상</h2>
+<div class="box">공개 생략은 '지정정보처리장치 2인 이상 견적' 또는 '타 법령상 비공개 사유'뿐(예규 제5장 제8절 나.). 세무과의 1인 견적 수의계약은 수의계약사유를 명시한 공개내역서 첨부 대상.</div>
+</article>
+
+<article data-t="개인정보 위탁 문서 필수 견적서만으로 부족">
+<h2>④ 계약서는 생략해도 개인정보 위탁 문서는 생략 불가</h2>
+<div class="box">개인정보보호법 §26①: 위탁 목적·범위, 재위탁 제한, 안전조치 등을 문서로 정할 의무 — 지방계약법상 계약서 생략과 무관하게 항상 필요. 세무과가 개인정보위탁계약을 별도 체결하는 현행 실무가 정확함. 이 문서가 매년 위탁현황 공개(§26②)의 전제.</div>
+</article>
+</section>
+
+</div>
+<script>
+const root=document.documentElement;
+if(localStorage.getItem('sntheme')==='dark') root.classList.add('dark');
+function toggleTheme(){root.classList.toggle('dark');localStorage.setItem('sntheme',root.classList.contains('dark')?'dark':'light');}
+const q=document.getElementById('q');
+q.addEventListener('input',()=>{
+  const t=q.value.trim().toLowerCase(); let any=false;
+  document.querySelectorAll('[data-t]').forEach(el=>{const hit=!t||el.getAttribute('data-t').toLowerCase().includes(t)||el.textContent.toLowerCase().includes(t);el.classList.toggle('hidden',!hit);if(hit)any=true;});
+  document.querySelectorAll('section').forEach(s=>{const vis=s.querySelectorAll('[data-t]:not(.hidden)').length;s.classList.toggle('hidden',t&&!vis);});
+  document.getElementById('empty').style.display=(t&&!any)?'block':'none';
+});
+const links=[...document.querySelectorAll('#side a')];
+const secs=links.map(a=>document.getElementById(a.dataset.sec));
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.toggle('active',l.dataset.sec===e.target.id));}})},{rootMargin:'-40% 0px -55% 0px'});
+secs.forEach(s=>s&&io.observe(s));
+</script></body></html>

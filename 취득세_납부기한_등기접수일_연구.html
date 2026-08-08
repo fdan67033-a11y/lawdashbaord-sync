@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>취득세 납부기한은 왜 등기접수일로 당겨지는가 — 세 가설의 검증</title>
+<style>
+:root{
+ --bg:#fcfcfd; --fg:#1c2128; --muted:#6b7280; --faint:#9aa2ae;
+ --pc:#4338ca; --pc2:#6d28d9; --ok:#0a7d55; --warn:#c2323f; --amber:#9a6407;
+ --card:#ffffff; --box:#f5f6fa; --line:#e5e8ee; --line2:#eef0f5;
+ --side:#f7f8fb; --chip:#eef0fa; --mark:#ffeb9c; --markfg:#4a3b00;
+ --shadow:0 1px 2px rgba(16,24,40,.04),0 4px 14px rgba(16,24,40,.05);
+}
+html.dark{
+ --bg:#181b21; --fg:#e3e7ed; --muted:#98a2b3; --faint:#6b7684;
+ --pc:#a5a8fb; --pc2:#c0a4fb; --ok:#5cd6a0; --warn:#f2909a; --amber:#e0b264;
+ --card:#20242c; --box:#1c2028; --line:#2f3641; --line2:#262c35;
+ --side:#15181d; --chip:#272e39; --mark:#5f5000; --markfg:#ffe98a;
+ --shadow:0 1px 2px rgba(0,0,0,.2),0 4px 14px rgba(0,0,0,.18);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);display:flex;
+ font-family:"Pretendard Variable","Pretendard","Apple SD Gothic Neo","맑은 고딕","Malgun Gothic",system-ui,sans-serif;
+ font-size:15.6px;line-height:1.9;letter-spacing:-.003em;
+ word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased}
+#nav{width:250px;flex:0 0 250px;height:100vh;position:sticky;top:0;overflow-y:auto;overscroll-behavior:contain;
+ background:var(--side);border-right:1px solid var(--line);padding:18px 12px 80px;font-size:13px}
+#nav .ttl{font-size:13px;font-weight:700;color:var(--muted);margin:0 8px 14px;line-height:1.5}
+#nav .ttl b{color:var(--pc);font-weight:800;display:block;font-size:14px}
+#nav a{display:block;color:var(--muted);text-decoration:none;padding:6px 11px;border-radius:8px;line-height:1.5;margin-bottom:1px}
+#nav a:hover{background:var(--chip);color:var(--fg)}
+#nav a.cur{background:var(--chip);color:var(--pc);font-weight:700}
+#nav a i{font-style:normal;font-weight:800;color:var(--pc);margin-right:7px;font-size:11.5px}
+#main{flex:1;min-width:0;max-width:860px;margin:0 auto;padding:0 34px 160px}
+header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);
+ backdrop-filter:saturate(180%) blur(10px);border-bottom:1px solid var(--line);
+ padding:13px 0 11px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+header h1{font-size:16px;margin:0;font-weight:800;letter-spacing:-.02em}
+header .sub{font-size:12px;color:var(--faint)}
+.btns{margin-left:auto;display:flex;gap:5px}
+.btn{border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:9px;
+ padding:6px 11px;font-size:12px;cursor:pointer;font-weight:700;font-family:inherit}
+.btn:hover{border-color:var(--pc);color:var(--pc)}
+h2{font-size:21px;margin:64px 0 14px;padding:0 0 12px;color:var(--pc);letter-spacing:-.025em;
+ border-bottom:2px solid var(--pc);scroll-margin-top:74px;font-weight:800;line-height:1.45}
+h2 .no{color:var(--faint);font-weight:800;font-size:14px;margin-right:8px;letter-spacing:.02em}
+h3{font-size:16.5px;margin:30px 0 8px;letter-spacing:-.02em;font-weight:800}
+p{margin:.9em 0}
+li{margin:.35em 0}
+ul,ol{padding-left:22px;margin:.7em 0}
+b{font-weight:700}
+mark{background:var(--mark);color:var(--markfg);padding:1px 4px;border-radius:4px;font-weight:700}
+.lead{background:var(--box);border-left:3px solid var(--pc);border-radius:0 12px 12px 0;
+ padding:16px 20px;font-size:14.8px;margin:16px 0 26px}
+.q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 24px;margin:18px 0;
+ box-shadow:var(--shadow);font-size:15px}
+.q .who{font-size:11.5px;font-weight:800;color:var(--pc);letter-spacing:.05em;display:block;margin-bottom:6px}
+.quote{border-left:3px solid var(--line);padding:4px 0 4px 16px;margin:14px 0;color:var(--muted);font-size:14.3px}
+.quote .src{display:block;font-size:12px;color:var(--faint);margin-top:6px}
+.note{background:rgba(154,100,7,.07);border:1px solid rgba(154,100,7,.16);border-left:3px solid var(--amber);
+ border-radius:0 12px 12px 0;padding:13px 17px;margin:14px 0;font-size:14.3px}
+.note>b:first-child{color:var(--amber)}
+.warnbox{background:rgba(194,50,63,.06);border:1px solid rgba(194,50,63,.15);border-left:3px solid var(--warn);
+ border-radius:0 12px 12px 0;padding:13px 17px;margin:14px 0;font-size:14.3px}
+.warnbox>b:first-child{color:var(--warn)}
+.okbox{background:rgba(10,125,85,.06);border:1px solid rgba(10,125,85,.15);border-left:3px solid var(--ok);
+ border-radius:0 12px 12px 0;padding:13px 17px;margin:14px 0;font-size:14.3px}
+.okbox>b:first-child{color:var(--ok)}
+/* 가설 카드 */
+.hypo{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:20px 0}
+.hcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:17px 19px;box-shadow:var(--shadow)}
+.hcard .tag{display:inline-block;font-size:11px;font-weight:800;border-radius:6px;padding:2px 9px;margin-bottom:8px;letter-spacing:.03em}
+.hcard.a .tag{background:#e8f0fe;color:#1a4fc4}.hcard.b .tag{background:#e7f5ee;color:#0a7d55}.hcard.c .tag{background:#f3eefb;color:#6d28d9}
+html.dark .hcard.a .tag{background:#1e2b42;color:#8fb2ff}html.dark .hcard.b .tag{background:#1c352a;color:#5cd6a0}html.dark .hcard.c .tag{background:#2f2545;color:#c0a4fb}
+.hcard h4{margin:0 0 6px;font-size:14.5px;letter-spacing:-.01em}
+.hcard p{font-size:13.4px;color:var(--muted);margin:.4em 0;line-height:1.75}
+.verdict{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);font-size:13px}
+.verdict b{font-size:11px;letter-spacing:.05em;display:block;margin-bottom:3px;color:var(--faint)}
+/* 타임라인 */
+.tl{margin:22px 0;position:relative;padding-left:26px}
+.tl::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:var(--line)}
+.tl .ev{position:relative;margin:0 0 18px;font-size:14.3px}
+.tl .ev::before{content:"";position:absolute;left:-24px;top:7px;width:10px;height:10px;border-radius:50%;
+ background:var(--card);border:2.5px solid var(--pc)}
+.tl .ev.big::before{background:var(--pc)}
+.tl .ev .yr{font-weight:800;color:var(--pc);font-size:13px;letter-spacing:.01em;display:block}
+.tl .ev .tt{font-weight:700}
+.tl .ev .dt{color:var(--muted);font-size:13.4px;display:block;line-height:1.75}
+/* 표 */
+.tblwrap{overflow-x:auto;margin:16px 0;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.6px;line-height:1.7}
+th,td{padding:10px 13px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line2)}
+th{background:color-mix(in srgb,var(--pc) 8%,transparent);font-weight:800;color:var(--pc);
+ font-size:12.6px;white-space:nowrap;border-bottom:1px solid var(--line)}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:nth-child(even){background:color-mix(in srgb,var(--box) 60%,transparent)}
+tbody td:first-child{font-weight:700}
+td.c,th.c{text-align:center}
+/* 참고문헌 */
+.ref{font-size:13.4px;line-height:1.8}
+.ref li{margin:.55em 0}
+.ref a{color:var(--pc);text-decoration:none;border-bottom:1px dotted color-mix(in srgb,var(--pc) 40%,transparent)}
+.ref a:hover{background:var(--chip)}
+.ref .k{font-weight:700}
+.mini{font-size:12.3px;color:var(--faint)}
+#top-btn{position:fixed;right:20px;bottom:20px;z-index:30;border:1px solid var(--line);background:var(--card);
+ color:var(--muted);border-radius:12px;width:42px;height:42px;font-size:14px;cursor:pointer;box-shadow:var(--shadow)}
+#top-btn:hover{color:var(--pc);border-color:var(--pc)}
+@media(max-width:940px){#nav{display:none}#main{padding:0 18px 100px}h2{font-size:19px;margin-top:46px}}
+@media print{#nav,.btns,#top-btn{display:none}body{display:block;font-size:10.5pt}#main{max-width:none;padding:0}
+ header{position:static}h2{break-before:page}a{color:inherit;text-decoration:none}.tblwrap{overflow:visible}}
+</style>
+</head>
+<body>
+<nav id="nav">
+<div class="ttl"><b>납부기한 연구</b>취득세는 왜 등기접수일에 멈추는가</div>
+<a href="#s1"><i>①</i>질문의 구도</a>
+<a href="#s2"><i>②</i>결론 먼저</a>
+<a href="#s3"><i>③</i>조문의 현재 — 한 세트 구조</a>
+<a href="#s4"><i>④</i>계보 추적 1911→2020</a>
+<a href="#s5"><i>⑤</i>가설 A — 절차간명화설</a>
+<a href="#s6"><i>⑥</i>가설 B — 조세채권 보전설</a>
+<a href="#s7"><i>⑦</i>가설 C — 연혁설</a>
+<a href="#s8"><i>⑧</i>비교법 — 다섯 나라의 관문</a>
+<a href="#s9"><i>⑨</i>추가 논점 — 등기 촉진이라는 오답</a>
+<a href="#s10"><i>⑩</i>종합 — 발생·존속·부산물</a>
+<a href="#s11"><i>⑪</i>반론과 응답, 판단 유보</a>
+<a href="#s12"><i>⑫</i>사실관계 정정 두 가지</a>
+<a href="#s13"><i>⑬</i>참고문헌</a>
+</nav>
+<div id="main">
+<header>
+  <h1>취득세 납부기한은 왜 등기접수일로 당겨지는가</h1>
+  <span class="sub">세 가설의 검증 · 2026.8. 기준</span>
+  <span class="btns">
+    <button class="btn" onclick="window.print()">인쇄</button>
+    <button class="btn" onclick="document.documentElement.classList.toggle('dark');try{localStorage.setItem('rsdark',document.documentElement.classList.contains('dark')?'1':'0')}catch(e){}">테마</button>
+  </span>
+</header>
+
+<h2 id="s1"><span class="no">①</span>질문의 구도</h2>
+
+<div class="q"><span class="who">질문 — 지방세 실무 담당자</span>
+지방세법 제20조 제4항은 취득일부터 60일이 남아 있어도 등기하려면 등기신청서 <b>접수일까지</b> 취득세를 신고·납부하게 한다. 왜 굳이 기한을 당기는가?
+<br><br>
+내 가설은 이렇다 — <mark>"실제 취득 시점을 일일이 판가름해서 거기서 60일을 세고, 그로부터 제반 행정사항을 정하는 것보다, 납부기한을 애초에 등기 시점으로 당겨버려서 더 깔끔하게 가져가려는 의도가 있지 않을까."</mark>
+<br><br>
+그리고 하나 더 — 등기를 빨리 하면 얻는 권리·이익은 이 조항과 무관하게 이미 크다. 그러니 <b>"등기를 촉진하려고 기한을 당겼다"는 설명은 성립하지 않을 것 같다.</b> 이게 맞는지도 확인하고 싶다.
+</div>
+
+<p>이 질문을 세 개의 경쟁 가설로 정리해 검증했다. 조사는 다섯 축 — 입법연혁(법제처 제·개정이유, 국회 자료), 학술문헌(KCI·RISS·한국지방세연구원), 판례·심판례, 비교법(독일·영국·미국·일본), 실무 기능 — 으로 나눠 진행했고, 마지막에 종합 판정에 대한 반대신문을 붙였다.</p>
+
+<div class="hypo">
+<div class="hcard a"><span class="tag">가설 A</span><h4>절차간명화설 (질문자)</h4>
+<p>'사실상 취득'이라는 확인 곤란한 사적 시점 대신, 등기 접수라는 공부상 명확한 시점으로 기한을 당겨 후속 행정(가산세 기산·체납 판정)을 간명하게 만들려는 설계다.</p></div>
+<div class="hcard b"><span class="tag">가설 B</span><h4>조세채권 보전설</h4>
+<p>등기가 완료되면 소유권이 공시되어 즉시 재처분·담보설정이 가능해진다. 미납 상태로 소유권이 공시되는 구간을 차단하는 담보 장치다. 영수필확인서·등기 각하와 한 세트.</p></div>
+<div class="hcard c"><span class="tag">가설 C</span><h4>연혁설</h4>
+<p>구 등록세의 과세요건이 '등기 전 납부'였고, 2011년 취득세로 통합되면서 그 요건이 관성적으로 이식된 잔재다. 적극적 설계 의도가 아니다.</p></div>
+</div>
+
+<h2 id="s2"><span class="no">②</span>결론 먼저</h2>
+
+<div class="lead">
+세 가설은 경쟁 관계가 아니라 <b>서로 다른 질문에 답하는 층위 구조</b>였다.
+<b>발생(왜 생겼나)은 C</b> — 구 등록세 요건의 기계적 이식이다.
+<b>존속(왜 안 없어지나)은 B</b> — 미납 소유권 공시를 차단하는 관문 기능이 사후적으로 승인되었기 때문이다.
+<b>그리고 질문자의 A는 — 의도가 아니라 실재하는 부산물이다.</b>
+가설 A가 말하는 간명화 효과는 실무에서 정확히 그렇게 작동하고 있음이 확인되지만, 어떤 입법자료도 그것을 기한을 당긴 '이유'로 기록하지 않았다.
+관찰은 정확하되, 인과의 방향이 반대다.
+</div>
+
+<p>다만 흥미로운 반전이 하나 있다. 2018년 말, 이 기한의 표현을 시행령에서 법률로 끌어올리는 개정이 있었는데(제12절에서 상술), 그 국면에서 채택된 논리가 정확히 가설 A의 논리 — <b>다툼의 여지가 없는 공부상 시점으로의 명확화</b> — 였다. 질문자의 직관은 "2011년에 기한을 당긴 이유"로는 기각되지만, <mark>"2018년에 기한의 표현을 다듬은 이유"로는 실제 입법사에서 실현되었다.</mark> 층위를 옮기면 맞는 직관이었던 셈이다.</p>
+
+<p>추가 논점 — "등기 촉진은 이유가 못 된다" — 는 <b>다섯 축 전부가 수렴 지지했다.</b> 반대 증거는 한 건도 나오지 않았다(⑨).</p>
+
+<h2 id="s3"><span class="no">③</span>조문의 현재 — 한 세트 구조</h2>
+
+<p>먼저 이 조항이 혼자 작동하는 규정이 아니라는 점을 봐야 한다. 세 개의 법령이 맞물려 하나의 관문을 이룬다.</p>
+
+<div class="tblwrap"><table>
+<thead><tr><th>부품</th><th>조문</th><th>내용</th></tr></thead>
+<tbody>
+<tr><td>기한</td><td>지방세법 제20조 제4항</td><td>신고·납부기한 이내에 등기·등록하려는 경우 <b>신청서를 접수하는 날까지</b> 신고·납부</td></tr>
+<tr><td>확인</td><td>지방세법 시행령 제36조</td><td>등기신청서에 <b>영수필통지서·영수필확인서 첨부</b> (행정기관 간 전자 확인 가능 시 생략)</td></tr>
+<tr><td>차단</td><td>부동산등기법 제29조 제10호</td><td>취득세·등록면허세를 <b>내지 아니한 경우 등기신청 각하</b></td></tr>
+</tbody>
+</table></div>
+
+<p>대법원 2020.10.15. 선고 2017두47403 판결은 바로 이 세트를 해석 근거로 삼았다. 시행령이 영수필서류 첨부를 요구하는 것은 <b>"등기신청서 접수 전까지 선납할 것을 전제"</b>로 한 것이고, 미납이 각하사유인 이상 "등기 완료일까지"로 읽으면 <b>취득세가 납부되지 않은 상태에서는 등기가 완료될 수 없어 가산세 징수 자체가 불가능해지는 순환</b>이 생긴다는 것이다. 그래서 기한은 접수일이다.</p>
+
+<h2 id="s4"><span class="no">④</span>계보 추적 — 1911년에서 2020년까지</h2>
+
+<p>이 조항이 어디서 왔는지는 문서로 추적된다. 결정적인 사실은, <b>"등기 전 납부"는 취득세의 발명품이 아니라 등록세의 유전자</b>라는 것이다.</p>
+
+<div class="tl">
+<div class="ev"><span class="yr">1911</span><span class="tt">등록세, 국세로 창설</span><span class="dt">등기·등록이라는 <b>행위 자체</b>를 과세물건으로 하는 형식세. 1977년 지방세로 이양.</span></div>
+<div class="ev"><span class="yr">1993.12</span><span class="tt">대법원 92누15833</span><span class="dt">"등록세는 신고에 의하여 과세표준이 확정되는 신고납세방식의 조세이고 그 신고납부시기는 <b>적어도 등기 또는 등록 전</b>." — 행위세이므로 행위 전에 걷는 것이 세목의 본질.</span></div>
+<div class="ev big"><span class="yr">1994.12.22</span><span class="tt">구 지방세법 제150조의2 신설</span><span class="dt">등록세 신고납부 의무화 — "등기 또는 등록을 하기 전까지." 오늘날 제20조 제4항의 직계 조상.</span></div>
+<div class="ev"><span class="yr">1998</span><span class="tt">시행령 제104조의2</span><span class="dt">"등기 또는 등록의 신청서를 등기소 또는 등록관청에 <b>접수하는 날까지</b>를 말한다" — '접수일' 기준은 이때 이미 확립.</span></div>
+<div class="ev big"><span class="yr">2010.3.31</span><span class="tt">지방세법 전부개정 (법률 제10221호, 2011.1.1. 시행)</span><span class="dt">등록세 중 취득 관련 과세대상을 취득세로 통합. 제150조의2가 제20조 제4항으로 <b>사실상 복사·이식</b>되는데, 등록세 조문에 있던 위임 문구("대통령령이 정하는 바에 의하여")는 <b>누락</b>된 채 옮겨졌다. 공식 개정이유는 세목 간소화·납세편의(신고기한 30일→60일 연장)만 말할 뿐, 이 조항의 설계 의도는 <b>한 줄도 설명하지 않았다.</b></span></div>
+<div class="ev"><span class="yr">2010.12.27</span><span class="tt">시행도 전에 나온 완충 입법 (법률 제10416호)</span><span class="dt">"취득세와 등록세가 취득세로 통합됨에 따라 <b>일시 납부 부담을 완화</b>" — 2011~2013년 한시 분할납부 특례(제20조의2). 입법자가 '등기 전 전액 일시납'을 설계 목표가 아니라 <b>통합의 부작용</b>으로 인식했다는 방증.</span></div>
+<div class="ev"><span class="yr">2011~2013</span><span class="tt">경과조치 — 50 대 50</span><span class="dt">개인의 주택 등 취득 시 납부세액의 <b>50%(구 등록세분 상당)는 등기 전까지</b>, 나머지 50%는 취득일부터 60일 이내 분납. '등기 전 납부' 의무의 정체가 구 등록세의 몫이었다는 <b>직접 증거.</b></span></div>
+<div class="ev"><span class="yr">2015.12.29</span><span class="tt">자구 정비 (법률 제13636호)</span><span class="dt">제4항 개정 태그 존재(등재 포함 등 자구 정비로 추정, 원문 미확인). 기한 구조 변경 아님.</span></div>
+<div class="ev"><span class="yr">2017.5.24</span><span class="tt">대전고법(청주) 2016누10672 — 시행령 무효 판결</span><span class="dt">'접수일 기준'을 정한 시행령 제35조가 <b>법률유보 위반으로 무효</b>라고 판단. 근거가 흥미롭다 — 구 등록세 조문에는 위임 문구가 있었는데 취득세 제20조 제4항에는 없다는 "큰 차이." 2010년 이식의 조잡함이 6년 뒤 소송으로 터진 것.</span></div>
+<div class="ev big"><span class="yr">2018.12.31</span><span class="tt">법률로 격상 (법률 제16194호)</span><span class="dt">법률 문언 자체를 "등기 또는 등록 신청서를 등기·등록관서에 <b>접수하는 날까지</b>"로 명문화. 2019.2.8. 시행령 제35조 삭제. 하급심 무효 판결이 촉발한 <b>명확화 입법.</b></span></div>
+<div class="ev"><span class="yr">2020.10.15</span><span class="tt">대법원 2017두47403 — 최종 확정</span><span class="dt">시행령은 "모법 해석상 가능한 것을 명시하거나 구체화한 것"으로 유효. 판단 근거로 <b>1998년 이래 등록세 규율이 2010년 통합 시 취득세로 이어진 연혁</b>을 설시. 등기신청서 접수 다음 날 납부한 납세자에게 무신고가산세 부과 적법.</span></div>
+</div>
+
+<div class="note"><b>이 계보가 말해주는 것</b> — '등기 전 납부'는 등록세에서는 기한을 당긴 것이 아니었다. 등기라는 행위 자체에 매기는 세금이니 <b>등기 전이 유일한 징수 시점</b>이었을 뿐이다. 문제는 2011년 통합으로 과세물건이 '취득'으로 바뀐 뒤에도 이 요건이 그대로 남으면서, '취득 후 60일'이라는 기한과 충돌하는 <b>기한 단축 조항처럼 보이게</b> 되었다는 데 있다. 지금 우리가 "왜 당기지?"라고 묻게 된 것 자체가 통합의 산물이다.</div>
+
+<h2 id="s5"><span class="no">⑤</span>가설 A — 절차간명화설의 검증</h2>
+
+<h3>전제는 강하게 실증된다 — '사실상 취득 시점'은 정말로 확인이 어렵다</h3>
+
+<p>가설 A의 전제, 즉 "실제 취득을 판가름하는 일의 곤란"은 학술·판례·실무 세 방면에서 모두 실증된다.</p>
+
+<ul>
+<li><b>판례군의 규모.</b> '사실상 취득' 성립 여부를 다툰 사건은 방대한 판례군을 이룬다. 확립된 법리는 "사회통념상 대금의 <b>거의 전부</b>가 지급되었다고 볼 만한 정도"인지를 미지급 잔금의 액수·비율·경위 등 제반사정을 <b>종합해 개별 판단</b>하라는 것이다(대법원 2013두2778 계열 — 99.44% 지급 사안, 상계·대물변제·연부취득 사안 등 다수). '종합 판단'이 필요하다는 것 자체가 이 시점이 공부처럼 읽히지 않는다는 뜻이다.</li>
+<li><b>학설의 진단.</b> 김동욱(2020)은 시행령이 '계약상 잔금지급일'을 취득시기로 규정한 것 자체가 "실제 잔금지급일이 불분명한 경우"를 위한 <b>추정규정</b>이라고 설명한다. 이창희(2024)는 "잔금청산은 사실상 지배력의 취득을 추단케 할 뿐"이라며 잔금 완납조차 취득을 확정하지 못한다고 지적하고, 법원·행정청·심판원 간 기준 불일치를 비판한다.</li>
+<li><b>실무의 실증.</b> 계약서상 잔금일(8.10.)로 가산세를 부과했다가 금융거래기록으로 입증된 실제 잔금일(8.20.) 기준으로 <b>취소</b>된 심사결정(행정자치부 2003.2.24.)이 있다. 과세관청조차 사적 시점 앞에서는 틀린다.</li>
+</ul>
+
+<h3>효과도 실증된다 — 등기 건에서는 행정이 실제로 깔끔해진다</h3>
+
+<p>가설 A가 예측하는 효과 — 공부상 시점 하나로 후속 행정이 종결되는 것 — 도 실무에서 정확히 확인된다.</p>
+
+<ul>
+<li>행정자치부 세제과-6133(2015.4.23.): 등기를 마친 경우 법정신고납부기한은 '취득일부터 60일'이 아니라 <b>등기신청서 접수일</b>이다. 그 후의 수정신고는 '기한 경과 후 수정신고'로 취급되고, 가산세 감면율도 그 날짜 기준으로 계산된다.</li>
+<li>조심2011지0765(2012.3.8.): 등기접수일을 법정신고기한으로 보아 가산세를 매기되, 접수일 기준 1개월 내 신고였으므로 감면 50% 적용. 등기서류 보정 여부는 "가산세의 과세에는 영향을 미치지 못한다" — <b>공부상 접수일이라는 객관적 시점만으로 판정이 끝난다.</b></li>
+<li>조심2017지0990(2017.11.23.): 같은 구조. 가산세 기산·감면 판정 전부가 접수일 하나로 처리된다.</li>
+</ul>
+
+<h3>그러나 '의도'의 증거는 없다 — 그리고 반대 방향 증거가 있다</h3>
+
+<p>문제는 여기서부터다. 다섯 축을 통틀어, <b>이 간명화를 기한 단축의 이유로 기록한 입법자료·판례·학술문헌은 한 건도 발견되지 않았다.</b> 나아가 가설 A가 '설계'였다면 설명되지 않는 사실이 둘 있다.</p>
+
+<ul>
+<li><b>간명화가 부분적이다.</b> 등기하지 않는 취득 — 미등기 전매, 상속 미등기, 과점주주 간주취득, 지목변경 — 에는 '사실상 취득일부터 60일'이라는 기준이 그대로 남아 있다. 검증 곤란을 해소하려는 설계였다면 가장 곤란한 미등기 영역을 그대로 두었을 리 없다.</li>
+<li><b>문언 자체가 분쟁을 낳았다.</b> "등기를 하기 전까지"라는 원래 표현은 접수 시점인지 완료 시점인지의 다툼을 유발했고, 시행령 무효 판결(2017)과 법률 개정(2018)으로야 정리되었다. 간명화를 노린 조항이 간명하지 않았던 것이다.</li>
+</ul>
+
+<div class="okbox"><b>가설 A 판정</b> — 입법 <b>동기</b>로서는 증거 부재로 채택 불가. 그러나 <b>실증되는 부수 효과</b>로서는 강하게 확인된다. 질문자가 포착한 운영상 이점은 실재하고 실무는 정확히 그렇게 굴러간다. 다만 그것은 조항이 만들어진 이유가 아니라, 이식된 조항이 낳은 결과적 효용이다. <mark>관찰은 정확하되 인과의 방향이 반대다.</mark> — 그리고 ⑫에서 보듯, 2018년 명문화 국면에서는 이 논리가 실제로 채택되었다.</div>
+
+<h2 id="s6"><span class="no">⑥</span>가설 B — 조세채권 보전설의 검증</h2>
+
+<p>가설 B의 메커니즘은 조문 구조(③)로 실재가 확인되고, 사법부의 목적론적 설시가 이를 뒷받침한다.</p>
+
+<ul>
+<li><b>헌법재판소 2004헌가31(2005.12.22.)</b> — 전신인 등록세의 '등기 전 신고납부+가산세' 체계에 대해: 성실신고 유도를 통한 신고납세제도의 실효성 확보, <b>"등기절차의 정형화·효율화라는 공익"</b>, 그리고 <b>"세수의 용이한 적기(適期) 확보"</b>를 병렬로 설시. 절차 효율(A 친화)과 세수 확보(B 친화)를 함께 든 복수 목적설이다.</li>
+<li><b>대법원 2017두47403(2020)</b> — 영수필확인서 선납 전제 + 각하사유라는 담보 구조를 해석의 근거로 명시적으로 원용.</li>
+<li><b>미등기 전매의 실증</b> — 등기의 사법상 이익이 커도 조세회피 집단은 실재한다. 경기도는 2018년 조사에서 "2천억 원 상당 상업건물을 사실상 취득하고도 등기하지 않은 채 제3자에게 매각"한 전형적 미등기 전매로 취득세 180억 원을 추징했다. 등기 시점이 취득세 징수의 <b>사실상 유일한 강제 관문</b>임을 보여준다.</li>
+<li><b>전산화는 이 기능을 약화시키지 않았다.</b> 시행령 제36조 단서가 종이 영수필확인서를 전자 확인으로 대체했지만, 그것은 <b>확인 수단</b>의 교체이지 '등기 전 납부'라는 <b>요건</b>의 폐지가 아니다. 오히려 확인이 즉시·자동화되어 관문의 집행력은 강해졌다.</li>
+</ul>
+
+<div class="okbox"><b>가설 B 판정</b> — 이 조항이 <b>지금 무엇을 하고 있고 왜 폐지되지 않는가</b>에 대한 가장 강한 설명. 기능·존속 이유로서는 사실상 확정적이다. 그러나 "2011년에 왜 이렇게 생겼는가"라는 발생 질문에는 답하지 못한다 — 문서상 근거(판례·헌재 설시)가 전부 <b>사후적 정당화</b>이기 때문이다. 통합 당시 이를 도입 이유로 든 1차 문헌은 발견되지 않았다.</div>
+
+<h2 id="s7"><span class="no">⑦</span>가설 C — 연혁설의 검증</h2>
+
+<p>발생 경로에 관한 한, 증거는 네 겹으로 수렴한다.</p>
+
+<ol>
+<li><b>문언의 물증</b> — 제20조 제4항은 구 등록세 제150조의2의 복사본이고, 복사 과정에서 위임 문구가 누락되는 <b>조잡함</b>까지 남겼다(그 누락이 2017년 시행령 무효 판결의 근거가 됐다). 계산된 설계보다 기계적 이식과 정합적이다.</li>
+<li><b>입법자의 자인</b> — 시행도 전에 나온 분납 완충 입법(2010.12.27.)의 개정이유가 "통합됨에 따라 일시 납부 부담을 완화"다. 이 요건을 적극 설계한 입법자라면 자신의 담보 장치를 시행 전에 스스로 약화시키지 않는다.</li>
+<li><b>경과조치의 증언</b> — 2011~2013년 분납 특례가 정확히 <b>"구 등록세분 50%는 등기 전까지, 나머지는 60일 이내"</b>로 갈라져 있었다. 등기 전 납부 의무의 정체가 구 등록세의 몫이었다는 직접 증거다.</li>
+<li><b>최고심의 설시</b> — 대법원 2017두47403은 이 조항을 "종전 등록세 규정의 취지를 그대로 유지한 것"으로 해석했다.</li>
+</ol>
+
+<p>학계의 평가도 같은 방향이다. 이한우·정지선(2024)은 이를 <b>통합 시 등록세 성격이 잔존한 결과</b>로 보고 "등기행위와 연동된 취득세 신고납부의 폐지"를 입법론으로 주장한다. 구성권(2019)은 통합 취득세가 "형식상 (구)취득세와 (구)등록세를 합해 놓은 것일 뿐"이라고 진단한다.</p>
+
+<div class="okbox"><b>가설 C 판정</b> — 발생 경로에 관한 한 가장 강하게 입증된 가설. 다만 C는 "어디서 왔나"만 답하며 <b>"왜 유지되나"는 답하지 못하는 반쪽 설명</b>이다. 잔재라면 15년째 세 번의 재정비(2015·2018 개정, 2020 대법원)에서 살아남은 이유를 따로 설명해야 하고, 그 답이 B다.</div>
+
+<h2 id="s8"><span class="no">⑧</span>비교법 — 다섯 나라의 관문</h2>
+
+<p>"세금을 등기의 관문으로 삼는 설계"가 한국 특유의 것인지 국제 표준인지는 가설 B와 C의 무게를 가르는 시금석이다. 결과: <b>관문 자체는 국제 표준 기법이고, 다만 그 관문이 '취득세 전액'에 걸리게 된 경로가 한국적 우연이다.</b></p>
+
+<div class="tblwrap"><table>
+<thead><tr><th>국가</th><th>세목</th><th>등기와의 연계</th><th>구조</th></tr></thead>
+<tbody>
+<tr><td>독일</td><td>부동산취득세<br>(Grunderwerbsteuer)</td><td class="c"><b>강한 관문</b></td><td>GrEStG §22 — 세무서의 <b>Unbedenklichkeitsbescheinigung(납세완납증명)</b> 없이는 등기부(Grundbuch) 소유권 등재 불가. 'Grundbuchsperre(등기부 동결)'. 명시적 취지가 조세채권 확보.</td></tr>
+<tr><td>영국</td><td>SDLT<br>(인지토지세)</td><td class="c"><b>강한 관문</b></td><td>Finance Act 2003 s.79 — HMRC의 <b>SDLT5 증명서</b> 없이는 Land Registry 등기 원칙적 불가.</td></tr>
+<tr><td>미국 (다수 주)</td><td>Transfer tax<br>/ recordation tax</td><td class="c"><b>관문</b></td><td>카운티 recorder가 미납 deed의 record 거부(예: Nevada NRS ch.375 — "recorder shall refuse to record any deed ... if the tax has not been paid").</td></tr>
+<tr><td><b>일본</b></td><td>부동산취득세</td><td class="c"><b>연계 없음</b></td><td><b>보통징수(부과과세)</b> — 취득·등기 후 4~6개월 뒤 도도부현이 납세통지서 발송. 등기의 관문은 국세인 등록면허세(등기 시 납부)가 따로 담당. 등기부가 과세자료의 원천.</td></tr>
+<tr><td>한국</td><td>취득세</td><td class="c"><b>관문 (통합 이후)</b></td><td>제20조 제4항 + 영수필확인 + 각하. 1911년생 등록세의 관문이 2011년 통합으로 <b>취득세 전액에 확장</b>된 형태.</td></tr>
+</tbody>
+</table></div>
+
+<p>독일·영국·미국의 존재는 가설 B를 보강한다 — 소유권 공시 전에 이전세를 확보하는 것은 보편적 채권 보전 기법이다. 그러나 <b>일본의 존재가 결정적</b>이다. 취득세형 조세에 등기 관문이 필수라면 일본은 설명되지 않는다. 일본은 등록면허세(행위세)와 부동산취득세(취득세)를 분리 유지했고, 취득세는 관문 없이 보통징수로 걷는다. 한국은 두 세목을 <b>합쳐버렸기 때문에</b> 등록세의 관문이 취득세 전액으로 확장된 것이다. 현 구조는 필연이 아니라 <b>통합이라는 선택이 낳은 역사적 경로</b>다 — 가설 C의 국제판 증거인 셈이다.</p>
+
+<h2 id="s9"><span class="no">⑨</span>추가 논점 — "등기 촉진"이라는 오답</h2>
+
+<p>질문자의 두 번째 판단 — <b>등기를 빨리 하게 만드는 것은 이 조항의 이유가 될 수 없다</b> — 은 조사한 다섯 축 전부가 수렴 지지했고, 반대 증거는 발견되지 않았다. 근거는 네 겹이다.</p>
+
+<ol>
+<li><b>기능 분담의 물증.</b> 등기 강제는 별도의 장치가 담당한다. 민법 제186조(등기 = 물권변동의 효력요건)라는 사법상 유인에 더해, <b>부동산등기특별조치법 제2조</b>(1990)가 잔금지급일부터 60일 내 등기신청을 공법상 의무로 만들고 위반 시 과태료(등록세액의 5배 이하)를 부과한다. 등기 촉진이 목적이라면 그 목적은 이미 이 법이 수행 중이다.</li>
+<li><b>사법부의 목적 귀속.</b> 헌재는 '등기절차 이행 유도' 목적을 제20조 제4항이 아니라 <b>미등기 전매 중가산세 조항</b>(2000헌바86 — 미등기 전매자를 "취득세 면탈의 의사가 확정적으로 표출된 악의적인 취득자"로 규정)에 명시적으로 귀속시켰다. 한편 조세심판원은 제4항에 대해 <mark>"취득일부터 60일 이내에 등기를 하는 것은 납세의무자 스스로 필요에 의하여 기한의 이익을 포기하는 것"</mark>(조심2017지0990)이라 하여, 등기 시점 선택을 납세자의 자유로 전제했다.</li>
+<li><b>구조적 논증.</b> 제4항은 "등기하려는 경우"에만 발동하는 조건부 규정이다. 등기를 앞당길 유인을 전혀 만들지 않으며, 오히려 <b>조기 등기에 조기 납부라는 비용을 붙이는 역유인</b>이다. 등기 촉진 장치로서는 설계 자체가 성립하지 않는다.</li>
+<li><b>문헌상 부재.</b> 판례·헌재결정·학술논문·개정이유 어디에서도 이 조항의 목적을 '등기 촉진'으로 서술한 예가 없다(5축 독립 조사에서 반례 0건 — 부존재 증명은 아님).</li>
+</ol>
+
+<div class="note"><b>한 가지 보정</b> — 경기도 미등기 전매 적발 사례(180억 추징)는 사법상 등기 유인이 '모두에게' 충분하지는 않음을 보여준다. 그러나 이는 질문자 논점을 약화시키지 않는다. 등기 회피자는 애초 제4항의 적용 대상 밖이므로("등기하려는 경우"에만 발동), 이 조항이 등기 촉진에 무력하다는 결론을 오히려 강화한다. 등기 회피 대응은 별도 조항 — 미등기 전매 중가산세 80%(제21조 제2항) — 의 몫이다.</div>
+
+<h2 id="s10"><span class="no">⑩</span>종합 — 발생·존속·부산물</h2>
+
+<p>이제 세 가설을 한 서사로 엮을 수 있다.</p>
+
+<div class="q">
+<b>1단계 — 발생 (가설 C).</b> '등기 전 납부'는 등기 행위 자체에 과세하던 구 등록세의 본질적 징수 구조였다(1994년 의무화, 1998년 '접수일' 기준 확립). 2010년 전부개정은 세목 간소화라는 별개의 목적으로 두 세목을 통합하면서 이 요건을 제20조 제4항으로 기계적으로 이식했다. 위임 문구 누락, 개정이유의 침묵, 시행 전 완충 입법, 50 대 50 경과조치가 이것이 적극적 설계가 아니었음을 사중으로 증언한다.
+<br><br>
+<b>2단계 — 존속 (가설 B).</b> 그러나 이식된 조항은 잔재로 방치되지 않았다. 미납 상태의 소유권 공시를 차단하는 관문(영수필확인 + 각하)의 조세법 측 반쪽으로 기능했고 — 독일 GrEStG §22, 영국 SDLT5, 미국 recorder 거부와 동형인 국제 표준 기법 — 바로 그 기능 때문에 사법부의 목적론적 정당화(헌재 2004헌가31의 "세수 적기 확보", 대법원 2017두47403)를 얻어, 폐지론(이한우·정지선 2024)에도 불구하고 살아남았다.
+<br><br>
+<b>3단계 — 부산물 (가설 A).</b> 그리고 등기 사안에서는 접수일이 법정신고기한 그 자체가 되어 가산세 기산·감면 판정이 공부상 일자 하나로 종결되는 간명화 효과가 실제로 발생한다(세제과-6133, 조심2011지0765·2017지0990). 어떤 입법자료도 이를 동기로 기록하지 않았지만, 이 효용이 실재한다는 사실 자체가 — 관문 기능과 함께 — 이 조항이 재심의 기회마다 살아남는 이유의 일부일 것이다.
+</div>
+
+<p>한 문장으로: <mark>발생은 C, 존속은 B, A는 의도가 아니라 실재하는 부산물</mark>이다. 질문자의 가설은 "이 조항이 왜 좋은가"에 대한 정확한 관찰이지만, "왜 생겼는가"에 대한 답으로는 문서 증거가 없다.</p>
+
+<h2 id="s11"><span class="no">⑪</span>반론과 응답, 판단 유보</h2>
+
+<h3>가장 강한 반론 — "이식도 선택이다"</h3>
+
+<div class="quote">"'발생은 C, 존속은 B'라는 종합은 설명의 회피다. 2010년 입법자는 이 요건을 삭제하고 일본식 보통징수로 갈 수도 있었다. 2018년에는 명백한 재심의 기회에서 오히려 법률로 격상했다. 두 번의 침묵 속 존치는 관성이 아니라, 처음부터 B(관문형 세수 확보)를 실질적 이유로 채택한 묵시적 입법 의사로 읽어야 한다."</div>
+
+<p><b>응답</b> — 부분 수용, 핵심 기각. 2018년 명문화가 B적 구조의 법률 차원 승인이라는 점은 수용한다(그래서 존속의 서사에 B를 세웠다). 그러나 "처음부터 B가 이유"라는 주장은 세 가지에 걸린다.</p>
+<ol>
+<li><b>발생 시점의 직접 증거가 반대 방향이다.</b> 입법자는 이 요건의 효과(등기 전 전액 일시납)를 인지하자마자 그것을 '통합에 따른 부담'으로 규정하고 완충 입법을 했다. B를 의도한 설계자라면 자신의 담보 장치를 시행 전에 스스로 약화시키지 않는다.</li>
+<li><b>이식의 조잡함.</b> 위임 문구 누락으로 법률유보 무효 논란을 자초한 것은 계산된 채택보다 기계적 복사와 정합적이다.</li>
+<li><b>2018년의 계기는 외생적이다.</b> 하급심 무효 판결이라는 사법적 사건에 대한 대응이었지, 담보 기능의 재설계 발의가 아니었다. 사후 승인은 "기능 때문에 살아남았다"와 "처음부터 기능이 이유였다"를 구별해 주지 못하지만, 발생 시점의 문서 증거는 전자만 지지한다.</li>
+</ol>
+
+<h3>판단 유보 목록</h3>
+<ul>
+<li><b>2010년 국회 심사보고서 원문 미확인.</b> 이번 조사의 결론은 심사자료의 침묵을 전제로 한다. 만약 심사보고서에 등기 관문의 세수 확보 효용을 논한 대목이 있다면, 서사는 "의도적 승계(B가 원인, C는 형식)"로 수정되어야 한다.</li>
+<li>한국지방세연구원 정승영(2020) 보고서 원문 미확인(국회도서관 소장 확인, 텍스트 추출 실패).</li>
+<li>2015.12.29. 개정 태그의 정확한 내용 미확인(자구 정비로 추정).</li>
+</ul>
+
+<h2 id="s12"><span class="no">⑫</span>사실관계 정정 두 가지</h2>
+
+<div class="warnbox"><b>정정 1 — 30일 → 60일 연장 시점</b><br>
+취득세 신고납부기한의 60일 연장은 2011년 말이 아니라 <b>2010.3.31. 전부개정(법률 제10221호)에서 이미</b> 이루어졌고 2011.1.1. 통합과 동시에 시행되었다. 개정이유 원문: "신고·납부기한을 현행 취득일로부터 30일에서 60일로 대폭 연장하여 납세편의를 제고." 통합으로 낼 돈이 두 배가 되는 데 대한 완충이 <b>처음부터 패키지</b>였던 것이다. (이 대화에서 앞서 "2011.12.31. 개정으로 60일"이라 말한 것은 오류였다.)</div>
+
+<div class="warnbox"><b>정정 2 — '접수하는 날까지' 법문화 시점</b><br>
+법률 문언이 "접수하는 날까지"로 바뀐 것은 2015.12.29.이 아니라 <b>2018.12.31. 개정(법률 제16194호)</b>이다(시행령 제35조는 2019.2.8. 삭제). 근거: ① 대전고법이 2017년에 시행령을 무효로 판단할 수 있었다는 사실 자체가 2015년에 법률로 명문화되지 않았음을 함축하고, ② 대법원 2017두47403이 구법+시행령 체제를 전제로 판단했다. 다만 '접수일'이라는 <b>기준 자체</b>는 1998년 등록세 시행령 이래 계속 존재했다 — 2018년은 기한의 창설이 아니라 <b>이미 있던 기한의 표현을 법률로 끌어올린 명확화</b>다.</div>
+
+<p>정정 2가 이 연구에서 갖는 의미는 작지 않다. 명문화 국면에서 채택된 논리 — 다툼 없는 공부상 시점의 확정 — 는 정확히 가설 A의 논리다. 질문자의 직관은 "2011년 기한을 당긴 이유"로는 기각되지만, <b>"2018년 기한의 표현을 다듬은 이유"로는 입법사에서 실현되었다.</b> 그리고 2018년은 입법자가 이 조항을 폐지할 수도 있었던 재심의 기회였는데 오히려 법률로 격상했다는 점에서, 연혁적 잔재(C)가 담보 기능(B)을 이유로 묵시적으로 재승인된 순간으로 읽을 수 있다.</p>
+
+<h2 id="s13"><span class="no">⑬</span>참고문헌</h2>
+
+<h3>법령·입법자료</h3>
+<ul class="ref">
+<li><span class="k">지방세법 제20조 제4항</span> — <a href="https://casenote.kr/법령/지방세법/제20조" target="_blank" rel="noopener">현행 조문(CaseNote)</a> · <a href="https://www.law.go.kr/LSW/lsRvsRsnListP.do?lsId=001649&chrClsCd=010102" target="_blank" rel="noopener">지방세법 제·개정이유 목록(법제처)</a></li>
+<li><span class="k">법률 제10221호</span>(2010.3.31. 전부개정) — 취·등록세 통합, 신고기한 30→60일 연장</li>
+<li><span class="k">법률 제10416호</span>(2010.12.27.) — 통합에 따른 분할납부 특례 신설(개정이유: "일시 납부 부담 완화")</li>
+<li><span class="k">법률 제16194호</span>(2018.12.31.) — "접수하는 날까지" 법률 명문화 · 시행령 제35조 삭제(2019.2.8.)</li>
+<li><span class="k">구 지방세법 제150조의2</span>(1994.12.22. 신설) · 구 시행령 제104조의2(접수일 정의) — 등록세 신고납부 체제</li>
+<li><span class="k">부동산등기법 제29조 제10호</span> — 취득세 미납 시 등기신청 각하 · <span class="k">지방세법 시행령 제36조</span> — 영수필확인서 첨부</li>
+<li><span class="k">부동산등기특별조치법 제2조·제11조</span>(1990) — 60일 내 등기신청 의무·과태료</li>
+</ul>
+
+<h3>판례·결정례</h3>
+<ul class="ref">
+<li><a href="https://casenote.kr/대법원/2017두47403" target="_blank" rel="noopener">대법원 2020.10.15. 선고 2017두47403</a> — 접수일 기준 확정, 등록세 연혁 승계 설시 · <a href="https://www.law.go.kr/LSW/precInfoP.do?precSeq=214823" target="_blank" rel="noopener">원심: 대전고법(청주) 2017.5.24. 선고 2016누10672</a>(시행령 무효 판단)</li>
+<li><a href="https://casenote.kr/대법원/92누15833" target="_blank" rel="noopener">대법원 1993.12.24. 선고 92누15833</a> — 등록세 신고납부시기는 "적어도 등기 또는 등록 전"</li>
+<li><a href="https://casenote.kr/대법원/98두17685" target="_blank" rel="noopener">대법원 2000.8.22. 선고 98두17685</a> — 구 등록세 접수일 기준 가산세</li>
+<li><a href="https://www.scourt.go.kr/sjudge/1521699697140_152137.pdf" target="_blank" rel="noopener">대법원 2018.3.22. 선고 2014두43110 전원합의체</a> — 대금 완납 시 사실상 취득 성립, 등기는 형식적 추완</li>
+<li><a href="https://casenote.kr/citing/대법원/2013두2778" target="_blank" rel="noopener">대법원 2013.6.28. 선고 2013두2778 및 인용 판례군</a> — '사회통념상 거의 전부 지급' 종합판단 법리</li>
+<li><a href="https://olta.re.kr/explainInfo/authoInterpretationDetail.do?num=60058771" target="_blank" rel="noopener">헌법재판소 2005.12.22. 2004헌가31</a> — 등록세 체계의 목적: 신고 실효성 + 등기절차 정형화·효율화 + 세수 적기 확보</li>
+<li><a href="https://www.law.go.kr/LSW/detcInfoP.do?detcSeq=58283&mode=1" target="_blank" rel="noopener">헌법재판소 2001.7.19. 2000헌바86</a> — 미등기 전매 중가산세 합헌, '등기 유도' 목적의 귀속처</li>
+<li><a href="https://casenote.kr/조세심판원/조심2011지0765" target="_blank" rel="noopener">조심2011지0765</a>(2012.3.8.) · <a href="https://olta.re.kr/explainInfo/print/judgeDecisionDetailPrint.do?num=60082661" target="_blank" rel="noopener">조심2017지0990</a>(2017.11.23. — "기한의 이익 포기" 설시)</li>
+<li><a href="https://www.olta.re.kr/explainInfo/authoInterpretationDetail.do?num=60074391" target="_blank" rel="noopener">행정자치부 세제과-6133</a>(2015.4.23.) — 등기 시 법정신고납부기한 = 접수일 · <a href="https://www.olta.re.kr/explainInfo/judgeDecisionDetail.do?num=60067196" target="_blank" rel="noopener">행정자치부 심사결정(2003.2.24.)</a> — 금융자료로 입증된 사실상 잔금일 기준 가산세 취소</li>
+</ul>
+
+<h3>학술문헌</h3>
+<ul class="ref">
+<li>이한우·정지선, <span class="k">"부동산 취득에 대한 취득세 과세의 문제점과 개선방안"</span>, 세무와 회계연구 제13권 제4호(2024), 161–214 — <a href="https://www.kci.go.kr/kciportal/landing/article.kci?arti_id=ART003138116" target="_blank" rel="noopener">KCI</a> · 등기 연동 신고납부의 폐지론</li>
+<li>이창희, <span class="k">"취득세에서 취득의 개념"</span>, 서울대학교 법학 제65권 제4호(2024), 173–224 — 사실상 취득 개념의 불확정성 비판</li>
+<li>김동욱, <span class="k">"지방세법상 취득시기와 납세의무자: 사실상 취득 개념을 중심으로"</span>, 지방세논집 제7권 제1호(2020), 199–219 — 계약상 잔금일 = 추정규정론</li>
+<li>구성권, <span class="k">"지방세법상 통합된 취득세에 관한 연구"</span>, 조세논총 제4권 제4호(2019), 51–75 — "형식적 합산" 진단</li>
+<li>전동흔, <span class="k">"부동산관련 취득세와 등록면허세 과세범위에 대한 소고"</span>, 조세논총 제4권 제3호(2019), 35–77</li>
+<li>유영하·김수성, <span class="k">"취득세와 등록세 통합의 효과 분석에 관한 연구"</span>, 조세논총 제5권 제1호(2020), 41–90</li>
+<li>윤문구·문필주·박훈, <span class="k">"조세심판원 심판례 분석을 통한 취득세 취득개념의 해석론 및 입법론"</span>, 경희법학 — 심판원·법원 기준 불일치 실증</li>
+<li class="mini">※ 원문 접근이 초록·목차 수준에 그친 문헌은 그 범위에서만 인용했다. 정승영(연구책임), "알기 쉽게 새로 쓰는 지방세법 정비 방안 — 취득세를 중심으로"(한국지방세연구원, 2020)는 소장만 확인, 내용 인용 없음.</li>
+</ul>
+
+<h3>비교법·기타</h3>
+<ul class="ref">
+<li>독일 <a href="https://www.buzer.de/gesetz/6320/a87770.htm" target="_blank" rel="noopener">GrEStG §22</a> — Unbedenklichkeitsbescheinigung(등기부 동결)</li>
+<li>영국 Finance Act 2003 s.79 — <a href="https://landtaxadvice.co.uk/hmrc/SDLTM50200" target="_blank" rel="noopener">SDLT5와 Land Registry(HMRC 매뉴얼 해설)</a></li>
+<li>미국 <a href="https://www.leg.state.nv.us/nrs/NRS-375.html" target="_blank" rel="noopener">Nevada NRS ch.375</a> — 미납 deed의 record 거부</li>
+<li>일본 <a href="https://web.pref.hyogo.lg.jp/kk22/faq/hudousan/hudousan1.html" target="_blank" rel="noopener">효고현 부동산취득세 안내</a> 등 — 보통징수, 등기 비연계</li>
+<li><a href="https://www.intn.co.kr/news/articleView.html?idxno=2014462" target="_blank" rel="noopener">강지현(법무법인 광장), 대법원 2017두47403 판례평석</a>, 일간NTN 2020.12.18.</li>
+<li><a href="https://news.seoul.go.kr/gov/archives/200082" target="_blank" rel="noopener">서울시 세목별 안내</a> — 2011~2013 분납 경과조치(50% 등기 전 + 50% 60일 내)</li>
+<li><a href="https://www.e-newsp.com/mobile/article.html?no=27876" target="_blank" rel="noopener">경기도 미등기 전매 적발 보도</a> — 취득세 180억 추징 사례</li>
+</ul>
+
+<div class="note"><b>한계 고지</b> — 이 문서는 2026년 8월 기준 웹으로 접근 가능한 자료에 기초한 조사이며, 국회 심사보고서 원문 등 일부 1차 자료는 미확인 상태다(⑪ 판단 유보 목록). 학술 인용은 초록·본문 중 확인된 범위로 한정했다. 실무 적용 전에는 반드시 현행 조문과 유권해석을 확인할 것.</div>
+
+</div>
+<button id="top-btn" title="맨 위로" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+try{if(localStorage.getItem('rsdark')==='1')document.documentElement.classList.add('dark')}catch(e){}
+var links=[].slice.call(document.querySelectorAll('#nav a'));
+var map={};links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a});
+var cur=null;
+var io=new IntersectionObserver(function(es){
+  es.forEach(function(en){
+    if(!en.isIntersecting)return;
+    var a=map[en.target.id];if(!a)return;
+    if(cur)cur.classList.remove('cur');a.classList.add('cur');cur=a;
+  });
+},{rootMargin:'-80px 0px -70% 0px'});
+document.querySelectorAll('#main h2').forEach(function(h){io.observe(h)});
+</script>
+</body>
+</html>

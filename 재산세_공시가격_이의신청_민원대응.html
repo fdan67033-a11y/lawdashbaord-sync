@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>재산세 민원 대응 — 공시가격·시가표준액 이의신청</title>
+<style>
+:root{--bg:#fbfcff;--fg:#1a1f29;--muted:#6b6b77;--accent:#1a56db;--accent2:#0a7d55;--warn:#d64550;
+ --card:#ffffff;--box:#f4f7fd;--line:#e3e8f2;--side:#eef2fb;--chip:#eaf0ff}
+html.dark{--bg:#1f232b;--fg:#e8ebf0;--muted:#a7b0be;--accent:#7aa2ff;--accent2:#5cd6a0;--warn:#f2909a;
+ --card:#272c36;--box:#20252e;--line:#333a45;--side:#20252e;--chip:#2b3444}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);line-height:1.7;
+ font-family:"맑은 고딕","Malgun Gothic",sans-serif;display:flex}
+/* 좌측 목차 */
+#nav{width:210px;flex:0 0 210px;height:100vh;position:sticky;top:0;overflow-y:auto;
+ background:var(--side);border-right:1px solid var(--line);padding:16px 12px;font-size:13px}
+#nav .ttl{font-size:13.5px;font-weight:800;color:var(--accent);margin:2px 6px 12px}
+#nav a{display:block;color:var(--fg);text-decoration:none;padding:7px 9px;border-radius:8px;margin-bottom:2px}
+#nav a:hover{background:var(--chip)}
+#main{flex:1;min-width:0;max-width:900px;margin:0 auto;padding:0 28px 100px}
+header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);
+ padding:16px 0 12px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+header h1{font-size:20px;margin:0}
+header .sub{font-size:12.5px;color:var(--muted)}
+.btn{margin-left:auto;border:1px solid var(--line);background:var(--box);color:var(--fg);
+ border-radius:8px;padding:6px 11px;font-size:12.5px;cursor:pointer;font-weight:700}
+h2{font-size:17px;margin:30px 0 10px;padding-top:8px;color:var(--accent);border-bottom:2px solid var(--line);padding-bottom:6px}
+h3{font-size:14.5px;margin:16px 0 6px}
+p,li{font-size:14.5px}
+.lead{background:var(--box);border-left:4px solid var(--accent);border-radius:0 10px 10px 0;padding:12px 16px;font-size:14.5px}
+table{border-collapse:collapse;width:100%;margin:10px 0;font-size:13.5px;overflow:hidden;border-radius:10px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--chip);font-weight:800;color:var(--accent)}
+td.c,th.c{text-align:center}
+.pill{display:inline-block;font-size:11.5px;font-weight:800;border-radius:999px;padding:1px 9px}
+.pill.local{background:#e7f7ef;color:#0a7d55}.pill.molit{background:#eaf0ff;color:#1a56db}
+html.dark .pill.local{background:#1f3d30;color:#5cd6a0}html.dark .pill.molit{background:#25344f;color:#7aa2ff}
+.cite{font-size:12px;color:var(--muted);margin:-4px 0 12px;padding:7px 11px;background:var(--box);border-radius:8px;border-left:3px solid var(--accent)}
+.cite b{color:var(--accent)}
+.cite .go{font-weight:800;color:var(--accent2);text-decoration:none}
+.cite .go:hover{text-decoration:underline}
+details.lawbox{background:transparent;border:0;padding:0;margin:6px 0 0}
+details.lawbox>summary{font-size:12px;font-weight:800;color:var(--accent);padding:4px 0;list-style:none}
+details.lawbox>summary::-webkit-details-marker{display:none}
+details.lawbox>summary::before{content:"📖 ";}
+details.lawbox[open]>summary::before{content:"📖 ▾ ";}
+.law{font-size:12.5px;white-space:pre-wrap;line-height:1.65;color:var(--fg);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-top:4px}
+.law .tt{font-weight:800;color:var(--accent);display:block;margin-bottom:4px}
+mark{background:#fff29a;color:#4a3b00;padding:0 3px;border-radius:3px;font-weight:800}
+html.dark mark{background:#5f5000;color:#ffe98a}
+/* 타임라인 캘린더 */
+.tl{margin:14px 0 6px;font-size:12px}
+.tl-head{display:grid;grid-template-columns:158px 1fr;align-items:end}
+.tl-head .mos{display:grid;grid-template-columns:repeat(12,1fr);text-align:center;color:var(--muted);font-weight:700;font-size:11px}
+.tl-head .mos span{padding:3px 0;border-left:1px solid var(--line)}
+.tl-row{display:grid;grid-template-columns:158px 1fr;align-items:center;margin-top:7px}
+.tl-lab{font-weight:800;font-size:12.5px;padding-right:10px;line-height:1.3}
+.tl-lab .who{font-weight:700;font-size:10.5px;border-radius:999px;padding:0 6px;margin-left:2px}
+.tl-track{position:relative;height:28px;background:var(--box);border-radius:7px;overflow:hidden;border:1px solid var(--line)}
+.tl-track .grid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(12,1fr);pointer-events:none}
+.tl-track .grid i{border-left:1px solid var(--line);opacity:.5}
+.tl-bar{position:absolute;top:3px;bottom:3px;border-radius:6px;color:#fff;font-size:11px;font-weight:800;
+ display:flex;align-items:center;padding:0 9px;white-space:nowrap;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.tl-bar.molit{background:linear-gradient(90deg,#2a6be0,#1a56db)}
+.tl-bar.local{background:linear-gradient(90deg,#12946a,#0a7d55)}
+@media(max-width:640px){.tl-head,.tl-row{grid-template-columns:96px 1fr}.tl-lab{font-size:11px}}
+.script{background:var(--box);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;position:relative}
+.script .lbl{font-size:12px;font-weight:800;color:var(--accent2);margin-bottom:5px}
+.script .txt{font-size:14px;white-space:pre-wrap}
+.script .copy{position:absolute;top:8px;right:8px;border:1px solid var(--line);background:var(--card);color:var(--muted);
+ border-radius:7px;padding:3px 8px;font-size:11px;cursor:pointer;font-family:inherit}
+.script .copy:hover{border-color:var(--accent);color:var(--accent)}
+.warn{background:rgba(214,69,80,.08);border-left:4px solid var(--warn);border-radius:0 10px 10px 0;padding:12px 16px;margin:10px 0}
+.warn b{color:var(--warn)}
+.ok{color:var(--accent2);font-weight:800}.no{color:var(--warn);font-weight:800}
+details{background:var(--box);border:1px solid var(--line);border-radius:10px;padding:4px 14px;margin:10px 0}
+details>summary{cursor:pointer;font-weight:800;padding:8px 0;font-size:14px}
+details .law{font-size:12.5px;white-space:pre-wrap;color:var(--muted);line-height:1.6}
+.mini{font-size:12px;color:var(--muted)}
+ul.lk{list-style:none;padding:0;margin:6px 0}
+ul.lk li{padding:8px 11px;border:1px solid var(--line);border-radius:9px;margin-bottom:6px;background:var(--card)}
+ul.lk a{color:var(--accent);font-weight:800;text-decoration:none;font-size:14px}
+ul.lk a:hover{text-decoration:underline}
+ul.lk .mini{display:block;margin-top:2px}
+.tier{display:inline-block;font-size:10.5px;font-weight:800;border-radius:999px;padding:1px 7px;margin-right:6px}
+.tier.t1{background:#e7f7ef;color:#0a7d55}.tier.t2{background:#eaf0ff;color:#1a56db}.tier.t3{background:#f3eefb;color:#7a4fd0}
+html.dark .tier.t1{background:#1f3d30;color:#5cd6a0}html.dark .tier.t2{background:#25344f;color:#7aa2ff}html.dark .tier.t3{background:#332a4d;color:#c9b3ff}
+.step{display:flex;gap:10px;align-items:flex-start;margin:8px 0}
+.step .n{flex:0 0 24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+@media(max-width:820px){#nav{display:none}#main{padding:0 16px 80px}}
+</style>
+</head>
+<body>
+<nav id="nav">
+  <div class="ttl">📋 목차</div>
+  <a href="#why">① 왜 세금이 늘었나</a>
+  <a href="#cal">② 이의신청 골든타임</a>
+  <a href="#types">③ 가격유형별 이의신청</a>
+  <a href="#gijang" style="color:var(--accent2);font-weight:800">🏛 기장군 전용</a>
+  <a href="#trap">④ 30일 놓치면? (함정)</a>
+  <a href="#bokbu">⑤ 재산세 자체 불복(90일)</a>
+  <a href="#bldg">⑥ 건축물 시가표준액</a>
+  <a href="#agent">⑦ "대신 넣어줘" 응대</a>
+  <a href="#law">⑧ 근거 법조문</a>
+  <a href="#sites">⑨ 🔗 관련 사이트</a>
+</nav>
+<div id="main">
+<header>
+  <h1>재산세 민원 대응 카드</h1>
+  <span class="sub">공시가격·시가표준액 이의신청 — 담당자용 빠른 참조</span>
+  <button class="btn" onclick="document.documentElement.classList.toggle('dark')">🌓 테마</button>
+</header>
+
+<div class="lead">
+<b>핵심 한 줄</b> — 재산세 <b>세율은 매년 같습니다.</b> 세액이 오른 건 대부분 <b>공시가격(시가표준액)이 올라서</b>입니다.
+재산세 = <b>공시가격 × 공정시장가액비율 × 세율</b>. 그래서 "세금 다툼"은 자연스레 <b>공시가격 이의신청</b>으로 이어집니다.
+가격 다툼(공시가격 이의신청, <b>공시일부터 30일</b>)과 세금 다툼(재산세 불복, <b>고지받은 날부터 90일</b>)은 <b>완전히 다른 절차</b>라는 게 응대의 뼈대입니다.
+</div>
+
+<h2 id="why">① 왜 세금이 늘었나 — 민원인에게 설명</h2>
+<div class="cite">📖 <b>지방세법 §110</b>(과세표준)·<b>§111</b>(세율)·<b>§4</b>(시가표준액) / <b>시행령 §109</b>(공정시장가액비율) · 🔗 <a class="go" href="https://www.wetax.go.kr/" target="_blank" rel="noopener">위택스 – 지방세(재산세)</a>
+<details class="lawbox"><summary>지방세법 §110 과세표준 + 시행령 §109 공정시장가액비율 — 전문</summary>
+<div class="law"><span class="tt">지방세법 제110조(과세표준)</span>① 토지ㆍ건축물ㆍ주택에 대한 재산세의 과세표준은 제4조제1항 및 제2항에 따른 <mark>시가표준액에 … 공정시장가액비율을 곱하여 산정</mark>한 가액으로 한다.
+ 1. 토지 및 건축물: 시가표준액의 100분의 50부터 100분의 90까지
+ 2. 주택: 시가표준액의 100분의 40부터 100분의 80까지(1세대 1주택은 30~70)
+
+<span class="tt">지방세법 시행령 제109조(공정시장가액비율)</span>1. <mark>토지 및 건축물: 시가표준액의 100분의 70</mark>
+ 2. <mark>주택: 시가표준액의 100분의 60</mark>(2026년 1세대 1주택 특례 43~45%)</div></details></div>
+<p>재산세 계산 구조를 보여주면 대부분 납득합니다.</p>
+<table>
+<tr><th class="c">과세대상</th><th>과세표준 = 시가표준액 × 공정시장가액비율</th><th class="c">세율(제111조)</th></tr>
+<tr><td class="c"><b>토지</b></td><td>개별공시지가 × <b>70%</b></td><td class="c">별도·종합·분리(0.2~0.4%)</td></tr>
+<tr><td class="c"><b>건축물</b></td><td>지자체 산정 시가표준액 × <b>70%</b></td><td class="c">0.25%(고급오락장·골프장 4%)</td></tr>
+<tr><td class="c"><b>주택</b></td><td>개별/공동주택가격 × <b>60%</b> (1세대1주택 43~45% 특례)</td><td class="c">0.1~0.4% 누진</td></tr>
+</table>
+<div class="script">
+<button class="copy" onclick="cp(this)">복사</button>
+<div class="lbl">💬 응대 스크립트 — "왜 이렇게 많이 나왔나요?"</div>
+<div class="txt">재산세율 자체는 법으로 정해져 있어 작년과 동일합니다. 세액이 오르신 건 대부분 과세의 기준이 되는 공시가격(시가표준액)이 올랐기 때문입니다. 재산세는 '공시가격 × 공정시장가액비율 × 세율'로 계산되는데, 세율은 그대로여도 앞의 공시가격이 오르면 세액이 늘어납니다. 공시가격이 실제 시세보다 높다고 생각되시면 '공시가격 이의신청' 제도가 따로 있습니다. 다만 신청 기간이 정해져 있어 시기를 꼭 지키셔야 합니다.</div>
+</div>
+
+<h2 id="cal">② 이의신청 골든타임 (연간 일정)</h2>
+<div class="cite">📖 <b>부동산 가격공시에 관한 법률</b> §7·§11·§16⑦·§17⑧·§18⑧ — 전부 "공시일부터 30일" (개별=시·군·구청장, 표준·공동=국토부) · 🔗 <a class="go" href="https://www.realtyprice.kr/" target="_blank" rel="noopener">부동산공시가격알리미 안내</a>
+<details class="lawbox"><summary>부공법 §11 개별공시지가에 대한 이의신청 — 전문</summary>
+<div class="law"><span class="tt">부동산 가격공시에 관한 법률 제11조(개별공시지가에 대한 이의신청)</span>① 개별공시지가에 이의가 있는 자는 그 <mark>결정ㆍ공시일부터 30일 이내</mark>에 서면으로 <mark>시장ㆍ군수 또는 구청장</mark>에게 이의를 신청할 수 있다.
+② 시장ㆍ군수 또는 구청장은 … 이의신청 기간이 만료된 날부터 30일 이내에 심사하여 … 타당하다고 인정될 때에는 해당 개별공시지가를 <mark>조정하여 다시 결정ㆍ공시</mark>하여야 한다.
+(표준지 §7·공동주택 §18⑧·표준주택 §16⑦은 "공시일부터 30일, 국토교통부장관", 개별주택 §17⑧은 §11을 준용)</div></details></div>
+<p class="mini">정확한 날짜는 매년 <b>부동산공시가격알리미(realtyprice.kr)</b>·지자체 공고로 확정됩니다. 아래는 기장군 2026년 기준입니다.</p>
+<div class="tl">
+  <div class="tl-head"><div></div><div class="mos"><span>1월</span><span>2월</span><span>3월</span><span>4월</span><span>5월</span><span>6월</span><span>7월</span><span>8월</span><span>9월</span><span>10월</span><span>11월</span><span>12월</span></div></div>
+  <div class="tl-row"><div class="tl-lab">표준주택 <span class="mini">이의 2월 (공시 1월말) · 국토부</span></div><div class="tl-track"><div class="grid"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tl-bar molit" style="left:8.33%;width:8.33%"></div></div></div>
+  <div class="tl-row"><div class="tl-lab">표준지 <span class="mini">이의 3월 (공시 2월말) · 국토부</span></div><div class="tl-track"><div class="grid"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tl-bar molit" style="left:16.66%;width:8.33%"></div></div></div>
+  <div class="tl-row"><div class="tl-lab">개별주택 <span class="mini">4.30~5.29 · 시·군·구</span></div><div class="tl-track"><div class="grid"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tl-bar local" style="left:33.33%;width:8.33%"></div></div></div>
+  <div class="tl-row"><div class="tl-lab">공동주택 <span class="mini">4.30~5.29 · 국토부</span></div><div class="tl-track"><div class="grid"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tl-bar molit" style="left:33.33%;width:8.33%"></div></div></div>
+  <div class="tl-row"><div class="tl-lab">개별공시지가 <span class="mini">정기 4.30~5.29 · 시·군·구</span></div><div class="tl-track"><div class="grid"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tl-bar local" style="left:33.33%;width:8.33%"></div></div></div>
+  <div class="tl-row"><div class="tl-lab">개별공시지가 <span class="mini">수시 10.30~11.28 · 시·군·구</span></div><div class="tl-track"><div class="grid"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tl-bar local" style="left:83.33%;width:8.33%"></div></div></div>
+</div>
+<p class="mini"><span style="color:#0a7d55;font-weight:800">■</span> 시·군·구청(우리 지자체=기장군) 접수 · <span style="color:#1a56db;font-weight:800">■</span> 국토교통부(부동산원) 접수. (기장군 2026년 정기 기준)</p>
+
+<div class="warn" style="border-left-color:var(--accent);background:rgba(26,86,219,.07)">
+<b>❓ 내 집·땅이 "표준주택" 또는 "표준지"라면 — 정말 2·3월에만 이의신청?</b><br>
+<b>네, 사실상 그렇습니다.</b> 표준주택(전국 표본 단독주택)·표준지로 <b>선정된 부동산은 개별공시(4~5월)를 따로 하지 않고, 그 표준가격을 곧바로 개별가격으로 봅니다</b>. → 그래서 이의 창구가 <b>표준가격 이의(국토부장관, 공시일+30일)</b> = <b>표준주택 2월·표준지 3월</b> 하나뿐입니다.
+<div class="cite" style="margin-top:8px">📖 <b>부공법 §10②</b>(표준지 선정 시 표준지공시지가를 개별공시지가로 봄)·<b>§17②</b>(표준주택 선정 시 표준주택가격을 개별주택가격으로 봄) · 🔗 <a class="go" href="https://www.realtyprice.kr/" target="_blank" rel="noopener">부동산공시가격알리미(표준 여부 조회)</a>
+<details class="lawbox"><summary>부공법 §10② · §17② — 전문</summary>
+<div class="law"><span class="tt">부동산 가격공시에 관한 법률 제10조 ②</span>… 표준지로 선정된 토지 … 에 대하여는 개별공시지가를 결정ㆍ공시하지 아니할 수 있다. 이 경우 <mark>표준지로 선정된 토지에 대하여는 해당 토지의 표준지공시지가를 개별공시지가로 본다.</mark>
+<span class="tt">제17조 ②</span>… 표준주택으로 선정된 단독주택 … 에 대하여는 개별주택가격을 결정ㆍ공시하지 아니할 수 있다. 이 경우 <mark>표준주택으로 선정된 주택에 대하여는 해당 주택의 표준주택가격을 개별주택가격으로 본다.</mark></div></details></div>
+<ul style="margin:8px 0 0;font-size:13px">
+<li>내 부동산이 표준인지 확인: <b>부동산공시가격알리미</b>에서 "표준주택/표준지"로 조회되면 표준입니다.</li>
+<li>이 30일을 놓쳐도 → <b>행정심판·행정소송</b>(제소기간 내)이나 <b>내년 표준 공시 때 다시 이의</b> 가능. (재산세 90일 불복 단계에선 원칙적으로 가격을 못 다툼)</li>
+<li>대부분의 일반 주택·토지는 <b>표준이 아니라 개별</b>이라 4~5월(개별)에 이의합니다. 표준으로 뽑힌 소수만 2·3월.</li>
+</ul>
+</div>
+
+<h2 id="types">③ 공시가격 유형별 이의신청 (표)</h2>
+<div class="cite">📖 <b>부공법</b> §7·§11·§16·§17·§18 / <b>지방세법 §4①</b>(토지·주택 시가표준액=공시가격) · 🔗 <a class="go" href="https://www.realtyprice.kr/" target="_blank" rel="noopener">부동산공시가격알리미</a>
+<details class="lawbox"><summary>지방세법 §4① 부동산 등의 시가표준액 — 전문</summary>
+<div class="law"><span class="tt">지방세법 제4조(부동산 등의 시가표준액)</span>① 이 법에서 적용하는 <mark>토지 및 주택에 대한 시가표준액은 「부동산 가격공시에 관한 법률」에 따라 공시된 가액(價額)</mark>으로 한다. 다만, 개별공시지가 또는 개별주택가격이 공시되지 아니한 경우에는 … 시장ㆍ군수 또는 구청장이 … 토지가격비준표 또는 주택가격비준표를 사용하여 산정한 가액으로 하고, 공동주택가격이 공시되지 아니한 경우에는 … 산정한 가액으로 한다.</div></details></div>
+<table>
+<tr><th>가격 유형</th><th>재산세 어디에</th><th class="c">공시 시기</th><th class="c">이의신청 기한</th><th class="c">접수 기관</th><th>근거</th></tr>
+<tr><td><b>개별공시지가</b></td><td>토지 재산세</td><td class="c">매년 5.31</td><td class="c"><b>공시일+30일</b><br>(~6월 말)</td><td class="c"><span class="pill local">시·군·구청장</span></td><td>부공법 §11</td></tr>
+<tr><td><b>개별주택가격</b><br><span class="mini">(단독·다가구)</span></td><td>단독주택 재산세</td><td class="c">매년 4.30</td><td class="c"><b>공시일+30일</b><br>(~5월 말)</td><td class="c"><span class="pill local">시·군·구청장</span></td><td>부공법 §17⑧→§11</td></tr>
+<tr><td><b>공동주택가격</b><br><span class="mini">(아파트·연립·다세대)</span></td><td>공동주택 재산세</td><td class="c">매년 4.30</td><td class="c"><b>공시일+30일</b><br>(4.30~5.29)</td><td class="c"><span class="pill molit">국토부/부동산원</span></td><td>부공법 §18⑧→§7</td></tr>
+<tr><td>표준주택가격<br><span class="mini">(선정된 표본 단독주택)</span></td><td>표준주택 선정 시 <b>곧 개별주택가격</b></td><td class="c">1월 말</td><td class="c"><b>~2월</b><br>(공시+30일)</td><td class="c"><span class="pill molit">국토부</span></td><td>§16⑦→§7 / §17②</td></tr>
+<tr><td>표준지공시지가<br><span class="mini">(선정된 표본 토지)</span></td><td>표준지 선정 시 <b>곧 개별공시지가</b></td><td class="c">2월</td><td class="c"><b>~3월</b><br>(공시+30일)</td><td class="c"><span class="pill molit">국토부</span></td><td>§7 / §10②</td></tr>
+</table>
+<h3>접수 방법 (공통)</h3>
+<div class="step"><div class="n">1</div><div><b>온라인</b> — 부동산공시가격알리미 <b>realtyprice.kr</b> → 해당 메뉴 → 이의신청(기간 중에만 버튼 활성화)</div></div>
+<div class="step"><div class="n">2</div><div><b>방문·우편</b> — 개별공시지가·개별주택 = 물건 소재지 <b>시·군·구청(부동산정보/토지정보과 등)</b> / 공동주택 = 국토부·한국부동산원</div></div>
+<div class="step"><div class="n">3</div><div><b>서식</b> — "이의신청서"에 대상 부동산·이의사유·희망가격·근거자료(인근 실거래가·감정평가서 등) 첨부</div></div>
+<div class="script">
+<button class="copy" onclick="cp(this)">복사</button>
+<div class="lbl">💬 응대 스크립트 — 이의신청 안내</div>
+<div class="txt">고객님 재산의 종류에 따라 창구와 기간이 다릅니다. 토지(개별공시지가)와 단독주택(개별주택가격)은 저희 시·군·구청에 공시일부터 30일 이내에, 아파트 등 공동주택은 국토교통부(부동산공시가격알리미)에 역시 30일 이내에 신청하시면 됩니다. 온라인은 '부동산공시가격알리미' 사이트에서 하시고, 방문·우편 접수도 가능합니다. 신청서에 왜 높다고 보시는지 근거(인근 실거래가 등)를 함께 내시면 검토에 도움이 됩니다.</div>
+</div>
+
+<h2 id="gijang">🏛 기장군 전용 — 담당·전화·올해 기간·조례</h2>
+<div class="cite">📖 부공법 §10③·§11 / <b>기장군 부동산 가격공시위원회 조례 §7</b> · 🔗 <a class="go" href="https://www.gijang.go.kr/index.gijang?menuCd=DOM_000000104004002001" target="_blank" rel="noopener">기장군 개별공시지가 안내</a> · <a class="go" href="https://www.gijang.go.kr/index.gijang?menuCd=DOM_000000101001002000" target="_blank" rel="noopener">기장군 고시/공고</a>
+<details class="lawbox"><summary>기장군 부동산 가격공시위원회 조례 §7 기능 — 전문</summary>
+<div class="law"><span class="tt">부산광역시 기장군 부동산 가격공시위원회 설치 및 운영 조례 제7조(기능)</span>위원회는 다음 각 호의 사항에 관하여 심의한다.
+ 1. <mark>개별공시지가의 결정 및 이의신청에 관한 사항</mark>
+ 2. <mark>개별주택가격의 결정 및 이의신청에 관한 사항</mark>
+ 3. 비주거용 개별부동산가격의 결정 및 이의신청에 관한 사항
+ 4. 그 밖에 군수가 부의하는 사항
+(제2조: 위원장=부군수, 당연직 위원=<mark>세무2과장·도시계획과장·토지정보과장</mark>)</div></details></div>
+<div class="lead">
+개별공시지가·개별주택가격 이의신청은 <b>토지·주택 소재지 시·군·구청</b>에 합니다. 기장군은 <b>토지정보과 토지관리팀</b>이 주관하고 <b>기장군 부동산가격공시위원회</b>가 심의합니다.
+</div>
+
+<h3>📞 담당 (기장군)</h3>
+<table>
+<tr><th class="c">구분</th><th>내용</th></tr>
+<tr><td class="c">주관부서</td><td>문화환경국 <b>토지정보과 토지관리팀</b></td></tr>
+<tr><td class="c">전화</td><td><b>051-709-4754~5, 4757</b></td></tr>
+<tr><td class="c">팩스</td><td>051-709-4779</td></tr>
+<tr><td class="c">주소</td><td>부산광역시 기장군 기장읍 기장대로 560 (기장군청)</td></tr>
+<tr><td class="c">접수</td><td>부동산공시가격알리미(<b>realtyprice.kr</b>) · 기장군청 토지정보과 · <b>토지 소재지 읍·면 행정복지센터</b> · 우편/팩스</td></tr>
+</table>
+
+<h3>📅 올해(2026) 이의신청 기간 <span class="mini">(기장군 공고 기준 — 매년 홈페이지 공지사항 확인)</span></h3>
+<table>
+<tr><th>구분</th><th class="c">결정·공시</th><th class="c">이의신청</th><th class="c">최종 조정·공시</th></tr>
+<tr><td><b>정기</b> 개별공시지가·개별주택가격<br><span class="mini">(1.1 기준, 전 필지·주택)</span></td><td class="c">2026.<b>4.30</b></td><td class="c"><b>2026.4.30 ~ 5.29</b></td><td class="c">2026.6.26</td></tr>
+<tr><td><b>수시</b> 개별공시지가<br><span class="mini">(7.1 기준 토지이동분: 분할·합병·지목변경 등)</span></td><td class="c">10월 말경</td><td class="c">공시일+30일<br>(~11월 말)</td><td class="c">12월경</td></tr>
+</table>
+<p class="mini">※ 2025년 수시분은 10.30 공시 → 11.28 이의마감(928필지)이었습니다. 올해 수시분 정확한 날짜는 기장군 공고로 확정됩니다.</p>
+
+<h3>🔄 수시 개별공시지가란? (자세히)</h3>
+<p>정기 공시기준일(<b>1월 1일</b>) <b>이후</b> 그 해에 토지 상태가 바뀐 필지에 대해, 별도 기준일로 <b>다시 결정·공시</b>하는 개별공시지가입니다. 그래서 기장군은 <b>연 2회</b>(정기 4.30 + 수시 10월경) 공시합니다.</p>
+<table>
+<tr><th class="c">항목</th><th>내용</th></tr>
+<tr><td class="c"><b>대상</b><br>(토지이동)</td><td><b>분할·합병, 지목변경, 신규등록, 형질변경, 국·공유지 ↔ 사유지 전환</b> 등으로 1.1 기준 지가가 실제와 맞지 않게 된 토지</td></tr>
+<tr><td class="c"><b>기준일</b></td><td>• 사유가 <b>1.1 ~ 6.30</b> 사이 발생 → 그 해 <b>7월 1일</b> 기준(기장군 10월경 공시)<br>• 사유가 <b>7.1 ~ 12.31</b> 사이 발생 → <b>다음 해 1월 1일</b> 정기공시에 반영</td></tr>
+<tr><td class="c"><b>이의신청</b></td><td>정기와 <b>동일하게 결정·공시일부터 30일 이내</b> (기장군 2025년 수시분: 10.30 공시 → <b>11.28 마감</b>, 928필지)</td></tr>
+<tr><td class="c"><b>왜 중요</b></td><td>그 필지의 <b>취득세·양도소득세·개발부담금</b> 등과 <b>다음 연도 재산세</b>의 기초가 됨 → 토지이동이 있었던 소유자는 이 시기에도 이의신청 기회가 있음</td></tr>
+</table>
+<div class="cite">📖 <b>부공법 §10③</b> + <b>시행령 §21①</b>(공시기한) · 🔗 <a class="go" href="https://www.gijang.go.kr/index.gijang?menuCd=DOM_000000101001002000" target="_blank" rel="noopener">기장군 고시/공고</a>
+<details class="lawbox"><summary>부공법 §10③ + 시행령 §21① 개별공시지가 공시기한 — 전문</summary>
+<div class="law"><span class="tt">부동산 가격공시에 관한 법률 제10조 ③</span>시장ㆍ군수 또는 구청장은 <mark>공시기준일 이후에 분할ㆍ합병 등이 발생한 토지에 대하여는 대통령령으로 정하는 날을 기준으로 하여 개별공시지가를 결정ㆍ공시</mark>하여야 한다.
+
+<span class="tt">같은 법 시행령 제21조 ①(개별공시지가의 결정 및 공시)</span>시장ㆍ군수 또는 구청장은 <mark>매년 5월 31일까지</mark> 개별공시지가를 결정ㆍ공시하여야 한다. 다만, (1.1~6.30 토지이동분은) <mark>그 해 10월 31일까지</mark>, (7.1~12.31 토지이동분은) <mark>다음 해 5월 31일까지</mark> 결정ㆍ공시하여야 한다.</div></details></div>
+
+<h3>❓ 수시 개별공시지가 — 자주 헷갈리는 3가지</h3>
+<table>
+<tr><th>질문</th><th>답</th></tr>
+<tr><td><b>"한 번 더 기회"인가?<br>계속 가능한가?</b></td><td>재도전 기회가 <b class="no">아닙니다.</b> <b>토지이동(분할·합병·지목변경 등)이 생긴 필지에 한해</b> 그 변동을 반영해 별도 기준일로 새로 공시하는 것 — 사유가 없으면 수시 대상 아님.<br>다만 <b class="ok">매년 정기공시(1.1)마다 이의 기회는 반복</b>됩니다(올해 놓쳐도 내년 정기 때 또 가능). 단, <b>같은 공시에 대해선 30일 1회</b>.</td></tr>
+<tr><td><b>이의로 바뀌면<br>1월(1.1)로 소급되나?</b></td><td>수시는 애초에 <b>7.1(또는 다음 해 1.1) 기준</b>이라 <b class="no">1.1로 소급하는 개념이 아닙니다.</b> 이의로 조정되면 <b>그 7.1 기준 지가</b>가 바뀔 뿐.<br>반면 <b>정기(1.1)</b> 개별공시지가를 이의로 바로잡으면 <b>1.1 기준 지가 자체</b>가 조정됩니다.</td></tr>
+<tr><td><b>재산세도<br>소급되나?</b></td><td><b>정기(1.1)</b> 지가가 이의로 조정 → 그 지가를 쓰는 <b class="ok">그 해 재산세도 반영·경정</b>(과세기준일 6.1, 최종공시 6.26 → 9월 토지분 반영. 이미 부과됐으면 경정·환급).<br><b>수시(7.1)</b> 지가는 과세기준일(6.1)보다 <b>뒤</b>라 그 해 재산세엔 안 쓰이고 → <b>취득세·양도세</b>와 <b>다음 해 재산세</b>에 반영(그 해 재산세로 소급 ✕).</td></tr>
+</table>
+<p class="mini">※ 개별공시지가가 조정되면 그것을 과세표준으로 쓰는 세금은 그에 맞춰 바로잡힙니다(개별공시지가는 그 자체가 처분). 다만 어느 시점 지가(1.1 vs 7.1)가 어느 세목·어느 연도에 쓰이는지에 따라 반영 범위가 갈리므로, 실제 경정 여부는 세무2과·토지정보과와 확인하세요.</p>
+
+<div class="warn" style="border-left-color:var(--accent2);background:rgba(10,125,85,.08)">
+<b>💡 "올해 재산세"에 반영되려면 — 과세기준일 <u>6월 1일</u>이 열쇠</b><br>
+재산세는 <b>과세기준일 6.1 현재</b> 상태 + <b>그 해 정기(1.1 기준) 개별공시지가·개별주택가격</b>으로 계산됩니다. 그래서:
+<table>
+<tr><th>구분</th><th class="c">올해 재산세 반영?</th></tr>
+<tr><td><b>정기(1.1)</b> 개별공시지가·개별주택가격 이의<br><span class="mini">(4~5월, 공시+30일)</span></td><td><b class="ok">O</b> — 이의로 낮아지면 그 해 최종공시(6월경)가 <b>올해 재산세(토지 9월·주택 7·9월)에 반영·경정</b></td></tr>
+<tr><td><b>수시(7.1, 상반기 토지이동분)</b> 개별공시지가<br><span class="mini">(10월경 공시)</span></td><td><b class="no">X</b> — 기준일 7.1이 과세기준일 <b>6.1보다 뒤</b> + 10월 공시 → <b>올해 재산세 무관</b>. 취득세·양도세·<b>다음 해 재산세</b>에만 반영</td></tr>
+</table>
+<b>결론</b> — 올해 재산세를 낮추려면 <b class="no">반드시 정기(1.1) 개별공시지가·개별주택가격 이의신청(4~5월, 30일)</b>을 했어야 합니다. 이 시기를 놓치면 올해 재산세 단계에선 가격을 못 낮춥니다(→ 내년 정기 이의, 또는 행정심판·행정소송). <b>수시(7.1)로는 올해 재산세가 바뀌지 않습니다.</b>
+<div class="mini" style="margin-top:5px">📖 지방세법 §114(재산세 과세기준일=매년 6.1) · §110·§4(과세표준=그 해 시가표준액)</div>
+</div>
+
+<h3>⚖ 심의: 기장군 부동산가격공시위원회 (조례 근거)</h3>
+<p>「부산광역시 기장군 부동산 가격공시위원회 설치 및 운영 조례」 <b>제7조</b> — 개별공시지가·개별주택가격·비주거용 개별부동산가격의 <b>결정 및 이의신청</b>을 심의합니다.</p>
+<ul>
+<li>위원장 = <b>부군수</b>, 당연직 위원 = <b>세무2과장·도시계획과장·토지정보과장</b> + 위촉위원(감정평가 전문가·시민단체 추천)</li>
+<li>이의신청이 접수되면 이 위원회 심의를 거쳐 조정 여부를 결정(2026년은 6.26 최종공시).</li>
+</ul>
+<div class="warn">
+<b>💡 "재산세 담당이 대신 넣어줘"에 대한 기장군 강화 논리</b> — 개별공시지가·개별주택가격 이의신청을 <b>심의하는 위원회에 세무2과장(재산세 소관 부서장)이 당연직 위원</b>으로 들어갑니다.
+재산세 담당이 민원인을 대신해 이의신청을 제기하면 <b class="no">신청측과 심의측이 같은 부서 라인</b>이 되어 공정성·이해충돌 문제가 명백해집니다. → 안내·서식지원은 하되 <b class="no">대리 제기는 부적절</b>.
+</div>
+
+<h2 id="trap">④ ⚠️ 30일을 놓치면? (가장 중요한 함정)</h2>
+<div class="cite">📖 개별공시지가·개별주택가격 = <b>그 자체가 처분</b>(대법원 판례) / 재산세 불복 <b>지방세기본법 §90</b>(90일) · 🔗 <a class="go" href="https://www.realtyprice.kr/" target="_blank" rel="noopener">공시가격 이의신청</a> · <a class="go" href="https://www.tt.go.kr/" target="_blank" rel="noopener">조세심판원</a>
+<details class="lawbox"><summary>지방세기본법 §90 이의신청 — 전문</summary>
+<div class="law"><span class="tt">지방세기본법 제90조(이의신청)</span>이의신청을 하려면 그 처분이 있은 것을 안 날(처분의 통지를 받았을 때에는 그 통지를 받은 날)부터 <mark>90일 이내</mark>에 … 불복의 사유를 적어 … 시ㆍ군ㆍ구세의 경우에는 <mark>시장ㆍ군수ㆍ구청장</mark>에게 이의신청을 하여야 한다. (재산세 = 시·군·구세)</div></details></div>
+<div class="warn">
+<b>공시가격 이의신청(30일)</b>과 <b>재산세 불복(90일)</b>은 <b>다른 절차</b>입니다.
+개별공시지가·개별주택가격은 <b>그 자체가 행정처분</b>이라, 30일 이의신청(또는 행정심판·행정소송) 기간을 놓치면 그 해 공시가격은 <b>확정</b>됩니다.
+→ 이후 <b>재산세 부과 단계(90일 불복)에서 "공시가격이 높다"는 이유로 다투는 것은 원칙적으로 어렵습니다.</b> (공시가격이 당연무효인 예외적 경우 제외)
+</div>
+<div class="script">
+<button class="copy" onclick="cp(this)">복사</button>
+<div class="lbl">💬 응대 스크립트 — 이미 30일이 지났을 때</div>
+<div class="txt">공시가격 이의신청 기간(30일)이 지나면 올해 공시가격은 확정되어, 재산세 고지 단계에서 '공시가격이 높다'는 이유로 다투기는 어렵습니다. 공시가격은 그 자체가 별도의 처분이기 때문입니다. 다만 재산세 부과 자체에 계산 착오 등 위법이 있으면 고지받은 날부터 90일 이내에 이의신청·심판청구로 다투실 수 있습니다. 그리고 내년 공시 때 다시 이의신청하실 수 있으니, 지금 근거자료(실거래가 등)를 준비해 두시면 좋습니다.</div>
+</div>
+
+<h2 id="bokbu">⑤ 재산세 부과 "자체" 불복 (지방세기본법)</h2>
+<div class="cite">📖 <b>지방세기본법 §89·§90·§91</b> (행정소송은 심판청구 필요적 전치) · 🔗 <a class="go" href="https://www.tt.go.kr/" target="_blank" rel="noopener">조세심판원(심판청구)</a> · <a class="go" href="https://www.wetax.go.kr/" target="_blank" rel="noopener">위택스</a>
+<details class="lawbox"><summary>지방세기본법 §91 심판청구 — 전문</summary>
+<div class="law"><span class="tt">지방세기본법 제91조(심판청구)</span>① 이의신청을 거친 후에 심판청구를 할 때에는 이의신청에 대한 결정 통지를 받은 날부터 <mark>90일 이내</mark>에 <mark>조세심판원장</mark>에게 심판청구를 하여야 한다.
+③ 이의신청을 거치지 아니하고 바로 심판청구를 할 때에는 그 처분이 있은 것을 안 날(…)부터 <mark>90일 이내</mark>에 조세심판원장에게 하여야 한다.</div></details></div>
+<p>가격이 아니라 <b>재산세 부과처분</b>에 위법(과세대상·세율·계산 오류, 감면 누락 등)이 있을 때의 경로입니다.</p>
+<div class="step"><div class="n">1</div><div><b>이의신청</b> — 고지받은 날부터 <b>90일 이내</b> → 시·군·구청장 (재산세=시·군·구세). <span class="mini">(생략하고 바로 심판청구 가능)</span></div></div>
+<div class="step"><div class="n">2</div><div><b>심판청구</b> — 이의신청 결정통지 받은 날(또는 처분 안 날)부터 <b>90일 이내</b> → <b>조세심판원장</b></div></div>
+<div class="step"><div class="n">3</div><div><b>행정소송</b> — 심판청구를 <b>반드시 거친 뒤</b>(필요적 전치) 제기</div></div>
+<p class="mini">근거: 지방세기본법 §90(이의신청 90일)·§91(심판청구 90일). ※ 감사원 심사청구 경로도 별도 존재.</p>
+
+<h2 id="bldg">⑥ 건축물 시가표준액은 이의신청 창구가 다르다</h2>
+<div class="cite">📖 <b>지방세법 §4②·④</b> · 🔗 <a class="go" href="https://www.wetax.go.kr/" target="_blank" rel="noopener">위택스 – 지방세</a>
+<details class="lawbox"><summary>지방세법 §4② 건축물 등 시가표준액 — 전문</summary>
+<div class="law"><span class="tt">지방세법 제4조 ②</span>제1항 외의 <mark>건축물</mark>(…), 선박, 항공기 및 그 밖의 과세대상에 대한 시가표준액은 거래가격, 수입가격, 신축ㆍ건조ㆍ제조가격 등을 고려하여 정한 기준가격에 종류, 구조, 용도, 경과연수 등 과세대상별 특성을 고려하여 … <mark>지방자치단체의 장이 결정한 가액</mark>으로 한다.
+④ 제1항과 제2항에 따른 시가표준액의 결정은 지방세심의위원회에서 심의한다.</div></details></div>
+<p><b>토지·주택</b>의 시가표준액 = 부동산 공시가격 그대로(지방세법 §4①) → 위 <b>공시가격 이의신청(30일)</b>으로 다툽니다.</p>
+<p><b>건축물(주택 외)</b>의 시가표준액 = 지자체장이 <b>기준가격 × 구조·용도·경과연수</b> 등으로 산정(지방세법 §4②, 지방세심의위 심의). <b>별도의 "공시 + 30일 이의신청" 제도가 없습니다.</b></p>
+<div class="warn">건축물 시가표준액이 잘못됐다고 보면 → ① 담당부서에 <b>시가표준액 산정 오류 정정 요청</b>, 또는 ② 재산세 고지 후 <b>지방세기본법 불복(90일)</b>으로 다툽니다. (공시가격처럼 30일 창구가 따로 있는 게 아님 — 이 차이를 정확히 안내해야 함)</div>
+
+<h2 id="agent">⑦ "재산세 공무원이 더 잘 아니까, 대신 이의신청 넣어줘" 응대</h2>
+<div class="cite">📖 부공법 §11①(신청권자 = "이의가 있는 자" = 소유자 본인) / 민원 처리에 관한 법률 · 🔗 <a class="go" href="https://www.gov.kr/" target="_blank" rel="noopener">정부24 – 개별공시지가 이의신청</a>
+<details class="lawbox"><summary>부공법 §11① 신청권자 — 전문</summary>
+<div class="law"><span class="tt">부동산 가격공시에 관한 법률 제11조 ①</span><mark>개별공시지가에 이의가 있는 자</mark>는 그 결정ㆍ공시일부터 30일 이내에 서면으로 시장ㆍ군수 또는 구청장에게 <mark>이의를 신청할 수 있다.</mark>
+→ 신청 주체는 "이의가 있는 자"(소유자·이해관계인)이며, <b>행정청이 대신 제기할 근거 규정은 없음</b>. 「민원 처리에 관한 법률」상 행정청은 안내·상담 의무는 있으나 대리 신청 의무·권한은 없음.</div></details></div>
+<p>가능성이 아예 없진 않아도, <b>행정상 대리 제기는 곤란</b>합니다. 이유를 명확히 알고 안내해야 뒷말이 없습니다.</p>
+<table>
+<tr><th>왜 대신 못 넣나</th><th>담당자가 할 수 있는 것</th></tr>
+<tr><td>
+• 이의신청은 <b class="no">소유자 본인의 권리행사</b> — 행정청이 대신 제기할 <b>법적 권한·근거 없음</b><br>
+• 개별공시지가·개별주택가격은 <b>심사·결정 주체도 시·군·구청</b> → 우리가 신청까지 하면 <b class="no">신청=심사 이해충돌</b><br>
+• 「민원처리법」상 공무원은 <b>안내·상담</b> 의무는 있어도 <b>대리 신청 의무는 없음</b>
+</td><td>
+• 기간·기관·서식 위치 <b class="ok">정확히 안내</b><br>
+• 소관부서 <b class="ok">토지정보과(☎051-709-4754) 연결</b><br>
+• <b class="ok">내년 정기 이의 기간(4~5월)</b> 알려드리고 → 그때 담당자와 상담 권유<br>
+• 재산세가 위법하면 <b class="ok">90일 불복 안내</b><br>
+• <mark>(선택) 개별 건이 아닌 <b>범용 제도개선 건의</b></mark> — 아래 ⚠️ 참고
+</td></tr>
+</table>
+<div class="script">
+<button class="copy" onclick="cp(this)">복사</button>
+<div class="lbl">💬 응대 스크립트 — 대리 제기 요청 거절(정중·airtight)</div>
+<div class="txt">이의신청은 소유자 본인이 하시는 권리행사라, 저희가 대신 제기해 드릴 법적 권한은 없습니다. 특히 개별공시지가·개별주택가격은 그 이의를 심사·결정하는 곳도 저희 시·군·구청이어서, 저희가 신청까지 대신하면 신청과 심사를 같은 기관이 하게 되는 문제도 생깁니다. 또한 공시가격은 토지정보과(☎051-709-4754)가 담당이라, 세무 부서인 저희가 개별 건을 직접 처리해 드리기는 어려운 점 너른 양해 부탁드립니다.
+다만 도움이 될 방향을 말씀드리면 — 개별공시지가·개별주택가격은 매년 새로 공시되므로, 내년 이의 기간(대략 4월 말~5월 말)에 다시 신청하실 수 있습니다. 그 시기에 맞춰 토지정보과 담당자와 미리 상의해 두시고, 인근 실거래가 같은 근거자료를 준비해 두시면 순조롭게 진행하실 수 있습니다. 필요하시면 담당 부서와 연락처를 정확히 안내해 드리겠습니다.</div>
+</div>
+
+<div class="warn" style="border-left-color:#d6a24f;background:rgba(214,162,79,.12)">
+<b>⚠️ (선택 · 담당자 재량) "제도개선 건의"는 <mark>꺼낼지 신중히</mark></b><br>
+우리가 할 수 있는 건 <b>민원인 개별 건이 아니라</b>, 제도적으로 개선이 필요해 보이는 사안을 <b>상급기관에 범용적 제도개선으로 건의</b>해 보는 정도입니다.
+단, <b class="no">이 말을 먼저 꺼내면 "그럼 내 것도 올려달라"는 개별 요구로 이어질 수 있으니</b> — <b>정말 범용적·구조적 개선사안일 때만</b>, 그리고 개별 건 처리 약속이 아님을 분명히 한 뒤 언급하세요. (개별 건은 어디까지나 본인 이의신청 절차로.)
+</div>
+
+<h2 id="law">⑧ 근거 법조문 (펼쳐보기)</h2>
+<details>
+<summary>부동산 가격공시에 관한 법률 — 이의신청</summary>
+<div class="law">
+[제7조] 표준지공시지가에 이의가 있는 자는 그 <b>공시일부터 30일 이내</b>에 서면(전자문서 포함)으로 <b>국토교통부장관</b>에게 이의를 신청할 수 있다. (국장은 신청기간 만료일부터 30일 내 심사·통지)
+
+[제11조] 개별공시지가에 이의가 있는 자는 그 <b>결정·공시일부터 30일 이내</b>에 서면으로 <b>시장·군수 또는 구청장</b>에게 이의를 신청할 수 있다.
+
+[제16조⑦] 표준주택가격의 공시에 제7조를 준용 → 30일, 국토교통부장관.
+[제17조⑧] 개별주택가격에 대한 이의신청은 제11조를 준용 → 30일, 시장·군수·구청장.
+[제18조⑧] 공동주택가격의 공시에 제7조를 준용 → 30일, 국토교통부장관.
+</div>
+</details>
+<details>
+<summary>지방세법 — 시가표준액(§4)</summary>
+<div class="law">
+① 토지 및 주택의 시가표준액은 「부동산 가격공시에 관한 법률」에 따라 <b>공시된 가액</b>으로 한다. (개별공시지가·개별주택가격 미공시 시 비준표로 산정)
+② 그 밖의 <b>건축물</b>·선박·항공기 등의 시가표준액은 거래·수입·신축가격 등 기준가격에 종류·구조·용도·경과연수 등을 고려하여 <b>지방자치단체의 장이 결정</b>한 가액으로 한다.
+④ 시가표준액의 결정은 지방세심의위원회에서 심의한다.
+</div>
+</details>
+<details>
+<summary>지방세기본법 — 불복(이의신청·심판청구)</summary>
+<div class="law">
+[제90조] 이의신청은 그 처분이 있은 것을 안 날(통지받은 날)부터 <b>90일 이내</b>에 … 시·군·구세의 경우 <b>시장·군수·구청장</b>에게 하여야 한다. (재산세=시·군·구세)
+[제91조] 심판청구는 이의신청 결정통지를 받은 날부터 90일 이내(또는 이의신청 없이 처분 안 날부터 90일 이내)에 <b>조세심판원장</b>에게 하여야 한다.
+</div>
+</details>
+
+<h2 id="sites">⑨ 🔗 관련 사이트 (공신력 순 바로가기)</h2>
+<div class="cite">순서: <b>🏛 기장군(관할청)</b> → <b>🌐 국토부·부동산원(전국)</b> → <b>⚖ 불복·법령</b>. 아래는 전부 공식·공신력 사이트라 블로그는 넣지 않았습니다.</div>
+
+<h3><span class="tier t1">1순위</span>기장군 (관할청)</h3>
+<ul class="lk">
+<li><a href="https://www.gijang.go.kr/index.gijang?menuCd=DOM_000000104004002001" target="_blank" rel="noopener">기장군 – 개별공시지가 안내</a><span class="mini">조회·이의신청 방법·담당(토지정보과 ☎051-709-4754)</span></li>
+<li><a href="https://www.gijang.go.kr/index.gijang?menuCd=DOM_000000101001002000" target="_blank" rel="noopener">기장군 – 고시/공고</a><span class="mini">★ <b>올해 이의신청 공고·정확한 날짜</b>가 여기 게시됩니다</span></li>
+<li><a href="https://www.gijang.go.kr/index.gijang?menuCd=DOM_000000104004005000" target="_blank" rel="noopener">기장군 – 토지민원창구</a><span class="mini">부동산 관련 종합 안내</span></li>
+<li><a href="https://www.gijang.go.kr/index.gijang?menuCd=DOM_000000102001004000" target="_blank" rel="noopener">기장군 – 민원편람/서식안내</a><span class="mini">이의신청서 서식 다운로드</span></li>
+</ul>
+
+<h3><span class="tier t2">2순위</span>국토교통부 · 한국부동산원 (전국)</h3>
+<ul class="lk">
+<li><a href="https://www.realtyprice.kr/" target="_blank" rel="noopener">부동산공시가격알리미 (realtyprice.kr)</a><span class="mini">★ <b>5종 공시가격 조회 + 온라인 이의신청 통합창구</b>(국토부). 개별공시지가·개별주택·공동주택·표준지·표준주택 모두</span></li>
+<li><a href="https://www.reb.or.kr/" target="_blank" rel="noopener">한국부동산원 (reb.or.kr)</a><span class="mini">공시가격 조사·산정 기관, 공동주택가격 이의 접수</span></li>
+<li><a href="https://www.molit.go.kr/" target="_blank" rel="noopener">국토교통부 (molit.go.kr)</a><span class="mini">공시가격 정책·보도자료</span></li>
+</ul>
+
+<h3><span class="tier t2">불복</span>재산세 자체 불복 · 온라인 민원</h3>
+<ul class="lk">
+<li><a href="https://www.wetax.go.kr/" target="_blank" rel="noopener">위택스 WeTax (wetax.go.kr)</a><span class="mini">지방세(재산세) 조회·전자신고·전자신청</span></li>
+<li><a href="https://www.tt.go.kr/" target="_blank" rel="noopener">조세심판원 (tt.go.kr)</a><span class="mini">재산세 심판청구(고지 후 90일)</span></li>
+<li><a href="https://www.gov.kr/" target="_blank" rel="noopener">정부24 (gov.kr)</a><span class="mini">개별공시지가 이의신청 등 온라인 민원</span></li>
+</ul>
+
+<h3><span class="tier t3">법령</span>법령 원문</h3>
+<ul class="lk">
+<li><a href="https://www.law.go.kr/" target="_blank" rel="noopener">국가법령정보센터 (law.go.kr)</a><span class="mini">부동산 가격공시에 관한 법률 · 지방세법 · 지방세기본법 · 시행령</span></li>
+</ul>
+
+<p class="mini" style="margin-top:24px">※ 공시 날짜는 통상 일정이며 정확한 날짜·이의신청 기간은 매년 <b>기장군 고시/공고</b>와 <b>부동산공시가격알리미</b>로 확정됩니다. 이 카드는 담당자용 요약 참고자료입니다.</p>
+</div>
+
+<script>
+function cp(btn){
+ const t=btn.parentElement.querySelector('.txt').textContent;
+ navigator.clipboard.writeText(t).then(()=>{const o=btn.textContent;btn.textContent='복사됨✓';setTimeout(()=>btn.textContent=o,1200);});
+}
+document.querySelectorAll('#nav a').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();document.querySelector(a.getAttribute('href')).scrollIntoView({behavior:'smooth',block:'start'});}));
+</script>
+</body>
+</html>

@@ -1,0 +1,382 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>고지서 건별 품의 실무 리더 — 계약서 없이 품의만으로 되는 이유</title><style>
+:root{--bg:#fbfcff;--fg:#1a1f29;--tagbg:#eef3ff;--tagfg:#3b5bb5;--meta:#6b6b77;--sec:#3b5bb5;--boxbg:#f6f8fc;--ansbd:#7aa7e6;--ah:#5577aa;--line:#e5e9f2;--side:#f0f3fa;--hover:#e9eefb;--ok:#1b7f5c;--warn:#9a6b00;--hl:#fff3cd;--must:#b3261e}
+html.dark{--bg:#2f3338;--fg:#eef1f5;--tagbg:#3a4458;--tagfg:#a8c7ff;--meta:#bcc4cf;--sec:#a8c7ff;--boxbg:#272b30;--ansbd:#4a90d9;--ah:#9fb6d4;--line:#3a4048;--side:#272b30;--hover:#353b43;--ok:#6cc9a2;--warn:#e0b45c;--hl:#3a3418;--must:#ff8a80}
+*{box-sizing:border-box}
+body{font-family:"맑은 고딕","Malgun Gothic",sans-serif;margin:0;background:var(--bg);color:var(--fg);line-height:1.75;display:flex}
+#side{width:280px;flex:0 0 280px;height:100vh;position:sticky;top:0;overflow-y:auto;background:var(--side);border-right:1px solid var(--line);padding:16px 12px}
+#side h3{font-size:14px;margin:2px 6px 12px}
+#side .tot{font-size:12px;color:var(--meta);margin:0 6px 12px}
+#side a{display:flex;justify-content:space-between;gap:8px;text-decoration:none;color:var(--fg);font-size:13px;padding:7px 9px;border-radius:8px}
+#side a:hover{background:var(--hover)}
+#side a.active{background:var(--tagbg);color:var(--tagfg);font-weight:700}
+#side .cnt{color:var(--meta);font-size:12px}
+#main{flex:1;min-width:0;padding:20px 28px 80px;max-width:980px}
+#top{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+#top h1.pg{font-size:20px;margin:0 8px 0 0}
+#q{flex:1;min-width:180px;padding:8px 12px;font-size:14px;border:1px solid var(--line);border-radius:8px;background:var(--boxbg);color:var(--fg)}
+.btn{padding:7px 12px;font-size:13px;border:1px solid var(--line);border-radius:8px;background:var(--boxbg);color:var(--fg);cursor:pointer}
+.btn:hover{background:var(--hover)}
+section{margin:26px 0}
+section>h2.sec{font-size:17px;color:var(--sec);border-bottom:2px solid var(--sec);padding-bottom:6px;margin:0 0 14px}
+article{margin:0 0 18px}
+article h2{font-size:15px;margin:0 0 6px}
+.tag{display:inline-block;background:var(--tagbg);color:var(--tagfg);font-size:11.5px;padding:1px 8px;border-radius:99px;margin-right:6px;vertical-align:1px;font-weight:700}
+.tag.must{background:var(--must);color:#fff}
+.tag.ok{background:var(--ok);color:#fff}
+.box{background:var(--boxbg);border:1px solid var(--line);border-left:3px solid var(--ansbd);border-radius:8px;padding:12px 16px;font-size:14px;white-space:pre-wrap}
+.box b.hl{background:var(--hl);padding:0 3px;border-radius:3px}
+.meta{font-size:12px;color:var(--meta);margin-top:5px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.meta a{color:var(--ah)}
+.rdr{font-family:system-ui,sans-serif;font-size:.74rem;color:#fff;background:var(--sec);border:1px solid var(--sec);border-radius:999px;padding:2px 11px;text-decoration:none;white-space:nowrap}
+.rdr:hover{opacity:.85}
+.lawgo{font-family:system-ui,sans-serif;font-size:.72rem;color:var(--ah);border:1px solid var(--line);border-radius:999px;padding:2px 9px;text-decoration:none;white-space:nowrap}
+.hidden{display:none!important}
+#empty{display:none;color:var(--meta);padding:30px;text-align:center}
+table{border-collapse:collapse;width:100%;font-size:13.5px;background:var(--boxbg)}
+th{background:var(--tagbg);text-align:left;padding:7px 10px;border:1px solid var(--line);font-size:12.5px;white-space:nowrap}
+td{padding:6px 10px;border:1px solid var(--line);vertical-align:top}
+.twrap{overflow-x:auto;border-radius:8px;border:1px solid var(--line);margin:8px 0}
+.step{margin:3px 0;padding-left:14px;text-indent:-14px}
+.flow{display:flex;gap:6px;flex-wrap:wrap;align-items:stretch;margin:10px 0}
+.flow .fbox{flex:1;min-width:150px;background:var(--boxbg);border:1px solid var(--line);border-top:3px solid var(--sec);border-radius:8px;padding:9px 12px;font-size:13px}
+.flow .fbox b{display:block;font-size:13.5px;margin-bottom:3px;color:var(--sec)}
+.amt{font-weight:800;white-space:nowrap;font-variant-numeric:tabular-nums}
+tr.hlrow td{background:var(--hl)}
+.verdict{display:flex;gap:10px;align-items:flex-start;background:var(--boxbg);border:2px solid var(--ok);border-radius:10px;padding:12px 16px;font-size:14.5px;margin:8px 0}
+.verdict .vmark{font-size:22px;line-height:1.2}
+@media print{#side,#top .btn,#q{display:none}#main{padding:0;max-width:none}body{display:block}}
+</style></head><body>
+<nav id="side"><h3>🗂 목차</h3><div class="tot">기장군 세무 부서 · 고지서 건별 품의 실무<br>전 조문 법제처 API 원문 검증 (2026.7.)</div>
+<a href="#s_현황" data-sec="s_현황">📌 우리 과 현행 방식<span class="cnt">2</span></a>
+<a href="#s_q1" data-sec="s_q1">❓ Q1. 품의가 곧 계약인가<span class="cnt">2</span></a>
+<a href="#s_q2" data-sec="s_q2">❓ Q2. 위반은 아닌가<span class="cnt">3</span></a>
+<a href="#s_hapui" data-sec="s_hapui">💰 재정합의란<span class="cnt">3</span></a>
+<a href="#s_q3" data-sec="s_q3">❓ Q3. 새 업체로 바꿀 때<span class="cnt">3</span></a>
+<a href="#s_경계" data-sec="s_경계">⚠ 금액 경계선·초과 시나리오<span class="cnt">3</span></a>
+<a href="#s_nakchal" data-sec="s_nakchal">📉 낙찰하한율 88% 메커니즘<span class="cnt">3</span></a>
+<a href="#s_조문" data-sec="s_조문">📚 조문 원문 부록<span class="cnt">10</span></a>
+</nav>
+<div id="main">
+<div id="top"><h1 class="pg">고지서 건별 품의 실무 리더</h1>
+<input id="q" placeholder="검색… (예: 품의, 견적서, 500, 재정합의, 제7조)">
+<button class="btn" onclick="toggleTheme()">🌓 테마</button>
+<button class="btn" onclick="window.print()">🖨 인쇄</button></div>
+<div id="empty">검색 결과 없음</div>
+
+<section id="s_현황"><h2 class="sec">📌 우리 과 현행 방식 — 무엇을 하고 있는 건가</h2>
+
+<article data-t="현행 방식 흐름 개인정보위탁계약 품의 지출">
+<h2><span class="tag">현황</span>연간 흐름</h2>
+<div class="flow">
+<div class="fbox"><b>연초 1회</b>개인정보처리<b style="display:inline;color:inherit">위탁계약</b> 체결 (업체와, 1년 단위)<br><span style="font-size:12px;color:var(--meta)">개인정보보호법 §26의 문서 의무 이행</span></div>
+<div class="fbox"><b>매달 (계별)</b>재산세계 · 지소세계 · 세외수입계가 각자 고지서 물량 발생 시 <b style="display:inline;color:inherit">품의서</b> 작성 → 발주<br><span style="font-size:12px;color:var(--meta)">= 건별 소액 수의계약 체결</span></div>
+<div class="fbox"><b>지출</b>건당 500만원 이하 → 과 자체(일상경비) 지출<br><span style="font-size:12px;color:var(--meta)">초과 시 재무과(지출원) 지출</span></div>
+<div class="fbox"><b>종료 시</b>파기(삭제)확인서 수취<br><span style="font-size:12px;color:var(--meta)">표준위탁계약서상 파기·반환 의무 이행</span></div>
+</div>
+<div class="box">전제 조건: <b class="hl">연간 고지서 제작·발송비 총액이 2,000만원 미만</b>. 이 전제가 이 리더 전체의 적법성을 떠받치는 기둥이다 — 총액이 2,000만원을 넘게 되면 ⚠장의 시나리오로 전환해야 한다.</div>
+</article>
+
+<article data-t="세줄 요약 결론">
+<h2><span class="tag ok">결론 요약</span>세 질문, 세 줄 답</h2>
+<div class="box">Q1. 매번 품의 = 매번 계약? → <b>맞다.</b> 주문 하나하나가 각각의 소액 수의계약이고, "계약서"라는 종이만 적법하게 생략한 것.
+Q2. 위반인가? → <b>아니다.</b> 계약서 생략(영 §50)·품의서 갈음(규칙 §48 단서)·1인 견적 수의(영 §25·§30)·연간 총액 합산(영 §7)까지 전부 조문 위에 올라타 있다. 다만 점검 포인트 4개는 챙길 것.
+Q3. 새 업체로 바꿔도 이대로? → <b>된다.</b> 연간 총액 2,000만원 미만이 유지되는 한 같은 구조 반복 가능. 갈아탈 때 챙길 것 3가지(위탁계약 신규 체결, 홈페이지 위탁현황 갱신, 첫 품의에 근거 명시).</div>
+</article>
+</section>
+
+<section id="s_q1"><h2 class="sec">❓ Q1. 계약서를 안 쓰는데, 주문할 때마다 "계약"을 한 셈인가?</h2>
+
+<article data-t="품의 계약 지출원인행위 청약 승낙">
+<h2><span class="tag ok">답: 맞다</span>품의 결재 + 발주 = 계약 체결</h2>
+<div class="verdict"><span class="vmark">✅</span><div>법적으로 <b>매달 고지서 주문 하나하나가 각각 별개의 소액 수의계약</b>이다. 지방회계법 제29조가 지출원인행위를 "지출의 원인이 되는 <b>계약</b>이나 그 밖의 행위"로 정의하므로, 품의서 결재 후 업체에 발주하는 행위 자체가 계약의 청약·승낙이다. <b class="hl">"계약서"라는 서면을 생략했을 뿐, 계약이 없는 것이 아니다.</b></div></div>
+<div class="box">구조를 분해하면:
+① <b>계약의 성립</b> — 품의 결재(내부 의사결정) → 업체 발주(청약) → 업체 수령·작업(승낙·이행) = 민법상 계약 성립. 계약서는 성립 요건이 아니라 증거 서면일 뿐.
+② <b>서면 생략의 적법성</b> — 지방계약법 §14① 단서 → 시행령 §50①1호: <b class="hl">계약금액 5천만원 이하면 계약서 작성 생략 가능</b>. 건별 몇십~몇백만원짜리 고지서 주문은 전부 이 범위.
+③ <b>증빙의 갈음</b> — 시행규칙 §48: 생략 시 청구서·각서 등 증거서류를 받아야 하지만, <b class="hl">단서: "재무회계에 관한 규칙에서 정하는 회계경리 서식에 따른 경우에는 그러하지 아니하다"</b> → 품의서·지출결의서(회계경리 서식)가 곧 그 증빙. "품의서만 쓰는" 실무의 직접 근거.</div>
+</article>
+
+<article data-t="계약 단위 각각 별개 수의계약 요건">
+<h2>따라서 — 각 주문마다 수의계약의 요건을 갖춰야 한다</h2>
+<div class="box">매 주문이 각각 하나의 계약이므로, 건마다 이론상 갖출 것: ① 수의계약 사유(영 §25①5호나목 — 2천만원 이하 물품·용역) ② <b>업체 견적서 1장</b>(영 §30①2호 — "1인으로부터 받은 견적서<b>에 의할</b> 수 있다"이지 견적서 생략이 아님) ③ 검수. 금액 요건(2천만원)의 판단 기준은 건별 금액이 아니라 <b class="hl">연간 총액</b>(영 §7 2호, Q2 참조) — 우리 과는 총액이 2천만원 미만이라 충족된다.</div>
+</article>
+</section>
+
+<section id="s_q2"><h2 class="sec">❓ Q2. 법령·훈령·조례·규칙 위반은 아닌가?</h2>
+
+<article data-t="적법성 매핑 표 위반 아님">
+<h2><span class="tag ok">답: 위반 아님</span>실무 ↔ 근거 조문 매핑</h2>
+<div class="twrap"><table>
+<tr><th>우리 과 실무</th><th>근거</th><th>판정</th></tr>
+<tr><td>계약서 없이 품의만</td><td>지방계약법 §14①단서 + 영 §50①1호 + 규칙 §48 단서</td><td>✓ 적법</td></tr>
+<tr><td>건별 1인 견적 수의</td><td>영 §25①5호나목 + §30①2호 (2천만원 이하)</td><td>✓ 적법</td></tr>
+<tr class="hlrow"><td>건별로 쪼개서 주문 (매달 계별 품의)</td><td>영 §7 2호 — 분할 조달 시 추정가격은 <b>연간 총액</b>으로 합산 판단</td><td>✓ <b>총액이 2천만원 미만이라</b> 한도 회피가 아님. 분할 금지(예규)의 취지는 한도 회피 방지 — 합쳐도 한도 안이면 부당성 불성립. 부산 강서구도 건별 방식</td></tr>
+<tr><td>500만원 이하 과 자체 지출</td><td>지방회계법 §34 → 훈령 §32② 단서 → 기장군 회계관리규칙(1건당 500만원)</td><td>✓ 적법</td></tr>
+<tr><td>개인정보위탁계약 연 1회 + 삭제확인서</td><td>개인정보보호법 §26① (문서 의무) · 표준위탁계약서 파기 조항</td><td>✓ 모범 실무 — 지방계약법상 계약서를 생략해도 <b>이 문서는 생략 불가</b>인데 정확히 갖추고 있음</td></tr>
+</table></div>
+</article>
+
+<article data-t="점검 포인트 견적서 재정합의 공개 검수">
+<h2><span class="tag must">점검 4</span>위반은 아니지만, 감사 대비로 챙길 것</h2>
+<div class="box"><div class="step">① <b>견적서 첨부</b> — 각 품의에 업체 견적서(또는 단가표) 1장. 1인 견적 수의도 "견적서에 의한다"가 원칙이라, 품의서만 있고 가격 근거가 없으면 지적 1순위.</div>
+<div class="step">② <b>재정합의(200만원)</b> — 기장군 회계관리규칙 별표 5: 공사·용역·물품 <b>추정금액 200만원 이상은 재무과 재정합의</b> 대상. 재산세 정기분처럼 물량 큰 달의 품의가 여기 걸릴 수 있음 — 과 자체 일상경비 지출 건이라도 해당.</div>
+<div class="step">③ <b>수의계약 내역 공개</b> — 예규 제5장 제8절: 공개 생략은 '나라장터 2인 견적'뿐이므로 <b>1인 견적 수의는 공개내역서(법적 근거·사유 명시) 공개 대상</b>. 건별 방식이면 건별 공개가 원칙(부산 강서구가 건건이 게시하는 이유). 우리 군 공개 실무 확인 필요.</div>
+<div class="step">④ <b>검수 기록</b> — 납품(고지서 인쇄물 인수 또는 우체국 접수증) 확인 기록을 지출 서류에 붙일 것.</div></div>
+</article>
+
+<article data-t="발송 우편법 출력 제작 표기">
+<h2>참고 — 품의서에 "발송"을 안 쓰는 이유 (복습)</h2>
+<div class="box">우편법 §2: 서신 송달은 국가(우체국) 독점 — 업체가 적법하게 하는 범위는 출력→봉함→<b>우체국 접수</b>까지이고, 우편요금은 군이 우체국에 후납하는 공과금이라 계약금액에 안 들어간다. "출력·제작까지만" 표기는 회피가 아니라 정확한 표기.</div>
+</article>
+</section>
+
+<section id="s_hapui"><h2 class="sec">💰 재정합의란? — 점검 포인트 ②의 자세한 설명</h2>
+
+<article data-t="재정합의 개념 재무과 사전 동의 지출원인행위">
+<h2><span class="tag">개념</span>재정합의 = 돈 쓰기 전에 재무과의 사전 동의를 받는 절차</h2>
+<div class="box">지방재정 지출은 두 손을 거친다: <b>① 지출원인행위</b>(사업과가 계약·발주로 지출 원인을 만듦) → <b>② 지출</b>(재무과 지출원이 실제 돈을 내줌). <b class="hl">재정합의는 ①이 확정되기 전에 재무과(회계담당부서)가 끼어들어 "이 지출, 해도 됩니다"라고 동의(合議)해 주는 사전 통제 장치</b>다.
+재무과가 합의 단계에서 보는 것:
+· 예산이 있는가 — 해당 예산과목에 편성돼 있고 <b>잔액</b>이 충분한가
+· 목적에 맞는가 — 그 과목으로 쓸 수 있는 성질의 지출인가
+· 산출근거·계약방법이 적정한가 — 견적서·단가, 수의계약 사유
+· 법령·기준 위반이 없는가 — 분할발주·계약방법 등
+즉 사업과의 "쓰고 싶다"를 재무과가 예산·회계 관점에서 한 번 걸러 주는 <b>사전 브레이크</b>다.</div>
+</article>
+
+<article data-t="협조 합의 결재 칸 차이 팀장 협조 전자결재">
+<h2><span class="tag must">핵심 질문</span>"품의 협조칸에 재무과 팀장 넣으면 되는 건가?" — 거의 맞지만, '협조'가 아니라 '합의'다</h2>
+<div class="verdict"><span class="vmark">◐</span><div>메커니즘은 정확히 이해하셨다 — <b>품의 결재선에 재무과를 한 칸 끼워 사전 동의를 받는 것</b>이 재정합의의 실체다. 다만 전자결재상 슬롯은 원칙적으로 <b class="hl">'협조'가 아니라 '합의'</b> 칸이다. 이 둘은 문서상 효력이 다르다.</div></div>
+<div class="twrap"><table>
+<tr><th>칸(슬롯)</th><th>성격</th><th>동의 안 하면?</th></tr>
+<tr><td><b>결재</b></td><td>사업과 내부 의사결정선 (담당→팀장→과장)</td><td>문서 성립 안 됨</td></tr>
+<tr><td><b>협조</b></td><td>"관련되니 봐 주세요" — 의견 수준(협조자가 의견 표시)</td><td>의견만 남고 진행은 가능</td></tr>
+<tr class="hlrow"><td><b>합의</b> ← 재정합의</td><td>"이 지출, 재무과가 <b>동의</b>합니다" — 동의가 필요</td><td>이견(異見) 표시 가능, 합의 없으면 집행 제약</td></tr>
+</table></div>
+<div class="box">그래서 정확히는 "재무과를 <b>합의</b>칸에 넣어 동의를 받는 것"이 재정합의다. '협조'는 더 가벼운 개념이라, 동의가 필요한 재정합의를 협조칸으로만 처리하면 절차의 성격이 약해진다.
+<b>다만 실무 편차가 있다</b> — 기초자치단체 전자결재(e호조·새올)에서 이를 '합의' 라인으로 운영하는 곳도, '협조' 라인으로 운영하는 곳도 있다. <b class="hl">기장군이 어느 슬롯을 쓰는지, 누구 선(재무과 회계담당 / 팀장 / 과장)까지인지는 기장군 사무관리·위임전결 관행에 따르므로 재무과에 확인하는 것이 확실하다.</b> 통상은 재무과 회계업무 담당(또는 그 팀장) 선에서 합의하며, 금액이 크면 과장까지 올라가기도 한다.</div>
+</article>
+
+<article data-t="200만 500만 두 선 구별 재정합의 일상경비 지출">
+<h2><span class="tag">주의</span>200만원(재정합의)과 500만원(자체지출)은 서로 다른 선</h2>
+<div class="box">두 기준을 헷갈리기 쉬운데, 묻는 질문 자체가 다르다:
+· <b>200만원</b> = "재무과 사전 <b>동의</b>가 필요한가?"(재정합의 여부)
+· <b>500만원</b> = "누가 돈을 내주는가?"(과 자체 일상경비 지출 vs 재무과 지출원 지출)</div>
+<div class="twrap"><table>
+<tr><th>고지서 품의 금액</th><th>재정합의(200만)</th><th>지출 주체(500만)</th></tr>
+<tr><td class="amt">150만원</td><td>불요</td><td>과 자체(일상경비)</td></tr>
+<tr class="hlrow"><td class="amt">400만원</td><td><b>필요</b> (200만 이상)</td><td>과 자체(일상경비) (500만 이하)</td></tr>
+<tr><td class="amt">700만원</td><td><b>필요</b></td><td>재무과(지출원) 지출</td></tr>
+</table></div>
+<div class="box">가운데 줄(400만원)이 핵심: <b class="hl">지출은 과가 직접 하면서도, 재정합의는 재무과를 거쳐야 하는</b> 구간이 있다. "우리 과 돈으로 쓰니까 재무과 안 거쳐도 되겠지"가 아니라, 200만원만 넘으면 지출 주체와 무관하게 합의는 필요하다. 재산세 정기분처럼 물량 큰 달의 고지서 품의가 여기 해당한다.
+근거: 기장군 회계관리규칙 별표 5 — 공사·용역계약 및 물품 제조·구매 <b>추정금액 200만원 이상</b> 재정합의 대상. (별표는 규칙 첨부 HWP이므로 정확한 최신 문구는 아래 부록의 대시보드 리더로 원문 대조 권장)</div>
+</article>
+</section>
+
+<section id="s_q3"><h2 class="sec">❓ Q3. 새 고지서 업체를 뚫으면, 지금 방식 그대로 해도 되나?</h2>
+
+<article data-t="새 업체 전환 가능 조건">
+<h2><span class="tag ok">답: 된다</span>조건은 하나 — 연간 총액 2,000만원 미만 유지</h2>
+<div class="verdict"><span class="vmark">✅</span><div>새 업체와도 <b>개인정보위탁계약 1건(연초) + 건별 품의</b> 구조를 그대로 반복하면 된다. 이 구조의 적법성은 업체가 누구인지와 무관하고, 오직 <b class="hl">연간 총액이 1인 견적 한도(2,000만원) 안인지</b>에 달려 있다.</div></div>
+</article>
+
+<article data-t="업체 교체 체크리스트 위탁계약 공개 갱신">
+<h2><span class="tag must">전환 시 3</span>업체 갈아탈 때 챙길 것</h2>
+<div class="box"><div class="step">① <b>새 업체와 개인정보위탁계약 신규 체결</b> + 기존 업체에서 <b>파기(삭제)확인서</b> 수취 — 지금 하던 그대로. 표준 개인정보처리위탁 계약서(안)를 쓰면 무난.</div>
+<div class="step">② <b>홈페이지 위탁현황 갱신</b> — 개인정보보호법 §26②: 위탁업무 내용과 <b>수탁자가 변경되면 지체 없이 공개</b>. 군 방침의 위탁현황 표에 새 업체명 반영되도록 취합부서(민원과 등)에 통보. ※ 부산정보시스템→온마음컴퍼니 교체 때와 동일한 절차.</div>
+<div class="step">③ <b>첫 품의에 근거 한 줄</b> — "지방계약법 시행령 제25조제1항제5호나목에 따른 수의계약" + 업체 선정 사유(단가 비교, 기존 업체 폐업 등). 첫 거래라 "왜 이 업체인가"를 남겨두면 깔끔.</div></div>
+</article>
+
+<article data-t="연간 단가계약 선택지 비교">
+<h2><span class="tag">선택지</span>이왕 바꾸는 김에 — 건별 품의 vs 연간 단가계약</h2>
+<div class="twrap"><table>
+<tr><th></th><th>현행: 건별 품의 유지</th><th>대안: 연초 단가계약 1건</th></tr>
+<tr><td>적법성</td><td>✓ (총액 2천만 미만 전제)</td><td>✓ (법 §25 단가계약 — "할 수 있다")</td></tr>
+<tr><td>행정력</td><td>3개 계가 매달 각자 품의 — 연 수십 건</td><td>연초 계약 1건 + 지출 때만 품의</td></tr>
+<tr><td>단가</td><td>건별 견적 — 변동 가능</td><td>1년 고정 (장당 ○원 명시)</td></tr>
+<tr><td>실물 사례</td><td>부산 강서구(건별 공시)</td><td>옆 과 공문(체납고지서 출력 919만원, 1.13~12.31 연간 계약)</td></tr>
+</table></div>
+<div class="box">의무가 아니라 편의의 문제. 다만 연간 총액이 2,000만원에 가까워지고 있다면 단가계약 쪽이 안전 여유가 크다 — 추정가격(단가×연간 예정물량)을 연초에 한 번 정직하게 산정해 두는 셈이라 영 §7 논란 자체가 사라진다.</div>
+</article>
+</section>
+
+<section id="s_경계"><h2 class="sec">⚠ 금액 경계선 요약 · 2,000만원을 넘게 되면</h2>
+
+<article data-t="금액 사다리 200 500 2000 5000">
+<h2>기장군 세무과 기준 금액 사다리</h2>
+<div class="twrap"><table>
+<tr><th style="width:110px">기준선</th><th>이하</th><th>초과</th><th style="width:220px">근거</th></tr>
+<tr><td class="amt">200만원</td><td>재정합의 불요</td><td><b>재무과 재정합의</b></td><td>기장군 회계관리규칙 별표5</td></tr>
+<tr><td class="amt">500만원</td><td><b>일상경비</b> — 과 자체 지출</td><td>지출원(재무과) 지출</td><td>훈령 §32② 단서 → 기장군 규칙 (※법령 아닌 군 규칙의 숫자)</td></tr>
+<tr class="hlrow"><td class="amt">2,000만원</td><td><b>1인 견적</b> 수의 — 지금 우리 과</td><td>나라장터 <b>2인 전자견적</b>(전자공개수의)</td><td>영 §30①2호 · <b>연간 총액 기준</b>(영 §7 2호)</td></tr>
+<tr><td class="amt">5,000만원</td><td>계약서 생략 가능 · 과장(분임재무관) 자체 계약</td><td>계약서 작성 + 재무과 계약의뢰</td><td>영 §50①1호 · 기장군 회계규칙 별표3</td></tr>
+</table></div>
+</article>
+
+<article data-t="2천만 초과 시나리오 업체 쪼개기 불가 분할">
+<h2><span class="tag must">주의</span>연간 총액이 2,000만원을 넘게 되면</h2>
+<div class="box">① <b>"업체를 나눠서 각각 2천만 이하로"는 성립하지 않는다</b> — 영 §7 2호가 분할 조달의 추정가격을 <b class="hl">연간 총액으로 합산</b>하도록 명시. 금액 판단 단위는 업체가 아니라 수요(사업)다.
+② <b>성질이 다른 수요의 분리는 정당</b> — 정기분 고지서와 체납고지서는 시기·데이터·긴급성이 달라 별개 계약으로 방어 가능(수영구·서울 마포구·대전 유성구가 실제 이렇게 분리). 분리 사유를 품의·사유서에 "업무 성질·시기 차이"로 명시할 것 — 금액을 사유로 쓰면 안 된다.
+③ <b>넘어도 무겁지 않다</b> — 필요한 건 일반경쟁입찰이 아니라 나라장터 견적공고 + 2인 이상 전자견적(소기업·소상공인 1억원까지). 공고 절차 하나 늘어나는 정도이고 낙찰하한율(88%) 덕에 단가가 내려가기도 한다. 무리한 쪼개기의 감사 리스크보다 절차 부담이 훨씬 싸다.</div>
+</article>
+
+<article data-t="3000만원 시나리오 팀별 선호 업체 나누기 사례">
+<h2><span class="tag must">시나리오</span>연간 3,000만원인데 팀별로 선호 업체를 쓰고 싶다면?</h2>
+<div class="verdict" style="border-color:var(--must)"><span class="vmark">⚠</span><div><b>"팀별로 나눈다"는 것 자체는 분리 사유가 되지 못한다.</b> 재산세계·지소세계·세외수입계는 모두 <b class="hl">같은 법인격(기장군) 안의 내부 조직</b>이다. 계약 주체는 군수 한 명이지 계(팀)가 아니므로, 팀을 나눠도 추정가격은 영 §7 2호에 따라 <b>연간 총액 3,000만원으로 합산</b>된다. "팀장님이 선호하는 업체"는 법령이 인정하는 분리 기준이 아니다.</div></div>
+<div class="box">3,000만원일 때 실제로 가능한 선택지:
+
+<b>[A] 하나의 수요로 보고 통째로 계약</b> — 추정가격 3,000만원
+· 수의계약 <b>자체는 여전히 가능</b>. 영 §25①5호<b>라목</b>(소기업·소상공인과 1억원 이하) — 고지서 업체는 전부 직원 3~7명 소기업이라 해당. <b class="hl">일반경쟁입찰까지 갈 일이 아니다.</b>
+· 다만 2천만원을 넘으므로 견적은 <b>2인 이상</b>(영 §30①) → 나라장터 견적공고 = 전자공개수의
+· <b class="hl">역설: 이 길로 가면 '선호 업체' 선택이 원천적으로 불가능하다.</b> 공고를 띄우면 누가 응찰할지 통제할 수 없고, 88% 이상 중 최저가가 자동 낙찰되기 때문. 업체를 고르고 싶다는 목적과 3,000만원 통합계약은 애초에 양립하지 않는다.
+
+<b>[B] 성질이 다른 수요로 정당하게 분리</b> — 각 단위별 추정가격
+· 정기분(예: 2,000만원) / 체납분(예: 1,000만원)처럼 <b>업무 성질·시기·데이터가 실제로 다른</b> 단위로 나뉘고, <b>각 단위가 2천만원 이하</b>이면 → 각각 1인 견적 수의 가능 → 결과적으로 <b>업체가 달라질 수 있다</b>. 옆 과의 체납분 919만원 별업체 계약이 이 형태.
+· <b class="hl">단, 세목별(재산세 vs 자동차세) 분리는 위험</b> — 둘 다 같은 "정기분 고지서 출력"이라 성질이 같다고 볼 여지가 크다. 팀이 다르다는 건 조직 사정이지 수요의 성질 차이가 아니다.
+· 서류에 <b>"3,000만원이라 2천만원을 넘으니 나눈다"는 동기가 읽히는 순간 부당 분할</b>. 사유는 반드시 업무 성질·시기 차이로.
+
+<b>결론</b>: 팀별 선호 업체를 지키려면 [B]밖에 없는데, [B]는 "성질이 다른 수요"라는 실질이 있어야만 성립한다. 그 실질이 없다면 [A]로 가야 하고, [A]에서는 업체를 고를 수 없다. 참고로 부산 16개 구·군 중 북구(전량 ㈜시화)·중구(전량 세정정보)처럼 <b>한 업체 통합</b>이 오히려 다수이고, 업체를 나눈 곳(수영구·영도구)도 정기/체납 또는 물량 분산의 실질이 있다.</div>
+</article>
+</section>
+
+<section id="s_nakchal"><h2 class="sec">📉 낙찰하한율 88% — 어디서 나온 숫자이고, 왜 단가가 내려가나</h2>
+
+<article data-t="낙찰하한율 88% 근거 예규 예정가격">
+<h2><span class="tag">근거</span>88%의 출처 — 예규 제5장 수의계약 운영요령</h2>
+<div class="box">「지방자치단체 입찰 및 계약 집행기준」(행안부 예규) 제5장: 예정가격이 작성된 경우, <b class="hl">예정가격의 88%</b>(시행규칙 §23조의3 각 호에 따른 용역계약은 90%) <b class="hl">이상으로 견적서를 제출한 자 중 최저가격을 제출한 자</b>를 계약상대자로 결정한다. 88% <b>미만이면 계약상대자 결정 대상에서 제외</b>(=탈락).
+즉 88%는 "낙찰되는 비율"이 아니라 <b class="hl">그 아래로 내려가면 탈락하는 바닥선(덤핑 방지 하한)</b>이다. 지나친 저가 경쟁으로 품질이 무너지는 것을 막으려는 장치.</div>
+<div class="meta"><a class="lawgo" href="https://www.law.go.kr/행정규칙/지방자치단체입찰및계약집행기준" target="_blank">예규 전문(법제처)</a></div>
+</article>
+
+<article data-t="예정가격 기초금액 복수예비가격 추첨 메커니즘">
+<h2><span class="tag">전제</span>먼저 — '예정가격'은 아무도 모르는 숫자다</h2>
+<div class="box">88%의 기준이 되는 <b>예정가격</b>은 발주기관이 미리 정해 공개하는 값이 아니다. 나라장터 전자견적의 산정 절차:
+① 발주기관이 <b>기초금액</b>(시장조사·원가계산으로 산정)을 공고
+② 시스템이 기초금액 <b>±3%</b> 범위에서 <b>복수예비가격 15개</b>를 자동 생성
+③ 견적 제출자들이 각자 번호를 추첨 → 가장 많이 뽑힌 <b>4개를 평균</b> → 그 값이 <b class="hl">예정가격</b>으로 확정
+④ 개찰 후에야 예정가격이 공개됨
+그래서 업체는 "예정가격의 88%가 정확히 얼마인지" 모르는 상태로 견적을 낸다. 결국 <b>기초금액 × 88% 근처를 겨냥해 찍는 게임</b>이 된다.</div>
+</article>
+
+<article data-t="낙찰률 메커니즘 단가 내려가는 이유 1인 견적 2인 견적 비교">
+<h2><span class="tag must">핵심</span>왜 단가가 내려가나 — 하한선이 '목표점'이 되기 때문</h2>
+<div class="box">88%는 하한선일 뿐 강제로 깎는 규정이 아니다. 단가를 내리는 것은 <b class="hl">"최저가가 이긴다"는 경쟁 규칙</b>이고, 88%는 그 경쟁이 멈추는 바닥이다.
+
+<b>· 1인 견적(2천만원 이하 — 지금 우리 과)</b>
+경쟁자가 없다 → 업체는 굳이 깎을 이유가 없다 → 88%는 그냥 바닥으로 남고, 실제 견적가는 <b>예정가격 근처(≈100%)</b>에서 결정된다. (88% 미만으로 내면 오히려 탈락하니 업체도 안 내림)
+
+<b>· 2인 이상 전자견적(2천만원 초과)</b>
+낙찰 기준이 "88% 이상 중 <b>최저가</b>" → 남보다 1원이라도 낮게 써야 이긴다 → 서로 깎다가 <b class="hl">더 못 내려가는 지점, 즉 88% 바로 위에 전부 몰린다</b> → 낙찰가가 기초금액의 대략 <b>88% 수준</b>에서 결정된다.
+
+<b>결과</b>: 같은 물량이라도 1인 견적(≈100%) vs 전자견적(≈88%) → <b class="hl">약 12% 차이</b>. 3,000만원 물량이면 약 360만원. "공고 절차 하나 늘어나는 대신 단가가 내려간다"는 말의 실체가 이것이다.</div>
+<div class="twrap"><table>
+<tr><th>구분</th><th>1인 견적 (2천만 이하)</th><th>2인 이상 전자견적 (2천만 초과)</th></tr>
+<tr><td>낙찰 규칙</td><td>그 업체가 88% 이상이면 계약</td><td>88% 이상 중 <b>최저가</b></td></tr>
+<tr><td>업체의 선택</td><td>깎을 이유 없음 → 예정가격 근처</td><td>남보다 낮게 → 하한선 근처로 수렴</td></tr>
+<tr class="hlrow"><td>실제 계약 수준</td><td>기초금액의 ≈100%</td><td>기초금액의 <b>≈88%</b></td></tr>
+<tr><td>업체 선택권</td><td>우리가 지정 가능</td><td><b>불가</b> — 최저가 자동</td></tr>
+</table></div>
+<div class="box">※ <b>정정</b>: 88%는 1인 견적에도 적용되는 하한선이다("견적서 제출자가 1인인 경우에도 예정가격의 88% 이상으로 제출하면 계약 가능"). 다만 1인일 때는 <b>경쟁이 없어 하한선까지 내려갈 유인이 없다</b>는 점이 다를 뿐이다. 즉 88%는 두 경우 모두의 바닥이고, 차이를 만드는 건 <b>경쟁 유무</b>다.
+※ 소액이라 예정가격을 작성하지 않는 경우에는 88% 판단 자체가 없다 — 기장군은 회계관리규칙 별표4에 예정가격 결정 전결(제조·용역 5천만원 이하는 실·과장)을 두고 있어 소액도 예정가격을 작성하는 구조로 보이나, 실제 운영은 재무과 확인 권장.</div>
+</article>
+</section>
+
+<section id="s_조문"><h2 class="sec">📚 조문 원문 부록 (전부 법제처 API 원문 확인)</h2>
+
+<article data-t="지방회계법 29 지출원인행위 원문">
+<h2>지방회계법 29 지출원인행위 <span class="tag">Q1 근거</span></h2>
+<div class="box">제29조(지출원인행위) ① 지방자치단체의 <b class="hl">지출 원인이 되는 계약이나 그 밖의 행위</b>(이하 "지출원인행위"라 한다)는 지방자치단체의 장이 하되, 소속 공무원에게 위임하여 지출원인행위를 하게 할 수 있다.
+② 지방자치단체의 장이나 그 위임을 받은 공무원(이하 "재무관"이라 한다)이 지출원인행위를 할 때에는 법령, 조례 및 규칙에서 정하는 바에 따라 배정된 예산의 범위에서 하여야 한다.</div>
+<div class="meta"><a class="rdr" href="http://127.0.0.1:6155/reader?target=eflaw&mst=276363&name=지방회계법&art=제29조" target="_blank">📖 대시보드 리더 (메모·회독)</a><a class="lawgo" href="https://www.law.go.kr/법령/지방회계법/제29조" target="_blank">법제처</a></div>
+</article>
+
+<article data-t="지방계약법 14조 계약서 작성 생략 원문">
+<h2>지방계약법 14① 계약서의 작성 및 계약의 성립</h2>
+<div class="box">① 지방자치단체의 장 또는 계약담당자는 계약을 체결하려는 경우에는 계약의 목적, 계약금액, 이행기간, 계약보증금, 위험부담, 지연배상금(遲延賠償金), 그 밖에 필요한 사항을 명백히 적은 계약서를 작성하여야 한다. <b class="hl">다만, 대통령령으로 정하는 경우에는 계약서의 작성을 생략할 수 있다.</b></div>
+<div class="meta"><a class="rdr" href="http://127.0.0.1:6155/reader?target=eflaw&mst=253973&name=지방자치단체를 당사자로 하는 계약에 관한 법률&art=제14조" target="_blank">📖 대시보드 리더 (메모·회독)</a><a class="lawgo" href="https://www.law.go.kr/법령/지방자치단체를당사자로하는계약에관한법률/제14조" target="_blank">법제처</a></div>
+</article>
+
+<article data-t="시행령 50조 계약서 생략 5천만원 원문">
+<h2>지방계약법 시행령 50① 계약서 작성의 생략</h2>
+<div class="box">① 법 제14조제1항 단서에 따라 계약서의 작성을 생략할 수 있는 경우는 다음 각 호와 같다.
+1. <b class="hl">계약금액이 5천만원 이하인 계약을 체결하는 경우</b>
+2. 경매에 부치는 경우
+3. 물품을 매각할 때 매수인이 즉시 대금을 내고 그 물품을 인수하는 경우
+4. 국가기관과 계약을 체결하거나 다른 지방자치단체와 계약을 체결하는 경우
+5. 전기ㆍ가스ㆍ수도의 공급계약 등 그 계약의 성질상 계약서를 작성할 필요가 없는 경우</div>
+<div class="meta"><a class="rdr" href="http://127.0.0.1:6155/reader?target=eflaw&mst=286149&name=지방자치단체를 당사자로 하는 계약에 관한 법률 시행령&art=제50조" target="_blank">📖 대시보드 리더 (메모·회독)</a><a class="lawgo" href="https://www.law.go.kr/법령/지방자치단체를당사자로하는계약에관한법률시행령/제50조" target="_blank">법제처</a></div>
+</article>
+
+<article data-t="시행규칙 48조 증거서류 품의서 갈음 원문">
+<h2>지방계약법 시행규칙 48 계약서 생략 시 증거서류 <span class="tag must">품의서 갈음 근거</span></h2>
+<div class="box">제48조(계약서의 작성을 생략하는 경우) 지방자치단체의 장 또는 계약담당자는 영 제50조에 따라 계약서의 작성을 생략하는 경우에는 계약상대자로부터 청구서, 각서, 협정서, 승낙사항 등 계약 성립의 증거가 될 수 있는 서류를 제출받아 갖춰 두어야 한다. <b class="hl">다만, 그 지방자치단체의 재무회계에 관한 규칙에서 따로 정하는 회계경리에 관한 서식에 따른 경우에는 그러하지 아니하다.</b></div>
+<div class="meta">단서 = 품의서(회계경리 서식)만으로 처리하는 실무의 직접 근거 <a class="rdr" href="http://127.0.0.1:6155/reader?target=eflaw&mst=287365&name=지방자치단체를 당사자로 하는 계약에 관한 법률 시행규칙&art=제48조" target="_blank">📖 대시보드 리더 (메모·회독)</a><a class="lawgo" href="https://www.law.go.kr/법령/지방자치단체를당사자로하는계약에관한법률시행규칙/제48조" target="_blank">법제처</a></div>
+</article>
+
+<article data-t="시행령 25조 수의계약 나목 원문">
+<h2>지방계약법 시행령 25①5호나목 소액 수의계약</h2>
+<div class="box">5. 다음 각 목의 어느 하나에 해당하는 계약
+  나. <b class="hl">추정가격이 2천만원 이하인 물품의 제조ㆍ구매계약 또는 용역계약</b>
+  (라목: 소기업·소상공인과의 1억원 이하 계약 등)</div>
+<div class="meta">품의·수의계약사유서의 "법적 근거"란에 쓰는 그 조문 <a class="rdr" href="http://127.0.0.1:6155/reader?target=eflaw&mst=286149&name=지방자치단체를 당사자로 하는 계약에 관한 법률 시행령&art=제25조" target="_blank">📖 대시보드 리더 (메모·회독)</a><a class="lawgo" href="https://www.law.go.kr/법령/지방자치단체를당사자로하는계약에관한법률시행령/제25조" target="_blank">법제처</a></div>
+</article>
+
+<article data-t="시행령 30조 견적서 1인 원문">
+<h2>지방계약법 시행령 30① 견적서 제출 <span class="tag">견적서는 필요</span></h2>
+<div class="box">① 지방자치단체의 장 또는 계약담당자는 수의계약을 체결하려는 경우에는 2인 이상으로부터 견적서를 받아야 한다. 다만, 다음 각 호의 어느 하나에 해당하는 경우에는 <b class="hl">1인으로부터 받은 견적서에 의할 수 있다.</b>
+(제2호) 추정가격이 2천만원 이하인 공사, 물품의 제조ㆍ구매 및 용역의 경우. (여성기업·장애인기업 등과 계약 시 5천만원 이하)</div>
+<div class="meta">"견적서에 의할 수 있다" — 생략이 아니라 1장은 받아야 함 <a class="rdr" href="http://127.0.0.1:6155/reader?target=eflaw&mst=286149&name=지방자치단체를 당사자로 하는 계약에 관한 법률 시행령&art=제30조" target="_blank">📖 대시보드 리더 (메모·회독)</a><a class="lawgo" href="https://www.law.go.kr/법령/지방자치단체를당사자로하는계약에관한법률시행령/제30조" target="_blank">법제처</a></div>
+</article>
+
+<article data-t="시행령 7조 추정가격 분할 합산 원문">
+<h2>지방계약법 시행령 7 추정가격의 산정 <span class="tag must">건별 방식의 성립 조건</span></h2>
+<div class="box">(제2호) <b class="hl">개별적인 조달요구가 복수로 이루어지거나 분할되어 이루어지는 계약</b>의 경우 다음 각 목의 어느 하나 중에서 선택한 금액
+  가. 직전 회계연도 또는 직전 12개월 동안 체결된 유사한 계약의 총액을 대상으로 직후 12개월 동안의 수량·금액 예상변동분을 고려하여 조정한 금액
+  나. <b class="hl">해당 회계연도 또는 그 직후 12개월 동안에 계약할 금액의 총액</b>
+(제1호: 단가계약 = 추정단가 × 예정물량)</div>
+<div class="meta">건별로 쪼개도 금액 판단은 연간 총액 — 우리 과는 총액이 2천만 미만이라 건별 방식이 성립. 총액이 넘으면 업체를 나눠도 소용없음 <a class="rdr" href="http://127.0.0.1:6155/reader?target=eflaw&mst=286149&name=지방자치단체를 당사자로 하는 계약에 관한 법률 시행령&art=제7조" target="_blank">📖 대시보드 리더 (메모·회독)</a><a class="lawgo" href="https://www.law.go.kr/법령/지방자치단체를당사자로하는계약에관한법률시행령/제7조" target="_blank">법제처</a></div>
+</article>
+
+<article data-t="회계관리훈령 32조 지출 절차 일상경비 원문">
+<h2>지방자치단체 회계관리에 관한 훈령 32 지출의 절차</h2>
+<div class="box">② 각 실ㆍ과장은 공사ㆍ제조ㆍ용역의 도급, 물건의 매입ㆍ수리ㆍ운반 등에 관하여는 회계업무담당과장 또는 계약담당과장에게 그 집행을 요구하여야 한다. <b class="hl">다만, 일상경비등으로서 지방자치단체의 장이 정하는 기준액 범위 내에서 지급하는 것은 그러하지 아니하다.</b>
+③ 회계업무담당과장 또는 계약업무담당과장은 제2항의 요구를 받았을 때에는 즉시 소정의 절차에 따라 계약을 체결하여야 한다.</div>
+<div class="meta">②단서의 "기준액"을 기장군 규칙이 500만원으로 설정 <a class="rdr" href="http://127.0.0.1:6155/reader?target=admrul&id=2100000281370&name=지방자치단체 회계관리에 관한 훈령&art=제32조" target="_blank">📖 대시보드 리더 (메모·회독)</a><a class="lawgo" href="https://www.law.go.kr/행정규칙/지방자치단체회계관리에관한훈령" target="_blank">법제처</a></div>
+</article>
+
+<article data-t="기장군 회계관리규칙 500만원 재정합의 별표">
+<h2>기장군 회계관리에 관한 규칙 — 500만원·재정합의·분임재무관</h2>
+<div class="box">§5④ 1건당 추정금액 <b class="hl">500만원</b> 이하 (과장 전결·일상경비 경계)
+별표 3 (재무관 직무위임): 본청 실·과장(분임재무관)은 <b>물품 제조·용역 추정 5천만원 이하 자체 처리</b>, 일상경비의 교부는 전액
+별표 5 (재정합의): 공사·용역계약 관련 경비 및 물품 제조·구매 — <b class="hl">추정금액 200만원 이상</b>은 회계담당부서(재무과) 재정합의 대상</div>
+<div class="meta">규칙 제680호(2024.10.2.) <a class="rdr" href="http://127.0.0.1:6155/reader?target=ordin&mst=1974535&name=부산광역시 기장군 회계관리에 관한 규칙" target="_blank">📖 대시보드 리더 (메모·회독)</a><a class="lawgo" href="https://www.law.go.kr/자치법규/부산광역시기장군회계관리에관한규칙" target="_blank">법제처 자치법규</a></div>
+</article>
+
+<article data-t="개인정보보호법 26조 위탁 문서 공개 원문">
+<h2>개인정보 보호법 26 업무위탁에 따른 개인정보의 처리 제한 <span class="tag must">생략 불가</span></h2>
+<div class="box">① 개인정보처리자가 제3자에게 개인정보의 처리 업무를 위탁하는 경우에는 다음 각 호의 내용이 포함된 <b class="hl">문서로</b> 하여야 한다.
+1. 위탁업무 수행 목적 외 개인정보의 처리 금지에 관한 사항
+2. 개인정보의 기술적ㆍ관리적 보호조치에 관한 사항
+3. 그 밖에 개인정보의 안전한 관리를 위하여 대통령령으로 정한 사항
+② 위탁자는 위탁하는 업무의 내용과 수탁자를 정보주체가 언제든지 쉽게 확인할 수 있도록 대통령령으로 정하는 방법에 따라 <b class="hl">공개하여야 한다.</b>
+④ 위탁자는 업무 위탁으로 인하여 정보주체의 개인정보가 분실ㆍ도난ㆍ유출ㆍ위조ㆍ변조 또는 훼손되지 아니하도록 <b>수탁자를 교육하고</b>, 처리 현황 점검 등 대통령령으로 정하는 바에 따라 수탁자가 개인정보를 안전하게 처리하는지를 <b>감독하여야 한다.</b></div>
+<div class="meta">지방계약법상 계약서는 생략해도 이 문서(개인정보위탁계약)는 항상 필수 — 현행 실무가 정확. ②항이 매년 위탁현황을 걷는 이유, 업체 교체 시 갱신 의무의 근거 <a class="rdr" href="http://127.0.0.1:6155/reader?target=eflaw&mst=270351&name=개인정보 보호법&art=제26조" target="_blank">📖 대시보드 리더 (메모·회독)</a><a class="lawgo" href="https://www.law.go.kr/법령/개인정보보호법/제26조" target="_blank">법제처</a></div>
+</article>
+</section>
+
+</div>
+<script>
+const root=document.documentElement;
+if(localStorage.getItem('sntheme')==='dark') root.classList.add('dark');
+function toggleTheme(){root.classList.toggle('dark');localStorage.setItem('sntheme',root.classList.contains('dark')?'dark':'light');}
+const q=document.getElementById('q');
+q.addEventListener('input',()=>{
+  const t=q.value.trim().toLowerCase(); let any=false;
+  document.querySelectorAll('[data-t]').forEach(el=>{const hit=!t||el.getAttribute('data-t').toLowerCase().includes(t)||el.textContent.toLowerCase().includes(t);el.classList.toggle('hidden',!hit);if(hit)any=true;});
+  document.querySelectorAll('section').forEach(s=>{const vis=s.querySelectorAll('[data-t]:not(.hidden)').length;s.classList.toggle('hidden',t&&!vis);});
+  document.getElementById('empty').style.display=(t&&!any)?'block':'none';
+});
+const links=[...document.querySelectorAll('#side a')];
+const secs=links.map(a=>document.getElementById(a.dataset.sec));
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.toggle('active',l.dataset.sec===e.target.id));}})},{rootMargin:'-40% 0px -55% 0px'});
+secs.forEach(s=>s&&io.observe(s));
+</script></body></html>

@@ -1,0 +1,286 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>공제사업 수요조사 리더 — 영조물배상·재해복구</title><style>
+:root{--bg:#fbfcff;--fg:#1a1f29;--tagbg:#eef3ff;--tagfg:#3b5bb5;--meta:#6b6b77;--sec:#3b5bb5;--boxbg:#f6f8fc;--ansbd:#7aa7e6;--ah:#5577aa;--line:#e5e9f2;--side:#f0f3fa;--hover:#e9eefb;--ok:#1b7f5c;--warn:#9a6b00;--hl:#fff3cd;--must:#b3261e}
+html.dark{--bg:#2f3338;--fg:#eef1f5;--tagbg:#3a4458;--tagfg:#a8c7ff;--meta:#bcc4cf;--sec:#a8c7ff;--boxbg:#272b30;--ansbd:#4a90d9;--ah:#9fb6d4;--line:#3a4048;--side:#272b30;--hover:#353b43;--ok:#6cc9a2;--warn:#e0b45c;--hl:#3a3418;--must:#ff8a80}
+*{box-sizing:border-box}
+body{font-family:"맑은 고딕","Malgun Gothic",sans-serif;margin:0;background:var(--bg);color:var(--fg);line-height:1.75;display:flex}
+#side{width:280px;flex:0 0 280px;height:100vh;position:sticky;top:0;overflow-y:auto;background:var(--side);border-right:1px solid var(--line);padding:16px 12px}
+#side h3{font-size:14px;margin:2px 6px 12px}
+#side .tot{font-size:12px;color:var(--meta);margin:0 6px 12px}
+#side a{display:flex;justify-content:space-between;gap:8px;text-decoration:none;color:var(--fg);font-size:13px;padding:7px 9px;border-radius:8px}
+#side a:hover{background:var(--hover)}
+#side a.active{background:var(--tagbg);color:var(--tagfg);font-weight:700}
+#side .cnt{color:var(--meta);font-size:12px}
+#main{flex:1;min-width:0;padding:20px 28px 80px;max-width:980px}
+#top{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+#top h1.pg{font-size:20px;margin:0 8px 0 0}
+#q{flex:1;min-width:180px;padding:8px 12px;font-size:14px;border:1px solid var(--line);border-radius:8px;background:var(--boxbg);color:var(--fg)}
+.btn{padding:7px 12px;font-size:13px;border:1px solid var(--line);border-radius:8px;background:var(--boxbg);color:var(--fg);cursor:pointer}
+.btn:hover{background:var(--hover)}
+section{margin:26px 0}
+section>h2.sec{font-size:17px;color:var(--sec);border-bottom:2px solid var(--sec);padding-bottom:6px;margin:0 0 14px}
+article{margin:0 0 18px}
+article h2{font-size:15px;margin:0 0 6px}
+.tag{display:inline-block;background:var(--tagbg);color:var(--tagfg);font-size:11.5px;padding:1px 8px;border-radius:99px;margin-right:6px;vertical-align:1px;font-weight:700}
+.tag.must{background:var(--must);color:#fff}
+.box{background:var(--boxbg);border:1px solid var(--line);border-left:3px solid var(--ansbd);border-radius:8px;padding:12px 16px;font-size:14px;white-space:pre-wrap}
+.box b.hl{background:var(--hl);padding:0 3px;border-radius:3px}
+.meta{font-size:12px;color:var(--meta);margin-top:5px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.meta a{color:var(--ah)}
+.rdr{font-family:system-ui,sans-serif;font-size:.74rem;color:#fff;background:var(--sec);border:1px solid var(--sec);
+  border-radius:999px;padding:2px 11px;text-decoration:none;white-space:nowrap}
+.rdr:hover{opacity:.85}
+.lawgo{font-family:system-ui,sans-serif;font-size:.72rem;color:var(--ah);border:1px solid var(--line);border-radius:999px;padding:2px 9px;text-decoration:none;white-space:nowrap}
+.hidden{display:none!important}
+#empty{display:none;color:var(--meta);padding:30px;text-align:center}
+table{border-collapse:collapse;width:100%;font-size:13.5px;background:var(--boxbg)}
+th{background:var(--tagbg);text-align:left;padding:7px 10px;border:1px solid var(--line);font-size:12.5px;white-space:nowrap}
+td{padding:6px 10px;border:1px solid var(--line);vertical-align:top}
+.twrap{overflow-x:auto;border-radius:8px;border:1px solid var(--line);margin:8px 0}
+.step{margin:3px 0;padding-left:14px;text-indent:-14px}
+.notebar{background:var(--hl);border-radius:8px;padding:9px 14px;font-size:13px;margin:0 0 16px}
+@media print{#side,#top .btn,#q{display:none}#main{padding:0;max-width:none}body{display:block}}
+</style></head><body>
+<nav id="side"><h3>🗂 목차</h3><div class="tot">공제사업 수시등록 수요조사<br>제출기한 2026.7.31.(금) · 전 조문 법제처 API 검증</div>
+<a href="#s_공문" data-sec="s_공문">📨 공문 해설·체크리스트<span class="cnt">3</span></a>
+<a href="#s_개요" data-sec="s_개요">🧭 공제 개요 (LOFA)<span class="cnt">4</span></a>
+<a href="#s_공제회법" data-sec="s_공제회법">Ⅰ. 한국지방재정공제회법<span class="cnt">5</span></a>
+<a href="#s_국배법" data-sec="s_국배법">Ⅱ. 국가배상법<span class="cnt">3</span></a>
+<a href="#s_민법" data-sec="s_민법">Ⅲ. 민법 §758<span class="cnt">1</span></a>
+<a href="#s_공유" data-sec="s_공유">Ⅳ. 공유재산법·시행령<span class="cnt">4</span></a>
+<a href="#s_유의" data-sec="s_유의">⚠ 유의사항<span class="cnt">4</span></a>
+</nav>
+<div id="main">
+<div id="top"><h1 class="pg">공제사업 수요조사 리더</h1>
+<input id="q" placeholder="검색… (예: 제5조, 영조물, 수시등록, 의무)">
+<button class="btn" onclick="toggleTheme()">🌓 테마</button>
+<button class="btn" onclick="window.print()">🖨 인쇄</button></div>
+<div class="notebar">📖 각 조문의 <b>「대시보드 리더」</b> 버튼을 누르면 법제처 대시보드(127.0.0.1:6155)가 해당 법령·해당 조문 위치로 열리고, 거기서 <b>조문 메모와 회독 카운트</b>가 저장됩니다. (대시보드 서버가 꺼져 있으면 <b>법제처대시보드_시작.bat</b> 먼저 실행)</div>
+<div id="empty">검색 결과 없음</div>
+
+<section id="s_공문"><h2 class="sec">📨 공문 해설 — 무엇을, 왜, 언제까지</h2>
+
+<article data-t="공문 요지 수요조사 마감 7월 31일">
+<h2><span class="tag">요지</span>이 공문이 요구하는 것</h2>
+<div class="box">① <b>공제사업 수시등록 수요조사</b>: 올해 중간에 새로 공제에 넣어야 할 시설이 있는지 미리 파악하는 조사
+② 대상: <b>연내 준공 예정 시설</b> 중 <b class="hl">영조물배상공제</b> 또는 <b class="hl">건물(시설물) 재해복구공제</b> 가입이 예상되는 시설
+③ 붙임 서식 작성 → <b class="hl">2026.7.31.(금)까지</b> 제출
+④ <b>미제출 시 올해 수시 가입 불가</b> — 공제회 제도가 아니라 취합부서의 내부 방침(회비 예산·일괄 등록 일정을 잡아야 하므로)</div>
+</article>
+
+<article data-t="왜 하는 조사인가 수시등록 정기등록 구조">
+<h2><span class="tag">구조</span>왜 미리 조사하나 — 정기등록 vs 수시등록</h2>
+<div class="twrap"><table>
+<tr><th></th><th>정기등록</th><th>수시등록</th></tr>
+<tr><td>대상</td><td>기존 보유 시설 전체</td><td>정기등록을 놓친 물건, <b>연중 신규 취득·준공 시설</b></td></tr>
+<tr><td>신청 시기</td><td><b>전년도 12월 20일까지</b></td><td>연중 상시</td></tr>
+<tr><td>공제 기간</td><td>1.1 ~ 12.31 (1년)</td><td>등록신청 <b>다음날 ~ 당해 12.31</b> (잔여기간만)</td></tr>
+<tr><td>회비 납부</td><td>당해년도 3월 말까지</td><td>등록 다음달 말일까지</td></tr>
+</table></div>
+<div class="box">연내 준공 건물은 준공 즉시 화재·배상 위험에 노출되는데 정기등록엔 없던 물건이므로 <b>수시등록으로 공백 없이 가입</b>시켜야 합니다. 취합부서는 그 회비 예산과 등록 일정을 미리 잡아야 하므로 지금 수요조사를 하는 것 — 회신하지 않으면 예산·일정에서 빠져 "올해 수시 가입 불가"가 되는 구조입니다.</div>
+</article>
+
+<article data-t="체크리스트 회신 요령 재조달가액">
+<h2><span class="tag">실무</span>회신 체크리스트</h2>
+<div class="box"><div class="step">☐ 우리 과 소관으로 <b>올해 안에 준공(신축·증축·리모델링)되는 건물·시설</b>이 있는가?</div>
+<div class="step">☐ 있으면 서식에: 시설명 / 준공 예정일 / <b>재조달가액</b>(신축 공사비 기준 — 재해복구공제 등록금액 산정 기초) / 필요한 공제 종류(건물 자체 복구 = 재해복구공제, 이용자 배상 = 영조물배상공제) 기재</div>
+<div class="step">☐ 없으면 <b>"해당 없음"으로라도 회신</b> — 미회신으로 두면 나중에 준공 시설이 생겨도 올해 가입이 막힘</div>
+<div class="step">☐ 참고: 건물은 시행령 제4조상 보험·공제 <b>가입 의무</b> 대상이라, 준공 시설을 빠뜨리면 감사 지적 소지 (아래 Ⅳ장)</div></div>
+</article>
+</section>
+
+<section id="s_개요"><h2 class="sec">🧭 공제 개요 — 한국지방재정공제회(LOFA)</h2>
+
+<article data-t="영조물배상공제 개요 담보 보상한도">
+<h2><span class="tag">공제 1</span>영조물배상공제 — "시설 하자로 남에게 입힌 손해"를 담보</h2>
+<div class="box">지자체가 소유·사용·관리하는 시설(영조물)의 설치·관리 <b>하자로 타인의 신체·재물에 손해</b>를 입혀 법률상 배상책임(국가배상법 제5조)이 생길 때 배상금을 보상.
+- 가입 대상: 청사, 복지시설, 공원, 도서관, 공연장 등 (특별약관: 도로, 주차장, 어린이놀이시설, 가스사고 등)
+- 보상 한도(선택): 대인 1사고당 500만원~100억원 / 1인당 500만원~5억원 / 대물 1사고당 200만원~100억원. 한도 초과분은 지자체 자체 부담
+- 제외: 고의 손해, 천재지변</div>
+<div class="meta"><a class="lawgo" href="https://www.lofa.or.kr/subList/20000000047" target="_blank">LOFA 상품 안내</a></div>
+</article>
+
+<article data-t="재해복구공제 개요 화재 풍수해 복구비">
+<h2><span class="tag">공제 2</span>건물(시설물) 재해복구공제 — "우리 건물이 입은 피해"를 담보</h2>
+<div class="box">공제회의 1964년 설립 때부터의 고유목적사업. 공제등록한 공유재산에 재해가 나면 <b>복구비를 지급</b>.
+- 기본 담보: <b>화재(벼락 포함), 풍·수·설해, 노후 도괴·붕괴, 테러·폭발, 지진</b>
+- 특별 담보(추가): 전기위험, 기계위험, 스프링클러, 급배수설비, 신체·대물배상, 유리손해, 완성토목공사물 등
+- 대상: 공제등록한 건물·시설물(집기비품·설비 포함)·완성토목공사물(도로, 교량, 터널 등) / 제외: 자동차, 국보·보물 등
+- 공제금 = 손해액 × (공제등록금액 ÷ 재조달가액의 80%) — 등록금액을 낮게 잡으면 비례 감액되므로 재조달가액 산정이 중요</div>
+<div class="meta"><a class="lawgo" href="https://www.lofa.or.kr/subList/20000000043" target="_blank">LOFA 사업개요·공제등록</a><a class="lawgo" href="https://www.lofa.or.kr/subList/20000000044" target="_blank">공제금 지급</a></div>
+</article>
+
+<article data-t="수시등록 절차 담보 개시">
+<h2><span class="tag">절차</span>수시등록 — 담보 개시와 회비</h2>
+<div class="box">- 연중 상시 신청 가능, <b>공제책임(담보)은 등록신청 다음날부터</b> 당해 12.31까지
+- 회비는 등록 다음달 말일까지 납부 (미납 시 보상 제외)
+- 다음 해부터는 정기등록(전년 12.20 마감)에 통합 갱신</div>
+</article>
+
+<article data-t="가입 실무 예산 갱신 회비">
+<h2><span class="tag">실무</span>가입 실무 — 예산·갱신</h2>
+<div class="box">- 두 공제 모두 1년 단위(1.1~12.31) 매년 갱신. 흐름: 가입신청 → 공제회 등록·회비납부 통보 → 회비 납부
+- 회비 예산: 일반운영비 중 공공운영비(201-02)로 편성하는 것이 통례 (※ 통계목은 예산부서·「지방자치단체 예산편성 운영기준」 별표로 확인 권장)
+- 재해복구공제 회비 = 등록금액 × 요율(기본담보 외 특별담보는 추가요율), 영조물배상공제는 시설 유형·보상한도에 따라 상이</div>
+</article>
+</section>
+
+<section id="s_공제회법"><h2 class="sec">Ⅰ. 한국지방재정공제회법 — 공제의 근거 법률 <span style="font-size:12px;color:var(--meta)">(법률 제15805호, 시행 2019.4.17.)</span></h2>
+
+<article data-t="공제회법 1조 목적">
+<h2>한국지방재정공제회법 1 목적</h2>
+<div class="box">제1조(목적) 이 법은 한국지방재정공제회를 설립하여 지방자치단체 등에 대한 효율적인 공제제도를 확립ㆍ운영함으로써 지방자치단체의 건전한 재정 운영과 지방재정 발전에 이바지함을 목적으로 한다.</div>
+<div class="meta"><a class="rdr" href="http://127.0.0.1:6155/reader?target=eflaw&mst=204784&name=한국지방재정공제회법&art=제1조" target="_blank">📖 대시보드 리더 (메모·회독)</a><a class="lawgo" href="https://www.law.go.kr/법령/한국지방재정공제회법/제1조" target="_blank">법제처</a></div>
+</article>
+
+<article data-t="공제회법 16조 사업 재해복구 영조물 손해배상 공제사업">
+<h2>한국지방재정공제회법 16 사업 <span class="tag must">핵심</span></h2>
+<div class="box">제16조(사업) ① 공제회는 그 목적을 달성하기 위하여 정관으로 정하는 바에 따라 다음 각 호의 사업을 한다. &lt;개정 2017.3.21&gt;
+1. <b class="hl">공유재산의 재해복구를 위한 공제사업</b>
+2. <b class="hl">영조물(營造物) 또는 업무수행으로 인한 손해배상 공제사업</b>
+3. 회원의 공공청사의 정비, 지역개발사업 등을 위한 융자사업
+4. 회원의 기금 위탁관리사업
+5. 회원의 지방재정 발전을 위한 지원사업
+6. 지방재정 관련 통계분석 검증 및 회계제도 연구 지원사업
+7. 주무관청 또는 회원으로부터 위탁받은 사업
+② 공제회는 그 목적을 달성하기 위하여 필요한 범위에서 수익사업을 할 수 있다.</div>
+<div class="meta">1호 = 재해복구공제, 2호 = 영조물배상공제 — 이번 수요조사 두 공제의 직접 근거 <a class="rdr" href="http://127.0.0.1:6155/reader?target=eflaw&mst=204784&name=한국지방재정공제회법&art=제16조" target="_blank">📖 대시보드 리더 (메모·회독)</a><a class="lawgo" href="https://www.law.go.kr/법령/한국지방재정공제회법/제16조" target="_blank">법제처</a></div>
+</article>
+
+<article data-t="공제회법 6조 회원 자격 지방자치단체">
+<h2>한국지방재정공제회법 6 회원의 자격</h2>
+<div class="box">제6조(회원의 자격) 공제회의 회원이 될 수 있는 자는 다음 각 호의 어느 하나에 해당하는 자로 한다.
+1. 특별시ㆍ광역시ㆍ도ㆍ특별자치도와 특별자치시ㆍ시ㆍ군ㆍ자치구
+2. 「지방자치법」에 따라 설립된 지방자치단체조합과 지방자치단체가 출연(出捐)하거나 출자한 법인
+3. 그 밖에 정관으로 정하는 자</div>
+<div class="meta">기장군은 1호의 '군'으로서 회원 <a class="rdr" href="http://127.0.0.1:6155/reader?target=eflaw&mst=204784&name=한국지방재정공제회법&art=제6조" target="_blank">📖 대시보드 리더 (메모·회독)</a><a class="lawgo" href="https://www.law.go.kr/법령/한국지방재정공제회법/제6조" target="_blank">법제처</a></div>
+</article>
+
+<article data-t="공제회법 7조 회원의 권리 의무 회비">
+<h2>한국지방재정공제회법 7 회원의 권리와 의무</h2>
+<div class="box">제7조(회원의 권리와 의무) ① 회원은 정관으로 정하는 바에 따라 공제회의 사업에 참가하고 이에 따른 모든 권익을 누릴 권리를 가진다.
+② 회원은 다음 각 호의 의무를 진다.
+1. 정관 및 규정과 총회의 의결사항을 준수할 의무
+2. 회비 납부 의무</div>
+<div class="meta"><a class="rdr" href="http://127.0.0.1:6155/reader?target=eflaw&mst=204784&name=한국지방재정공제회법&art=제7조" target="_blank">📖 대시보드 리더 (메모·회독)</a><a class="lawgo" href="https://www.law.go.kr/법령/한국지방재정공제회법/제7조" target="_blank">법제처</a></div>
+</article>
+
+<article data-t="공제회법 17조 규정 제정 행정안전부 협의">
+<h2>한국지방재정공제회법 17 규정의 제정 등</h2>
+<div class="box">제17조(규정의 제정 등) 공제회는 사업, 조직 및 인사, 임직원의 보수에 관한 규정을 정하거나 변경할 때에는 행정안전부장관과 협의하여야 한다. &lt;개정 2013.3.23, 2014.11.19, 2017.7.26&gt;</div>
+<div class="meta">영조물배상공제규정·재해복구공제규정 등 세부 약관의 적법성 근거 <a class="rdr" href="http://127.0.0.1:6155/reader?target=eflaw&mst=204784&name=한국지방재정공제회법&art=제17조" target="_blank">📖 대시보드 리더 (메모·회독)</a><a class="lawgo" href="https://www.law.go.kr/법령/한국지방재정공제회법/제17조" target="_blank">법제처</a></div>
+</article>
+</section>
+
+<section id="s_국배법"><h2 class="sec">Ⅱ. 국가배상법 — 영조물배상공제가 담보하는 책임 <span style="font-size:12px;color:var(--meta)">(법률 제20635호, 시행 2025.1.7.)</span></h2>
+
+<article data-t="국가배상법 5조 영조물 설치 관리 하자 책임">
+<h2>국가배상법 5 공공시설 등의 하자로 인한 책임 <span class="tag must">핵심</span></h2>
+<div class="box">제5조(공공시설 등의 하자로 인한 책임) ① 도로ㆍ하천, 그 밖의 공공의 영조물(營造物)의 <b class="hl">설치나 관리에 하자(瑕疵)가 있기 때문에 타인에게 손해를 발생하게 하였을 때에는 국가나 지방자치단체는 그 손해를 배상하여야 한다</b>. 이 경우 제2조제1항 단서, 제3조 및 제3조의2를 준용한다.
+② 제1항을 적용할 때 손해의 원인에 대하여 책임을 질 자가 따로 있으면 국가나 지방자치단체는 그 자에게 구상할 수 있다.</div>
+<div class="meta">과실 입증 없이도(하자만으로) 지자체가 지는 배상책임 — 영조물배상공제는 바로 이 책임을 담보 <a class="rdr" href="http://127.0.0.1:6155/reader?target=eflaw&mst=268079&name=국가배상법&art=제5조" target="_blank">📖 대시보드 리더 (메모·회독)</a><a class="lawgo" href="https://www.law.go.kr/법령/국가배상법/제5조" target="_blank">법제처</a></div>
+</article>
+
+<article data-t="국가배상법 2조 배상책임 공무원 직무">
+<h2>국가배상법 2 배상책임</h2>
+<div class="box">제2조(배상책임) ① 국가나 지방자치단체는 공무원 또는 공무를 위탁받은 사인(이하 "공무원"이라 한다)이 직무를 집행하면서 고의 또는 과실로 법령을 위반하여 타인에게 손해를 입히거나, 「자동차손해배상 보장법」에 따라 손해배상의 책임이 있을 때에는 이 법에 따라 그 손해를 배상하여야 한다. 다만, 군인ㆍ군무원ㆍ경찰공무원 또는 예비군대원이 전투ㆍ훈련 등 직무 집행과 관련하여 전사(戰死)ㆍ순직(殉職)하거나 공상(公傷)을 입은 경우에 본인이나 그 유족이 다른 법령에 따라 재해보상금ㆍ유족연금ㆍ상이연금 등의 보상을 지급받을 수 있을 때에는 이 법 및 「민법」에 따른 손해배상을 청구할 수 없다. &lt;개정 2009.10.21, 2016.5.29&gt;
+② 제1항 본문의 경우에 공무원에게 고의 또는 중대한 과실이 있으면 국가나 지방자치단체는 그 공무원에게 구상(求償)할 수 있다.
+③ 제1항 단서에도 불구하고 전사하거나 순직한 군인ㆍ군무원ㆍ경찰공무원 또는 예비군대원의 유족은 자신의 정신적 고통에 대한 위자료를 청구할 수 있다. &lt;신설 2025.1.7&gt;</div>
+<div class="meta">지자체 배상책임의 일반 조항 — 제5조가 이 조의 단서를 준용 <a class="rdr" href="http://127.0.0.1:6155/reader?target=eflaw&mst=268079&name=국가배상법&art=제2조" target="_blank">📖 대시보드 리더 (메모·회독)</a><a class="lawgo" href="https://www.law.go.kr/법령/국가배상법/제2조" target="_blank">법제처</a></div>
+</article>
+
+<article data-t="국가배상법 6조 비용부담자 책임 위임 도로">
+<h2>국가배상법 6 비용부담자 등의 책임</h2>
+<div class="box">제6조(비용부담자 등의 책임) ① 제2조ㆍ제3조 및 제5조에 따라 국가나 지방자치단체가 손해를 배상할 책임이 있는 경우에 공무원의 선임ㆍ감독 또는 영조물의 설치ㆍ관리를 맡은 자와 공무원의 봉급ㆍ급여, 그 밖의 비용 또는 영조물의 설치ㆍ관리 비용을 부담하는 자가 동일하지 아니하면 그 비용을 부담하는 자도 손해를 배상하여야 한다.
+② 제1항의 경우에 손해를 배상한 자는 내부관계에서 그 손해를 배상할 책임이 있는 자에게 구상할 수 있다.</div>
+<div class="meta">위임받아 관리하는 시설(국도 등)도 비용부담자로서 배상책임 — 담보 범위가 넓어지는 이유 <a class="rdr" href="http://127.0.0.1:6155/reader?target=eflaw&mst=268079&name=국가배상법&art=제6조" target="_blank">📖 대시보드 리더 (메모·회독)</a><a class="lawgo" href="https://www.law.go.kr/법령/국가배상법/제6조" target="_blank">법제처</a></div>
+</article>
+</section>
+
+<section id="s_민법"><h2 class="sec">Ⅲ. 민법 — 사경제 영역의 공작물 책임 <span style="font-size:12px;color:var(--meta)">(법률 제21454호, 시행 2026.3.17.)</span></h2>
+
+<article data-t="민법 758조 공작물 점유자 소유자 책임">
+<h2>민법 758 공작물등의 점유자, 소유자의 책임</h2>
+<div class="box">제758조(공작물등의 점유자, 소유자의 책임) ①공작물의 설치 또는 보존의 하자로 인하여 타인에게 손해를 가한 때에는 공작물점유자가 손해를 배상할 책임이 있다. 그러나 점유자가 손해의 방지에 필요한 주의를 해태하지 아니한 때에는 그 소유자가 손해를 배상할 책임이 있다.
+②전항의 규정은 수목의 재식 또는 보존에 하자있는 경우에 준용한다.
+③전2항의 경우 점유자 또는 소유자는 그 손해의 원인에 대한 책임있는 자에 대하여 구상권을 행사할 수 있다. &lt;개정 2022.12.13&gt;</div>
+<div class="meta">지자체가 사경제 주체로 소유·점유하는 시설(수익시설 등, 국가배상법 미적용 영역)의 책임 — 영조물배상공제 담보 범위에 포함 <a class="rdr" href="http://127.0.0.1:6155/reader?target=eflaw&mst=284415&name=민법&art=제758조" target="_blank">📖 대시보드 리더 (메모·회독)</a><a class="lawgo" href="https://www.law.go.kr/법령/민법/제758조" target="_blank">법제처</a></div>
+</article>
+</section>
+
+<section id="s_공유"><h2 class="sec">Ⅳ. 공유재산 및 물품 관리법·시행령 — 가입 "의무"의 근거 <span style="font-size:12px;color:var(--meta)">(법률 제19990호 / 대통령령 제36423호)</span></h2>
+
+<article data-t="공유재산법 시행령 4조 손해보험 공제계약 가입 의무 건물">
+<h2>공유재산법 시행령 4 손해보험 및 공제계약 <span class="tag must">가입 의무</span></h2>
+<div class="box">제4조(손해보험 및 공제계약) ①지방자치단체의 장은 다음 각 호의 공유재산에 대해서는 <b class="hl">손해보험이나 공제(共濟)에 가입하여야 한다</b>.
+1. <b class="hl">건물, 선박</b>
+2. 공유재산 대장에 기록된 가격이 1억원 이상인 것으로서 지방자치단체의 장이 중요하다고 인정하는 공작물ㆍ기계 및 기구
+② 지방자치단체가 제1항에 따라 손해보험 또는 공제에 가입한 재산을 사용허가 또는 대부를 하는 경우에는 유상(有償)ㆍ무상(無償) 여부에 관계없이 지방자치단체가 부담한 보험료나 공제금에 해당하는 금액을 그 사용허가 또는 대부를 받은 자에게 부과할 수 있다. &lt;개정 2014.7.7, 2022.4.20&gt;</div>
+<div class="meta">건물은 보험·공제 가입이 <b>의무</b>("가입하여야 한다") — 연내 준공 건물을 수요조사에서 빠뜨리면 무보험 상태로 의무 위반 소지 <a class="rdr" href="http://127.0.0.1:6155/reader?target=eflaw&mst=287071&name=공유재산 및 물품 관리법 시행령&art=제4조" target="_blank">📖 대시보드 리더 (메모·회독)</a><a class="lawgo" href="https://www.law.go.kr/법령/공유재산및물품관리법시행령/제4조" target="_blank">법제처</a></div>
+</article>
+
+<article data-t="공유재산법 3조 공무원 주의의무 선량한 관리자">
+<h2>공유재산 및 물품 관리법 3 관리 공무원의 주의의무</h2>
+<div class="box">제3조(공유재산 및 물품을 관리하는 공무원의 주의의무) 공유재산 및 물품의 관리에 관한 사무에 종사하는 공무원은 이 법과 그 밖의 공유재산 및 물품의 관리에 관한 법령 및 선량한 관리자의 주의의무를 준수하며 사무에 종사하여야 한다. &lt;개정 2021.4.20&gt;</div>
+<div class="meta">재해 위험에 대비한 공제 가입 = 선관주의의무의 이행 수단 <a class="rdr" href="http://127.0.0.1:6155/reader?target=eflaw&mst=258477&name=공유재산 및 물품 관리법&art=제3조" target="_blank">📖 대시보드 리더 (메모·회독)</a><a class="lawgo" href="https://www.law.go.kr/법령/공유재산및물품관리법/제3조" target="_blank">법제처</a></div>
+</article>
+
+<article data-t="공유재산법 3조의2 관리 처분 기본원칙">
+<h2>공유재산 및 물품 관리법 3의2 관리ㆍ처분의 기본원칙</h2>
+<div class="box">제3조의2(공유재산 및 물품 관리ㆍ처분의 기본원칙) 지방자치단체가 공유재산을 관리ㆍ처분하는 경우에는 다음 각 호의 원칙을 지켜야 한다.
+1. 해당 지방자치단체 전체의 이익에 맞도록 할 것
+2. 취득과 처분이 균형을 이룰 것
+3. 공공가치와 활용가치를 고려할 것
+4. 투명하고 효율적인 절차를 따를 것</div>
+<div class="meta"><a class="rdr" href="http://127.0.0.1:6155/reader?target=eflaw&mst=258477&name=공유재산 및 물품 관리법&art=제3조의2" target="_blank">📖 대시보드 리더 (메모·회독)</a><a class="lawgo" href="https://www.law.go.kr/법령/공유재산및물품관리법/제3조의2" target="_blank">법제처</a></div>
+</article>
+
+<article data-t="공유재산법 14조 관리 위임 재산관리관">
+<h2>공유재산 및 물품 관리법 14 공유재산의 관리와 사무의 위임</h2>
+<div class="box">제14조(공유재산의 관리와 사무의 위임) ① 지방자치단체의 장은 소관 공유재산을 관리ㆍ처분하되, 소속 공무원에게 위임하여 공유재산을 관리ㆍ처분하게 할 수 있고, 특별시장ㆍ광역시장 또는 도지사는 시장ㆍ군수 또는 구청장에게 위임하여 그 재산을 관리ㆍ처분하게 할 수 있다. &lt;개정 2021.4.20&gt;
+② 제1항에 따라 위임을 받은 공무원을 "재산관리관"이라 한다.
+③ 제1항에 따라 특별시장ㆍ광역시장 또는 도지사가 시장ㆍ군수 및 구청장에게 공유재산의 관리ㆍ처분에 관한 사무를 위임하여 집행하게 하는 경우에는 특별시ㆍ광역시 또는 도는 그 사무에 드는 경비를 보전(補塡)하게 하기 위하여 대통령령으로 정하는 금액을 해당 시ㆍ군 및 자치구에 귀속시켜야 한다. &lt;신설 2010.2.4, 2021.4.20&gt;</div>
+<div class="meta">공제 가입을 실행하는 주체(지자체장·재산관리관)의 근거 <a class="rdr" href="http://127.0.0.1:6155/reader?target=eflaw&mst=258477&name=공유재산 및 물품 관리법&art=제14조" target="_blank">📖 대시보드 리더 (메모·회독)</a><a class="lawgo" href="https://www.law.go.kr/법령/공유재산및물품관리법/제14조" target="_blank">법제처</a></div>
+</article>
+</section>
+
+<section id="s_유의"><h2 class="sec">⚠ 유의사항</h2>
+
+<article data-t="건물 가입 의무 감사">
+<h2>① 건물은 "선택"이 아니라 "의무"</h2>
+<div class="box">공유재산법 시행령 제4조①1호: 건물·선박은 손해보험이나 공제에 <b>가입하여야 한다</b>(기속). 연내 준공 건물을 수요조사에서 누락 → 무보험 공백 → 그 사이 화재·사고가 나면 복구비 전액 자체 부담 + 가입 의무 위반 감사 지적까지 이중 리스크.</div>
+</article>
+
+<article data-t="회비 미납 보상 제외">
+<h2>② 회비 미납 시 보상 제외</h2>
+<div class="box">수시등록분 회비는 등록 다음달 말일까지 납부해야 하며, 미납 상태의 사고는 보상에서 제외됩니다. 가입 신청 후 지출 품의(공공운영비)까지 한 세트로 처리할 것.</div>
+</article>
+
+<article data-t="사용허가 대부 보험료 부과 전가">
+<h2>③ 임대(사용허가·대부) 중인 시설의 보험료는 사용자에게 부과 가능</h2>
+<div class="box">시행령 제4조②: 보험·공제 가입 재산을 사용허가·대부하는 경우 유상·무상 불문 지자체가 부담한 보험료·공제금 해당액을 사용자에게 부과할 수 있음 — 구내식당·매점 등 임대 시설이 있으면 활용.</div>
+</article>
+
+<article data-t="공제금 비례 감액 재조달가액 등록금액">
+<h2>④ 등록금액을 낮게 잡으면 공제금이 비례 감액된다</h2>
+<div class="box">재해복구공제 공제금 = 손해액 × (등록금액 ÷ 재조달가액의 80%). 준공 시설의 재조달가액(신축 공사비 기준)을 정확히 적어야 실제 손해액만큼 보상받음 — 수요조사 서식의 금액란을 대충 쓰면 사고 때 손해.</div>
+</article>
+</section>
+
+</div>
+<script>
+const root=document.documentElement;
+if(localStorage.getItem('sntheme')==='dark') root.classList.add('dark');
+function toggleTheme(){root.classList.toggle('dark');localStorage.setItem('sntheme',root.classList.contains('dark')?'dark':'light');}
+const q=document.getElementById('q');
+q.addEventListener('input',()=>{
+  const t=q.value.trim().toLowerCase(); let any=false;
+  document.querySelectorAll('[data-t]').forEach(el=>{const hit=!t||el.getAttribute('data-t').toLowerCase().includes(t)||el.textContent.toLowerCase().includes(t);el.classList.toggle('hidden',!hit);if(hit)any=true;});
+  document.querySelectorAll('section').forEach(s=>{const vis=s.querySelectorAll('[data-t]:not(.hidden)').length;s.classList.toggle('hidden',t&&!vis);});
+  document.getElementById('empty').style.display=(t&&!any)?'block':'none';
+});
+const links=[...document.querySelectorAll('#side a')];
+const secs=links.map(a=>document.getElementById(a.dataset.sec));
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.toggle('active',l.dataset.sec===e.target.id));}})},{rootMargin:'-40% 0px -55% 0px'});
+secs.forEach(s=>s&&io.observe(s));
+</script></body></html>
