@@ -1030,6 +1030,11 @@ details.precGroup>summary{font-size:12px;font-weight:700;color:#344054;cursor:po
 .precConf{font-size:10px;color:#667085;margin-left:4px}
 .precJoBadge{display:inline-block;margin-left:8px;font-size:11px;font-weight:700;color:#1a56db;background:#eaf0ff;border:1px solid #c7d7fe;border-radius:10px;padding:0 7px;cursor:pointer;vertical-align:middle}
 .precJoBadge:hover{background:#1a56db;color:#fff}
+/* 판례 본문 가독화 */
+.unit.level-판례{line-height:1.95;letter-spacing:.1px}
+.unit.level-판례 br+br{content:'';display:block;margin-top:2px}
+.precNum{display:inline-block;font-weight:800;color:#1a56db;background:#eaf0ff;border-radius:6px;padding:0 7px;margin:2px 4px 2px 0}
+.precCite{color:#6941c6;background:#f6f2ff;border-radius:4px;padding:0 3px}
 .yegyuBadge{display:inline-block;margin-left:6px;font-size:11px;font-weight:700;color:#0a7d55;background:#e7f7ef;border:1px solid #b8e6d0;border-radius:10px;padding:0 7px;cursor:pointer;vertical-align:middle}
 .yegyuBadge:hover,.yegyuBadge.on{background:#0a7d55;color:#fff}
 .yegyuBox{margin:6px 0 10px;border-left:3px solid #0a7d55;background:#f2fbf7;border-radius:0 8px 8px 0;padding:8px 12px}
@@ -1896,7 +1901,9 @@ function renderPaneBody(n){
         const links=state.linkGraph[key]||[];
         const isSrc=state.linkSource&&state.linkSource.key===key;
         const chips=links.length?`<div class="linkedBox">${links.map((l,li)=>`<button class="linkedChip" onclick="event.stopPropagation();openManualLink('${enc(key)}',${li})">↔ ${esc(l.label||'연결')}</button>`).join('')}</div>`:'';
-        return `<div class="unit level-${esc(s.level)} ${unitKey(s)===p.selectedKey?'selected':''}" id="pane${n}-unit-${ai}-${si}" onclick="selectUnit(${n},${ai},${si})"><input type="checkbox" class="unitCheck" data-ai="${ai}" data-si="${si}" title="이 항/호/목 선택" onclick="event.stopPropagation()" onchange="onUnitCheck(${n},${ai},${si})"><span class="unitLabel">${esc(s.level)}</span>${convOn?esc(hjMix(s.text,convMap)):renderUnitText(s.text, a.links, hasFind?find:terms())}${chips}</div>`;
+        let inner=convOn?esc(hjMix(s.text,convMap)):renderUnitText(s.text, a.links, hasFind?find:terms());
+        if(s.level==='판례'&&(s.text||'').length>300)inner=precReadable(inner);
+        return `<div class="unit level-${esc(s.level)} ${unitKey(s)===p.selectedKey?'selected':''}" id="pane${n}-unit-${ai}-${si}" onclick="selectUnit(${n},${ai},${si})"><input type="checkbox" class="unitCheck" data-ai="${ai}" data-si="${si}" title="이 항/호/목 선택" onclick="event.stopPropagation()" onchange="onUnitCheck(${n},${ai},${si})"><span class="unitLabel">${esc(s.level)}</span>${inner}${chips}</div>`;
       }).join('')}
     </section>`;
   });
@@ -1942,6 +1949,22 @@ function toggleHanja(n){
   else{renderPaneBody(n);}
 }
 function hjLawKey(row){return [(row&&row.law_id)||'',(row&&row.mst)||''].join('|');}
+/* 판례 본문 가독화(표시 전용): 문장('…다.') 단위 줄바꿈 + 쟁점번호·판례인용 강조.
+   이미 이스케이프된 안전한 html 문자열을 받아 <br>/<span>만 삽입한다. 원본 데이터 불변. */
+function precReadable(html){
+  if(!html) return html;
+  let t=String(html);
+  t=t.replace(/(다\.)(&quot;|")?\s+(?=[^\s])/g,(m,a,q)=>a+(q||'')+'<br><br>');   // 문장 경계
+  t=t.replace(/(^|<br><br>)(\d{1,2}\.\s*)(제\d+,?\s*\d*점|상고이유|결론)?/g,
+    (m,pre,num,rest)=>pre+'<span class="precNum">'+num+(rest||'')+'</span>');      // 쟁점 번호
+  t=t.replace(/\(\s*((?:당원|대법원|헌법재판소|서울고등법원|조세심판원)[^()<]{0,80}?(?:판결|결정)[^()<]{0,10}?)\)/g,
+    '(<span class="precCite">$1</span>)');                                          // 판례 인용
+  // 만연체 완화: 인용 괄호 뒤 쉼표, 담화 표지 앞에서 줄 나눔(표시만)
+  t=t.replace(/(<\/span>\)[,、])\s+/g,'$1<br>');
+  t=t.replace(/([,)])\s+(그러나|따라서|한편|또한|나아가|살피건대|그렇다면|그러므로|이와\s*같이)\s/g,'$1<br>$2 ');
+  t=t.replace(/(하였으나,|하였는바,|것인바,|배척하였는바,|인정한 다음,|승인을 받은 다음|주장에 대하여,|의하면,)\s*/g,'$1<br>');
+  return t;
+}
 function hjMixWord(text){if(!text||!state.hanjaRe)return text||'';state.hanjaRe.lastIndex=0;return text.replace(state.hanjaRe,m=>(state.hanjaDict&&state.hanjaDict[m])||m);}
 function hjMix(text,convMap){if(convMap){if(convMap[text]!=null)return convMap[text];if(text&&text.normalize){const nf=text.normalize('NFC');if(nf!==text&&convMap[nf]!=null)return convMap[nf];}}return hjMixWord(text);}
 async function reqHanjaConvert(n){
