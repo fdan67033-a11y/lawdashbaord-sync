@@ -305,8 +305,39 @@ function pushRecent(row){
   a=a.filter(x=>!(x.mst===row.mst&&x.target===row.target));
   a.unshift({target:row.target,law_id:row.law_id,mst:row.mst,name:row.name,label:row.target_label||'',ts:Date.now()});
   localStorage.mob_recent=JSON.stringify(a.slice(0,40));
+  syncRecents(true);                                   // 서버에도 반영(폰·PC 공유)
 }
 function recents(){try{return JSON.parse(localStorage.mob_recent||'[]')}catch(e){return[]}}
+/* 최근 목록을 서버(ui_state)와 병합 동기화 — 기기별 localStorage 한계 극복 */
+let _recSyncBusy=false;
+async function syncRecents(push){
+  if(_recSyncBusy)return recents();
+  _recSyncBusy=true;
+  try{
+    const d=await api('/api/ui_state/mob_recent',{});
+    const server=((d&&d.data)||{}).items||[];
+    const local=recents();
+    const key=x=>(x.target||'')+'|'+(x.mst||'')+'|'+(x.law_id||'');
+    const map={};
+    server.concat(local).forEach(x=>{const k=key(x);if(!map[k]||(x.ts||0)>(map[k].ts||0))map[k]=x;});
+    const merged=Object.values(map).sort((a,b)=>(b.ts||0)-(a.ts||0)).slice(0,40);
+    localStorage.mob_recent=JSON.stringify(merged);
+    if(push||merged.length!==server.length){
+      fetch('/api/ui_state/mob_recent',{method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({items:merged})}).catch(()=>{});
+    }
+    return merged;
+  }catch(e){return recents();}
+  finally{_recSyncBusy=false;}
+}
+function timeAgo(ts){
+  if(!ts)return '';
+  const s=(Date.now()-ts)/1000;
+  if(s<3600)return Math.max(1,Math.round(s/60))+'분 전';
+  if(s<86400)return Math.round(s/3600)+'시간 전';
+  if(s<86400*2)return '어제';
+  return Math.round(s/86400)+'일 전';
+}
 
 /* ============================ 열기 동작 ============================ */
 const TL={prec:'판례',eflaw:'법령',law:'법령',ttSpecialDecc:'조심결정',expc:'해석례',admrul:'행정규칙',ordin:'자치법규',detc:'헌재'};
@@ -373,7 +404,7 @@ function jumpArticle(jo){
 const TGT=[['prec','판례'],['eflaw','법령'],['ttSpecialDecc','조심결정'],['expc','해석례']];
 let curTgt=localStorage.mob_tgt||'prec';
 function homeHtml(){
-  const rc=recents().slice(0,5);
+  const rc=recents().slice(0,12);
   return `<div class="wrap">
     <div style="height:8px"></div>
     <input id="q" placeholder="사건번호·법령명·키워드  (예: 96누8321, 지방세법)" value="${esc(S.q||'')}"
@@ -381,7 +412,11 @@ function homeHtml(){
     <div class="chips">${TGT.map(([k,v])=>`<button class="chip ${k===curTgt?'on':''}" onclick="setTgt('${k}')">${v}</button>`).join('')}
       <button class="chip ${bodySearch?'on':''}" onclick="toggleBodySearch(this)" id="bodyChip">본문검색</button></div>
     <div id="hits"></div>
-    ${rc.length?`<h2 class="sec">최근 본 문서</h2>`+rc.map(r=>hitCard(r)).join(''):''}
+    ${rc.length?`<div style="display:flex;align-items:baseline;justify-content:space-between;margin-top:20px">
+        <h2 class="sec" style="margin:0 2px">최근 본 문서</h2>
+        <button class="chip" style="min-height:32px" onclick="navTo('recent')">전체 보기 →</button></div>`
+      +rc.map(r=>hitCard(r)).join('')
+      :`<div class="empty" id="recEmpty">문서를 열면 여기에 최근 본 판례·법령이 쌓입니다.<br><span class="mini">PC 대시보드 모바일과 목록이 공유됩니다.</span></div>`}
     <div class="mini" style="text-align:center;margin-top:26px">법제처 대시보드 모바일 · 같은 노트·데이터를 씁니다</div>
   </div>`;
 }
@@ -396,7 +431,8 @@ function hitCard(x){
     <div class="m"><span class="badge ${badgeCls(tg)}">${TL[tg]||tg}</span>
       ${x.promulgation_no?`<span>${esc(x.promulgation_no)}</span>`:''}
       ${x.effective_date?`<span>${esc(x.effective_date)}</span>`:''}
-      ${x.department?`<span>${esc(x.department)}</span>`:''}</div></div>`;
+      ${x.department?`<span>${esc(x.department)}</span>`:''}
+      ${x.ts?`<span style="margin-left:auto">${timeAgo(x.ts)}</span>`:''}</div></div>`;
 }
 async function doSearch(){
   if($('load').style.display==='flex')return;              // 로딩 중 재진입 차단
@@ -590,6 +626,7 @@ try{history.scrollRestoration='manual';}catch(e){}
 S.stack=[{type:'home'}];
 history.replaceState({i:1},'','#1');
 render();
+syncRecents().then(m=>{const sc=screen();if(sc&&sc.type==='home'&&m.length&&!document.querySelector('#hits .hit'))render();});
 </script>
 </body>
 </html>
