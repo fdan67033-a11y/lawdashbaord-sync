@@ -66,9 +66,20 @@
   .unit{position:relative;padding:4px 44px 4px 10px;border-left:3px solid transparent;
     border-radius:7px;cursor:pointer;font-size:var(--fs);white-space:pre-wrap;word-break:break-word;
     transition:background .12s}
+  .lawFormulaImg{display:block;max-width:100%;margin:8px 0;padding:8px 10px;background:#fff;border:1px solid rgba(0,0,0,.12);border-radius:8px}
   .unit:hover{background:var(--sel)}
   .unit.selected{background:var(--sel);border-left-color:var(--accent)}
   .unit .unitLabel{display:none}
+  /* 행정규칙 별표: HWP 서식 텍스트라 전각:반각=2:1 고정폭(굴림체 계열)이어야 괘선이 맞고,
+     세로 괘선(│)이 끊기지 않으려면 줄 간격을 글자 높이에 붙여야 합니다 */
+  .unit.level-별표{font-family:"GulimChe","굴림체","DotumChe","돋움체","D2Coding",monospace;
+    font-size:calc(var(--fs)*.72);line-height:1.08;letter-spacing:0;
+    white-space:pre;overflow-x:auto;word-break:normal;cursor:default;
+    background:rgba(0,0,0,.025);border-radius:8px;padding:10px 14px}
+  html[data-theme="dark"] .unit.level-별표{background:rgba(255,255,255,.04)}
+  .bylBtn{font-family:system-ui,sans-serif;font-size:.7rem;color:var(--accent2);border:1px solid var(--accent2);
+    border-radius:999px;padding:1px 9px;text-decoration:none;margin-left:6px;white-space:nowrap;opacity:.9}
+  .bylBtn:hover{background:var(--accent2);color:#fff}
   .unit.level-항{margin-left:.6em}
   .unit.level-호{margin-left:1.5em;font-size:calc(var(--fs) - 1px)}
   .unit.level-목{margin-left:2.4em;font-size:calc(var(--fs) - 1px)}
@@ -431,8 +442,14 @@ function unitPartOf(s){ return [s.article||'',s.paragraph||'',s.ho||'',s.mok||''
 
 /* 이미 esc된 문자열에 본문 인용 링크(refLink) 삽입 — 대시보드 renderUnitText와 동일한 규칙 */
 const REF_SPLIT=/(<a\b[^>]*>[^<]*<\/a>)/;
+function lawImgHtml(h){
+  // 법제처 본문의 <img src="…flDownload…">(괘선문자 fallback)</img>를 실제 이미지로 렌더(대시보드와 동일 규칙).
+  return h
+    .replace(/&lt;img src=&quot;(.+?)&quot;(.*?)&gt;([\s\S]*?)&lt;\/img&gt;/g,(m,src)=>`<img class="lawFormulaImg" src="${src.replace(/&amp;/g,'&').replace(/^http:/,'https:')}" alt="계산식 이미지" loading="lazy">`)
+    .replace(/&lt;img src=&quot;(.+?)&quot;(.*?)&gt;/g,(m,src)=>`<img class="lawFormulaImg" src="${src.replace(/&amp;/g,'&').replace(/^http:/,'https:')}" alt="계산식 이미지" loading="lazy">`);
+}
 function renderUnitText(text, links){
-  let h=esc(text||'');
+  let h=lawImgHtml(esc(text||''));
   if(links&&links.length){
     for(const lk of links){
       const needle=esc(lk.text||''); if(!needle)continue;
@@ -482,8 +499,10 @@ function render(norm, notesByArt){
     }).join('');
     const notes = (notesByArt[key]||notesByArt[num]||[]);
     const notesHtml = notes.length ? `<div class="notes">${notes.map(noteCard).join('')}</div>` : '';
+    const bylBtns = (a.annex_pdf?`<a class="bylBtn" href="${esc(a.annex_pdf)}" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="법제처 서식 원본(PDF)">📄 PDF 원본</a>`:'')
+      + (a.annex_hwp?`<a class="bylBtn" href="${esc(a.annex_hwp)}" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="법제처 서식 원본(HWP)">HWP</a>`:'');
     return `<article id="art-${ai}" data-art="${num}" data-artkey="${esc(key)}">
-      <div class="art-h"><span class="art-no">${num}</span><span class="art-ti">${a.title?esc(a.title):''}</span>
+      <div class="art-h"><span class="art-no">${num}</span><span class="art-ti">${a.title?esc(a.title):''}</span>${bylBtns}
         <span class="art-prec" id="artprec-${ai}" style="display:none" onclick="event.stopPropagation();gotoPrecFor(${ai})"></span></div>
       ${segHtml}
       ${notesHtml}

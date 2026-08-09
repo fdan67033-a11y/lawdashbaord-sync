@@ -11,7 +11,7 @@ import time
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Tuple
-from urllib.parse import urlencode
+from urllib.parse import urlencode, quote
 from concurrent.futures import ThreadPoolExecutor
 
 import requests
@@ -20,7 +20,7 @@ try:
 except Exception:  # python-dotenv가 없어도 실행되도록 처리
     def load_dotenv(*args: Any, **kwargs: Any) -> None:
         return None
-from flask import Flask, Response, jsonify, request, send_file, send_from_directory
+from flask import Flask, Response, jsonify, redirect, request, send_file, send_from_directory
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 
@@ -1335,6 +1335,127 @@ def normalize_detail(data: Dict[str, Any]) -> Dict[str, Any]:
     return {"metadata": metadata, "articles": articles, "segments": all_segments, "addenda_count": len(addenda), "annexes": annex_list, "raw": root}
 
 
+def _admrul_flat_text(v: Any) -> str:
+    """행정규칙의 조문내용·별표내용은 문자열/리스트/중첩리스트가 섞여 내려옵니다.
+    줄 단위로 평탄화해 하나의 본문 텍스트로 만듭니다."""
+    if isinstance(v, (list, tuple)):
+        return "\n".join(_admrul_flat_text(x) for x in v if x not in (None, ""))
+    return str(v or "").rstrip()
+
+
+_HANG_BREAK_RE = re.compile(r"[ \t]*(?=[①-⑳㉑-㉟㊱-㊿])")
+
+
+def _admrul_hang_break(text: str) -> str:
+    """행정규칙 조문은 항(①②…)이 한 줄에 붙어 내려오므로,
+    항 기호 앞에서 줄을 바꿔 읽기 쉽게 만듭니다(첫 항 포함)."""
+    out = _HANG_BREAK_RE.sub("\n", text)
+    return re.sub(r"\n{2,}", "\n", out).strip()
+
+
+def normalize_admrul_detail(data: Dict[str, Any]) -> Dict[str, Any]:
+    """행정규칙(훈령·예규) 상세 JSON 정규화.
+    AdmRulService에는 법령의 조문단위가 없고 '조문내용' 문자열 목록과
+    별표단위만 내려오므로, 제n조 표제 기준으로 articles를 만들고
+    별표는 level='별표' 세그먼트(리더에서 고정폭 글꼴 표시)로 붙입니다."""
+    root = data.get("AdmRulService") if isinstance(data.get("AdmRulService"), dict) else data
+    if not isinstance(root, dict):
+        root = {}
+    basic = root.get("행정규칙기본정보") if isinstance(root.get("행정규칙기본정보"), dict) else {}
+    metadata = {
+        "law_name": pick(basic, "행정규칙명", "행정규칙명한글"),
+        "effective_date": normalize_date(pick(basic, "시행일자", "발령일자")),
+        "revision_type": pick(basic, "제개정구분명", "제개정구분", "행정규칙종류"),
+        "department": pick(basic, "소관부처명", "담당부서기관명", "발령기관명"),
+    }
+
+    articles: List[Dict[str, Any]] = []
+
+    def _push_header(title: str) -> None:
+        articles.append({"number": "", "jo": "", "title": title, "effective_date": "",
+                         "changed": "", "body": "", "segments": [], "is_header": True})
+
+    def _push_article(number: str, title: str, text: str, level: str = "조") -> None:
+        articles.append({
+            "number": number, "jo": "", "title": title, "effective_date": "", "changed": "",
+            "body": text,
+            "segments": [{"level": level, "article": number, "paragraph": "", "ho": "", "mok": "", "text": text}],
+        })
+
+    jo_items = root.get("조문내용")
+    if isinstance(jo_items, str):
+        jo_items = [jo_items]
+    art_re = re.compile(r"^\s*(제\d+조(?:의\d+)?)\s*(?:\(([^)]*)\))?")
+    hdr_re = re.compile(r"^\s*제\d+(?:장|절|관|편)\b")
+    for item in (jo_items or []):
+        text = _admrul_flat_text(item).strip()
+        if not text:
+            continue
+        m = art_re.match(text)
+        if m:
+            _push_article(m.group(1), m.group(2) or "", _admrul_hang_break(text))
+        elif hdr_re.match(text) and len(text) < 60:
+            _push_header(text)
+        elif articles and not articles[-1].get("is_header"):
+            # 조문 표제 없이 이어지는 줄은 직전 조문에 붙입니다.
+            articles[-1]["body"] += "\n" + _admrul_hang_break(text)
+            if articles[-1]["segments"]:
+                articles[-1]["segments"][0]["text"] = articles[-1]["body"]
+        else:
+            _push_header(text)
+
+    # 부칙: 여러 건이면 건별로 나눠 붙입니다.
+    buchick = root.get("부칙")
+    if isinstance(buchick, dict):
+        bodies = buchick.get("부칙내용")
+        if isinstance(bodies, str):
+            bodies = [bodies]
+        for b in (bodies or []):
+            text = _admrul_flat_text(b).strip()
+            if text:
+                _push_article("부칙", "", _admrul_hang_break(text))
+
+    # 별표: 본문 아래에 별표 단위로 붙입니다.
+    annex_list: List[Dict[str, str]] = []
+    annexes = find_all_by_key(root, "별표단위")
+    if annexes:
+        _push_header("별  표")
+    for a in annexes:
+        if not isinstance(a, dict):
+            continue
+        no_raw = re.sub(r"\D", "", pick(a, "별표번호")) or "0"
+        gaji = re.sub(r"\D", "", pick(a, "별표가지번호")) or "0"
+        label = "별표 " + str(int(no_raw)) + ("의" + str(int(gaji)) if int(gaji) else "")
+        title = pick(a, "별표제목", "별표제목문자열", "별표첨부파일명", "제목")
+        text = _admrul_flat_text(a.get("별표내용")).strip()
+        # 법제처 변환 단계에서 깨진 특수문자 보정: '??'는 도장 자리, 한글 사이 '?'는 가운뎃점으로 추정 표시
+        text = text.replace("??", "㊞")
+        text = re.sub(r"(?<=[가-힣])\?(?=[가-힣])", "ㆍ", text)
+        pdf = pick(a, "별표서식PDF파일링크", "별표PDF파일링크")
+        hwp = pick(a, "별표서식파일링크", "별표HWP파일링크", "별표파일링크")
+        if pdf.startswith("/"):
+            pdf = "https://www.law.go.kr" + pdf
+        if hwp.startswith("/"):
+            hwp = "https://www.law.go.kr" + hwp
+        _push_article("[" + label + "]", title, text or "(별표 본문 없음 — 서식 파일 참조)", level="별표")
+        # 서식 원본(법제처 PDF/HWP) 링크 — 리더에서 버튼으로 표시합니다.
+        articles[-1]["annex_pdf"] = pdf
+        articles[-1]["annex_hwp"] = hwp
+        annex_list.append({
+            "title": title,
+            "hwp": hwp,
+            "pdf": pdf,
+            "body": "",
+            "file_name": pick(a, "별표첨부파일명", "파일명"),
+        })
+
+    all_segments2: List[Dict[str, str]] = []
+    for a in articles:
+        all_segments2.extend(a.get("segments", []))
+    return {"metadata": metadata, "articles": articles, "segments": all_segments2,
+            "addenda_count": 0, "annexes": annex_list, "raw": root}
+
+
 def split_terms(query: str) -> List[str]:
     # 공백은 OR 검색 기준입니다. 따옴표 구문까지는 지원하지 않고, 입력 토큰을 그대로 완전일치 단어로 봅니다.
     return [t for t in re.split(r"\s+", str(query or "").strip()) if t]
@@ -2511,7 +2632,14 @@ def get_detail_payload(target: str, law_id: str, mst: str, efyd: str, jo: str, r
         if isinstance(data, dict) and "raw" in data and str(params.get("type", "")).upper() == "HTML":
             result["normalized"] = normalize_html_detail(str(data.get("raw", "")), target, law_id, mst)
         else:
-            result["normalized"] = normalize_detail(data if isinstance(data, dict) else {})
+            if api_target == "admrul":
+                # v20.1: 행정규칙은 조문단위가 없어 일반 정규화가 실패하고
+                # 원본 JSON 덤프로 떨어지던 문제를 전용 정규화로 해결합니다.
+                result["normalized"] = normalize_admrul_detail(data if isinstance(data, dict) else {})
+                if not has_article_text(result["normalized"]):
+                    result["normalized"] = normalize_detail(data if isinstance(data, dict) else {})
+            else:
+                result["normalized"] = normalize_detail(data if isinstance(data, dict) else {})
         if has_article_text(result["normalized"]):
             return result
         # 별표만 있더라도 마지막 fallback용으로 보관합니다.
@@ -2991,6 +3119,59 @@ def index() -> Response:
     return _serve_light_zoom_index()
 
 
+@app.route("/open")
+def open_deeplink():
+    """외부 문서(학습 HTML 리더 등)용 범용 딥링크. 노트를 남길 수 있도록
+    law.go.kr 대신 대시보드 뷰어로 연다.
+      /open?law=지방세법&jo=제20조   → 현행법령을 컴팩트 창으로 열고 해당 조문으로 점프
+      /open?case=2013두2778          → 판례DB에서 사건번호를 찾아 판례 본문을 연다
+    해석 실패 시에만 law.go.kr로 폴백한다."""
+    case = (request.args.get("case") or "").strip()
+    law = (request.args.get("law") or "").strip()
+    jo = (request.args.get("jo") or "").strip()
+    row = None
+    if case:
+        con = _prec_con()
+        if con is not None:
+            try:
+                norm = case.replace(" ", "")
+                r = con.execute(
+                    "SELECT prec_id, case_no, case_name FROM precedent "
+                    "WHERE REPLACE(case_no,' ','') LIKE ? ORDER BY decided DESC LIMIT 1",
+                    (f"%{norm}%",),
+                ).fetchone()
+                if r is not None:
+                    row = {"target": "prec", "law_id": r["prec_id"], "mst": r["prec_id"],
+                           "name": f"{r['case_no']} {r['case_name'] or ''}".strip(),
+                           "target_label": "판례"}
+            finally:
+                con.close()
+        if row is None:
+            return redirect("https://www.law.go.kr/precSc.do?menuId=7&subMenuId=47&query=" + quote(case))
+    elif law:
+        result = search_one_target("eflaw", law, "1", "15", "1", False)
+        items = ((result.get("normalized") or {}).get("items") or []) if result.get("ok") else []
+        best = None
+        for it in items:
+            if str(it.get("name") or "").replace(" ", "") == law.replace(" ", ""):
+                best = it
+                break
+        best = best or (items[0] if items else None)
+        if best is not None:
+            row = {"target": best.get("target") or "eflaw", "law_id": str(best.get("law_id") or ""),
+                   "mst": str(best.get("mst") or ""), "name": best.get("name") or law,
+                   "effective_date": str(best.get("effective_date") or ""),
+                   "target_label": best.get("target_label") or "현행법령"}
+            if jo:
+                row["match"] = {"article_number": jo}
+        else:
+            return redirect("https://www.law.go.kr/" + quote("법령") + "/" + quote(law)
+                            + (("/" + quote(jo)) if jo else ""))
+    if row is None:
+        return redirect("/")
+    return redirect("/?openrow=" + quote(json.dumps(row, ensure_ascii=False)))
+
+
 @app.route("/api/config")
 def api_config() -> Response:
     return jsonify({
@@ -3107,8 +3288,75 @@ def api_article_prec_counts() -> Response:
 # ---------------------------------------------------------------------------
 # olta(질의응답+지방세상담) ↔ 조문 연결 (build_olta_index.py 가 만든 article_olta/olta_post)
 # ---------------------------------------------------------------------------
+# 크롤 텍스트는 get_text("\n") 방식이라 원문 인라인 태그(법령 인용 토큰: 제/7/조/괄호 등)
+# 경계마다 줄바꿈이 들어가 있음 → DB 원본은 그대로 두고 표시 직전에 문장으로 재결합한다.
+_ORF_OPEN = "(「『[{<‘“"          # 여는 괄호·따옴표: 뒤 줄바꿈 무공백 결합
+_ORF_CLOSE = ")」』]}>’”,.·;:!?%~"  # 닫는 괄호·문장부호: 앞 줄바꿈 무공백 결합
+_ORF_LIST = re.compile(r"^(\d{1,3}\s*[.)]\s|[①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳㉑㉒㉓㉔㉕]"
+                       r"|[-•*※▶▷◆□■○◦☞]|[가나다라마바사아자차카타파하]\s*[.)]\s)")
+_ORF_UNIT = re.compile(r"^(조의\s*\d|조제|[조항호목편장절관년월일억만천원명건회차퍼])")
+_ORF_JOSA = re.compile(r"^(으로|이라|부터|까지|[가이을를은는과와의에로라란만도])([\s,.]|[가-힣]|$)")
+_ORF_SENT_END = ".?!:;。"
+
+
+def _orf_join(prev: str, cur: str) -> Optional[str]:
+    """prev·cur 줄 사이 줄바꿈 처리: None=유지, ''=무공백 결합, ' '=공백 결합."""
+    p, c = prev[-1], cur[0]
+    if p in _ORF_OPEN:
+        return ""
+    if _ORF_LIST.match(cur):  # 번호 목록·항 기호는 새 줄 유지
+        return None
+    if c in _ORF_CLOSE:
+        return ""
+    if c in "\"'":
+        # 따옴표: 현재 문단 내 개수 홀수면 닫는 것 → 무공백, 짝수면 여는 것 → 공백
+        return "" if prev.count(c) % 2 == 1 else " "
+    if p in "\"'":
+        if prev.count(p) % 2 == 1:  # 방금 연 따옴표
+            return ""
+        return "" if _ORF_JOSA.match(cur) else " "
+    if p == "제" or prev.endswith("조제") or prev.endswith("조의"):
+        return ""
+    if p.isdigit() and _ORF_UNIT.match(cur):
+        return ""
+    if c == "(" and p not in _ORF_SENT_END:
+        return ""
+    if p in _ORF_CLOSE and _ORF_JOSA.match(cur):
+        return ""
+    if re.search(r"(^|\s)\d{1,3}[.)]$", prev):  # 줄 끝 목록 번호는 내용과 결합
+        return " "
+    if p in _ORF_SENT_END:
+        return None
+    if len(prev) <= 12 or len(cur) <= 12:  # 짧은 조각 = 끊긴 인라인 토큰
+        return " "
+    return None
+
+
+def _olta_reflow(t: Optional[str]) -> str:
+    """olta 크롤 텍스트의 조각난 줄바꿈을 표시용으로 재결합."""
+    if not t or "\n" not in t:
+        return t or ""
+    out: List[str] = []
+    for ln in (s.strip() for s in t.split("\n")):
+        if not ln:
+            if out and out[-1] != "":
+                out.append("")
+            continue
+        if not out or out[-1] == "":
+            out.append(ln)
+            continue
+        sep = _orf_join(out[-1], ln)
+        if sep is None:
+            out.append(ln)
+        else:
+            out[-1] = out[-1] + sep + ln
+    while out and out[-1] == "":
+        out.pop()
+    return "\n".join(out)
+
+
 def _olta_card(r: sqlite3.Row) -> Dict[str, Any]:
-    snip = (r["attach_text"] or r["body_text"] or "")
+    snip = _olta_reflow(r["attach_text"] or r["body_text"] or "")
     snip = re.sub(r"\s+", " ", snip).strip()[:160]
     return {
         "board": r["board"], "ntt_id": r["ntt_id"], "category": r["category"],
@@ -3197,11 +3445,15 @@ def api_olta_post() -> Response:
         answers = json.loads(r["answers_json"] or "[]")
     except Exception:
         answers = []
+    for a in answers:
+        if isinstance(a, dict) and a.get("text"):
+            a["text"] = _olta_reflow(a["text"])
     return jsonify({"ok": True, "board": r["board"], "ntt_id": r["ntt_id"],
                     "board_label": "질의응답" if r["board"] == "qa" else "지방세상담",
                     "category": r["category"], "title": r["title"], "author": r["author"],
                     "created_at": r["created_at"], "answer_count": r["answer_count"],
-                    "body_text": r["body_text"], "attach_text": r["attach_text"], "answers": answers})
+                    "body_text": _olta_reflow(r["body_text"]), "attach_text": _olta_reflow(r["attach_text"]),
+                    "answers": answers})
 
 
 @app.route("/api/olta_search")

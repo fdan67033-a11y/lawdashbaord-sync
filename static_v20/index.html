@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>법제처 JSON 업무검색 대시보드 v36.16 v20 API 확장</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
 :root{
   --bg:#eef2f8;--panel:#fff;--line:#d8e0ec;--line2:#e8edf5;--text:#162033;
@@ -12,7 +13,7 @@
   --shadow:0 10px 28px rgba(16,24,40,.06);
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:"Malgun Gothic","Apple SD Gothic Neo",Arial,sans-serif;font-size:14px;overflow:hidden}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Pretendard Variable",Pretendard,"Malgun Gothic","Apple SD Gothic Neo",Arial,sans-serif;font-size:14px;overflow:hidden}
 button,input,select,textarea{font-family:inherit}
 button{border:0;border-radius:11px;background:var(--chip-bg);color:#52525b;padding:8px 11px;cursor:pointer;font-weight:600;transition:background .12s}
 button:hover{background:#e9e9ed}
@@ -825,9 +826,15 @@ body.grayDark .prettyCol textarea{background:#2b3038;color:#e9eef7}
 .paneZoomGroup button{font-size:11px;padding:4px 7px;border-radius:8px;background:#f2f4f7;color:#344054}
 .paneZoomLabel{min-width:38px;text-align:center;font-size:11px;font-weight:900;color:#475467;padding:0 3px;line-height:22px}
 .articleWrap{--pane-font-size:13px}
+.lawFormulaImg{display:block;max-width:100%;margin:8px 0;padding:8px 10px;background:#fff;border:1px solid var(--line);border-radius:8px}
 .articleWrap .unit{font-size:var(--pane-font-size,13px) !important;line-height:1.62 !important}
 .articleWrap .article h3{font-size:calc(var(--pane-font-size,13px) + 1px) !important;line-height:1.45 !important}
 .articleWrap .annexBlock,.articleWrap .precHtmlFrameBox{font-size:var(--pane-font-size,13px) !important}
+/* v20.1: 행정규칙 별표(서식) — 전각:반각 2:1 고정폭(굴림체 계열) + 촘촘한 줄간격으로 괘선 정렬 */
+.unit.level-별표{font-family:"GulimChe","굴림체","DotumChe","돋움체",monospace !important;
+  font-size:12px !important;line-height:1.08 !important;letter-spacing:0 !important;
+  white-space:pre !important;overflow-x:auto;word-break:normal;cursor:default}
+body.grayDark .unit.level-별표{background:rgba(255,255,255,.04)}
 body.grayDark .paneZoomGroup{background:#2f3540;border-color:#555d68}
 body.grayDark .paneZoomGroup button{background:#3b4047;color:#eef1f5}
 body.grayDark .paneZoomLabel{color:#d7dde8}
@@ -1042,6 +1049,14 @@ details.precGroup>summary{font-size:12px;font-weight:700;color:#344054;cursor:po
 .precDate{color:#667085}.precType{color:#9061f9}
 .precName{font-size:13px;color:#1a1f29;margin-top:3px;font-weight:600;line-height:1.4}
 .precSum{font-size:11.5px;color:#667085;margin-top:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.lawRef{color:#1a56db;font-weight:600;text-decoration:none;border-bottom:1px dashed #9db8ec;cursor:pointer}
+.lawRef:hover{background:#eef4ff;border-bottom-style:solid}
+body.grayDark .lawRef{color:#8fb2ff;border-bottom-color:#5d7bb6}
+body.grayDark .lawRef:hover{background:#3a465c}
+.lawRef.old{color:#9a6407;border-bottom-color:#dcbb72}
+.lawRef.old:hover{background:#fdf3dd}
+body.grayDark .lawRef.old{color:#e0b264;border-bottom-color:#9a7c3c}
+body.grayDark .lawRef.old:hover{background:#4a4130}
 .precRel{font-size:10.5px;font-weight:700;padding:1px 6px;border-radius:10px;color:#fff}
 .precRel.d{background:#12b76a}.precRel.n{background:#f79009}.precRel.r{background:#98a2b3}
 .precArt{font-size:10.5px;font-weight:700;color:#1a56db;background:#eaf0ff;border-radius:6px;padding:1px 5px;margin-right:4px}
@@ -1240,7 +1255,12 @@ document.addEventListener('keydown',e=>{
 function terms(){return $('query').value.trim().split(/\s+/).filter(Boolean)}
 function exactTermRegex(t){
   const r=(t||'').replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
-  return new RegExp(`(^|[^0-9A-Za-z가-힣_])(${r})(?=$|[^0-9A-Za-z가-힣_])`,'gi');
+  // 숫자로 시작하는 검색어는 법령 표기상 항상 '제'가 앞에 붙어 단어 경계에 걸리므로 '제' 접두를 허용
+  // ('178조'→제178조). 순수 숫자면 조·항·호·목 접미까지 허용('178'→제178조).
+  let core=r;
+  if(/^\d/.test(t||''))core='제?'+r;
+  if(/^\d+$/.test(t||''))core='제?'+r+'(?:조|항|호|목)?';
+  return new RegExp(`(^|[^0-9A-Za-z가-힣_])(${core})(?=$|[^0-9A-Za-z가-힣_])`,'gi');
 }
 function hasAnyExact(txt,arr){
   const s=(txt||'').replace(/\s+/g,' ');
@@ -1264,8 +1284,15 @@ function hiInner(h,qs){
 }
 // v20: 조문 본문에 인용 링크(「법령명」·제○조)를 입히고 하이라이트를 함께 적용
 const REF_SPLIT=/(<a\b[^>]*>[^<]*<\/a>)/;
+function lawImgHtml(h){
+  // 법제처 본문의 <img src="…flDownload…">(괘선문자 fallback)</img>를 실제 이미지로 렌더.
+  // esc() 이후의 이스케이프된 형태를 치환하며, ASCII 괘선 fallback은 이미지가 대신하므로 버린다.
+  return h
+    .replace(/&lt;img src=&quot;(.+?)&quot;(.*?)&gt;([\s\S]*?)&lt;\/img&gt;/g,(m,src)=>`<img class="lawFormulaImg" src="${src.replace(/&amp;/g,'&').replace(/^http:/,'https:')}" alt="계산식 이미지" loading="lazy">`)
+    .replace(/&lt;img src=&quot;(.+?)&quot;(.*?)&gt;/g,(m,src)=>`<img class="lawFormulaImg" src="${src.replace(/&amp;/g,'&').replace(/^http:/,'https:')}" alt="계산식 이미지" loading="lazy">`);
+}
 function renderUnitText(text, links, qs){
-  let h=esc(text||'');
+  let h=lawImgHtml(esc(text||''));
   if(links&&links.length){
     for(const lk of links){
       const needle=esc(lk.text||'');
@@ -1499,7 +1526,30 @@ function blankPanes(){return {1:{tabs:[],activeTabId:null,row:null,detail:null,c
 
 function paneZoom(n){const p=pane(n)||{};let z=Number(p.zoom||13);if(!Number.isFinite(z))z=13;z=Math.max(10,Math.min(24,z));p.zoom=z;return z}
 function paneZoomLabel(n){return paneZoom(n)+'px'}
-function setPaneZoom(n,z){const p=pane(n);if(!p)return;p.zoom=Math.max(10,Math.min(24,Number(z)||13));saveWorkspace();renderPane(n);setStatus(`${n}번 법령창 글자 크기: ${p.zoom}px`)}
+function setPaneZoom(n,z){
+  const p=pane(n);if(!p)return;
+  // 재렌더로 scrollTop이 0이 되므로, 뷰포트 상단에 걸친 단위를 기억해 두었다가 같은 화면 위치로 복원한다.
+  // 픽셀 오프셋은 글자 크기에 따라 변하니 요소 내 비율(ratio)로 저장해야 확대·축소 후에도 정확하다.
+  let anchor=null;
+  const wrap=$(`articleWrap${n}`);
+  if(wrap){
+    const wr=wrap.getBoundingClientRect();
+    for(const u of wrap.querySelectorAll('.unit[id]')){
+      const r=u.getBoundingClientRect();
+      if(r.bottom>wr.top+1){anchor={id:u.id,ratio:Math.max(0,(wr.top-r.top)/Math.max(1,r.height))};break;}
+    }
+  }
+  p.zoom=Math.max(10,Math.min(24,Number(z)||13));
+  saveWorkspace();renderPane(n);
+  if(anchor){
+    const el=document.getElementById(anchor.id),w2=$(`articleWrap${n}`);
+    if(el&&w2){
+      const wr2=w2.getBoundingClientRect(),r2=el.getBoundingClientRect();
+      w2.scrollTop+=(r2.top-wr2.top)+anchor.ratio*r2.height;
+    }
+  }
+  setStatus(`${n}번 법령창 글자 크기: ${p.zoom}px`)
+}
 function adjustPaneZoom(n,delta){setPaneZoom(n,paneZoom(n)+(Number(delta)||0))}
 function resetPaneZoom(n){setPaneZoom(n,13)}
 function paneZoomControls(n){return `<span class="paneZoomGroup" title="이 법령창만 글자 크기를 조정합니다"><button class="small" onclick="adjustPaneZoom(${n},-1)">A-</button><span class="paneZoomLabel">${paneZoomLabel(n)}</span><button class="small" onclick="adjustPaneZoom(${n},1)">A+</button><button class="small" onclick="resetPaneZoom(${n})">100%</button></span>`}
@@ -1956,9 +2006,115 @@ function renderPaneBody(n){
     html=`<div class="artCopyBar"><label class="artAll"><input type="checkbox" onchange="selectAllArts(${n},this.checked)"> 전체 선택</label><button class="small artCopyBtn" onclick="copySelectedArts(${n})">선택 조문 복사 <span class="selCnt" id="selCount${n}">0</span></button><button class="small ${p.hanjaConvOn?'active':''}" id="hjConvBtn${n}" onclick="toggleHanjaConv(${n})" title="이 법령의 gold 한자 변환판(국한문 혼용) 보기/끄기. Claude가 만들어 저장한 완전변환(gold) 결과를 사용">gold한자</button><button class="small" onclick="reqHanjaConvert(${n})" title="이 법령 전 조문을 Claude가 빈틈없이 국한문 혼용으로 변환하도록 요청(큐 저장). 이후 채팅에서 '한자 변환해줘' 하면 변환·저장됨">🈶 Claude변환요청</button><button class="small printBtn" onclick="openPrintPreview(${n})" title="선택한 조문 인쇄·미리보기·PDF·내보내기">🖨 인쇄</button><button class="small" onclick="openReader(${n})" title="이 법령을 보기 좋은 테마의 전체화면 리더로 열기(조문 아래 노트 인라인 + 조문별 Claude 질문)">🖥 전체화면</button></div>`+html;
   }
   wrap.innerHTML=html+annexHtml;
+  if(window.precLawRefLinkify)precLawRefLinkify(n,wrap);
   if(p.hanjaOn)annotateHanja(wrap);
   if(window.precBadges)precBadges(n);
   if(window.yegyuBadges)yegyuBadges(n);
+}
+
+/* ---- 판례 본문의 조문 인용 → 법제처(law.go.kr 한글법령주소) 링크 ----
+   · 현행 법령 인용("지방세법 제20조", "같은 법 시행령 제35조", "(현행 제7조 제2항 참조)")만 링크.
+   · "구 ○○법 제N조"는 현행 조문번호와 달라 오연결 위험이 있어 링크하지 않는다(참조조문 난의 '현행 … 참조'를 이용).
+   · lastLaw로 직전 법령명을 기억해 "같은 법"·"(현행 …)"의 소속 법령을 해석한다. */
+function precLawRefLinkify(n,wrap){
+  const p=pane(n);
+  if(!p||!p.row)return;
+  const isPrec=(p.row.target==='prec')||String((p.detail&&p.detail.render_type)||'').indexOf('prec')===0;
+  if(!isPrec)return;
+  /* 법령명 화이트리스트(최장 우선) — 문장 조각 오인식 방지. 필요 시 여기에만 추가하면 된다. */
+  const NAMES=['공익사업을 위한 토지 등의 취득 및 보상에 관한 법률','부동산실권리자명의 등기에 관한 법률','채무자 회생 및 파산에 관한 법률','도시공원 및 녹지 등에 관한 법률','국토의 계획 및 이용에 관한 법률','부동산 거래신고 등에 관한 법률','산업집적활성화 및 공장설립에 관한 법률','민간임대주택에 관한 특별법','도시 및 주거환경정비법','상속세 및 증여세법','부동산등기 특별조치법','지방세특례제한법','조세특례제한법','수도권정비계획법','종합부동산세법','농어촌특별세법','부가가치세법','지방세기본법','지방세징수법','국세기본법','국세징수법','사회복지사업법','산지관리법','부동산등기법','민사집행법','행정소송법','행정심판법','행정절차법','사립학교법','고등교육법','초·중등교육법','유아교육법','지방자치법','산업입지 및 개발에 관한 법률','지방세법','소득세법','법인세법','인지세법','건축법','주택법','농지법','신탁법','의료법','민법','상법'];
+  const alts=NAMES.map(function(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&').replace(/\s+/g,'\\s+')}).join('|');
+  const LAW='(?:'+alts+')(?:\\s*시행령|\\s*시행규칙)?';
+  const CIT=new RegExp('(?<![가-힣])'
+    +'((?:\\d{4}\\.\\s*\\d{1,2}\\.\\s*\\d{1,2}\\.?\\s*(?:법률|대통령령|부령|총리령)\\s*제\\d+호로\\s*(?:전부\\s*)?개정(?:되기\\s*전(?:의\\s*것)?|된)\\s*)?)'
+    +'(구\\s*)?((?:현행\\s+)?(?:'+LAW+')|같은\\s*법(?:\\s*시행령|\\s*시행규칙)?|같은\\s*영|동법(?:\\s*시행령)?|현행)'
+    +'(\\s*\\([^()]{0,80}\\))?'
+    +'\\s*(제\\d+조(?:의\\d+)?)((?:\\s*제\\d+항)?(?:\\s*제\\d+호)?(?:\\s*(?:본문|단서))?)','g');
+  const NAMEONLY=new RegExp('(?<![가-힣])(구\\s*)?('+LAW+')\\s*\\(','g');
+  /* "…법률 제N호로 (전부 )개정되기 전/된" → 연혁판 정보 {no(5자리), date(YYYYMMDD), before} */
+  function parseHist(s){
+    const h=s&&s.match(/(\d{4})\.\s*(\d{1,2})\.\s*(\d{1,2})\.?\s*(?:법률|대통령령|부령|총리령)\s*제(\d+)호로\s*(?:전부\s*)?개정(되기\s*전|된)/);
+    if(!h)return null;
+    return {date:h[1]+String(h[2]).padStart(2,'0')+String(h[3]).padStart(2,'0'),
+            no:String(h[4]).padStart(5,'0'), before:/전/.test(h[5])};
+  }
+  const histByLaw={};   // "이하 같다" 방식 재인용 대비: 법령별로 마지막 연혁판 기억
+  let lastLaw='';
+  const baseLaw=()=> (lastLaw||'').replace(/\s*(시행령|시행규칙)$/,'');
+  const walker=document.createTreeWalker(wrap,NodeFilter.SHOW_TEXT,{acceptNode:function(nd){
+    let q=nd.parentElement;
+    while(q&&q!==wrap){const t=q.tagName;if(t==='A'||t==='SCRIPT'||t==='STYLE'||t==='BUTTON'||t==='INPUT'||t==='TEXTAREA')return NodeFilter.FILTER_REJECT;q=q.parentElement}
+    return NodeFilter.FILTER_ACCEPT;
+  }});
+  const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
+  nodes.forEach(function(nd){
+    const txt=nd.nodeValue;
+    CIT.lastIndex=0;
+    if(!CIT.test(txt)){
+      NAMEONLY.lastIndex=0;let m0,last0=null;
+      while((m0=NAMEONLY.exec(txt)))last0=m0;
+      if(last0)lastLaw=last0[2].replace(/\s+/g,' ').trim();
+      return;
+    }
+    CIT.lastIndex=0;
+    const frag=document.createDocumentFragment();
+    let pos=0,m;
+    while((m=CIT.exec(txt))){
+      const histRaw=m[1]||'', gu=!!m[2];
+      let tok=(m[3]||'').replace(/\s+/g,' ').trim();
+      const paren=m[4]||'', jo=m[5], tail=m[6]||'';
+      let isH=false;
+      if(tok==='현행'){isH=true;tok='';}
+      else if(/^현행\s+/.test(tok)){isH=true;tok=tok.replace(/^현행\s+/,'');}
+      let law='';
+      if(isH&&!tok)law=lastLaw;
+      else if(/^(같은\s*법\s*시행령|동법\s*시행령)$/.test(tok))law=baseLaw()+' 시행령';
+      else if(/^같은\s*법\s*시행규칙$/.test(tok))law=baseLaw()+' 시행규칙';
+      else if(/^(같은\s*법|같은\s*영|동법)$/.test(tok))law=lastLaw;
+      else law=tok;
+      if(!isH&&law&&!/^(같은|동법)/.test(tok))lastLaw=law;
+      /* 연혁판 정보: ① 인용 앞머리("1998. 12. 31. 법률 제5615호로 개정되기 전 지방세법…")
+         ② 법령명 뒤 괄호("구 지방세법(2010. 3. 31. 법률 제10221호로 전부 개정되기 전의 것)")
+         ③ 같은 법의 재인용은 histByLaw에 기억해 둔 판을 재사용("이하 같다" 대응) */
+      let hi=parseHist(histRaw)||parseHist(paren);
+      if(law&&!isH){
+        /* '이하 같다'로 정의된 판만 그 법령의 기본판으로 등록 — 앞머리형·일회성 괄호가
+           문서 전체의 맨몸 재인용("구 지방세법 제20조")을 오염시키지 않도록 */
+        if(hi&&parseHist(paren)&&/이하\s*같다|이라\s*한다/.test(paren))histByLaw[law]=hi;
+        else if(!hi&&gu&&histByLaw[law])hi=histByLaw[law];
+      }
+      frag.appendChild(document.createTextNode(txt.slice(pos,m.index)));
+      const full=m[0];
+      if(hi&&law&&!isH){
+        /* 연혁 인용 → law.go.kr 그 시점 공포판(한글법령주소 (공포번호,공포일))으로 */
+        const a=document.createElement('a');
+        a.className='lawRef old';
+        a.href='https://www.law.go.kr/'+encodeURIComponent('법령')+'/'+encodeURIComponent(law)
+              +'/('+hi.no+','+hi.date+')/'+encodeURIComponent(jo);
+        a.target='_blank';a.rel='noopener';
+        a.title=law+' '+jo+' — '+hi.date.slice(0,4)+'.'+hi.date.slice(4,6)+'.'+hi.date.slice(6,8)
+              +'. 제'+String(+hi.no)+'호 공포판(law.go.kr 연혁)으로 열기'
+              +(hi.before?' ※ 인용은 이 개정 직전 판 — 열린 페이지 좌측 연혁 목록에서 한 단계 이전 판을 확인':'');
+        a.textContent=full;
+        a.addEventListener('click',function(ev){ev.stopPropagation();});
+        frag.appendChild(a);
+      }else if(!law||(gu&&!isH)){
+        frag.appendChild(document.createTextNode(full));
+      }else{
+        const a=document.createElement('a');
+        a.className='lawRef';
+        a.href='/open?law='+encodeURIComponent(law)+'&jo='+encodeURIComponent(jo);
+        a.target='_blank';a.rel='noopener';
+        a.title=(isH?'현행 ':'')+law+' '+jo+(tail?tail.replace(/\s+/g,' '):'')+' — 대시보드 뷰어로 열기(노트 가능)';
+        a.textContent=full;
+        a.addEventListener('click',function(ev){ev.stopPropagation();});
+        frag.appendChild(a);
+      }
+      pos=m.index+full.length;
+    }
+    frag.appendChild(document.createTextNode(txt.slice(pos)));
+    nd.parentNode.replaceChild(frag,nd);
+  });
 }
 
 /* ---- 한자(漢字) 루비 병기 + 교정 ---- */

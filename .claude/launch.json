@@ -14,6 +14,13 @@
       "runtimeArgs": ["-3.12", "-m", "http.server", "6160", "--directory", "study"],
       "port": 6160,
       "autoPort": false
+    },
+    {
+      "name": "docs",
+      "runtimeExecutable": "py",
+      "runtimeArgs": ["-3.12", "-m", "http.server", "6161", "--directory", "."],
+      "port": 6161,
+      "autoPort": false
     }
   ]
 }
