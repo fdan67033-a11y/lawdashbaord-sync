@@ -2960,6 +2960,17 @@ def static_files(filename: str) -> Response:
     return send_from_directory(BASE_DIR / "static", filename)
 
 
+@app.route("/m")
+def mobile_page() -> Response:
+    """폰 전용 판례 리더 (2026-08-09). Tailscale로 폰에서 http://<PC주소>:6155/m 접속."""
+    p = BASE_DIR / "static_v20" / "mobile.html"
+    if not p.exists():
+        return Response("<h1>mobile.html 없음</h1>", status=404, mimetype="text/html; charset=utf-8")
+    resp = Response(p.read_text(encoding="utf-8"), mimetype="text/html; charset=utf-8")
+    resp.headers["Cache-Control"] = "no-store, no-cache, max-age=0, must-revalidate"
+    return resp
+
+
 def _serve_light_zoom_index() -> Response:
     index_path = _find_index_html_for_light_zoom()
     if not index_path:
@@ -4748,4 +4759,7 @@ if __name__ == "__main__":
     print("브라우저에서 http://127.0.0.1:6155 접속")
     print("종료하려면 이 창에서 Ctrl + C")
     print("=" * 72)
-    app.run(host="127.0.0.1", port=6155, debug=False)
+    # 0.0.0.0: 폰(Tailscale VPN)에서 /m 모바일 리더 접속 허용 (2026-08-09).
+    # Tailscale은 사설망이라 외부 인터넷엔 열리지 않지만, 공용 와이파이 LAN 노출이
+    # 걱정되면 Windows 방화벽에서 6155를 Tailscale 인터페이스로 한정하면 된다.
+    app.run(host="0.0.0.0", port=6155, debug=False)

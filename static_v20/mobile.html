@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1d2452">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>판례 리더</title>
+<style>
+/* ================= 판례 리더 (모바일 전용, 2026-08-09) =================
+   법제처 대시보드(6155)의 API 위에 폰 가독성 최우선으로 새로 설계한 리더.
+   화면: 홈(검색·최근) / 문서(판례·법령) / 노트. 스택 내비 + 폰 뒤로가기 지원. */
+:root{
+  --fs:17px;
+  --bg:#f4f5f8;--card:#fff;--ink:#1a1d26;--dim:#6a7183;--line:#e5e7ee;
+  --acc:#3b47c4;--acc-ink:#fff;--acc-soft:#eceffc;--green:#0f8a66;--green-soft:#e9f7f1;
+  --amber:#b45309;--amber-soft:#fdf3e0;--purple:#6941c6;--purple-soft:#f3eefc;
+  --cyan:#0e7490;
+  --top:#1d2452;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#15171d;--card:#1e2129;--ink:#e8eaf0;--dim:#98a0b3;--line:#30343f;
+  --acc:#8b95f2;--acc-ink:#141936;--acc-soft:#272c45;--green:#4cc9a4;--green-soft:#1f3229;
+  --amber:#e5a558;--amber-soft:#33291a;--purple:#b197e8;--purple-soft:#2c2440;
+  --cyan:#67d3e0;
+  --top:#141936;
+}}
+html.dark:root,html.dark{--bg:#15171d;--card:#1e2129;--ink:#e8eaf0;--dim:#98a0b3;--line:#30343f;
+  --acc:#8b95f2;--acc-ink:#141936;--acc-soft:#272c45;--green:#4cc9a4;--green-soft:#1f3229;
+  --amber:#e5a558;--amber-soft:#33291a;--purple:#b197e8;--purple-soft:#2c2440;--cyan:#67d3e0;--top:#141936}
+html.light:root,html.light{--bg:#f4f5f8;--card:#fff;--ink:#1a1d26;--dim:#6a7183;--line:#e5e7ee;
+  --acc:#3b47c4;--acc-ink:#fff;--acc-soft:#eceffc;--green:#0f8a66;--green-soft:#e9f7f1;
+  --amber:#b45309;--amber-soft:#fdf3e0;--purple:#6941c6;--purple-soft:#f3eefc;--cyan:#0e7490;--top:#1d2452}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);
+  font-family:'Pretendard',-apple-system,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif;
+  font-size:var(--fs);line-height:1.85;overscroll-behavior-y:contain}
+#top{position:fixed;top:0;left:0;right:0;z-index:50;background:var(--top);color:#fff;
+  padding:calc(env(safe-area-inset-top) + 10px) 12px 10px;display:flex;align-items:center;gap:8px;min-height:52px}
+#top .tbtn{background:rgba(255,255,255,.14);border:0;color:#fff;border-radius:10px;
+  padding:7px 12px;font-size:15px;font-weight:700;min-height:44px;min-width:44px;display:inline-flex;align-items:center;justify-content:center}
+#topTitle{flex:1;font-weight:800;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#app{padding:calc(env(safe-area-inset-top) + 66px) 0 calc(env(safe-area-inset-bottom) + 76px)}
+#nav{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;background:var(--card);
+  border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+#nav button{flex:1;background:none;border:0;color:var(--dim);font-size:12px;font-weight:700;
+  padding:9px 0 8px;display:flex;flex-direction:column;align-items:center;gap:2px}
+#nav button.on{color:var(--acc)}
+#nav .ic{font-size:21px;line-height:1}
+.wrap{padding:0 14px;max-width:760px;margin:0 auto}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin:10px 0;
+  box-shadow:0 1px 3px rgba(10,15,40,.05)}
+.tap{cursor:pointer}
+.tap:active{transform:scale(.985);opacity:.9}
+h2.sec{font-size:14px;color:var(--dim);font-weight:800;margin:20px 2px 6px;letter-spacing:.3px}
+/* ── 검색 ── */
+#q{width:100%;font-size:17px;padding:13px 15px;border-radius:14px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);outline:none}
+#q:focus{border-color:var(--acc)}
+.chips{display:flex;gap:7px;margin:10px 0 2px;flex-wrap:wrap}
+.chip{border:1.5px solid var(--line);background:var(--card);color:var(--dim);border-radius:999px;
+  padding:6px 13px;font-size:13.5px;font-weight:700;position:relative;min-height:38px}
+.chip::after{content:'';position:absolute;left:0;right:0;top:-5px;bottom:-5px}
+.chip.on{background:var(--acc);border-color:var(--acc);color:var(--acc-ink)}
+.hit .t{font-weight:700;font-size:16px;line-height:1.5}
+.hit .m{color:var(--dim);font-size:13px;margin-top:3px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.badge{display:inline-block;font-size:11.5px;font-weight:800;border-radius:7px;padding:1px 7px}
+.b-prec{background:var(--purple-soft);color:var(--purple)}
+.b-law{background:var(--acc-soft);color:var(--acc)}
+.b-sim{background:var(--amber-soft);color:var(--amber)}
+.b-etc{background:var(--green-soft);color:var(--green)}
+.empty{color:var(--dim);text-align:center;padding:34px 10px;font-size:15px}
+/* ── 문서(판례) ── */
+.docHead{background:linear-gradient(135deg,var(--top),#3b47c4);color:#fff;border-radius:18px;
+  padding:16px 18px;margin:10px 0 14px}
+.docHead .no{font-size:20px;font-weight:900;letter-spacing:.3px}
+.docHead .nm{font-size:15px;opacity:.95;margin-top:2px;line-height:1.5}
+.docHead .mt{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.docHead .mt span{background:rgba(255,255,255,.16);border-radius:8px;padding:2px 9px;font-size:12.5px;font-weight:700}
+.docBtns{display:flex;gap:8px;margin:0 0 6px}
+.docBtns button{flex:1;border:1.5px solid var(--line);background:var(--card);color:var(--ink);
+  border-radius:12px;padding:10px 6px;font-size:14px;font-weight:700}
+.docBtns button.acc{background:var(--acc);border-color:var(--acc);color:var(--acc-ink)}
+.secCard{background:var(--card);border:1px solid var(--line);border-radius:16px;margin:12px 0;overflow:hidden}
+.secCard>.hd{padding:11px 16px;font-weight:800;font-size:15px;background:var(--acc-soft);color:var(--acc);
+  display:flex;justify-content:space-between;align-items:center}
+.secCard>.bd{padding:6px 16px 14px}
+.secCard.fold>.bd{display:none}
+.secCard>.hd .arw{font-size:12px;opacity:.7}
+.sent{margin:13px 0}
+.pnum{display:inline-block;font-weight:900;color:var(--acc-ink);background:var(--acc);border-radius:9px;
+  padding:1px 9px;font-size:14px;margin-right:5px}
+.cite{color:var(--purple)}
+.cl{color:var(--cyan);border-bottom:1.5px dashed var(--cyan);font-weight:600}
+.ll{color:var(--acc);border-bottom:1.5px dashed var(--acc);font-weight:600}
+.jl{color:var(--green);border-bottom:1.5px dashed var(--green);font-weight:600}
+/* ── 법령 ── */
+.artFilter{position:sticky;top:calc(env(safe-area-inset-top) + 58px);z-index:10;background:var(--bg);padding:8px 0}
+.artFilter input{width:100%;font-size:15.5px;padding:11px 14px;border-radius:12px;
+  border:1.5px solid var(--line);background:var(--card);color:var(--ink);outline:none}
+details.art{background:var(--card);border:1px solid var(--line);border-radius:14px;margin:8px 0;overflow:hidden}
+details.art summary{list-style:none;padding:12px 15px;font-weight:700;font-size:15.5px;display:flex;gap:8px}
+details.art summary::-webkit-details-marker{display:none}
+details.art summary .no{color:var(--acc);font-weight:900;flex:0 0 auto}
+details.art[open] summary{border-bottom:1px solid var(--line);background:var(--acc-soft)}
+details.art .bd{padding:4px 16px 14px;font-size:calc(var(--fs) - 1px)}
+details.art .bd .u{margin:10px 0}
+/* ── 노트 ── */
+.nvSec{font-size:15.5px;font-weight:800;margin:20px 0 8px;padding:7px 12px;border-left:4px solid var(--acc);
+  background:var(--acc-soft);border-radius:0 10px 10px 0}
+.nvLead{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 15px;margin:8px 0 12px}
+.nvItem{display:flex;gap:9px;margin:15px 0 4px;align-items:flex-start}
+.nvNum{flex:0 0 auto;font-weight:900;color:var(--acc-ink);background:var(--acc);border-radius:9px;padding:1px 8px;font-size:14px;margin-top:3px}
+.nvExp{margin:5px 0 5px 32px;padding:8px 12px;border-left:3px solid var(--green);background:var(--green-soft);
+  border-radius:0 10px 10px 0;font-size:calc(var(--fs) - 2px)}
+.nvFlow{background:var(--card);border:1.5px dashed var(--line);border-radius:12px;padding:12px 15px;margin:8px 0;
+  font-size:calc(var(--fs) - 2px);line-height:2.1}
+.nvTake{margin:6px 0;padding:9px 12px;background:var(--amber-soft);border:1px solid transparent;border-radius:10px;
+  font-size:calc(var(--fs) - 2px)}
+.nvQuote{color:var(--purple)}
+.nvGap{height:6px}.nvP{margin:6px 0}
+.noteCard{border:1px solid var(--line);background:var(--card);border-radius:16px;padding:15px 17px;margin:12px 0}
+.noteCard .ti{font-weight:800;font-size:16px;line-height:1.5;margin-bottom:4px}
+.noteCard .meta{font-size:12.5px;color:var(--dim);margin-bottom:8px}
+.noteCard .nq{font-weight:700;color:var(--acc);background:var(--acc-soft);border-radius:10px;padding:9px 12px;margin:6px 0 10px;font-size:calc(var(--fs) - 1px)}
+/* ── 공통 ── */
+#toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 86px);transform:translateX(-50%);
+  background:#222c;color:#fff;padding:10px 18px;border-radius:22px;font-size:14px;opacity:0;transition:opacity .25s;
+  pointer-events:none;z-index:99;max-width:86vw;text-align:center}
+#load{position:fixed;inset:0;background:rgba(10,12,25,.35);display:none;z-index:98;align-items:center;justify-content:center}
+#load .sp{background:var(--card);color:var(--ink);border-radius:16px;padding:16px 24px;font-weight:700;font-size:15px}
+mark{background:#ffe9a8;color:#4a3705;border-radius:3px;padding:0 2px}
+.mini{font-size:12.5px;color:var(--dim)}
+</style>
+</head>
+<body>
+<div id="top">
+  <button class="tbtn" id="backBtn" onclick="goBack()" style="display:none">←</button>
+  <div id="topTitle">판례 리더</div>
+  <button class="tbtn" onclick="fontStep(-1)">A-</button>
+  <button class="tbtn" onclick="fontStep(1)">A+</button>
+  <button class="tbtn" onclick="toggleDark()">◐</button>
+</div>
+<div id="app"></div>
+<div id="nav">
+  <button id="nb-home" onclick="navTo('home')"><span class="ic">🔍</span>검색</button>
+  <button id="nb-recent" onclick="navTo('recent')"><span class="ic">🕘</span>최근</button>
+  <button id="nb-notes" onclick="navTo('allnotes')"><span class="ic">📝</span>노트</button>
+</div>
+<div id="toast"></div>
+<div id="load"><div class="sp">불러오는 중…</div></div>
+
+<script>
+'use strict';
+/* ============================ 유틸 ============================ */
+const $=id=>document.getElementById(id);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function toast(m,ms){const t=$('toast');t.textContent=m;t.style.opacity=1;clearTimeout(t._h);t._h=setTimeout(()=>t.style.opacity=0,ms||2200);}
+function loading(on){$('load').style.display=on?'flex':'none';}
+async function api(path,params){
+  const u=path+'?'+new URLSearchParams(params||{});
+  const ac=new AbortController();const tm=setTimeout(()=>ac.abort(),15000);
+  try{
+    const r=await fetch(u,{signal:ac.signal});
+    if(!r.ok)throw new Error('서버 오류 '+r.status);
+    return await r.json();
+  }catch(e){throw (e&&e.name==='AbortError')?new Error('요청 시간 초과(15초)'):e;}
+  finally{clearTimeout(tm);}
+}
+/* 글자 크기 / 다크 */
+function fontStep(d){
+  let v=(parseInt(localStorage.mob_fs||'17',10)||17)+d;v=Math.max(14,Math.min(24,v));
+  localStorage.mob_fs=v;document.documentElement.style.setProperty('--fs',v+'px');toast('글자 '+v+'px');
+}
+function toggleDark(){
+  const h=document.documentElement;
+  const cur=h.classList.contains('dark')?'dark':(h.classList.contains('light')?'light':'auto');
+  const nxt=cur==='auto'?'dark':(cur==='dark'?'light':'auto');
+  h.classList.remove('dark','light');if(nxt!=='auto')h.classList.add(nxt);
+  localStorage.mob_theme=nxt;toast(nxt==='auto'?'시스템 테마':'테마: '+(nxt==='dark'?'어두움':'밝음'));
+}
+(function(){ // 초기 설정 복원
+  const v=parseInt(localStorage.mob_fs||'17',10);if(v)document.documentElement.style.setProperty('--fs',v+'px');
+  const t=localStorage.mob_theme;if(t==='dark'||t==='light')document.documentElement.classList.add(t);
+})();
+
+/* ============================ 인용 링크 (데스크톱 검증판 이식) ============================ */
+const CASE_RE=/(조심\s?)?(?<!제)(\d{2,4})(누|두|구합|구단|구|다|도|허|지|부|서|중|광|전|대|가합|가단|나|카|마|바|재|헌[가-사]|심사|감심)(\d{1,6})(?![\d가-힣])/g;
+const LAW_RE=/(구\s+)?((?:[가-힣]{2,24}?(?:기본법|특례법|촉진법|처벌법|세법|소송법|등기법|보상법|법률|규칙|조례|법))|같은\s*법|같은법|동\s*법|이\s*법)?(시행령|시행규칙|\s+시행령|\s+시행규칙)?(\s*\(([^)<]{0,70}?)개정되기\s*전의\s*것\))?\s*(제\d{1,4}조(?:의\d{1,3})?)/g;
+const LEAD_STRIP=/^(있는|없는|한편|따라서|따라|또한|의하면|의하여|의하는|의한|규정하고|규정한|소정의|정하는|정한|현행|당시)+/;
+function cleanLawName(n){let p=n;while(LEAD_STRIP.test(p)){const q=p.replace(LEAD_STRIP,'');if(q.length<3||q===p)break;p=q;}return p;}
+function mapText(t,fn){return String(t).split(/(<[^>]*>)/g).map(s=>s.charAt(0)==='<'?s:fn(s)).join('');}
+function linkCase(t){
+  return mapText(t,s=>s.replace(CASE_RE,(m,ts,yy,mk,no)=>
+    `<a class="cl" data-case="${(ts?'조심':'')+yy+mk+no}">${m}</a>`));
+}
+function linkLaw(t,selfName){
+  let last='';
+  const baseOf=n=>n.replace(/\s*(시행령|시행규칙)$/,'').trim();
+  return mapText(t,s=>s.replace(LAW_RE,(m,gu,nm,shy,par,parIn,jo)=>{
+    let name='';
+    const ana=nm&&/^(같은\s*법|같은법|동\s*법|이\s*법)$/.test(nm);
+    if(nm&&!ana)name=cleanLawName(nm.trim());
+    else if(ana&&last)name=baseOf(last);
+    else if(!nm&&shy&&last)name=baseOf(last);
+    else if(!nm&&!shy){
+      if(selfName)return `<a class="jl" data-jo="${esc(jo)}">${m}</a>`;  // 같은 문서 내 조문 점프
+      if(!last)return m;name=last;
+    }
+    if(!name)return m;
+    if(shy)name=name+' '+shy.trim();
+    last=name;
+    let old='';
+    if(par){const dm=(parIn||'').match(/(\d{4})\.\s*(\d{1,2})\.\s*(\d{1,2})/);
+      if(dm)old=dm[1]+String(dm[2]).padStart(2,'0')+String(dm[3]).padStart(2,'0');}
+    return `<a class="ll" data-law="${esc(name)}" data-jo="${esc(jo)}" data-old="${old}">${m}</a>`;
+  }));
+}
+function linkAll(t,selfName){return linkLaw(linkCase(t),selfName);}
+
+/* 판례 만연체 가독화 (데스크톱 검증 규칙 이식) — 문장마다 문단 */
+function readable(t){
+  t=t.replace(/\(\s*((?:당원|대법원|헌법재판소|각급법원|서울고등법원|조세심판원)[^()<]{0,80}?(?:판결|결정)[^()<]{0,10}?)\)/g,
+    '(<span class="cite">$1</span>)');
+  t=linkAll(t);
+  var SEP=String.fromCharCode(1);
+  t=t.replace(/(다\.)(&quot;|")?\s+(?=[^\s<])/g,function(m,a,q){return a+(q||'')+SEP;});
+  t=t.replace(/(<\/span>\)[,\u3001])\s+/g,'$1<br>');
+  t=t.replace(/([,)])\s+(그러나|따라서|한편|또한|나아가|살피건대|그렇다면|그러므로|이와\s*같이)\s/g,'$1<br>$2 ');
+  t=t.replace(/(하였으나,|하였는바,|것인바,|배척하였는바,|인정한 다음,|승인을 받은 다음|주장에 대하여,|의하면,)\s*/g,'$1<br>');
+  return t.split(SEP).map(function(p){
+    p=p.replace(/^\s*(\d{1,2}\.\s*|\[\d{1,2}\]\s*)/,'<span class="pnum">$1</span>');
+    return '<div class="sent">'+p+'</div>';
+  }).join('');
+}
+
+/* 노트 리치 렌더러 (nv* 마커) */
+function noteRich(body){
+  let t=esc(body||'');
+  t=linkAll(t);
+  t=t.replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener">$1</a>');
+  t=t.replace(/「([^」]{1,160}?)」/g,'<span class="nvQuote">「$1」</span>');
+  const out=[];let flow=[];
+  const flush=()=>{if(flow.length){out.push('<div class="nvFlow">'+flow.join('<br>')+'</div>');flow=[];}};
+  for(const raw of t.split('\n')){
+    const line=raw.replace(/\s+$/,'');let m;
+    if((m=line.match(/^━+\s*(.+?)\s*━+$/))){flush();out.push('<div class="nvSec">'+m[1]+'</div>');continue;}
+    if((m=line.match(/^■\s?(.*)$/))){flush();out.push('<div class="nvLead">'+m[1]+'</div>');continue;}
+    if((m=line.match(/^([①-⑳])\s?(.*)$/))){flush();out.push('<div class="nvItem"><span class="nvNum">'+m[1]+'</span><span style="flex:1">'+m[2]+'</span></div>');continue;}
+    if((m=line.match(/^(→|⇒)\s?(.*)$/))){flush();out.push('<div class="nvExp">'+m[2]+'</div>');continue;}
+    if(/^\d\.\s/.test(line)){flush();out.push('<div class="nvTake">'+line+'</div>');continue;}
+    if(/^\s+→/.test(raw)){flow.push(line.trim());continue;}
+    if(line===''){flush();out.push('<div class="nvGap"></div>');continue;}
+    if(/→/.test(line)&&line.length<70&&!/(다\.|이다|한다)/.test(line)){flow.push(line);continue;}
+    flush();out.push('<div class="nvP">'+line+'</div>');
+  }
+  flush();return out.join('');
+}
+
+/* ============================ 화면 스택 ============================ */
+const S={stack:[],fwd:[]};
+function screen(){return S.stack[S.stack.length-1];}
+function go(sc,replace){
+  if(S.stack.length)S.stack[S.stack.length-1].sy=window.scrollY;   // 떠나는 화면 스크롤 저장
+  if(replace&&S.stack.length){S.stack[S.stack.length-1]=sc;history.replaceState({i:S.stack.length},'','#'+S.stack.length);}
+  else{S.stack.push(sc);history.pushState({i:S.stack.length},'','#'+S.stack.length);}
+  S.fwd=[];render();window.scrollTo(0,0);
+}
+function goBack(){history.back();}
+window.addEventListener('popstate',e=>{
+  const i=Math.max(1,(e.state&&e.state.i)||1);
+  if(i<S.stack.length){                                    // 뒤로가기
+    while(S.stack.length>i)S.fwd.push(S.stack.pop());
+    render();restoreScroll();
+  }else if(i>S.stack.length&&S.fwd.length){                // 앞으로가기(fwd 캐시 복원)
+    while(S.stack.length<i&&S.fwd.length)S.stack.push(S.fwd.pop());
+    render();restoreScroll();
+  }
+});
+function restoreScroll(){
+  const sc=screen();const sy=(sc&&sc.sy)||0;
+  requestAnimationFrame(()=>window.scrollTo(0,sy));
+}
+function navTo(type){
+  const n=S.stack.length;
+  S.stack=[{type}];S.fwd=[];
+  render();window.scrollTo(0,0);
+  if(n>1)history.go(-(n-1));                               // 히스토리를 #1로 되감기(popstate는 no-op)
+  else history.replaceState({i:1},'','#1');
+}
+function setTop(title){
+  $('topTitle').textContent=title;
+  $('backBtn').style.display=S.stack.length>1?'':'none';
+  ['home','recent','allnotes'].forEach(k=>{
+    const b=$('nb-'+(k==='allnotes'?'notes':k));
+    if(b)b.classList.toggle('on',S.stack[0]&&S.stack[0].type===k&&S.stack.length===1);
+  });
+}
+
+/* ============================ 최근 ============================ */
+function pushRecent(row){
+  let a=[];try{a=JSON.parse(localStorage.mob_recent||'[]')}catch(e){}
+  a=a.filter(x=>!(x.mst===row.mst&&x.target===row.target));
+  a.unshift({target:row.target,law_id:row.law_id,mst:row.mst,name:row.name,label:row.target_label||'',ts:Date.now()});
+  localStorage.mob_recent=JSON.stringify(a.slice(0,40));
+}
+function recents(){try{return JSON.parse(localStorage.mob_recent||'[]')}catch(e){return[]}}
+
+/* ============================ 열기 동작 ============================ */
+const TL={prec:'판례',eflaw:'법령',law:'법령',ttSpecialDecc:'조심결정',expc:'해석례',admrul:'행정규칙',ordin:'자치법규',detc:'헌재'};
+function badgeCls(tg){return tg==='prec'?'b-prec':(tg==='eflaw'||tg==='law'?'b-law':(tg==='ttSpecialDecc'?'b-sim':'b-etc'));}
+function openDoc(row,jump){pushRecent(row);go({type:'doc',row,jump});}
+async function openCaseNo(q){
+  if($('load').style.display==='flex')return;
+  loading(true);
+  try{
+    const isSim=q.indexOf('조심')===0;
+    const tries=isSim?[['ttSpecialDecc',q],['ttSpecialDecc',q.replace(/^조심/,'')],['prec',q]]:[['prec',q],['ttSpecialDecc',q]];
+    for(const [tg,qq] of tries){
+      const d=await api('/api/search',{target:tg,query:qq,search:'1',display:'5'});
+      const items=(d.normalized||{}).items||[];
+      const hit=items.find(x=>((x.name||'')+' '+(x.promulgation_no||'')).replace(/\s+/g,'').indexOf(qq.replace(/^조심/,''))>=0)||items[0];
+      if(hit){openDoc({target:tg,law_id:hit.law_id||hit.mst,mst:hit.mst||hit.law_id,
+        name:(hit.promulgation_no?hit.promulgation_no+' ':'')+(hit.name||q),target_label:TL[tg]||tg});return;}
+    }
+    toast('판례를 찾지 못했습니다: '+q);
+  }catch(e){toast('열기 실패: '+e.message);}finally{loading(false);}
+}
+async function openLawName(name,jo,old){
+  if($('load').style.display==='flex')return;
+  loading(true);
+  try{
+    if(old){
+      const d=await api('/api/search',{target:'eflaw',query:name,display:'50',nw:'1',ancyd:'19000101~'+old,sort:'efdes'});
+      const items=(d.normalized||{}).items||[];
+      const flat=s=>(s||'').replace(/\s+/g,'');
+      const it=items.find(x=>flat(x.name)===flat(name))||items[0];
+      if(it){openDoc({target:'eflaw',law_id:it.law_id||it.mst,mst:it.mst||it.law_id,name:it.name||name,
+        effective_date:it.effective_date||'',target_label:'연혁법령'},jo);return;}
+      toast('당시 연혁법령을 못 찾아 현행으로 엽니다');
+    }
+    const d=await api('/api/title_search',{query:name,targets:'eflaw',display:'10'});
+    const items=d.items||[];const flat=s=>(s||'').replace(/\s+/g,'');
+    let hit=items.find(x=>flat(x.name)===flat(name))||items[0],tg='law';
+    if(!hit){
+      for(const t2 of ['admrul','ordin']){
+        const d2=await api('/api/title_search',{query:name,targets:t2,display:'5'});
+        const it2=(d2.items||[])[0];if(it2){hit=it2;tg=t2;break;}
+      }
+    }
+    if(!hit){toast('법령을 찾지 못했습니다: '+name);return;}
+    openDoc({target:tg,law_id:hit.law_id||hit.mst,mst:hit.mst||hit.law_id,name:hit.name||name,target_label:TL[tg]||tg},jo);
+  }catch(e){toast('열기 실패: '+e.message);}finally{loading(false);}
+}
+/* 링크 탭 위임 */
+document.addEventListener('click',e=>{
+  const c=e.target.closest('.cl');if(c){e.preventDefault();openCaseNo(c.dataset.case);return;}
+  const l=e.target.closest('.ll');if(l){e.preventDefault();openLawName(l.dataset.law,l.dataset.jo,l.dataset.old||'');return;}
+  const j=e.target.closest('.jl');if(j){e.preventDefault();jumpArticle(j.dataset.jo);return;}
+});
+function jumpArticle(jo){
+  const num=(String(jo).match(/제(\d+)조(의\d+)?/)||[]);
+  const want='제'+(num[1]||'')+'조'+(num[2]||'');
+  const el=[...document.querySelectorAll('details.art')].find(d=>(d.dataset.no||'').indexOf(want)===0);
+  if(!el){toast(jo+' 조문을 찾지 못했습니다');return;}
+  el.open=true;fillArt(el);
+  setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'start'}),60);
+}
+
+/* ============================ 화면: 홈(검색) ============================ */
+const TGT=[['prec','판례'],['eflaw','법령'],['ttSpecialDecc','조심결정'],['expc','해석례']];
+let curTgt=localStorage.mob_tgt||'prec';
+function homeHtml(){
+  const rc=recents().slice(0,5);
+  return `<div class="wrap">
+    <div style="height:8px"></div>
+    <input id="q" placeholder="사건번호·법령명·키워드  (예: 96누8321, 지방세법)" value="${esc(S.q||'')}"
+      onkeydown="if(event.key==='Enter'){doSearch()}">
+    <div class="chips">${TGT.map(([k,v])=>`<button class="chip ${k===curTgt?'on':''}" onclick="setTgt('${k}')">${v}</button>`).join('')}
+      <button class="chip ${bodySearch?'on':''}" onclick="toggleBodySearch(this)" id="bodyChip">본문검색</button></div>
+    <div id="hits"></div>
+    ${rc.length?`<h2 class="sec">최근 본 문서</h2>`+rc.map(r=>hitCard(r)).join(''):''}
+    <div class="mini" style="text-align:center;margin-top:26px">법제처 대시보드 모바일 · 같은 노트·데이터를 씁니다</div>
+  </div>`;
+}
+let bodySearch=false;
+function toggleBodySearch(b){bodySearch=!bodySearch;b.classList.toggle('on',bodySearch);toast(bodySearch?'본문 내용으로 검색':'제목·사건번호로 검색');}
+function setTgt(k){curTgt=k;localStorage.mob_tgt=k;render();}
+function hitCard(x){
+  const tg=x.target||curTgt;
+  const row={target:tg,law_id:x.law_id||x.mst,mst:x.mst||x.law_id,name:x.name,effective_date:x.effective_date||'',target_label:TL[tg]||tg};
+  return `<div class="card tap hit" onclick='openDoc(${esc(JSON.stringify(row))})'>
+    <div class="t">${esc(x.name||'')}</div>
+    <div class="m"><span class="badge ${badgeCls(tg)}">${TL[tg]||tg}</span>
+      ${x.promulgation_no?`<span>${esc(x.promulgation_no)}</span>`:''}
+      ${x.effective_date?`<span>${esc(x.effective_date)}</span>`:''}
+      ${x.department?`<span>${esc(x.department)}</span>`:''}</div></div>`;
+}
+async function doSearch(){
+  if($('load').style.display==='flex')return;              // 로딩 중 재진입 차단
+  const q=$('q').value.trim();if(!q)return;
+  S.q=q;const cur=screen();loading(true);
+  try{
+    const d=await api('/api/search',{target:curTgt,query:q,search:bodySearch?'2':'1',display:'20'});
+    const h=$('hits');if(!h||screen()!==cur)return;         // 화면 떠났으면 폐기
+    const items=(d.normalized||{}).items||[];
+    h.innerHTML=S.hitsHtml=items.length
+      ? `<h2 class="sec">검색 결과 ${items.length}건</h2>`+items.map(x=>hitCard({...x,target:curTgt})).join('')
+      : '<div class="empty">결과가 없습니다.<br><span class="mini">본문검색을 켜거나 다른 대상 칩을 눌러보세요.</span></div>';
+  }catch(e){toast('검색 실패: '+e.message);}finally{loading(false);}
+}
+
+/* ============================ 화면: 최근 ============================ */
+function recentHtml(){
+  const a=recents();
+  return `<div class="wrap"><div style="height:6px"></div>
+    ${a.length?a.map(r=>hitCard(r)).join(''):'<div class="empty">아직 본 문서가 없습니다.</div>'}
+  </div>`;
+}
+
+/* ============================ 화면: 문서 ============================ */
+const detailCache={};
+async function loadDetail(row){
+  const key=[row.target,row.mst,row.law_id,row.effective_date||'',row.name||''].join('|');
+  if(detailCache[key])return detailCache[key];
+  const d=await api('/api/detail',{target:row.target||'eflaw',id:row.law_id||'',mst:row.mst||'',
+    effective_date:row.effective_date||'',law_name:row.name||''});
+  if(d.ok===false)throw new Error(d.error||'상세 조회 실패');
+  detailCache[key]=d.normalized||{};
+  return detailCache[key];
+}
+const CASE_TG=new Set(['prec','ttSpecialDecc','expc','decc','detc','moisCgmExpc','baiPvcs']);
+function secOf(arts,names){
+  for(const nm of names){const a=arts.find(x=>String(x.number||'').replace(/\s+/g,'').indexOf(nm)===0);
+    if(a)return (a.segments||[]).map(s=>s.text||'').join('\n');}
+  return '';
+}
+async function renderDoc(sc){
+  const row=sc.row;
+  setTop(row.name||'문서');
+  $('app').innerHTML='<div class="wrap"><div class="empty">불러오는 중…</div></div>';
+  let nz;
+  try{nz=await loadDetail(row);}
+  catch(e){if(screen()!==sc)return;$('app').innerHTML=`<div class="wrap"><div class="empty">${esc(e.message)}</div></div>`;return;}
+  if(screen()!==sc)return;                                  // 로딩 중 화면 이탈 → 폐기
+  const arts=nz.articles||[];
+  const noteBtn=`<div class="docBtns">
+      <button onclick='goNotes(${esc(JSON.stringify(row))})'>📝 노트</button>
+      <button onclick="copyDoc()">복사</button>
+      <button class="acc" onclick="window.scrollTo({top:0,behavior:'smooth'})">맨 위로</button></div>`;
+  if(CASE_TG.has(row.target)){
+    /* ── 판례/결정례: 섹션 카드 ── */
+    const no=secOf(arts,['사건번호','청구번호','안건번호'])||((row.name||'').match(/\S+/)||[''])[0];
+    const court=secOf(arts,['법원','법원명']);
+    const dt=(secOf(arts,['선고일자','결정일자','회신일자'])||'').replace(/(\d{4})(\d{2})(\d{2})/,'$1.$2.$3');
+    const kind=secOf(arts,['판결유형']);
+    const name=secOf(arts,['사건명'])||row.name||'';
+    const ORDER=[['판시사항',1],['판결요지',1],['결정요지',1],['주문',1],['주 문',1],['이유',1],['이 유',1],
+      ['처분개요',1],['청구주장',1],['심리및판단',1],['판단',1],
+      ['판례내용 앞부분',0],['참조조문',0],['참조판례',0]];
+    const used=new Set(['사건번호','청구번호','안건번호','법원','법원명','선고일자','결정일자','회신일자','판결유형','사건명']);
+    const cards=[];
+    const artByName=n=>arts.find(x=>String(x.number||'').replace(/\s+/g,'')===n.replace(/\s+/g,''));
+    for(const [nm,open] of ORDER){
+      const a=artByName(nm);if(!a)continue;used.add(String(a.number||''));
+      const txt=(a.segments||[]).map(s=>s.text||'').join('\n');if(!txt.trim())continue;
+      const long=txt.length>250;
+      const body=long?readable(esc(txt)):linkAll(esc(txt));
+      cards.push(secCard(nm.trim(),body,open));
+    }
+    for(const a of arts){ /* 나머지 섹션 */
+      if(used.has(String(a.number||'')))continue;
+      const txt=(a.segments||[]).map(s=>s.text||'').join('\n');if(!txt.trim())continue;
+      cards.push(secCard(a.number,linkAll(esc(txt)),0));
+    }
+    $('app').innerHTML=`<div class="wrap">
+      <div class="docHead"><div class="no">${esc(no)}</div><div class="nm">${esc(name)}</div>
+        <div class="mt">${court?`<span>${esc(court)}</span>`:''}${dt?`<span>${esc(dt)} 선고</span>`:''}
+          ${kind?`<span>${esc(kind)}</span>`:''}<span>${TL[row.target]||row.target}</span></div></div>
+      ${noteBtn}${cards.join('')}
+      <div class="mini" style="text-align:center;margin:18px 0">본문 속 <b>사건번호·법조항</b>을 탭하면 바로 이동합니다</div>
+    </div>`;
+  }else{
+    /* ── 법령: 조문 아코디언(펼칠 때 본문 채움 — 대형 법령 대응) ── */
+    const dkey=[row.target,row.mst,row.law_id,row.effective_date||'',row.name||''].join('|');
+    const meta=nz.metadata||{};
+    const list=arts.map((a,i)=>{
+      const segs=a.segments||[];if(!segs.length&&!(a.body||'').trim())return '';
+      return `<details class="art" data-i="${i}" data-no="${esc(a.number||'')}" ontoggle="if(this.open)fillArt(this)">
+        <summary><span class="no">${esc(a.number||'')}</span><span>${esc(a.title||'')}</span></summary>
+        <div class="bd"><div class="empty mini">…</div></div></details>`;
+    }).join('');
+    $('app').innerHTML=`<div class="wrap">
+      <div class="docHead"><div class="no" style="font-size:17px">${esc(meta.law_name||row.name||'')}</div>
+        <div class="mt"><span>${TL[row.target]||'법령'}</span>${row.effective_date?`<span>시행 ${esc(row.effective_date)}</span>`:''}
+          <span>조문 ${arts.length}</span></div></div>
+      ${noteBtn}
+      <div class="artFilter"><input placeholder="조문 번호·내용으로 거르기 (예: 130 또는 과세표준)" oninput="filterArts(this.value)"></div>
+      <div id="artList" data-dkey="${esc(dkey)}">${list}</div></div>`;
+    if(sc.jump)setTimeout(()=>jumpArticle(sc.jump),150);
+  }
+  if(sc.sy!=null){const y=sc.sy;sc.sy=null;requestAnimationFrame(()=>window.scrollTo(0,y));}  // 복귀 스크롤
+}
+function secCard(title,bodyHtml,open){
+  return `<div class="secCard ${open?'':'fold'}"><div class="hd" onclick="this.parentElement.classList.toggle('fold')">
+    <span>${esc(title)}</span><span class="arw">▾</span></div><div class="bd">${bodyHtml}</div></div>`;
+}
+function fillArt(el){
+  if(el.dataset.done)return;el.dataset.done='1';
+  const box=el.closest('#artList');
+  const arts=box?(((detailCache[box.dataset.dkey]||{}).articles)||[]):[];
+  const a=arts[+el.dataset.i];if(!a)return;
+  const segs=(a.segments&&a.segments.length)?a.segments:[{text:a.body||''}];
+  el.querySelector('.bd').innerHTML=segs.map(s=>`<div class="u">${linkAll(esc(s.text||''),true)}</div>`).join('');
+}
+function filterArts(q){
+  q=(q||'').trim();
+  const box=document.getElementById('artList');
+  const arts=box?(((detailCache[box.dataset.dkey]||{}).articles)||[]):[];
+  document.querySelectorAll('#artList details.art').forEach(el=>{
+    if(!q){el.style.display='';return;}
+    const a=arts[+el.dataset.i]||{};
+    const hay=(a.number||'')+' '+(a.title||'')+' '+((a.segments||[]).map(s=>s.text||'').join(' '));
+    el.style.display=hay.indexOf(q)>=0?'':'none';
+  });
+}
+async function copyDoc(){
+  const sc=screen();if(!sc||sc.type!=='doc')return;
+  try{const nz=await loadDetail(sc.row);
+    const txt=(nz.articles||[]).map(a=>(a.number||'')+' '+(a.title||'')+'\n'+(a.segments||[]).map(s=>s.text||'').join('\n')).join('\n\n');
+    await navigator.clipboard.writeText(txt);toast('전체 본문을 복사했습니다');
+  }catch(e){toast('복사 실패');}
+}
+
+/* ============================ 화면: 노트 ============================ */
+function goNotes(row){go({type:'notes',row});}
+async function renderNotes(sc){
+  setTop('📝 '+((sc.row&&sc.row.name)||'전체 노트'));
+  $('app').innerHTML='<div class="wrap"><div class="empty">노트 불러오는 중…</div></div>';
+  let items=[];
+  try{
+    if(sc.row){
+      const d=await api('/api/thread_notes',{law_name:sc.row.name||'',law_id:sc.row.law_id||'',mst:sc.row.mst||'',
+        sort:'relevance',page:'1',page_size:'50'});
+      const key=v=>String(v||'').trim();
+      items=(d.items||[]).filter(x=>{
+        const refs=(Array.isArray(x.refs)?x.refs:[]).concat([x]);
+        return refs.some(r=>(key(r.mst)&&key(r.mst)===key(sc.row.mst))||(key(r.law_id)&&key(r.law_id)===key(sc.row.law_id))
+          ||(key(r.law_name)&&key(sc.row.name)&&(key(sc.row.name).indexOf(key(r.law_name))>=0||key(r.law_name).indexOf(key(sc.row.name))>=0)));
+      });
+    }else{
+      const d=await api('/api/thread_notes',{sort:'latest',page:'1',page_size:'50'});
+      items=d.items||[];
+    }
+  }catch(e){if(screen()!==sc&&sc.row)return;$('app').innerHTML=`<div class="wrap"><div class="empty">${esc(e.message)}</div></div>`;return;}
+  if(sc.row&&screen()!==sc)return;
+  $('app').innerHTML=`<div class="wrap">${
+    items.length?items.map(n=>`
+      <div class="noteCard">
+        <div class="ti">${esc(n.title||'')}</div>
+        <div class="meta">${n.source==='claude'?'🤖 클로드':'✍️ 나'} · #${n.id} · ${esc(n.created_at||'')}
+          · <a class="ll" data-note-open="${n.id}" data-law="${esc(n.law_name||'')}" onclick="return openNoteDocFromList(event,${n.id})" style="border-bottom:none">${esc(n.law_name||'')} ↗</a></div>
+        ${n.q?`<div class="nq">Q. ${esc(n.q)}</div>`:''}
+        <div>${noteRich(n.body||'')}</div>
+      </div>`).join('')
+    :'<div class="empty">노트가 없습니다.</div>'}</div>`;
+  window._notes={};items.forEach(n=>window._notes[n.id]=n);
+  if(sc.sy!=null){const y=sc.sy;sc.sy=null;requestAnimationFrame(()=>window.scrollTo(0,y));}
+}
+function openNoteDocFromList(ev,id){
+  ev.preventDefault();ev.stopPropagation();
+  const n=(window._notes||{})[id];if(!n)return false;
+  openDoc({target:n.target||'eflaw',law_id:n.law_id||'',mst:n.mst||'',name:n.law_name||'문서',target_label:TL[n.target]||''},n.article||'');
+  return false;
+}
+
+/* ============================ 렌더 루프 ============================ */
+function render(){
+  const sc=screen();if(!sc)return;
+  if(sc.type==='home'){setTop('판례 리더');$('app').innerHTML=homeHtml();if(S.q){if(S.hitsHtml)$('hits').innerHTML=S.hitsHtml;else doSearch();}}
+  else if(sc.type==='recent'){setTop('최근 본 문서');$('app').innerHTML=recentHtml();}
+  else if(sc.type==='allnotes'){renderNotes({type:'notes',row:null});return;}
+  else if(sc.type==='doc'){renderDoc(sc);}
+  else if(sc.type==='notes'){renderNotes(sc);}
+  setTop($('topTitle').textContent);
+}
+try{history.scrollRestoration='manual';}catch(e){}
+S.stack=[{type:'home'}];
+history.replaceState({i:1},'','#1');
+render();
+</script>
+</body>
+</html>
