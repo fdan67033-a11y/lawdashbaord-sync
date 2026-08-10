@@ -3860,6 +3860,33 @@ def _broad_sync_extras() -> Dict[str, Any]:
            (일정 병합·UI채널은 그 대시보드 로직이라 실행 중일 때만 가능).
     어느 단계도 삭제·회귀 없음 — 각 단계는 기존 검증된 스크립트/버튼 로직 그대로."""
     out: Dict[str, Any] = {}
+    import subprocess
+    import sys as _s
+
+    def _todo_up() -> bool:
+        import socket as _sock
+        try:
+            with _sock.create_connection(("127.0.0.1", 17777), timeout=0.4):
+                return True
+        except Exception:
+            return False
+
+    # 꺼져 있으면 자동으로 켠다 (집/회사 표준 경로 순회)
+    if not _todo_up():
+        for cand in (Path(r"C:\Users\jeons\Downloads\todo_manual_dashboard\todo_manual_dashboard_package"),
+                     Path(r"C:\todo_manual_dashboard\todo_manual_dashboard_package")):
+            if (cand / "app.py").exists():
+                try:
+                    subprocess.Popen('cmd /c chcp 65001 >nul & py -3.12 app.py', cwd=str(cand), shell=True,
+                                     creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
+                except Exception:
+                    continue
+                for _ in range(50):                     # 최대 25초 기동 대기
+                    if _todo_up():
+                        break
+                    time.sleep(0.5)
+                break
+
     try:
         r = requests.get("http://127.0.0.1:17777/api/sync", timeout=280)
         j = r.json()
@@ -3869,9 +3896,6 @@ def _broad_sync_extras() -> Dict[str, Any]:
         return out
     except Exception:
         pass
-
-    import subprocess
-    import sys as _s
     out["via"] = "fallback"
     msgs: List[str] = []
     base = Path(r"C:\python_programs")
