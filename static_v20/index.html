@@ -1602,10 +1602,13 @@ async function toggleSyncAuto(on){
 async function syncNow(){
   const btn=$('syncNowBtn'), st=$('syncStatus');
   if(btn){ btn.disabled=true; btn.textContent='동기화 중…'; }
-  if(st) st.textContent='pull → push 진행 중…';
+  if(st) st.textContent='광범위 동기화 진행 중… (이 저장소 + 일정·회사자료·읽을것들·UI — 최대 1~2분)';
   try{
     const d=await(await fetch('/api/sync/now',{method:'POST'})).json();
-    setStatus(d.ok?'✅ 동기화 완료':'⚠ 동기화 일부 실패(콘솔 로그 확인)', !d.ok);
+    const ex=d.extras||{};
+    const exMsg=ex.message?(' | '+ex.message):'';
+    const via=ex.via==='todo-dashboard'?' (광범위)':(ex.via==='fallback'?' (부분 — 일정대시보드 꺼짐)':'');
+    setStatus((d.ok?'✅ 동기화 완료':'⚠ 동기화 일부 실패(콘솔 로그 확인)')+via+exMsg, !d.ok);
   }catch(e){ setStatus('동기화 실패: '+(e.message||e), true); }
   if(btn){ btn.disabled=false; btn.textContent='🔄 지금 동기화'; }
   loadSyncStatus();

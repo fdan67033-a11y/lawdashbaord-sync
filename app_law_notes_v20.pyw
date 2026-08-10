@@ -3851,11 +3851,80 @@ def api_sync_toggle() -> Response:
     return jsonify({"ok": True, "auto": cfg["auto"]})
 
 
+def _broad_sync_extras() -> Dict[str, Any]:
+    """[지금 동기화]를 업무통합대시보드의 광범위 동기화와 동일 범위로 확장 (2026-08-09).
+
+    1순위: 업무통합대시보드(17777)가 떠 있으면 그 /api/sync에 위임
+           → 일정 병합 + 회사자료(readables) 받기 + 리포트 올리기 + 읽을것들 git + UI 기기별 채널 전부.
+    폴백  : 17777이 꺼져 있으면 읽을것들 스크립트·git만 직접 수행
+           (일정 병합·UI채널은 그 대시보드 로직이라 실행 중일 때만 가능).
+    어느 단계도 삭제·회귀 없음 — 각 단계는 기존 검증된 스크립트/버튼 로직 그대로."""
+    out: Dict[str, Any] = {}
+    try:
+        r = requests.get("http://127.0.0.1:17777/api/sync", timeout=280)
+        j = r.json()
+        out["via"] = "todo-dashboard"
+        out["ok"] = bool(j.get("ok"))
+        out["message"] = str(j.get("message", ""))
+        return out
+    except Exception:
+        pass
+
+    import subprocess
+    import sys as _s
+    out["via"] = "fallback"
+    msgs: List[str] = []
+    base = Path(r"C:\python_programs")
+    rd = base / "읽을것들"
+
+    def run(args, cwd, to=300):
+        try:
+            p = subprocess.run(args, cwd=str(cwd), capture_output=True, text=True,
+                               encoding="utf-8", errors="replace", timeout=to,
+                               creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
+            return p.returncode, (p.stdout or "") + (p.stderr or "")
+        except Exception as e:
+            return -1, str(e)
+
+    if (rd / "_pull_company.py").exists():
+        rc, log = run([_s.executable, str(rd / "_pull_company.py")], rd, 600)
+        m = re.search(r"신규 (\d+) · 갱신 (\d+)", log)
+        if rc == 0 and m and (m.group(1) != "0" or m.group(2) != "0"):
+            msgs.append(f"회사자료 +{m.group(1)}·갱신{m.group(2)}")
+        run([_s.executable, str(rd / "_gather.py")], rd, 300)
+        rc2, log2 = run([_s.executable, str(rd / "_push_reports.py")], rd, 600)
+        m2 = re.search(r"올림 신규 (\d+) · 갱신 (\d+)", log2)
+        if rc2 == 0 and m2 and (m2.group(1) != "0" or m2.group(2) != "0"):
+            msgs.append(f"리포트 올림 +{m2.group(1)}·갱신{m2.group(2)}")
+    if (base / ".git").exists():
+        run(["git", "add", "읽을것들"], base)
+        rc, _ = run(["git", "diff", "--cached", "--quiet", "--", "읽을것들"], base)
+        if rc == 1:
+            run(["git", "commit", "-m",
+                 f"읽을것들 자동 동기화 ({os.environ.get('COMPUTERNAME','PC')})"], base)
+        rc, _log = run(["git", "-c", "rebase.autoStash=true", "pull", "--rebase", "origin", "main"], base)
+        if rc != 0:
+            run(["git", "rebase", "--abort"], base)
+            msgs.append("읽을것들 충돌⚠")
+        else:
+            rc2, _ = run(["git", "push", "origin", "main"], base)
+            msgs.append("읽을것들 ✓" if rc2 == 0 else "읽을것들 받기만 ✓")
+    msgs.append("일정·UI채널은 업무통합대시보드 실행 중일 때 함께 동기화")
+    out["ok"] = True
+    out["message"] = " · ".join(msgs)
+    return out
+
+
 @app.route("/api/sync/now", methods=["POST"])
 def api_sync_now() -> Response:
     if not sync_util:
         return jsonify({"ok": False, "error": "sync 모듈 없음"})
-    return jsonify(sync_util.do_sync())
+    result = sync_util.do_sync()          # ① 이 대시보드 저장소(코드·UI·노트) — 기존 동작
+    try:
+        result["extras"] = _broad_sync_extras()   # ② 광범위(일정·HTML·읽을것들·UI채널)
+    except Exception as e:
+        result["extras"] = {"ok": False, "message": "확장 동기화 오류: " + str(e)}
+    return jsonify(result)
 
 
 @app.route("/api/pools", methods=["GET", "POST"])
