@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>'사실상 취득'과 '사실상 소유' — 두 개념은 같은 것인가</title>
+<style>
+:root{
+ --fs:15.6px;
+ --bg:#fcfcfd; --fg:#1c2128; --muted:#6b7280; --faint:#9aa2ae;
+ --pc:#0f766e; --ok:#0a7d55; --warn:#c2323f; --amber:#9a6407; --alt:#7c3aed;
+ --card:#ffffff; --box:#f5f6fa; --line:#e5e8ee; --line2:#eef0f5;
+ --side:#f7f8fb; --chip:#e8f3f1; --mark:#ffeb9c; --markfg:#4a3b00;
+ --shadow:0 1px 2px rgba(16,24,40,.04),0 4px 14px rgba(16,24,40,.05);
+}
+html.dark{
+ --bg:#181b21; --fg:#e3e7ed; --muted:#98a2b3; --faint:#6b7684;
+ --pc:#5eead4; --ok:#5cd6a0; --warn:#f2909a; --amber:#e0b264; --alt:#c0a4fb;
+ --card:#20242c; --box:#1c2028; --line:#2f3641; --line2:#262c35;
+ --side:#15181d; --chip:#1e3330; --mark:#5f5000; --markfg:#ffe98a;
+ --shadow:0 1px 2px rgba(0,0,0,.2),0 4px 14px rgba(0,0,0,.18);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);display:flex;
+ font-family:"Pretendard Variable","Pretendard","Apple SD Gothic Neo","맑은 고딕","Malgun Gothic",system-ui,sans-serif;
+ font-size:var(--fs);line-height:1.9;letter-spacing:-.003em;
+ word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased}
+#nav{width:262px;flex:0 0 262px;height:100vh;position:sticky;top:0;overflow-y:auto;overscroll-behavior:contain;
+ background:var(--side);border-right:1px solid var(--line);padding:18px 12px 80px;font-size:13px}
+#nav .ttl{font-size:13px;font-weight:700;color:var(--muted);margin:0 8px 14px;line-height:1.5}
+#nav .ttl b{color:var(--pc);font-weight:800;display:block;font-size:14.5px;margin-bottom:2px}
+#nav a{display:block;color:var(--muted);text-decoration:none;padding:6px 11px;border-radius:8px;line-height:1.5;margin-bottom:1px}
+#nav a:hover{background:var(--chip);color:var(--fg)}
+#nav a.cur{background:var(--chip);color:var(--pc);font-weight:700}
+#nav a i{font-style:normal;font-weight:800;color:var(--pc);margin-right:7px;font-size:11.5px}
+#nav .navback{margin:14px 8px 0;padding-top:12px;border-top:1px solid var(--line)}
+#nav .navback a{color:var(--pc);font-weight:700;font-size:12.5px;padding:5px 3px}
+#main{flex:1;min-width:0;max-width:880px;margin:0 auto;padding:0 34px 160px}
+header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);
+ backdrop-filter:saturate(180%) blur(10px);border-bottom:1px solid var(--line);
+ padding:13px 0 11px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+header h1{font-size:16px;margin:0;font-weight:800;letter-spacing:-.02em}
+header .sub{font-size:12px;color:var(--faint)}
+.btns{margin-left:auto;display:flex;gap:5px}
+.btn{border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:9px;
+ padding:6px 11px;font-size:12px;cursor:pointer;font-weight:700;font-family:inherit;text-decoration:none;line-height:1.5}
+.btn:hover{border-color:var(--pc);color:var(--pc)}
+h2{font-size:21px;margin:64px 0 14px;padding:0 0 12px;color:var(--pc);letter-spacing:-.025em;
+ border-bottom:2px solid var(--pc);scroll-margin-top:74px;font-weight:800;line-height:1.45}
+h2 .no{color:var(--faint);font-weight:800;font-size:14px;margin-right:8px}
+h3{font-size:16.5px;margin:30px 0 8px;letter-spacing:-.02em;font-weight:800}
+h4{font-size:14.5px;margin:20px 0 6px}
+p{margin:.9em 0}
+li{margin:.35em 0}
+ul,ol{padding-left:22px;margin:.7em 0}
+b{font-weight:700}
+mark{background:var(--mark);color:var(--markfg);padding:1px 4px;border-radius:4px;font-weight:700}
+.lead{background:var(--box);border-left:3px solid var(--pc);border-radius:0 12px 12px 0;
+ padding:16px 20px;font-size:14.8px;margin:16px 0 26px}
+.q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 24px;margin:18px 0;
+ box-shadow:var(--shadow);font-size:15px}
+.q .who{font-size:11.5px;font-weight:800;color:var(--pc);letter-spacing:.05em;display:block;margin-bottom:6px}
+.quote{border-left:3px solid var(--line);padding:4px 0 4px 16px;margin:14px 0;color:var(--muted);font-size:14.3px}
+.quote .src{display:block;font-size:12px;color:var(--faint);margin-top:6px}
+.note{background:rgba(154,100,7,.07);border:1px solid rgba(154,100,7,.16);border-left:3px solid var(--amber);
+ border-radius:0 12px 12px 0;padding:13px 17px;margin:14px 0;font-size:14.3px}
+.note>b:first-child{color:var(--amber)}
+.warnbox{background:rgba(194,50,63,.06);border:1px solid rgba(194,50,63,.15);border-left:3px solid var(--warn);
+ border-radius:0 12px 12px 0;padding:13px 17px;margin:14px 0;font-size:14.3px}
+.warnbox>b:first-child{color:var(--warn)}
+.okbox{background:rgba(10,125,85,.06);border:1px solid rgba(10,125,85,.15);border-left:3px solid var(--ok);
+ border-radius:0 12px 12px 0;padding:13px 17px;margin:14px 0;font-size:14.3px}
+.okbox>b:first-child{color:var(--ok)}
+.hypo{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:12px;margin:20px 0}
+.hcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:17px 19px;box-shadow:var(--shadow)}
+.hcard .tag{display:inline-block;font-size:11px;font-weight:800;border-radius:6px;padding:2px 9px;margin-bottom:8px;letter-spacing:.03em}
+.hcard.h1 .tag{background:#eceef2;color:#5d6675}.hcard.h2 .tag{background:#d9f2ee;color:#0f766e}.hcard.h3 .tag{background:#f0eafc;color:#6431b8}
+html.dark .hcard.h1 .tag{background:#2e343d;color:#a7b0be}html.dark .hcard.h2 .tag{background:#1e3330;color:#5eead4}html.dark .hcard.h3 .tag{background:#2c2342;color:#c1a6f5}
+.hcard h4{margin:0 0 6px;font-size:14.5px}
+.hcard p{font-size:13.4px;color:var(--muted);margin:.4em 0;line-height:1.75}
+.verdict{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);font-size:13px}
+.verdict b{font-size:11px;letter-spacing:.05em;display:block;margin-bottom:3px;color:var(--faint)}
+.tblwrap{overflow-x:auto;margin:16px 0;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.6px;line-height:1.7}
+th,td{padding:10px 13px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line2)}
+th{background:color-mix(in srgb,var(--pc) 8%,transparent);font-weight:800;color:var(--pc);
+ font-size:12.6px;white-space:nowrap;border-bottom:1px solid var(--line)}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:nth-child(even){background:color-mix(in srgb,var(--box) 60%,transparent)}
+tbody td:first-child{font-weight:700}
+td.c,th.c{text-align:center}
+.ref{font-size:13.4px;line-height:1.8}
+.ref li{margin:.6em 0}
+.ref a{color:var(--pc);text-decoration:none;border-bottom:1px dotted color-mix(in srgb,var(--pc) 40%,transparent)}
+.ref a:hover{background:var(--chip)}
+.ref .k{font-weight:700}
+.ref .vf{font-size:11px;font-weight:800;border-radius:5px;padding:1px 6px;margin-left:5px;white-space:nowrap}
+.vf.full{background:#d9f2ee;color:#0f766e}.vf.abs{background:#e8f0fe;color:#1a4fc4}.vf.cit{background:#fdf1e3;color:#96570a}
+html.dark .vf.full{background:#1e3330;color:#5eead4}html.dark .vf.abs{background:#1e2b42;color:#8fb2ff}html.dark .vf.cit{background:#3e2b15;color:#e6b06a}
+.mini{font-size:12.3px;color:var(--faint)}
+#top-btn{position:fixed;right:20px;bottom:20px;z-index:30;border:1px solid var(--line);background:var(--card);
+ color:var(--muted);border-radius:12px;width:42px;height:42px;font-size:14px;cursor:pointer;box-shadow:var(--shadow)}
+#top-btn:hover{color:var(--pc);border-color:var(--pc)}
+a.lawlink{color:var(--pc);font-weight:600;text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--pc) 35%,transparent)}
+a.lawlink:hover{background:var(--chip);border-radius:4px}
+@media(max-width:940px){#nav{display:none}#main{padding:0 18px 100px}h2{font-size:19px;margin-top:46px}}
+@media print{#nav,.btns,#top-btn{display:none}body{display:block;font-size:10.5pt}#main{max-width:none;padding:0}
+ header{position:static}h2{break-before:page}a{color:inherit;text-decoration:none}.tblwrap{overflow:visible}}
+</style>
+</head>
+<body>
+<nav id="nav">
+<div class="ttl"><b>두 개의 '사실상'</b>취득세 취득 vs 재산세 소유</div>
+<a href="#s1"><i>①</i>질문</a>
+<a href="#s2"><i>②</i>결론 먼저</a>
+<a href="#s3"><i>③</i>요건과 징표 — 차이의 본질</a>
+<a href="#s4"><i>④</i>세 축의 구조 분석</a>
+<a href="#s5"><i>⑤</i>취득세 내부의 균열</a>
+<a href="#s6"><i>⑥</i>준별이 실정법으로 드러난 곳</a>
+<a href="#s7"><i>⑦</i>예규 107-1을 어떻게 볼 것인가</a>
+<a href="#s8"><i>⑧</i>비교법 — 일본·독일</a>
+<a href="#s9"><i>⑨</i>학술 지형과 연구공백</a>
+<a href="#s10"><i>⑩</i>반론과 응답</a>
+<a href="#s11"><i>⑪</i>실무 처방</a>
+<a href="#s12"><i>⑫</i>참고문헌</a>
+<a href="#s13"><i>⑬</i>판단 유보</a>
+<div class="navback"><a href="지방세_취득세_실무사례집.html">← 취득세 실무 사례집</a><a href="취득세_납부기한_등기접수일_연구.html">← 납부기한 연구</a></div>
+</nav>
+<div id="main">
+<header>
+  <h1>'사실상 취득'과 '사실상 소유'</h1>
+  <span class="sub">두 개념은 같은 것인가 · 2026.8. 기준</span>
+  <span class="btns">
+    <a class="btn" href="지방세_취득세_실무사례집.html">사례집</a>
+    <button class="btn" onclick="window.print()">인쇄</button>
+    <button class="btn" onclick="document.documentElement.classList.toggle('dark');try{localStorage.setItem('cndark',document.documentElement.classList.contains('dark')?'1':'0')}catch(e){}">테마</button>
+  </span>
+</header>
+
+<h2 id="s1"><span class="no">①</span>질문</h2>
+
+<div class="q"><span class="who">질문 — 지방세 실무 담당자</span>
+취득세에서 <b>취득의 시기</b> 판단과 재산세에서의 <b>실질적 소유권</b> 판단은, 엄밀하게 따지면 다른 건가?
+<br><br>
+근데 그냥 <mark>편의상 취득의 시기를 재산세에서 차용하는 건가?</mark>
+<br><br>
+이에 대한 논문 같은 학술자료가 있나?
+</div>
+
+<p>지방세법에는 닮아 보이는 두 개의 '사실상'이 있다.</p>
+
+<div class="tblwrap"><table>
+<thead><tr><th></th><th>조문</th><th>개념</th><th>묻는 것</th></tr></thead>
+<tbody>
+<tr><td><b>(A) 취득세</b></td><td>제7조 제2항 + 시행령 제20조</td><td><b>사실상 취득</b> · 취득의 시기</td><td>언제 취득이 성립하는가</td></tr>
+<tr><td><b>(B) 재산세</b></td><td>제107조 제1항</td><td><b>사실상 소유하고 있는 자</b></td><td>6월 1일 현재 누가 소유자인가</td></tr>
+</tbody>
+</table></div>
+
+<p>그리고 실무는 <b>「지방세관계법 운영 예규」 107-1</b>에 따라 (B)를 판단할 때 (A)의 취득시기 규정을 그대로 끌어다 쓴다.</p>
+
+<div class="quote">"「지방세법」제107조제1항의 「사실상 소유하고 있는 자」라 함은 <b>같은 법 시행령 제20조에 규정된 취득의 시기가 도래되어</b> 당해 토지를 취득한 자를 말하며, 법 제120조제1항의 규정에 의하여 신고하는 경우에는 같은 법 제107조제2항제1호의 규정에 우선하여 적용된다."<span class="src">「지방세관계법 운영 예규」 107-1 【사실상의 소유자】</span></div>
+
+<p>그런데 <b>법령상 준용 규정은 없다.</b> 예규는 행정규칙이라 법원을 기속하지 않는다. 그리고 대법원은 재산세 '사실상 소유자'를 "공부상 등재 여부를 불문한 <b>실질적 소유권자</b>"로 정의하며 시행령 제20조를 원용하지 않는 흐름이다. 이 문서는 세 가설을 놓고 5개 축(취득세 학설·재산세 학설·예규 비판·판례 교차·이론 구조)으로 조사한 결과를 정리한 것이다.</p>
+
+<div class="hypo">
+<div class="hcard h1"><span class="tag">가설 1</span><h4>동일설</h4>
+<p>두 개념 모두 '실질적 소유권 귀속'을 묻는 것이므로 본질적으로 같다. 취득시기 규정은 그 판단을 정형화한 기술적 장치일 뿐이다.</p>
+<div class="verdict"><b>판정</b>성립하지 않음</div></div>
+<div class="hcard h2"><span class="tag">가설 2</span><h4>준별설</h4>
+<p>취득세는 '이전이라는 사건'의 시점을 특정하고, 재산세는 '보유라는 상태'의 귀속을 묻는다. 논리적 층위가 다르며 차용은 경계사안에서 오류를 낳는다.</p>
+<div class="verdict"><b>판정</b>개념 층위에서 채택</div></div>
+<div class="hcard h3"><span class="tag">가설 3</span><h4>수렴설</h4>
+<p>개념은 다르지만 통상의 유상매매에서는 판정 결과가 수렴하므로 예규의 차용은 행정편의상 합리적이다. 신탁·조합·환지에서만 갈린다.</p>
+<div class="verdict"><b>판정</b>결과 층위에서 채택</div></div>
+</div>
+
+<h2 id="s2"><span class="no">②</span>결론 먼저</h2>
+
+<div class="lead">
+<b>개념의 층위에서는 준별설이, 판정 결과의 층위에서는 수렴설이 옳다. 동일설은 성립하지 않는다.</b>
+<br><br>
+다만 "다르다"는 말의 의미를 정확히 새겨야 한다. 두 개념이 서로 다른 <b>대상</b>을 묻는 것이 아니라,
+<mark>동일한 사실(잔금청산)을 서로 다른 '규범적 지위'로 취급한다</mark>는 데 차이의 본질이 있다.
+<br><br>
+그리고 질문의 후단 — "편의상 차용하는 것인가" — 에 대한 답은 <b>그렇다</b>에 가깝다.
+정확히는 <b>"통상사안에서의 결과적 수렴을 규범적 준용으로 오독한, 정당화 논증이 결여된 채 관행화된 의제"</b>다.
+</div>
+
+<h2 id="s3"><span class="no">③</span>요건과 징표 — 차이의 본질</h2>
+
+<p>핵심 정식은 <b>요건(要件)과 징표(徵表)의 구별</b>이다.</p>
+
+<div class="tblwrap"><table>
+<thead><tr><th></th><th>잔금청산의 지위</th><th>성질</th></tr></thead>
+<tbody>
+<tr><td><b>(A) 취득세</b></td><td><b>법률요건</b> — 제7조 제2항 + 시행령 제20조 제2항이 사실상의 잔금지급일을 취득시기로 <b>정한다</b></td><td>그날이 도래하면 납세의무가 성립하고, 도래하지 않으면 성립하지 않는다. <b>포섭(Subsumtion)의 대상</b></td></tr>
+<tr><td><b>(B) 재산세</b></td><td><b>징표</b> — 대법원 98두11458은 "대금 전액을 지불한 경우<b>와 같이</b> 실질적인 소유권 변동이 있는 경우"라고 예시적 어법을 쓴다</td><td>대금완납은 실질적 소유권 변동의 전형적 징표이지 정의가 아니다. <b>반증 가능하고 다른 사정으로 대체될 수 있다</b></td></tr>
+</tbody>
+</table></div>
+
+<p>환지예정지 사안에서는 대금 없이도 사실상 소유가 인정된다는 점이 (B)의 징표적 성격을 잘 보여준다.</p>
+
+<div class="okbox"><b>예규 107-1의 조작이 발생하는 지점</b>그것은 (B)의 <b>징표</b>를 (A)의 <b>요건</b>으로 승격시킨다. 개념법학적으로는 증거(Beweisanzeichen)를 구성요건(Tatbestandsmerkmal)으로 전환하는 것이며, <mark>논증 없이는 허용될 수 없는 층위 이동</mark>이다.</div>
+
+<h2 id="s4"><span class="no">④</span>세 축의 구조 분석</h2>
+
+<h3>1. 과세물건 — 사건(event) 대 상태(status)</h3>
+<p>(A)의 과세물건은 '취득'이라는 <b>사건</b>이다. 대법원 2013두2778은 취득세를 "재화의 이전이라는 사실 자체를 포착하여 과세하는 유통세로서 <b>취득자가 실질적으로 완전한 내용의 소유권을 취득하는가의 여부에 관계없이</b> 사실상의 취득행위 자체를 과세대상으로 한다"고 판시한다.</p>
+<p>(B)의 과세물건은 '재산의 보유'라는 <b>상태</b>이며, 판례 정식은 "공부상 소유자로 등재되어 있는지 여부를 불문하고 해당 재산에 대한 <b>실질적인 소유권을 가진 자</b>"(2005두15045, 2014두2980·2997, 2016두56790)이다.</p>
+<p>전자는 <b>'완전한 소유권 취득 여부와 무관'</b>을 명시하고, 후자는 <b>'실질적 소유권 보유'</b>를 요건으로 삼는다. 문언상 정반대 방향의 기준이다.</p>
+
+<h3>2. 판정 대상 — 미지수가 무엇인가</h3>
+<p><b>지방세기본법 제34조가 결정적이다.</b> 취득세의 납세의무는 "과세물건을 취득하는 때" 성립하고, 재산세는 "과세기준일"에 성립한다.</p>
+
+<div class="tblwrap"><table>
+<thead><tr><th></th><th>성립시기</th><th>미지수</th><th>시행령 제20조의 역할</th></tr></thead>
+<tbody>
+<tr><td><b>취득세</b></td><td><b>변수(when)</b></td><td>시점 — 납세의무자는 그 시점의 함수로 따라 나옴</td><td>이 미지수를 푸는 규범</td></tr>
+<tr><td><b>재산세</b></td><td><b>법정 상수(6.1.)</b></td><td>귀속주체(who)뿐</td><td><mark>채울 규범적 공백이 없음</mark></td></tr>
+</tbody>
+</table></div>
+
+<p>재산세에 시행령 제20조를 끌어오는 것은 <b>'시기 확정 규범'을 '귀속 확정 규범'으로 전용하는 기능전환(Funktionswandel)</b>이다.</p>
+
+<h3>3. 규범적 기능</h3>
+<p>(A)의 '사실상 취득'은 학설상 <b>"완전한 소유권을 취득할 지위에 있으나 등기 등 형식적 취득요건을 갖추지 못한 경우 취득의 시기를 앞당기기 위한 개념"</b>(김동욱 2020)이다. <b>시간축을 앞으로 당기는 장치</b>다.</p>
+<p>(B)의 '사실상 소유자'는 실질적 담세력의 <b>인적 귀속을 포착하는 장치</b>다.</p>
+<p>나아가 시간축 조정의 정당화 논거("등기라는 형식이 늦어질 뿐 실질은 완성되었으므로 앞당긴다")는 재산세로 이전되지 않는다. <b>재산세는 앞당길 시점이 없기 때문이다.</b></p>
+
+<h2 id="s5"><span class="no">⑤</span>취득세 내부의 균열 — 예상 밖의 발견</h2>
+
+<p>조사 과정에서 드러난 가장 뜻밖의 사실은, 예규가 붙잡은 <b>시행령 제20조를 학계 누구도 '사실상 취득'의 본질로 보지 않는다</b>는 점이다.</p>
+
+<div class="tblwrap"><table>
+<thead><tr><th>학설</th><th>'사실상 취득'의 본질</th><th>시행령 제20조의 지위</th></tr></thead>
+<tbody>
+<tr><td>㉮ 소유권 실질취득설<br><span class="mini">김동욱(2020), 권형기·고영우(2022)</span></td><td>"대금 지급과 같은 소유권 취득의 실질적 요건을 갖추어 완전한 소유권을 취득할 지위"</td><td>계약상 잔금지급일은 <b>"일종의 추정규정"</b></td></tr>
+<tr><td>㉯ 사실상 지배력설<br><span class="mini">이창희(2024), 전경근(2023)</span></td><td>"사실상 취득이란 <b>사실상 지배력</b>의 취득을 말한다" / "사용·수익·처분할 수 있는 권한을 가지게 된 때"</td><td>"잔금청산은 사실상 지배력의 취득을 <b>추단케 할 뿐</b>"</td></tr>
+<tr><td>㉰ 대금청산 형식기준</td><td colspan="2"><b>어느 학설도 본질로 보지 않는다</b></td></tr>
+</tbody>
+</table></div>
+
+<div class="note"><b>헌재 2019헌바107(2022.3.31.)</b>지방세법 제7조 제2항의 '부동산의 사실상 취득'을 <b>"사회통념상 대금의 거의 전부가 지급되었다고 볼 수 있는 경우"</b>로 한정해석하여 합헌 결정했다. 사안은 매매대금 146.6억 중 <b>448만원(0.3%)</b>만 미납된 상태였다. 즉 <mark>잔금이 남아 있어 시행령 제20조상 취득시기가 도래하지 않았음에도 제7조 제2항의 '사실상 취득'은 성립할 수 있다.</mark></div>
+
+<p>이것이 뜻하는 바는 무겁다. <b>취득세 내부에서조차 법 제7조 제2항(사실상 취득)과 시행령 제20조(취득시기)는 일치하지 않는다.</b> 그렇다면 예규 107-1은 (A)의 본체가 아니라 <b>(A)의 하위 기술규정만을, 그것도 추정규정에 불과한 것을 확정기준으로 격상시켜</b> 차용한 셈이 된다. <b>오독이 이중으로 겹친다.</b></p>
+
+<p>여기에 윤문구·문필주·박훈(2020)의 실증이 더해진다. 조세심판원은 대금 <b>지급비율</b>을, 법원은 미지급액의 <b>절대액·사회통념</b>을 본다. 취득세 내부에서도 '사실상 취득'의 판정기준이 확정되지 않았다는 사실은, 그 기준을 재산세로 통째로 차용하는 예규의 전제 — <b>"(A)는 정형화된 기준이다"</b> — 를 무너뜨린다.</p>
+
+<h2 id="s6"><span class="no">⑥</span>준별이 실정법으로 드러난 곳</h2>
+
+<h3>(가) 신탁 — 입법자 스스로의 자인</h3>
+<p>지방세법 제107조 제2항 제5호(2020.12.29. 개정, 2021.1.1. 시행)는 신탁재산 재산세 납세의무자를 <b>위탁자</b>로 하는 반면, 취득세는 신탁으로 인한 이전 시 수탁자를 취득자로 본다. <b>동일 부동산·동일 시점에 (A)의 취득자와 (B)의 사실상 소유자가 법률에 의해 서로 다른 인격으로 확정된다.</b></p>
+<p>더구나 이 규정은 <b>2014년 위탁자→수탁자, 2021년 수탁자→위탁자로 두 차례 뒤집혔는데 그 사이 시행령 제20조는 변하지 않았다.</b> '사실상 소유자'가 취득시기와 무관하게 정책적으로 결정된다는 증거다.</p>
+
+<h3>(나) 환지예정지 — 차용이 원리적으로 불가능한 영역</h3>
+<p>대법원 2016두56790은 종전 토지 소유자가 환지예정지의 사실상 소유자라고 판단했다. 그러나 시행령 제20조상 환지의 취득시기는 <b>환지처분 공고일의 다음 날</b>이므로, 환지예정지 지정 단계에서는 '취득'이 존재하지 않는다. <mark>취득 없이 사실상 소유가 이동하는 영역이 실재한다.</mark> 체비지는 취득세 취득시기 규정 자체가 공백이다(차규현 2024).</p>
+
+<h3>(다) 원시취득 — 대법원이 확인한 사법(私法) 절연성</h3>
+<p>대법원 2023.12.28. 선고 2020두49997은 건축물 취득세 성립시기가 <b>사법상 원시취득시기와 무관하게</b> 지방세법령의 획일적 기준(사용승인일과 사실상 사용일 중 빠른 날)에 따른다고 판시했다. 취득시기 규정이 <b>과세기술적 기준</b>임을 대법원 스스로 확인한 것이다. 사법상 소유권 귀속과 절연된 기준을 '실질적 소유권자'를 묻는 재산세에 그대로 대입하는 것은 <b>준거의 혼선</b>이다.</p>
+
+<h3>(라) 주택조합</h3>
+<p>대법원 2014두2980·2997은 주택조합이 조합원용 주택의 사실상 소유자가 아니라고 판시했다. 재산세에는 취득세 제7조 제8항 같은 의제규정이 없으므로 대법원이 <b>독자 논증</b>으로 조합을 배제했다. 조합 사안의 다툼축은 '취득시기 도래 여부'가 아니라 '조합원 귀속·신탁 구조'다.</p>
+
+<h2 id="s7"><span class="no">⑦</span>예규 107-1을 어떻게 볼 것인가</h2>
+
+<h3>개념적 정당성 — 결여</h3>
+<ul>
+<li><b>차용의 논거가 어디에도 제시된 적이 없다.</b> 예규 자체가 논증을 담고 있지 않고, 조세심판원 결정(조심2022지0134)도 시행령 제20조 제2항 제1호를 재산세 사건에 <b>아무런 준용 논증 없이</b> 직접 적용하며 예규를 인용조차 하지 않는다. 실무는 차용을 '하되' 그 근거를 대지 않는다.</li>
+<li><b>차용 대상 규범 자체가 불안정하다</b>(⑤ 참조). 추정규정을 확정기준으로 격상시킨 이중 오독.</li>
+<li>차용하면 <b>'추정 위에 의제를 얹는' 구조</b>가 된다. 계약상 잔금지급일이라는 추정(취득세 목적) 위에 소유자 의제(재산세 목적)를 다시 얹으면, 과세기준일 현재의 실질적 소유권 귀속이라는 법률요건에서 두 단계 멀어진다.</li>
+</ul>
+
+<h3>법률유보·조세법률주의 — 네 겹의 문제</h3>
+<div class="tblwrap"><table>
+<thead><tr><th>문제</th><th>내용</th></tr></thead>
+<tbody>
+<tr><td>준용규정 부재</td><td>지방세법 어디에도 제107조 제1항 판단에 시행령 제20조를 준용한다는 규정이 없다. <b>납세의무자는 과세요건의 핵심</b>이므로 과세요건 법정주의의 적용을 받는다. 대법원 2005두5611은 기본통칙을 "행정규칙에 불과하고 … <b>기본통칙 그 자체가 과세처분의 적법한 근거가 될 수 없음은 조세법률주의의 원칙상 당연</b>"하다고 판시했다</td></tr>
+<tr><td>법률 조항 간 우선순위를 예규가 정함</td><td>107-1 후단은 "제120조제1항의 규정에 의하여 신고하는 경우에는 … 제107조제2항제1호의 규정에 <b>우선하여 적용</b>된다"고 규정한다. 행정규칙이 법률 조항의 우선순위를 결정하는 것으로, 법률유보 위반 논증의 가장 취약한 표적</td></tr>
+<tr><td>문언상 '토지' 한정</td><td>예규는 <b>"당해 토지를 취득한 자"</b>라고만 규정한다. 건축물·주택·선박·항공기에 대한 차용은 <b>예규조차 근거가 되지 못하는 순수 관행</b>이다. 구 종합토지세 체계의 연혁적 잔재임을 시사</td></tr>
+<tr><td>파급범위</td><td>종합부동산세는 재산세 납세의무자를 그대로 승계하므로, 행안부 소관 지방세 예규가 <b>국세인 종부세의 납세의무자까지 사실상 결정</b>하는 구조가 된다</td></tr>
+</tbody>
+</table></div>
+
+<h3>그럼에도 전면 부정할 수 없는 이유</h3>
+<ul>
+<li>예규가 없다면 6.1. 현재 소유자 판정이 사안별 실질판단에 맡겨져 <b>예측가능성이 떨어진다.</b> 대량·반복 과세인 재산세에서 정형적 기준의 필요는 실재한다.</li>
+<li>대법원 93누22043이 재산세 판단에 취득시기 규정을 원용한 <b>전례</b>가 있다(→ ⑩ 반론 1).</li>
+<li>실무 운영은 순수한 기계적 차용이 아니라 <b>절충적</b>이다. 행안부 유권해석은 "취득의 시기가 도래되어 사실상 취득한 자를 의미하는 것으로(기본통칙 107-1) <b>당해 재산에 대한 사용·수익·처분권을 행사할 수 있는 지위에 있는 자</b>"라는 이중구조를 쓴다. 실무 스스로 취득시기만으로는 부족함을 인정하고 판례의 실질기준을 병기하는 것이다.</li>
+</ul>
+
+<div class="okbox"><b>규범적 처방</b>차용을 폐지하는 것이 아니라 <b>그 지위를 바로잡아야</b> 한다. ① 예규 107-1을 '확정적 준용'이 아니라 <b>반증 가능한 추정</b>으로 재문언화한다(예: "특별한 사정이 없는 한 …로 추정한다"). ② 장기적으로는 지방세법령에 <b>재산세 고유의 소유권 귀속 판정규정</b>을 신설한다 — 취득세 규정을 준용하는 형식이 아니라, 과세기준일 현재의 소유권 귀속을 정하는 독자적 추정규정이어야 한다(김신언 2024의 제안 방향). ③ 최소한 예규의 '토지' 한정 문언을 정리해 현재의 무근거 확장 적용 상태를 해소해야 한다.</div>
+
+<h2 id="s8"><span class="no">⑧</span>비교법 — 취득시기 준용은 필연이 아니다</h2>
+
+<div class="tblwrap"><table>
+<thead><tr><th>국가</th><th>이전과세</th><th>보유세</th><th>연결 구조</th></tr></thead>
+<tbody>
+<tr><td><b>일본</b></td><td>부동산취득세<br><span class="mini">최판 昭48.11.16 — 소유권이전의 <b>형식</b>에 착목</span></td><td>고정자산세<br><span class="mini"><b>台帳課税主義</b> — 지방세법 제343조, 부과기일 현재 등기부·과세대장상 소유자</span></td><td><b>완전 독립</b>. 취득시기를 보유세에 준용하는 구조가 없다</td></tr>
+<tr><td><b>독일</b></td><td>GrEStG 제1조 제1항 제1호<br><span class="mini">소유권이전청구권을 발생시키는 채권계약</span></td><td>Grundsteuer<br><span class="mini">귀속(Zurechnung) 기준</span></td><td><b>별개</b></td></tr>
+<tr><td><b>한국</b></td><td>취득세 — 사실상 취득 + 시행령 제20조</td><td>재산세 — 사실상 소유자</td><td><b>예규로 차용</b>(법령 준용규정 없음)</td></tr>
+</tbody>
+</table></div>
+
+<p>일본은 아예 실질 판단을 포기하고 <b>공부(公簿)로 못 박았다.</b> 한국의 '사실상 소유자주의'와 정반대 선택이다. 이 대비가 보여주는 것은 — <mark>"취득시기 기준 = 보유세 소유자 기준"이 개념적 필연이 아니라 입법정책의 선택</mark>이라는 점이다. 정형화가 필요하다면 그것을 <b>취득 개념 차용이 아니라 입법으로</b> 해결한 예다.</p>
+
+<h2 id="s9"><span class="no">⑨</span>학술 지형과 연구공백</h2>
+
+<h3>정면으로 다룬 문헌 — 사실상 1편</h3>
+<div class="q">
+<b>김신언, 「재산세의 사실상 소유개념과 후발적 경정청구에 대한 법리적 고찰」, 지방세논집 제11권 제1호(2024.4.), 63-84면</b>
+<br><br>
+"원칙상 재산세 납세의무자는 과세기준일 현재의 사실상 소유자이나, <b>실무에서는 취득세 납세의무자가 사실상 소유자로 간주되는 관행</b>"을 명시적으로 문제 삼고, 이것이 지방세기본법상 실질과세원칙과 충돌한다고 보아 <b>과세기준일 현재 실제 소유자를 판단할 독자적 법적 기준의 확립</b>을 제안한다. 준별설을 정면으로 지지하는 유일한 확인 문헌.
+<br><br>
+<span class="mini">⚠️ 서지(권·호·면수)는 확인되었으나 <b>본문·국문초록 축자원문 미확보</b>. RISS 서지 요약을 경유한 파악이므로 인용 전 원문 대조 필수.</span>
+</div>
+
+<h3>예규 107-1을 주제로 삼은 문헌 — 0편</h3>
+<p>연구자 5인이 KCI·DBpia·RISS·국회도서관·한국지방세연구원·olta.re.kr을 대상으로 <b>도합 60여 회 검색</b>했으나, 예규 107-1(구 기본통칙 107-1)의 취득시기 차용을 표제 또는 주요 논점으로 삼은 논문·연구보고서는 <b>0건</b>이었다. <mark>학설 대립이 형성되어 있는 것이 아니라, 논쟁 자체가 개시되지 않은 상태다.</mark></p>
+
+<h3>문헌 지형의 구조 — 두 문헌군의 단절</h3>
+<div class="tblwrap"><table>
+<thead><tr><th>축</th><th>축적 상태</th><th>단절의 증거</th></tr></thead>
+<tbody>
+<tr><td><b>취득세</b></td><td>이창희(2024), 김동욱(2020), 권형기·고영우(2022), 윤문구 외(2020), 장상록 외(2015), 차규현(2024) 등 <b>고품질 문헌 축적</b></td><td>확인 범위에서 <b>어느 것도 재산세 '사실상 소유자'와의 관계를 논하지 않는다.</b> 취득시기를 전론(專論)으로 다룬 논문조차 재산세 차용 문제를 인식하지 않는다</td></tr>
+<tr><td><b>재산세</b></td><td>'사실상 소유자'를 독립 주제로 삼은 논문은 <b>극히 희소</b>. 황태윤(2016)이 민사법 관점에서 개념을 좁게 정의한 것이 사실상 유일</td><td>나머지는 거의 전부 <b>신탁재산 납세의무자</b>라는 특수 국면에 집중(김상훈 2015, 고윤성·이은자 2014, 류연호·권형기 2019, 정지선·권형기 2013, 윤석환 2023). 파산재단(마정화)이 그다음</td></tr>
+</tbody>
+</table></div>
+
+<p><b>이 단절 자체가 결과다.</b> 최고 권위의 취득세 논문조차 재산세로 확장하지 않는다는 사실은, 예규 107-1의 차용이 <b>학설의 뒷받침 없이 행정해석만으로 유지되어 왔다</b>는 정황 증거다.</p>
+
+<div class="note"><b>가장 근접한 인접 문헌</b>전경근(2023, 비교사법)은 취득세·재산세·상속세·증여세·양도세의 납세의무 성립시점을 한 틀에서 검토하고 '사실상 지배권 취득 시점'이라는 통일 기준을 제안한다. 취득세와 재산세를 함께 다룬 드문 문헌이나, <b>두 '사실상' 개념(제7조 제2항 vs 제107조 제1항)을 대비 분석하지는 않으며</b> 예규 107-1을 논증대상으로 삼지도 않는다.</div>
+
+<h3>판례평석·비교법 공백</h3>
+<ul>
+<li>2014두2980(주택조합)·2016두56790(환지예정지)에 대한 <b>심사학술지 게재 판례평석은 확인되지 않았다.</b> 언론 해설과 실무 칼럼만 존재한다.</li>
+<li>일본 台帳課税主義와 한국 '사실상 소유자주의'를 <b>정면 대비한 한국 논문도 확인되지 않았다.</b></li>
+</ul>
+
+<h2 id="s10"><span class="no">⑩</span>반론과 응답</h2>
+
+<h3>반론 1 (가장 강함) — "대법원 자신이 재산세 사건에서 취득시기 규정을 원용했다"</h3>
+<div class="quote">대법원 1994.11.11. 선고 93누22043은 재산세 사건이면서 참조조문에 구 지방세법시행령 제73조 제1항 단서(현행 제20조의 전신)를 명시하고, "피분양자는 … 시행령 제73조 제1항 단서에 의하여 <b>사실상의 잔금지급일에 아파트를 취득한 것으로 간주된다</b>"는 논증을 거쳐 사실상 소유자를 판정했다. 예규 107-1은 편의적 의제가 아니라 <b>대법원 판시를 성문화한 것</b> 아닌가.</div>
+
+<p><b>응답</b> — 이 반론은 사실관계에서 정확하다. "판례는 시행령 제20조를 원용하지 않는다"는 진술은 이 판결 앞에서 수정되어야 한다. 그러나 반론은 <b>판결의 결론 방향을 뒤집어 읽는다.</b></p>
+<ol>
+<li><b>이 판결의 결론은 오히려 준별이다.</b> 판결요지는 "피분양자들이 잔금완납 전에 아파트에 입주하였다거나 이를 타에 임대한 사실 또는 <b>취득세를 미리 자진신고·납부한 사실만으로는</b> 사실상 소유자로 되어 재산세 납세의무를 부담한다고 볼 수 없다"이다. <mark>예규 107-1이 하려는 바로 그 등치를 이 판결이 배척했다.</mark></li>
+<li><b>논증구조를 보면</b> 시행령은 '잔금지급일의 특정'이라는 <b>사실확정 도구</b>로 쓰였을 뿐, 규범적 준용의 근거로 제시되지 않았다. 판결이 실제로 든 것은 "잔대금을 지급하여 … 권리변동이 생긴 것으로 보아"라는 실질적 소유권 이전 논증이다.</li>
+<li><b>후속 판례의 흐름이 이를 확인한다.</b> 2005두15045, 2014두2980·2997, 2016두56790은 모두 "실질적인 소유권을 가진 자"라는 자기완결적 정의만으로 판단하며 시행령 제20조를 참조조문으로 들지 않는다. <b>30년의 판례 흐름은 차용에서 멀어지는 방향이다.</b></li>
+</ol>
+<p>결론: 93누22043은 <b>'수렴의 증거'이지 '동일성의 증거'가 아니다.</b> 오히려 취득세 납부와 재산세 납세의무를 분리한 판시로서 준별설의 근거이기도 하다.</p>
+
+<h3>반론 2 — "유통세 vs 보유세라는 성격론으로 개념 차이를 도출하는 것은 방법론적으로 부당하다"</h3>
+<p>권형기·고영우(2022)는 취득세가 '유통세'로 표현되더라도 그 성격이 해석에 직접 영향을 미칠 수 없고, <b>법문이 우선</b>하며 법문만으로 불명확할 때 비로소 고려요소가 된다고 본다.</p>
+<p><b>응답</b> — 타당한 방법론적 경고로 받아들이되, <b>본 결론은 성격론에 의존하지 않는다.</b> 논거는 넷 모두 실정법적이다: ① 지방세기본법 제34조의 조문구조(미지수의 차이) ② 준용규정의 부존재 ③ 취득시기 규정의 사법 절연성(2020두49997) ④ 실정법의 분기(신탁 제107조 제2항 제5호). <b>어느 하나도 성격론을 전제하지 않는다.</b></p>
+
+<h3>반론 3 — "실무 안정성. 예규를 부정하면 판정이 자의적으로 된다"</h3>
+<p><b>응답</b> — 정당한 우려다. 그래서 차용의 '폐지'가 아니라 <b>'지위 격하'</b>를 제안한다(⑦의 처방). 예규를 반증 가능한 추정으로 재문언화하면 예측가능성은 유지되면서 경계사안의 오류만 걸러진다. 또한 <b>예측가능성은 법률유보의 대체물이 될 수 없다.</b> 일본이 대장과세주의를 조문으로 명기하고 독일이 Zurechnung 기준을 별도로 둔 것은, 정형화의 필요를 인정하면서도 그것을 <b>입법으로</b> 해결한 예다.</p>
+
+<h3>반론 4 — "이창희(2024)에 따르면 취득세의 '사실상 취득'도 결국 지배력 귀속을 묻는 것이므로 재산세와 같다(가설 1)"</h3>
+<p><b>응답</b> — 이 견해는 <b>오히려 예규를 더 강하게 부정한다.</b> 이창희가 '사실상 취득 = 사실상 지배력의 취득'이라고 할 때, 그는 동시에 "잔금청산은 지배력의 취득을 추단케 할 뿐"이라고 하여 시행령 제20조의 기계적 적용을 배척한다. 즉 그의 입장은 <b>"개념은 같을 수 있으나, 실무가 차용하는 그 규정(시행령 제20조)은 개념의 본체가 아니다"</b>라는 제4의 위치다. 가설 1을 취하더라도 예규 107-1은 정당화되지 않는다 — 두 개념이 같다면 차용해야 할 것은 시행령 제20조가 아니라 제7조 제2항의 '사실상 취득' 그 자체이고, 그것은 이미 재산세 판례의 실질기준과 다르지 않으므로 <b>차용할 필요조차 없다.</b></p>
+
+<h3>반론 5 — "예규의 '토지' 한정 문언을 근거로 삼는 것은 지엽적이다"</h3>
+<p><b>응답</b> — 지엽적으로 보이나 결정적이다. 차용이 두 개념의 <b>본질적 동일성에서 도출된 것이라면 과세객체에 따라 달라질 이유가 없다.</b> 예규가 토지에만 미친다는 사실은, 그것이 개념적 추론의 산물이 아니라 구 종합토지세 체계의 국지적 처방이 잔존한 것임을 보여준다. 다만 이 논거는 예규의 현행 전문과 개정 연혁을 확인한 뒤에야 확정적으로 사용할 수 있다(⑬ 참조).</p>
+
+<h2 id="s11"><span class="no">⑪</span>실무 처방</h2>
+
+<div class="lead"><b>대원칙</b> — 차용은 '결론을 도출하는 근거'가 아니라 <b>'결론을 1차로 추정하는 도구'</b>로만 쓴다. 시행령 제20조로 판정한 뒤, 반드시 <mark>"6.1. 현재 이 재산에 대한 사용·수익·처분권은 누구에게 있었는가"</mark>를 별도로 자문하고, 두 답이 갈리면 <b>후자를 따른다.</b></div>
+
+<h3>A. 차용이 안전한 영역</h3>
+<ul>
+<li>통상의 유상매매로서 잔금·인도·등기가 6.1.을 사이에 두고 갈리지 않는 경우</li>
+<li>잔금 완납 후 등기만 지연된 경우(미등기 매수인) — 판례(98두11458)와 학설(황태윤 2016)이 모두 매수인을 사실상 소유자로 본다</li>
+<li>3자간 등기명의신탁 — 명의신탁자로 수렴(2014두43110 전합). 매도인 선의인 계약명의신탁에서는 수탁자로 수렴</li>
+<li>상속·경매·공매 등 이전시기가 법정된 경우</li>
+<li>신축 후 사용승인·사실상 사용이 6.1. 이전인 자기소유 건축물</li>
+</ul>
+
+<h3>B. 차용이 위험한 영역 — 반드시 실질기준으로 재검토</h3>
+<div class="tblwrap"><table>
+<thead><tr><th>유형</th><th>왜 갈리는가</th></tr></thead>
+<tbody>
+<tr><td><b>★ 잔금 일부 미지급 + 인도·사용 개시</b></td><td>취득세는 헌재 2019헌바107에 따라 "거의 전부 지급"이면 성립. 그러나 재산세는 <b>93누22043</b>이 "잔금완납 전 입주·임대 또는 <b>취득세를 미리 자진신고·납부한 사실만으로는</b> 사실상 소유자로 볼 수 없다"고 명시. <mark>"취득세를 냈으니 재산세도 그가 낸다"는 추론은 대법원이 명시적으로 배척한 논리</mark> — 실무에서 가장 흔한 오류</td></tr>
+<tr><td><b>★ 계약상 잔금일 ≠ 사실상 잔금일이 6.1.을 끼고 갈릴 때</b></td><td>시행령 제20조 제2항 제2호로 계약상 잔금일(5.31.)에 취득시기가 도래한 듯 보여도, 실제 지급이 6.3.이면 6.1. 현재 실질적 소유권은 매도인에게 있다. 계약상 잔금일은 <b>추정규정</b>에 불과하며(김동욱 2020), 조심2022지0134도 실제 지급일 기준. <b>제2호를 근거로 매수인에게 과세하면 취소 위험이 크다</b></td></tr>
+<tr><td><b>★ 신탁재산</b></td><td>법률이 이미 분리(취득세=수탁자, 재산세=위탁자). 취득시기를 차용하면 <b>곧바로 오답</b>. 판단축은 위탁자·수익자 구조</td></tr>
+<tr><td><b>★ 환지예정지·체비지</b></td><td>취득시기 프레임으로는 "아직 아무도 취득하지 않았다"가 나온다. <b>차용이 원리적으로 작동하지 않는 영역</b></td></tr>
+<tr><td><b>★ 주택조합·지역주택조합</b></td><td>재산세엔 취득세 제7조 제8항 같은 의제규정이 없어 대법원이 독자 논증으로 조합을 배제. 다툼축은 '조합원 귀속·신탁 구조'</td></tr>
+<tr><td>6.1. 현재 미완성 건축물</td><td>"취득시기 미도래이므로 재산세 납세의무자 없음"으로 처리하면 오류. 사실상 소유자(통상 건축주)를 찾아야 한다</td></tr>
+<tr><td>계약의 무효·취소·해제</td><td>취득세는 성립한 조세채권에 합의해제가 영향을 주지 않는다(2013두2778). 재산세는 과세기준일 현재의 <b>상태</b> 판단이므로 소급효 유무에 따라 결론이 달라질 수 있다. <b>두 세목을 같은 논리로 처리하지 말 것</b></td></tr>
+<tr><td>점유취득시효 완성 후 미등기</td><td>황태윤(2016)은 사실상 소유자에서 제외해야 한다고 본다. 실무 회신도 시행령 제20조가 아니라 법 제7조 제2항을 원용 — 근거규범이 실무 내에서도 불안정</td></tr>
+<tr><td>건축물·주택·선박·항공기</td><td>예규 107-1 문언은 <b>"당해 토지"</b>에 한정. 토지 아닌 재산에 대한 차용은 <b>예규조차 근거가 되지 못한다</b></td></tr>
+</tbody>
+</table></div>
+
+<h3>C. 처분 실무 체크리스트</h3>
+<ol>
+<li>6.1. 현재 <b>사용·수익·처분권의 소재를 먼저 확정</b>하라(등기부·계약서·금융자료·인도확인서·관리비 납부주체·임대차 관계)</li>
+<li>시행령 제20조는 보조자료로만 쓰고, 특히 계약상 잔금지급일(제2항 제2호)은 <b>실제 지급일 자료로 반드시 검증</b>하라</li>
+<li>이유제시는 <b>법 제107조 제1항 + 실질적 소유권 귀속 사실</b>로 하고, <mark>예규 107-1이나 시행령 제20조를 단독 근거로 삼지 말라</mark></li>
+<li><b>취득세 신고·납부 사실은 재산세 납세의무자 판단의 근거가 되지 않는다</b>(93누22043)</li>
+<li>B군에 해당하면 예규가 아니라 <b>판례와 제107조 제2항 각 호를 직접 적용</b>하라</li>
+</ol>
+
+<h2 id="s12"><span class="no">⑫</span>참고문헌</h2>
+<p class="mini">확인 수준 — <span class="vf full">원문/초록확인</span> 초록 이상 확보 · <span class="vf abs">초록확인</span> 초록 확보 · <span class="vf cit">서지만</span> 서지만 확인(인용 전 원문 대조 필수)</p>
+
+<h3>본 쟁점 정면 문헌</h3>
+<ul class="ref">
+<li>김신언, <span class="k">「재산세의 사실상 소유개념과 후발적 경정청구에 대한 법리적 고찰」</span>, 지방세논집 제11권 제1호(2024.4.), 63-84면 <span class="vf cit">서지만</span> — 취득세 납세의무자를 사실상 소유자로 간주하는 <b>실무 관행</b>을 실질과세원칙 위반으로 문제 삼고 독자 기준 확립 제안. <b>준별설의 유일한 학술적 근거</b></li>
+</ul>
+
+<h3>취득세 '사실상 취득' 개념</h3>
+<ul class="ref">
+<li>이창희, <span class="k">「취득세에서 취득의 개념」</span>, 서울대학교 법학 제65권 제4호(2024), 173-224면 <span class="vf abs">초록확인</span> — "사실상 취득이란 사실상 지배력의 취득", "잔금청산은 추단케 할 뿐". 유통세 관념을 "비과학적 개념에 사로잡힌" 것으로 비판</li>
+<li>김동욱, <span class="k">「지방세법상 취득시기와 납세의무자: '사실상 취득' 개념을 중심으로」</span>, 지방세논집 제7권 제1호(2020), 199-219면 <span class="vf abs">초록확인</span> — '취득시기를 앞당기기 위한 개념', 계약상 잔금지급일은 "일종의 추정규정". <b>재산세 전혀 미언급 — 문헌 단절의 직접 증거</b></li>
+<li>권형기·고영우, <span class="k">「취득세의 '유통세적 성격'이 해석에 미치는 영향」</span>, 지방세논집 제9권 제1호(2022), 1-54면 <span class="vf abs">초록확인</span> — 성격규정이 해석을 좌우할 수 없다는 방법론. <b>준별설에 대한 정면 반론이므로 반드시 대응해야 할 문헌</b></li>
+<li>윤문구·문필주·박훈, <span class="k">「조세심판원 심판례 분석을 통한 취득세 취득개념의 해석론 및 입법론」</span>, 경희법학 제55권 제1호(2020), 99-134면 <span class="vf abs">초록확인</span> — 심판원(지급비율) vs 법원(절대액·사회통념) 기준 불일치 실증</li>
+<li>전경근, <span class="k">「재산권의 변동과 납세의무의 상관관계」</span>, 비교사법 제30권 제4호(2023), 215-251면 <span class="vf abs">초록확인</span> — 취득세·재산세를 한 틀에서 검토한 드문 문헌. 두 '사실상' 개념 대비는 없음</li>
+<li>장상록·정연식·김영락, <span class="k">「취득세의 취득시기에 관한 연구」</span>, 세무회계연구 제44집(2015), 227-251면 <span class="vf cit">서지만</span> / 차규현, <span class="k">「체비지 취득세의 취득시기에 관한 연구」</span>, 지방세논집 제11권 제3호(2024), 19-56면 <span class="vf cit">서지만</span></li>
+</ul>
+
+<h3>재산세 '사실상 소유자' 개념</h3>
+<ul class="ref">
+<li>황태윤, <span class="k">「등기청구권과 사실상 소유자」</span>, 동북아법연구 제9권 제3호(2016), 337-359면 <span class="vf abs">초록확인</span> — '대가를 지불하고 목적물을 인도받아 사용수익하는 미등기 매수인'으로 한정. <b>결론은 수렴, 논거는 민사법</b></li>
+<li>이창희, <span class="k">「부동산 보유세의 회고와 전망」</span>, 조세법연구 제30집 제3호(2024.11.), 91-163면 <span class="vf cit">서지만</span> — '납세의무자=사실상 소유자' 원칙이 일관되게 적용되지 않는다고 진단</li>
+<li>김상훈, <span class="k">「신탁재산에 대한 재산세 납세의무자」</span>, 저스티스 통권 제149호(2015) <span class="vf cit">서지만</span> — 제107조 제1항 입법론의 대표 문헌</li>
+<li>신탁 문헌군 <span class="vf cit">서지만</span> — 류연호·권형기(세무학연구 36-3, 2019) / 고윤성·이은자(지방자치법연구 14-1, 2014) / 정지선·권형기(세무학연구 30-4, 2013) / 윤석환(지방세논집 10-1, 2023). <b>'사실상 소유자'가 취득시기가 아니라 신탁실체설/도관설이라는 별개 축에서 판정됨을 보여줌</b></li>
+<li>마정화, <span class="k">「파산선고 이후 파산재단의 재산세 납세의무자 연구」</span>, 한국지방세연구원 정책연구보고서 2020-11 <span class="vf cit">서지만</span></li>
+<li>정승영, <span class="k">「지방세 회피 방지를 위한 실질과세원칙 적용 방안」</span>, 한국지방세연구원(2017.1.) <span class="vf cit">서지만</span> — 실질과세가 세목별로 균질하게 작동하지 않음의 근거</li>
+</ul>
+
+<h3>판례·결정례</h3>
+<ul class="ref">
+<li><b>재산세</b> — 대법원 1994.11.11. 선고 93누22043(취득세 납부 사실만으로 사실상 소유자 아님) · 2000.12.8. 선고 98두11458(대금 전액 지불 "~와 같이") · 2006.3.23. 선고 2005두15045 · 2016.12.29. 선고 2014두2980·2997(주택조합) · 2017.3.9. 선고 2016두56790(환지예정지)</li>
+<li><b>취득세</b> — 대법원 2013.6.28. 선고 2013두2778(유통세 정식) · 2018.3.22. 선고 2014두43110 전합 · 2023.12.28. 선고 2020두49997(사법 절연성) · 헌재 2022.3.31. 2019헌바107(사회통념상 거의 전부)</li>
+<li><b>행정규칙 법규성</b> — 대법원 2007.2.8. 선고 2005두5611("기본통칙 그 자체가 과세처분의 적법한 근거가 될 수 없음은 조세법률주의의 원칙상 당연")</li>
+<li><b>심판례</b> — 조심2022지0134(2023.1.18. 계약상 5.31. vs 실제 6.3. → 매수인 부과 취소)</li>
+</ul>
+
+<h3>법령·행정규칙</h3>
+<ul class="ref">
+<li>지방세법 제7조 제2항, 제107조 제1항·제2항 제5호, 제114조, 제120조 · 같은 법 시행령 제20조 · 지방세기본법 제34조(납세의무 성립시기)</li>
+<li>「지방세관계법 운영 예규」 107-1 【사실상의 소유자】</li>
+<li>일본 지방세법 제343조(고정자산세 台帳課税主義) · 독일 GrEStG 제1조, GrStG</li>
+</ul>
+
+<h2 id="s13"><span class="no">⑬</span>판단 유보</h2>
+
+<div class="warnbox"><b>이 문서가 확정하지 못한 것</b>
+<ul>
+<li><b>김신언(2024) 본문 미확보.</b> 본 쟁점의 유일한 정면 문헌이므로 KISS/KCI 원문 또는 지방세논집 PDF로 반드시 대조한 뒤 인용해야 한다. 특히 '실무 관행' 서술이 예규 107-1을 직접 겨냥한 것인지 확인 필요</li>
+<li><b>예규 107-1의 현행 전문·개정 연혁 미확정.</b> 구 기본통칙에서 언제 운영예규로 이관되었는지, '당해 토지' 문언이 현행에도 그대로인지, 후단이 유지되는지가 미확정. <b>'토지 한정' 논거는 이 확인 후에야 확정적으로 사용 가능</b></li>
+<li><b>2005두15045의 '대금청산일' 문언</b>이 실제 판시인지 조사자 간 진술 불일치. 재산세 맥락에서 대금청산 기준을 인용하려면 <b>98두11458·93누22043을 쓰는 편이 안전</b></li>
+<li>93누22043 이후 시행령 제20조를 참조조문으로 든 재산세 대법원 판결이 더 있는지 <b>전수 확인 못 함.</b> 1994년 판결이 고립된 선례인지 유지되는 판례군인지에 따라 '판례는 차용에서 멀어져 왔다'는 진단이 강화·약화된다</li>
+<li>이창희(2024) 본문에 재산세 언급이 있는지 미확정(원문 PDF는 SSL 오류로 미확보)</li>
+<li>KILF 보고서 다수 본문 미확보(DRM·바이너리 추출 실패). 특히 <b>배영석 「신탁재산의 취득 시 취득 개념 재정립…」(2018)</b>은 두 세목의 개념 연결을 다룰 가능성이 있는 유력 후보</li>
+<li><b>'선행연구 부재'는 미발견이지 부존재 확정이 아니다.</b> 검색은 공개 웹 및 서지·초록 수준에서 이루어졌고, 학술지 전문(全文) 검색이나 목차 통람은 수행하지 못했다. 논문의 한 절(節)에서 이 쟁점을 다룬 문헌이 존재할 가능성은 남아 있다</li>
+<li>학위논문 미확인 — 특히 임재근 「지방세 과세법리에 관한 연구 — 납세의무 성립과 확정을 중심으로」(서울시립대 박사, 2006)는 총론 차원의 비교 가능성이 있어 확인 가치가 높다</li>
+<li>조세심판원 결정례 전수조사 미완 — <b>시행령 제20조 제2항 제2호(계약상 잔금지급일)를 적용해 재산세 납세의무자를 확정한 결정이 존재하는지</b>가 미확인. 존재한다면 '가장 위험한 영역'에 실제 분쟁이 축적되어 있다는 뜻</li>
+<li>예규 107-1의 <b>법률유보 위반 주장이 실제 소송에서 판단된 적이 있는지</b> 미확인 — 본 문서의 법률유보 논증은 순수 이론 단계에 머물러 있다</li>
+<li>일본 최고재판소 昭48.11.16. 판결 원문 미확인 · 독일 GrStG는 2025년 Grundsteuerreform으로 조문번호 변경 가능성이 있어 재확인 필요</li>
+</ul>
+</div>
+
+<div class="note"><b>한계 고지</b>이 문서는 2026년 8월 기준 웹으로 접근 가능한 자료에 기초한 조사이며, 학술 인용은 확인된 범위(대부분 초록·서지)로 한정했다. <b>본문 미확보 문헌을 서면 회신·불복 대응에 인용할 때는 반드시 원문을 대조할 것.</b> 실무 적용 전에는 현행 조문과 유권해석을 확인해야 한다.</div>
+
+</div>
+<button id="top-btn" title="맨 위로" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+try{if(localStorage.getItem('cndark')==='1')document.documentElement.classList.add('dark')}catch(e){}
+/* 조문 인용 → 법제처 대시보드(/open) 링크. 대시보드가 켜져 있어야 열린다. */
+(function(){
+  var DASH='http://localhost:6155';
+  var LAWS=['지방세특례제한법 시행령','지방세특례제한법','지방세법 시행령','지방세법',
+            '지방세기본법 시행령','지방세기본법','지방세징수법','민법','부동산등기법'];
+  var re=new RegExp('('+LAWS.join('|')+')\\s*(제\\d+조(?:의\\d+)?)','g');
+  document.querySelectorAll('#main .ref li, #main .lead, #main .note, #main .okbox').forEach(function(el){
+    if(el.querySelector('a.lawlink'))return;
+    el.innerHTML=el.innerHTML.replace(re,function(m,law,jo){
+      var u=DASH+'/open?law='+encodeURIComponent(law)+'&jo='+encodeURIComponent(jo);
+      return '<a class="lawlink" href="'+u+'" target="_blank" rel="noopener" title="'+law+' '+jo+' — 법제처 대시보드에서 열기(노트 가능)">'+m+'</a>';
+    });
+  });
+})();
+var links=[].slice.call(document.querySelectorAll('#nav a[href^="#"]'));
+var map={};links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a});
+var cur=null;
+var io=new IntersectionObserver(function(es){
+  es.forEach(function(en){
+    if(!en.isIntersecting)return;
+    var a=map[en.target.id];if(!a)return;
+    if(cur)cur.classList.remove('cur');a.classList.add('cur');cur=a;
+  });
+},{rootMargin:'-80px 0px -70% 0px'});
+document.querySelectorAll('#main h2').forEach(function(h){io.observe(h)});
+</script>
+</body>
+</html>
