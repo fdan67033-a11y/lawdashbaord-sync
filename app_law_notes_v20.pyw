@@ -3127,11 +3127,141 @@ table{display:block;overflow-x:auto;max-width:100%!important}
 pre{white-space:pre-wrap!important;word-break:break-word}
 div,main,article,section,aside,nav{width:auto!important;min-width:0!important;float:none!important}
 </style>
+<button data-mshim="1" onclick="history.back()" style="position:fixed;left:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:2147483000;height:46px;border-radius:23px;border:0;background:#1d2452;color:#fff;font-weight:800;font-size:14px;padding:0 16px;box-shadow:0 4px 12px rgba(0,0,0,.3)">← 목록</button>
 <div data-mshim="1" style="position:fixed;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:2147483000;display:flex;gap:8px">
 <button onclick="(function(){var r=document.documentElement,v=parseFloat(getComputedStyle(r).getPropertyValue('--mshim-fs'))||16.5;r.style.setProperty('--mshim-fs',Math.max(13,v-1.5)+'px')})()" style="width:46px;height:46px;border-radius:50%;border:0;background:#3b47c4;color:#fff;font-weight:800;font-size:15px;box-shadow:0 4px 12px rgba(0,0,0,.3)">A-</button>
 <button onclick="(function(){var r=document.documentElement,v=parseFloat(getComputedStyle(r).getPropertyValue('--mshim-fs'))||16.5;r.style.setProperty('--mshim-fs',Math.min(26,v+1.5)+'px')})()" style="width:46px;height:46px;border-radius:50%;border:0;background:#3b47c4;color:#fff;font-weight:800;font-size:15px;box-shadow:0 4px 12px rgba(0,0,0,.3)">A+</button>
 </div>
 """
+
+_READ_TITLE_CACHE: Dict[str, Tuple[float, str]] = {}   # rel -> (mtime, title)
+
+def _readable_title(p: Path, rel: str) -> str:
+    """HTML의 <title>에서 제목 추출(캐시). 없으면 파일명."""
+    try:
+        mt = p.stat().st_mtime
+        hit = _READ_TITLE_CACHE.get(rel)
+        if hit and hit[0] == mt:
+            return hit[1]
+        title = ""
+        if p.suffix.lower() in (".html", ".htm"):
+            head = p.read_text(encoding="utf-8", errors="replace")[:8192]
+            m = re.search(r"<title[^>]*>(.*?)</title>", head, re.I | re.S)
+            if m:
+                title = html.unescape(re.sub(r"\s+", " ", m.group(1))).strip()
+        if not title:
+            title = re.sub(r"\.(html?|pdf|md)$", "", p.name, flags=re.I)
+        _READ_TITLE_CACHE[rel] = (mt, title)
+        return title
+    except Exception:
+        return p.name
+
+@app.route("/readables_index")
+def readables_index() -> Response:
+    """읽을것들 전체 목록(제목 나열) — 요청 시마다 폴더를 읽어 생성하므로 항상 최신.
+    폰 판례리더의 📚 자료 탭이 이 페이지를 연다. PC 브라우저에서도 그대로 보기 좋게."""
+    base = _readables_base()
+    if base is None:
+        return Response("<h1>읽을것들 폴더 없음</h1>", status=404, mimetype="text/html; charset=utf-8")
+
+    groups: List[Tuple[str, List[Dict[str, Any]]]] = []
+    all_items: List[Dict[str, Any]] = []
+
+    def collect(d: Path, relroot: str) -> List[Dict[str, Any]]:
+        items: List[Dict[str, Any]] = []
+        try:
+            entries = sorted(d.iterdir(), key=lambda x: (x.is_file(), x.name))
+        except Exception:
+            return items
+        for e in entries:
+            n = e.name
+            if n.startswith(".") or n.startswith("_") or n.endswith((".py", ".bat")):
+                continue
+            rel = (relroot + "/" + n) if relroot else n
+            if e.is_dir():
+                items += collect(e, rel)
+            elif e.suffix.lower() in (".html", ".htm", ".pdf", ".md"):
+                if n.lower() in ("index.html", "readme.md"):
+                    continue
+                st = e.stat()
+                sub = relroot.split("/", 1)[1] if "/" in relroot else ""
+                items.append({"rel": rel, "name": n, "title": _readable_title(e, rel),
+                              "sub": sub, "size": st.st_size, "mtime": st.st_mtime,
+                              "kind": e.suffix.lower().lstrip(".")})
+        return items
+
+    try:
+        for e in sorted(base.iterdir(), key=lambda x: (x.is_file(), x.name)):
+            n = e.name
+            if e.is_dir() and not n.startswith((".", "_")):
+                items = collect(e, n)
+                if items:
+                    groups.append((n, items))
+                    all_items += items
+    except Exception:
+        pass
+
+    def hsize(v: int) -> str:
+        return "%.1f MB" % (v / 1048576) if v >= 1048576 else "%d KB" % max(1, round(v / 1024))
+
+    def card(it: Dict[str, Any]) -> str:
+        href = "/readables/" + "/".join(urlencode({"": s})[1:] for s in it["rel"].split("/"))
+        if it["kind"] in ("html", "htm"):
+            href += "?m=1"
+        sub = f'<span class="sub">{html.escape(it["sub"])}</span>' if it["sub"] else ""
+        return (f'<a class="card" href="{href}" data-hay="{html.escape((it["title"] + " " + it["rel"]).lower())}">'
+                f'<div class="t">{html.escape(it["title"])}</div>'
+                f'<div class="m">{sub}<span class="k k-{it["kind"]}">{it["kind"].upper()}</span>'
+                f'<span>{hsize(it["size"])}</span><span>{datetime.fromtimestamp(it["mtime"]).strftime("%Y-%m-%d")}</span></div></a>')
+
+    recent = sorted(all_items, key=lambda x: -x["mtime"])[:8]
+    parts: List[str] = []
+    parts.append("""<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>읽을것들 목록</title><style>
+:root{--bg:#f4f5f8;--card:#fff;--ink:#1a1d26;--dim:#6a7183;--line:#e5e7ee;--acc:#3b47c4;--acc-soft:#eceffc}
+@media (prefers-color-scheme:dark){:root{--bg:#15171d;--card:#1e2129;--ink:#e8eaf0;--dim:#98a0b3;--line:#30343f;--acc:#8b95f2;--acc-soft:#272c45}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Pretendard',-apple-system,'Noto Sans KR','Malgun Gothic',sans-serif;
+  font-size:16px;line-height:1.7;padding:0 0 60px}
+.head{background:linear-gradient(135deg,#1d2452,#3b47c4);color:#fff;padding:calc(env(safe-area-inset-top) + 22px) 18px 18px}
+.head h1{margin:0;font-size:21px}.head .mini{opacity:.85;font-size:12.5px;margin-top:3px}
+.wrap{max-width:820px;margin:0 auto;padding:0 14px}
+#q{width:100%;font-size:16px;padding:12px 15px;border-radius:13px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--ink);outline:none;margin:14px 0 4px}
+h2{font-size:14px;color:var(--dim);font-weight:800;margin:22px 2px 6px;letter-spacing:.3px}
+.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:15px;padding:13px 16px;
+  margin:9px 0;text-decoration:none;color:inherit}
+.card:active{transform:scale(.985)}
+.card .t{font-weight:700;font-size:16px;line-height:1.5;word-break:keep-all}
+.card .m{color:var(--dim);font-size:12.5px;margin-top:4px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.sub{background:var(--acc-soft);color:var(--acc);border-radius:6px;padding:0 7px;font-weight:700}
+.k{border-radius:6px;padding:0 6px;font-weight:800;font-size:11px}
+.k-html,.k-htm{background:#e9f7f1;color:#0f8a66}.k-pdf{background:#fdecec;color:#c0392b}.k-md{background:#fdf3e0;color:#b45309}
+@media (prefers-color-scheme:dark){.k-html,.k-htm{background:#1f3229;color:#4cc9a4}.k-pdf{background:#3a2424;color:#e08b84}.k-md{background:#33291a;color:#e5a558}}
+.none{color:var(--dim);text-align:center;padding:30px 0;display:none}
+</style></head><body>
+<div class="head"><h1>📚 읽을것들</h1><div class="mini">열 때마다 자동 갱신 · 문서를 열면 폰 가독화가 적용됩니다</div></div>
+<div class="wrap">
+<input id="q" placeholder="제목으로 거르기…" oninput="flt(this.value)">
+<div class="none" id="none">일치하는 문서가 없습니다</div>""")
+    parts.append("<h2>🕘 최근 갱신</h2>" + "".join(card(x) for x in recent))
+    for gname, items in groups:
+        disp = re.sub(r"^\d+_", "", gname)
+        parts.append(f"<h2>{html.escape(disp)} · {len(items)}</h2>")
+        parts.append("".join(card(x) for x in sorted(items, key=lambda x: (x["sub"], x["name"]))))
+    parts.append("""</div><script>
+function flt(q){q=(q||'').trim().toLowerCase();let n=0;
+document.querySelectorAll('.card').forEach(c=>{const on=!q||(c.dataset.hay||'').indexOf(q)>=0;c.style.display=on?'':'none';if(on)n++;});
+document.querySelectorAll('h2').forEach(h=>{let el=h.nextElementSibling,any=false;
+while(el&&el.classList&&el.classList.contains('card')){if(el.style.display!=='none')any=true;el=el.nextElementSibling;}
+h.style.display=any?'':'none';});
+document.getElementById('none').style.display=n?'none':'block';}
+</script></body></html>""")
+    resp = Response("".join(parts), mimetype="text/html; charset=utf-8")
+    resp.headers["Cache-Control"] = "no-store"
+    return resp
+
 
 @app.route("/api/readables_list")
 def api_readables_list() -> Response:
