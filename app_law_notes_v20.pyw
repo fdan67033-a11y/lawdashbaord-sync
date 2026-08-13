@@ -3088,6 +3088,109 @@ def static_files(filename: str) -> Response:
     return send_from_directory(BASE_DIR / "static", filename)
 
 
+# ── 읽을것들(HTML 자료) 폰 열람 (2026-08-11) ─────────────────────────────
+# 읽을것들 폴더는 GitHub(study-apps-Private / iljeong-sync readables)로 동기화되므로,
+# 여기서 서빙하면 폰(Tailscale)에서 항상 최신 자료를 본다. ?m=1 이면 모바일 가독화 쉼 주입.
+READABLES_BASES = [Path(r"C:\python_programs\읽을것들"),
+                   Path(r"C:\todo_manual_dashboard\읽을것들")]
+
+def _readables_base() -> Optional[Path]:
+    for b in READABLES_BASES:
+        if b.exists():
+            return b
+    return None
+
+def _readables_resolve(rel: str) -> Optional[Path]:
+    base = _readables_base()
+    if base is None:
+        return None
+    rel = (rel or "").replace("\\", "/").strip("/")
+    try:
+        target = (base / rel).resolve() if rel else base.resolve()
+        baser = base.resolve()
+        if target != baser and baser not in target.parents:
+            return None                     # 경로 탈출 차단
+        return target
+    except Exception:
+        return None
+
+_MOBILE_SHIM = """
+<meta name="viewport" content="width=device-width,initial-scale=1" data-mshim="1">
+<style data-mshim="1">
+html{-webkit-text-size-adjust:100%}
+body{max-width:100vw!important;overflow-x:hidden!important;margin:0 auto!important;
+  padding:12px 14px calc(70px + env(safe-area-inset-bottom)) !important;box-sizing:border-box;
+  font-size:var(--mshim-fs,16.5px)!important;line-height:1.85!important}
+body *{box-sizing:border-box;max-width:100%!important}
+img,svg,video,canvas{height:auto!important}
+table{display:block;overflow-x:auto;max-width:100%!important}
+pre{white-space:pre-wrap!important;word-break:break-word}
+div,main,article,section,aside,nav{width:auto!important;min-width:0!important;float:none!important}
+</style>
+<div data-mshim="1" style="position:fixed;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:2147483000;display:flex;gap:8px">
+<button onclick="(function(){var r=document.documentElement,v=parseFloat(getComputedStyle(r).getPropertyValue('--mshim-fs'))||16.5;r.style.setProperty('--mshim-fs',Math.max(13,v-1.5)+'px')})()" style="width:46px;height:46px;border-radius:50%;border:0;background:#3b47c4;color:#fff;font-weight:800;font-size:15px;box-shadow:0 4px 12px rgba(0,0,0,.3)">A-</button>
+<button onclick="(function(){var r=document.documentElement,v=parseFloat(getComputedStyle(r).getPropertyValue('--mshim-fs'))||16.5;r.style.setProperty('--mshim-fs',Math.min(26,v+1.5)+'px')})()" style="width:46px;height:46px;border-radius:50%;border:0;background:#3b47c4;color:#fff;font-weight:800;font-size:15px;box-shadow:0 4px 12px rgba(0,0,0,.3)">A+</button>
+</div>
+"""
+
+@app.route("/api/readables_list")
+def api_readables_list() -> Response:
+    rel = request.args.get("path", "")
+    target = _readables_resolve(rel)
+    if target is None or not target.is_dir():
+        return jsonify({"ok": False, "error": "폴더 없음"}), 404
+    dirs: List[Dict[str, Any]] = []
+    files: List[Dict[str, Any]] = []
+    try:
+        for e in sorted(target.iterdir(), key=lambda x: (x.is_file(), x.name)):
+            n = e.name
+            if n.startswith(".") or n.startswith("_") or n.endswith((".py", ".bat")):
+                continue
+            if e.is_dir():
+                try:
+                    cnt = sum(1 for c in e.iterdir()
+                              if c.is_dir() or c.suffix.lower() in (".html", ".htm", ".pdf", ".md"))
+                except Exception:
+                    cnt = 0
+                dirs.append({"name": n, "count": cnt})
+            elif e.suffix.lower() in (".html", ".htm", ".pdf", ".md"):
+                st = e.stat()
+                files.append({"name": n, "size": st.st_size,
+                              "mtime": datetime.fromtimestamp(st.st_mtime).strftime("%Y-%m-%d")})
+    except Exception as exc:
+        return jsonify({"ok": False, "error": str(exc)}), 500
+    return jsonify({"ok": True, "path": rel, "dirs": dirs, "files": files})
+
+@app.route("/readables/<path:relpath>")
+def readables_file(relpath: str) -> Response:
+    target = _readables_resolve(relpath)
+    if target is None or not target.is_file():
+        return Response("<h1>파일 없음</h1>", status=404, mimetype="text/html; charset=utf-8")
+    if target.suffix.lower() in (".html", ".htm") and request.args.get("m") == "1":
+        try:
+            txt = target.read_text(encoding="utf-8", errors="replace")
+        except Exception:
+            return send_file(str(target))
+        shim = _MOBILE_SHIM
+        if re.search(r'name=["\']viewport["\']', txt, re.I):
+            shim = shim.replace('<meta name="viewport" content="width=device-width,initial-scale=1" data-mshim="1">', "")
+        low = txt.lower()
+        i = low.find("</head>")
+        if i >= 0:
+            out = txt[:i] + shim + txt[i:]
+        else:
+            j = low.find("<body")
+            if j >= 0:
+                k = low.find(">", j)
+                out = txt[:k + 1] + shim + txt[k + 1:] if k >= 0 else shim + txt
+            else:
+                out = shim + txt
+        resp = Response(out, mimetype="text/html; charset=utf-8")
+        resp.headers["Cache-Control"] = "no-store"
+        return resp
+    return send_file(str(target))
+
+
 @app.route("/m")
 def mobile_page() -> Response:
     """폰 전용 판례 리더 (2026-08-09). Tailscale로 폰에서 http://<PC주소>:6155/m 접속."""

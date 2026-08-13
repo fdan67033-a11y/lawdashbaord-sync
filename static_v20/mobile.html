@@ -146,6 +146,7 @@ mark{background:#ffe9a8;color:#4a3705;border-radius:3px;padding:0 2px}
 <div id="app"></div>
 <div id="nav">
   <button id="nb-home" onclick="navTo('home')"><span class="ic">🔍</span>검색</button>
+  <button id="nb-files" onclick="navTo('files')"><span class="ic">📚</span>자료</button>
   <button id="nb-recent" onclick="navTo('recent')"><span class="ic">🕘</span>최근</button>
   <button id="nb-notes" onclick="navTo('allnotes')"><span class="ic">📝</span>노트</button>
 </div>
@@ -293,7 +294,7 @@ function navTo(type){
 function setTop(title){
   $('topTitle').textContent=title;
   $('backBtn').style.display=S.stack.length>1?'':'none';
-  ['home','recent','allnotes'].forEach(k=>{
+  ['home','files','recent','allnotes'].forEach(k=>{
     const b=$('nb-'+(k==='allnotes'?'notes':k));
     if(b)b.classList.toggle('on',S.stack[0]&&S.stack[0].type===k&&S.stack.length===1);
   });
@@ -612,6 +613,45 @@ function openNoteDocFromList(ev,id){
   return false;
 }
 
+/* ============================ 화면: 자료(읽을것들) ============================ */
+function fmtSize(n){return n>=1048576?(n/1048576).toFixed(1)+' MB':Math.max(1,Math.round(n/1024))+' KB';}
+async function renderFiles(sc){
+  const rel=sc.path||'';
+  setTop(rel?('📚 '+rel.split('/').pop()):'📚 자료 (읽을것들)');
+  $('app').innerHTML='<div class="wrap"><div class="empty">목록 불러오는 중…</div></div>';
+  let d;
+  try{d=await api('/api/readables_list',{path:rel});}
+  catch(e){if(screen()!==sc)return;$('app').innerHTML=`<div class="wrap"><div class="empty">${esc(e.message)}</div></div>`;return;}
+  if(screen()!==sc)return;
+  if(d.ok===false){$('app').innerHTML=`<div class="wrap"><div class="empty">${esc(d.error||'열 수 없음')}</div></div>`;return;}
+  const dirs=(d.dirs||[]).map(x=>{
+    const p=rel?rel+'/'+x.name:x.name;
+    return `<div class="card tap hit" onclick='go({type:"files",path:${JSON.stringify(p)}})'>
+      <div class="t">📁 ${esc(x.name)}</div><div class="m"><span>${x.count}개 항목</span></div></div>`;
+  }).join('');
+  const files=(d.files||[]).map(x=>{
+    const p=rel?rel+'/'+x.name:x.name;
+    const isHtml=/\.html?$/i.test(x.name);
+    return `<div class="card tap hit" onclick='${isHtml?`go({type:"file",path:${JSON.stringify(p)},name:${JSON.stringify(x.name)}})`:`window.open("/readables/"+${JSON.stringify(p)}.split("/").map(encodeURIComponent).join("/"),"_blank")`}'>
+      <div class="t">📄 ${esc(x.name.replace(/\.(html?|pdf|md)$/i,''))}</div>
+      <div class="m"><span class="badge b-etc">${esc((x.name.match(/\.(\w+)$/)||[])[1]||'')}</span><span>${fmtSize(x.size)}</span><span>${esc(x.mtime)}</span></div></div>`;
+  }).join('');
+  $('app').innerHTML=`<div class="wrap"><div style="height:6px"></div>
+    ${rel?`<div class="mini" style="margin:2px 4px 8px">읽을것들 / ${esc(rel.replace(/\//g,' / '))}</div>`:
+      `<div class="mini" style="margin:2px 4px 8px">GitHub로 동기화되는 읽을것들 폴더 — 열면 자동으로 폰 가독화가 적용됩니다</div>`}
+    ${dirs}${files}
+    ${(!dirs&&!files)?'<div class="empty">비어 있습니다.</div>':''}</div>`;
+  if(sc.sy!=null){const y=sc.sy;sc.sy=null;requestAnimationFrame(()=>window.scrollTo(0,y));}
+}
+function renderFileView(sc){
+  setTop(sc.name||'문서');
+  const url='/readables/'+String(sc.path).split('/').map(encodeURIComponent).join('/')+'?m=1';
+  $('app').innerHTML=`<div style="position:fixed;left:0;right:0;top:calc(env(safe-area-inset-top) + 52px);bottom:calc(env(safe-area-inset-bottom) + 62px);background:var(--card)">
+    <iframe src="${url}" style="width:100%;height:100%;border:0" title="${esc(sc.name||'')}"></iframe></div>
+    <button onclick='window.open(${JSON.stringify(url)},"_blank")'
+      style="position:fixed;right:12px;top:calc(env(safe-area-inset-top) + 60px);z-index:60;border:0;border-radius:10px;background:rgba(30,35,60,.55);color:#fff;padding:7px 11px;font-size:12.5px;font-weight:700">새 탭 ↗</button>`;
+}
+
 /* ============================ 렌더 루프 ============================ */
 function render(){
   const sc=screen();if(!sc)return;
@@ -620,6 +660,8 @@ function render(){
   else if(sc.type==='allnotes'){renderNotes({type:'notes',row:null});return;}
   else if(sc.type==='doc'){renderDoc(sc);}
   else if(sc.type==='notes'){renderNotes(sc);}
+  else if(sc.type==='files'){renderFiles(sc);}
+  else if(sc.type==='file'){renderFileView(sc);}
   setTop($('topTitle').textContent);
 }
 try{history.scrollRestoration='manual';}catch(e){}
