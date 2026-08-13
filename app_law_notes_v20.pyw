@@ -3218,7 +3218,10 @@ def readables_index() -> Response:
     parts: List[str] = []
     parts.append("""<!doctype html><html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>읽을것들 목록</title><style>
+<title>읽을것들 목록</title>
+<link rel="manifest" href="/readables_manifest.json">
+<link rel="apple-touch-icon" href="/static/m_icons/read_192.png">
+<meta name="theme-color" content="#0f8a66"><style>
 :root{--bg:#f4f5f8;--card:#fff;--ink:#1a1d26;--dim:#6a7183;--line:#e5e7ee;--acc:#3b47c4;--acc-soft:#eceffc}
 @media (prefers-color-scheme:dark){:root{--bg:#15171d;--card:#1e2129;--ink:#e8eaf0;--dim:#98a0b3;--line:#30343f;--acc:#8b95f2;--acc-soft:#272c45}}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -3319,6 +3322,24 @@ def readables_file(relpath: str) -> Response:
         resp.headers["Cache-Control"] = "no-store"
         return resp
     return send_file(str(target))
+
+
+# ── PWA 매니페스트 (폰 홈 화면에 '앱 설치' 지원, 2026-08-11) ──
+def _manifest(name, short, start, theme, icon_prefix):
+    return jsonify({
+        "name": name, "short_name": short, "start_url": start, "scope": "/",
+        "display": "standalone", "background_color": "#f4f5f8", "theme_color": theme,
+        "icons": [{"src": f"/static/m_icons/{icon_prefix}_192.png", "sizes": "192x192", "type": "image/png"},
+                  {"src": f"/static/m_icons/{icon_prefix}_512.png", "sizes": "512x512", "type": "image/png"}],
+    })
+
+@app.route("/m_manifest.json")
+def m_manifest() -> Response:
+    return _manifest("판례 리더", "판례리더", "/m", "#1d2452", "prec")
+
+@app.route("/readables_manifest.json")
+def readables_manifest() -> Response:
+    return _manifest("읽을것들 리더", "읽을것들", "/readables_index", "#0f8a66", "read")
 
 
 @app.route("/m")
