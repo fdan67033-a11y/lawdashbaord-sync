@@ -3121,12 +3121,95 @@ html{-webkit-text-size-adjust:100%}
 body{max-width:100vw!important;overflow-x:hidden!important;margin:0 auto!important;
   padding:12px 14px calc(70px + env(safe-area-inset-bottom)) !important;box-sizing:border-box;
   font-size:var(--mshim-fs,16.5px)!important;line-height:1.85!important}
-body *{box-sizing:border-box;max-width:100%!important}
-img,svg,video,canvas{height:auto!important}
-table{display:block;overflow-x:auto;max-width:100%!important}
-pre{white-space:pre-wrap!important;word-break:break-word}
-div,main,article,section,aside,nav{width:auto!important;min-width:0!important;float:none!important}
+body *{box-sizing:border-box}
+img,svg,video,canvas,iframe{max-width:100%!important;height:auto!important}
+pre{white-space:pre-wrap!important;word-break:break-word;max-width:100%!important}
+a,code{overflow-wrap:anywhere;word-break:break-all}
+div,main,article,section,aside,nav,header,footer{width:auto!important;min-width:0!important;float:none!important;max-width:100%!important}
+/* 표: 스크롤 래퍼(.mshimTw) 안에서는 원래 폭 유지 + 가로 스와이프 */
+.mshimTw{overflow-x:auto!important;max-width:100%!important;-webkit-overflow-scrolling:touch;margin:10px 0}
+.mshimTw table{width:max-content!important;max-width:none!important;display:table!important}
+.mshimTw td,.mshimTw th{white-space:nowrap;padding:6px 10px}
+.mshimTw td.mshimWide,.mshimTw th.mshimWide{white-space:normal!important;min-width:250px;max-width:75vw}
+/* 사이드바(색인): 평소 숨김 → ☰ 목차 버튼으로 전체화면 오버레이 */
+[data-mshim-sb]{display:none!important}
+body.mshim-sb-open [data-mshim-sb]{display:block!important;position:fixed!important;inset:0!important;
+  width:100vw!important;max-width:100vw!important;height:100vh!important;max-height:100vh!important;
+  overflow:auto!important;background:#fff!important;color:#1a1d26!important;z-index:2147482999!important;
+  padding:64px 20px 40px!important;font-size:16px!important;line-height:2!important}
+body.mshim-sb-open [data-mshim-sb] a{display:block;padding:4px 0}
 </style>
+<script data-mshim="1">
+(function(){
+function fix(){
+  var vw=window.innerWidth;
+  /* 1) 표 → 스크롤 래퍼, 긴 셀은 줄바꿈 허용 */
+  document.querySelectorAll('table').forEach(function(t){
+    if(t.closest('.mshimTw')||t.closest('[data-mshim]'))return;
+    var w=document.createElement('div');w.className='mshimTw';
+    t.parentNode.insertBefore(w,t);w.appendChild(t);
+    t.querySelectorAll('td,th').forEach(function(c){
+      if((c.textContent||'').trim().length>55)c.classList.add('mshimWide');
+    });
+  });
+  /* 2) 2단 이상 그리드/가로 플렉스 레이아웃 → 1단 세로 */
+  document.querySelectorAll('body *').forEach(function(el){
+    if(el.closest('[data-mshim]')||el.classList.contains('mshimTw'))return;
+    var cs;try{cs=getComputedStyle(el);}catch(e){return;}
+    if(cs.display==='grid'){
+      var cols=(cs.gridTemplateColumns||'').split(' ').filter(function(x){return x&&x!=='none'});
+      if(cols.length>1)el.style.setProperty('display','block','important');
+    }else if(cs.display==='flex'&&cs.flexDirection.indexOf('row')===0){
+      var kids=el.children.length,r=el.getBoundingClientRect();
+      if(kids>1&&r.width>vw*0.9&&el.querySelector('table,article,section,h2,p'))
+        el.style.setProperty('flex-direction','column','important');
+    }
+  });
+  /* 3) 색인 사이드바 감지 → ☰ 목차 오버레이로 변환 */
+  var sb=null;
+  document.querySelectorAll('body *').forEach(function(el){
+    if(sb||el.closest('[data-mshim]'))return;
+    var cs;try{cs=getComputedStyle(el);}catch(e){return;}
+    var r=el.getBoundingClientRect();
+    if((cs.position==='fixed'||cs.position==='sticky')&&r.height>window.innerHeight*0.45&&
+       r.width>90&&r.width<vw*0.85&&el.querySelectorAll('a').length>=3)sb=el;
+  });
+  if(!sb){
+    var cands=document.querySelectorAll('nav,aside,[class*="sidebar"],[class*="sideNav"],[class*="side-nav"],[id*="sidebar"],[id*="toc"],[class*="toc"],[class*="index"]');
+    for(var i=0;i<cands.length;i++){
+      var c=cands[i];if(c.closest('[data-mshim]'))continue;
+      var rr=c.getBoundingClientRect(),cc;try{cc=getComputedStyle(c);}catch(e){continue;}
+      var anchors=c.querySelectorAll('a[href^="#"]').length||c.querySelectorAll('a').length;
+      /* 자체 반응형이 모바일에서 숨겨버린 색인(display:none)도 목차로 되살린다 */
+      if(anchors>=4&&((rr.height>260&&rr.width<vw*0.9)||cc.display==='none')){sb=c;break;}
+    }
+  }
+  if(sb){
+    sb.setAttribute('data-mshim-sb','1');
+    var btn=document.createElement('button');
+    btn.setAttribute('data-mshim','1');btn.textContent='\\u2630 \\ubaa9\\ucc28';
+    btn.style.cssText='position:fixed;left:12px;top:calc(env(safe-area-inset-top) + 10px);z-index:2147483000;height:40px;border-radius:20px;border:0;background:#3b47c4;color:#fff;font-weight:700;font-size:13.5px;padding:0 14px;box-shadow:0 4px 12px rgba(0,0,0,.3)';
+    btn.onclick=function(){document.body.classList.toggle('mshim-sb-open');};
+    document.body.appendChild(btn);
+    sb.addEventListener('click',function(e){
+      if(e.target.closest('a'))setTimeout(function(){document.body.classList.remove('mshim-sb-open');},80);
+    });
+  }
+  /* 4) 남은 가로 넘침 요소 개별 봉합 */
+  setTimeout(function(){
+    var lim=document.documentElement.clientWidth+2;
+    document.querySelectorAll('body *').forEach(function(el){
+      if(el.closest('.mshimTw')||el.closest('[data-mshim]'))return;
+      if(el.scrollWidth>lim&&el.clientWidth>lim-4){
+        el.style.setProperty('max-width','100%','important');
+        el.style.setProperty('overflow-x','auto','important');
+      }
+    });
+  },120);
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',fix);else fix();
+})();
+</script>
 <button data-mshim="1" onclick="history.back()" style="position:fixed;left:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:2147483000;height:46px;border-radius:23px;border:0;background:#1d2452;color:#fff;font-weight:800;font-size:14px;padding:0 16px;box-shadow:0 4px 12px rgba(0,0,0,.3)">← 목록</button>
 <div data-mshim="1" style="position:fixed;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:2147483000;display:flex;gap:8px">
 <button onclick="(function(){var r=document.documentElement,v=parseFloat(getComputedStyle(r).getPropertyValue('--mshim-fs'))||16.5;r.style.setProperty('--mshim-fs',Math.max(13,v-1.5)+'px')})()" style="width:46px;height:46px;border-radius:50%;border:0;background:#3b47c4;color:#fff;font-weight:800;font-size:15px;box-shadow:0 4px 12px rgba(0,0,0,.3)">A-</button>
