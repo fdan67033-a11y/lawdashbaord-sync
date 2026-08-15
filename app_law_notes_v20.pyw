@@ -3239,6 +3239,45 @@ def _readable_title(p: Path, rel: str) -> str:
     except Exception:
         return p.name
 
+# 페이지 독립 확대/축소 위젯 (브라우저 줌과 무관, PC 전용 — 폰은 핀치줌 사용)
+_ZOOM_WIDGET = """
+<script>
+(function(){
+if(window.__zoomWidget)return;window.__zoomWidget=1;
+if(matchMedia('(pointer:coarse)').matches&&innerWidth<800)return;
+var KEY='pageZoom:'+location.host+location.pathname;
+var z=parseFloat(localStorage.getItem(KEY)||'1')||1;var disp,box;
+function clamp(v){return Math.min(3,Math.max(0.4,Math.round(v*100)/100));}
+function apply(){document.body.style.zoom=z;try{localStorage.setItem(KEY,z);}catch(e){}
+ if(disp)disp.textContent=Math.round(z*100)+'%';if(box)box.style.zoom=(1/z);}
+function nudge(d){z=clamp(z+d);apply();}
+function ui(){
+ box=document.createElement('div');
+ box.style.cssText='position:fixed;right:10px;bottom:10px;z-index:2147483647;display:flex;gap:2px;align-items:center;background:rgba(20,22,30,.88);border:1px solid rgba(255,255,255,.25);border-radius:16px;padding:3px 6px;font:12px/1.4 Segoe UI,sans-serif;color:#eee;user-select:none;opacity:.3;transition:opacity .15s';
+ box.onmouseenter=function(){box.style.opacity='1';};
+ box.onmouseleave=function(){box.style.opacity='.3';};
+ function btn(t,f,ttl){var e=document.createElement('button');e.textContent=t;e.title=ttl;
+  e.style.cssText='background:none;border:none;color:#eee;font-size:13px;width:22px;height:20px;cursor:pointer;padding:0';
+  e.onclick=f;return e;}
+ box.appendChild(btn('\\u2212',function(){nudge(-0.1);},'축소'));
+ disp=document.createElement('span');
+ disp.style.cssText='min-width:38px;text-align:center;cursor:pointer';
+ disp.title='클릭=100% · Ctrl+휠/Ctrl+±로도 조절';
+ disp.onclick=function(){z=1;apply();};
+ box.appendChild(disp);
+ box.appendChild(btn('\\uFF0B',function(){nudge(0.1);},'확대'));
+ document.body.appendChild(box);apply();}
+addEventListener('wheel',function(e){if(!e.ctrlKey)return;e.preventDefault();nudge(e.deltaY<0?0.1:-0.1);},{passive:false});
+addEventListener('keydown',function(e){if(!e.ctrlKey||e.altKey)return;
+ if(e.key==='='||e.key==='+'){e.preventDefault();nudge(0.1);}
+ else if(e.key==='-'){e.preventDefault();nudge(-0.1);}
+ else if(e.key==='0'){e.preventDefault();z=1;apply();}});
+if(document.body)ui();else addEventListener('DOMContentLoaded',ui);
+})();
+</script>
+"""
+
+
 @app.route("/readables_index")
 def readables_index() -> Response:
     """읽을것들 전체 목록(제목 나열) — 요청 시마다 폴더를 읽어 생성하므로 항상 최신.
@@ -3343,7 +3382,7 @@ document.querySelectorAll('h2').forEach(h=>{let el=h.nextElementSibling,any=fals
 while(el&&el.classList&&el.classList.contains('card')){if(el.style.display!=='none')any=true;el=el.nextElementSibling;}
 h.style.display=any?'':'none';});
 document.getElementById('none').style.display=n?'none':'block';}
-</script></body></html>""")
+</script>""" + _ZOOM_WIDGET + """</body></html>""")
     resp = Response("".join(parts), mimetype="text/html; charset=utf-8")
     resp.headers["Cache-Control"] = "no-store"
     return resp
@@ -3402,6 +3441,19 @@ def readables_file(relpath: str) -> Response:
             else:
                 out = shim + txt
         resp = Response(out, mimetype="text/html; charset=utf-8")
+        resp.headers["Cache-Control"] = "no-store"
+        return resp
+    if target.suffix.lower() in (".html", ".htm"):
+        # PC 열람: 페이지 독립 줌 위젯 주입 (파일 원본은 건드리지 않음)
+        try:
+            txt = target.read_text(encoding="utf-8", errors="replace")
+        except Exception:
+            return send_file(str(target))
+        if "__zoomWidget" not in txt:
+            low = txt.lower()
+            i = low.rfind("</body>")
+            txt = txt[:i] + _ZOOM_WIDGET + txt[i:] if i >= 0 else txt + _ZOOM_WIDGET
+        resp = Response(txt, mimetype="text/html; charset=utf-8")
         resp.headers["Cache-Control"] = "no-store"
         return resp
     return send_file(str(target))
