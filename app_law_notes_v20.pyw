@@ -3239,34 +3239,56 @@ def _readable_title(p: Path, rel: str) -> str:
     except Exception:
         return p.name
 
-# 페이지 독립 확대/축소 위젯 (브라우저 줌과 무관, PC 전용 — 폰은 핀치줌 사용)
-_ZOOM_WIDGET = """
+# 글자크기 위젯 — 읽을것들/_gather.py 의 FONT_WIDGET 과 동일본.
+# (한쪽만 고치면 파일 자체 위젯과 서버 주입분이 어긋나 두 개가 겹쳐 보인다)
+_ZOOM_WIDGET = r"""<!-- font-size-widget v2: 폰 터치 대응(40px 버튼) · 브라우저 줌과 무관 · 페이지별 저장 -->
 <script>
 (function(){
-if(window.__zoomWidget)return;window.__zoomWidget=1;
-if(matchMedia('(pointer:coarse)').matches&&innerWidth<800)return;
+if(window.__fontWidget)return;window.__fontWidget=1;
 var KEY='pageZoom:'+location.host+location.pathname;
-var z=parseFloat(localStorage.getItem(KEY)||'1')||1;var disp,box;
-function clamp(v){return Math.min(3,Math.max(0.4,Math.round(v*100)/100));}
-function apply(){document.body.style.zoom=z;try{localStorage.setItem(KEY,z);}catch(e){}
- if(disp)disp.textContent=Math.round(z*100)+'%';if(box)box.style.zoom=(1/z);}
+function load(){try{return parseFloat(localStorage.getItem(KEY))||1;}catch(e){return 1;}}
+function save(v){try{localStorage.setItem(KEY,v);}catch(e){}}
+var z=load(),disp,box,base=0;
+var useZoom=!!(window.CSS&&CSS.supports&&CSS.supports('zoom','1.5'));
+function clamp(v){return Math.min(3,Math.max(0.5,Math.round(v*100)/100));}
+function apply(){
+ var b=document.body;if(!b)return;
+ if(useZoom){b.style.zoom=z;}
+ else{if(!base)base=parseFloat(getComputedStyle(b).fontSize)||16;b.style.fontSize=(base*z).toFixed(2)+'px';}
+ save(z);if(disp)disp.textContent=Math.round(z*100)+'%';}
 function nudge(d){z=clamp(z+d);apply();}
 function ui(){
  box=document.createElement('div');
- box.style.cssText='position:fixed;right:10px;bottom:10px;z-index:2147483647;display:flex;gap:2px;align-items:center;background:rgba(20,22,30,.88);border:1px solid rgba(255,255,255,.25);border-radius:16px;padding:3px 6px;font:12px/1.4 Segoe UI,sans-serif;color:#eee;user-select:none;opacity:.3;transition:opacity .15s';
- box.onmouseenter=function(){box.style.opacity='1';};
- box.onmouseleave=function(){box.style.opacity='.3';};
- function btn(t,f,ttl){var e=document.createElement('button');e.textContent=t;e.title=ttl;
-  e.style.cssText='background:none;border:none;color:#eee;font-size:13px;width:22px;height:20px;cursor:pointer;padding:0';
-  e.onclick=f;return e;}
- box.appendChild(btn('\\u2212',function(){nudge(-0.1);},'축소'));
- disp=document.createElement('span');
- disp.style.cssText='min-width:38px;text-align:center;cursor:pointer';
- disp.title='클릭=100% · Ctrl+휠/Ctrl+±로도 조절';
- disp.onclick=function(){z=1;apply();};
+ box.setAttribute('role','group');box.setAttribute('aria-label','글자 크기');
+ box.style.cssText='position:fixed;right:calc(10px + env(safe-area-inset-right,0px));'
+  +'bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:2147483647;display:flex;gap:2px;'
+  +'align-items:center;background:rgba(20,22,30,.9);border:1px solid rgba(255,255,255,.28);'
+  +'border-radius:24px;padding:3px 5px;font:14px/1 "Segoe UI",system-ui,sans-serif;color:#eee;'
+  +'user-select:none;-webkit-user-select:none;touch-action:manipulation;box-shadow:0 2px 10px rgba(0,0,0,.35)';
+ function btn(t,f,ttl){
+  var e=document.createElement('button');
+  e.type='button';e.textContent=t;e.title=ttl;e.setAttribute('aria-label',ttl);
+  e.style.cssText='background:none;border:none;color:#eee;font:inherit;font-size:20px;width:40px;'
+   +'height:40px;line-height:40px;cursor:pointer;padding:0;border-radius:20px;touch-action:manipulation;'
+   +'-webkit-tap-highlight-color:rgba(255,255,255,.25)';
+  e.addEventListener('click',function(ev){ev.preventDefault();f();});
+  return e;}
+ box.appendChild(btn('\u2212',function(){nudge(-0.1);},'글자 작게'));
+ disp=document.createElement('button');
+ disp.type='button';disp.title='기본 크기(100%)로';disp.setAttribute('aria-label','기본 크기로');
+ disp.style.cssText='background:none;border:none;color:#eee;font:inherit;min-width:48px;height:40px;'
+  +'text-align:center;cursor:pointer;padding:0;touch-action:manipulation';
+ disp.addEventListener('click',function(ev){ev.preventDefault();z=1;apply();});
  box.appendChild(disp);
- box.appendChild(btn('\\uFF0B',function(){nudge(0.1);},'확대'));
- document.body.appendChild(box);apply();}
+ box.appendChild(btn('\uFF0B',function(){nudge(0.1);},'글자 크게'));
+ // 마우스가 있는 기기에서만 옅게 — 폰(hover 없음)에서는 항상 또렷하게 보인다
+ if(window.matchMedia&&matchMedia('(hover:hover)').matches){
+  box.style.opacity='.35';box.style.transition='opacity .15s';
+  box.addEventListener('mouseenter',function(){box.style.opacity='1';});
+  box.addEventListener('mouseleave',function(){box.style.opacity='.35';});}
+ // body 확대의 영향을 받지 않도록 <html> 에 붙인다 (역-zoom 보정 불필요)
+ (document.documentElement||document.body).appendChild(box);
+ apply();}
 addEventListener('wheel',function(e){if(!e.ctrlKey)return;e.preventDefault();nudge(e.deltaY<0?0.1:-0.1);},{passive:false});
 addEventListener('keydown',function(e){if(!e.ctrlKey||e.altKey)return;
  if(e.key==='='||e.key==='+'){e.preventDefault();nudge(0.1);}
@@ -3449,7 +3471,7 @@ def readables_file(relpath: str) -> Response:
             txt = target.read_text(encoding="utf-8", errors="replace")
         except Exception:
             return send_file(str(target))
-        if "__zoomWidget" not in txt:
+        if "__fontWidget" not in txt and "__zoomWidget" not in txt:
             low = txt.lower()
             i = low.rfind("</body>")
             txt = txt[:i] + _ZOOM_WIDGET + txt[i:] if i >= 0 else txt + _ZOOM_WIDGET
