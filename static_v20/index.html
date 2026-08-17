@@ -1477,6 +1477,16 @@ function showRefCtx(ev,el){ev.preventDefault();ev.stopPropagation();showCtxMenu(
 /* ===== 새 창으로 열기(URL) + 종료 시 마지막 화면 저장/복원 ===== */
 function _serRow(r){return (r&&!r.isNote)?{target:r.target||'',law_id:r.law_id||'',mst:r.mst||'',name:r.name||'',effective_date:r.effective_date||'',target_label:r.target_label||'',department:r.department||''}:null;}
 async function maybeOpenFromUrl(){
+  /* 외부 문서(예: 취득세 실무사례집)에서 ?law=지방세법&jo=제7조 로 들어오는 경우 */
+  try{
+    const q=new URLSearchParams(location.search);
+    const lw=q.get('law'), jo=q.get('jo');
+    if(lw){
+      try{history.replaceState(null,'',location.pathname);}catch(e){}
+      openLawCiteData({law:lw, jo:jo||'', old:''});
+      return true;
+    }
+  }catch(e){}
   let raw=null; try{raw=new URLSearchParams(location.search).get('openrow');}catch(e){}
   if(!raw)return false;
   window._isOpenRowWindow=true;
@@ -2156,7 +2166,7 @@ function _linkifyCaseNos(t){
 }
 
 /* 법령명+제N조 링크 (같은법/동법 대용어는 직전 법령명으로 해소, 구법 괄호의 개정일을 연혁 탐색에 사용) */
-const _LAW_CITE_RE=/(구\s+)?((?:[가-힣]{2,24}?(?:기본법|특례법|촉진법|처벌법|세법|소송법|등기법|보상법|법률|규칙|조례|법))|같은\s*법|같은법|동\s*법|이\s*법)?(시행령|시행규칙|\s+시행령|\s+시행규칙)?(\s*\(([^)<]{0,70}?)개정되기\s*전의\s*것\))?\s*(제\d{1,4}조(?:의\d{1,3})?)/g;
+const _LAW_CITE_RE=/(구\s+)?((?:[가-힣]{1,24}?(?:기본법|특례법|촉진법|처벌법|세법|소송법|등기법|보상법|법률|규칙|조례|법))|같은\s*법|같은법|동\s*법|이\s*법)?(시행령|시행규칙|\s+시행령|\s+시행규칙)?(\s*\(([^)<]{0,70}?)개정되기\s*전의\s*것\))?\s*(제\d{1,4}조(?:의\d{1,3})?)/g;
 /* 판례 원문 붙여쓰기로 접속어가 법령명에 달라붙는 것 정리: '있는지방세법'→'지방세법' */
 const _LAW_LEAD_STRIP=/^(있는|없는|한편|따라서|따라|또한|의하면|의하여|의하는|의한|규정하고|규정한|소정의|정하는|정한|현행|당시)+/;
 function _cleanLawName(n){let p=n;while(_LAW_LEAD_STRIP.test(p)){const q=p.replace(_LAW_LEAD_STRIP,'');if(q.length<3||q===p)break;p=q;}return p;}
