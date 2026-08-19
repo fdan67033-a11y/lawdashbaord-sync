@@ -3300,6 +3300,82 @@ if(document.body)ui();else addEventListener('DOMContentLoaded',ui);
 """
 
 
+# 읽을것들 문서용 'gold한자' 토글 (2026-08-16).
+# 본문 텍스트 노드만 모아 /api/hanja/convert 로 보내고(서버가 gold 우선·없으면 엔진 폴백)
+# 받은 결과로 갈아 끼운다. 원본은 배열로 들고 있다가 다시 누르면 되돌린다.
+_HANJA_WIDGET = r"""<!-- gold-hanja toggle -->
+<script>
+(function(){
+if(window.__hanjaToggle)return;window.__hanjaToggle=1;
+var API=(location.port==='6155'||location.pathname.indexOf('/readables/')===0)?'':'http://localhost:6155';
+var nodes=null, orig=null, conv=null, on=false, busy=false, btn;
+var SKIP={SCRIPT:1,STYLE:1,TEXTAREA:1,CODE:1,PRE:1};
+function collect(){
+  var w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{acceptNode:function(n){
+    var v=n.nodeValue;
+    if(!v||!/[\uac00-\ud7a3]/.test(v))return NodeFilter.FILTER_REJECT;
+    for(var p=n.parentNode;p&&p!==document.body;p=p.parentNode){
+      if(SKIP[p.nodeName])return NodeFilter.FILTER_REJECT;
+      if(p.id==='lawpane')return NodeFilter.FILTER_REJECT;
+    }
+    return NodeFilter.FILTER_ACCEPT;
+  }});
+  var a=[],n;while((n=w.nextNode()))a.push(n);return a;
+}
+function setLabel(t){btn.textContent=t;}
+function convert(){
+  nodes=collect();
+  orig=nodes.map(function(n){return n.nodeValue;});
+  conv=orig.slice();
+  var B=150, chain=Promise.resolve(), total=orig.length, done=0;
+  var _loop=function(s){
+    chain=chain.then(function(){
+      return fetch(API+'/api/hanja/convert',{method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({texts:orig.slice(s,s+B)})})
+      .then(function(r){ if(!r.ok)throw new Error('HTTP '+r.status); return r.json(); })
+      .then(function(d){
+        var outs=d.outputs||[];
+        for(var k=0;k<outs.length;k++) conv[s+k]=outs[k];
+        done+=outs.length;
+        setLabel(Math.round(done*100/total)+'%');
+      });
+    });
+  };
+  for(var s=0;s<total;s+=B) _loop(s);
+  return chain;
+}
+function paint(arr){ for(var i=0;i<nodes.length;i++) nodes[i].nodeValue=arr[i]; }
+function toggle(){
+  if(busy)return;
+  if(on){ paint(orig); on=false; setLabel('\u6f22'); btn.style.background='rgba(20,22,30,.9)'; return; }
+  busy=true; setLabel('\u2026');
+  var go = conv ? Promise.resolve() : convert();
+  go.then(function(){
+    paint(conv); on=true; setLabel('\ud55c\uae00'); btn.style.background='#8a6d10';
+  }).catch(function(){
+    alert('\ud55c\uc790 \ubcc0\ud658\uc5d0 \uc2e4\ud328\ud588\uc2b5\ub2c8\ub2e4.\n\ubc95\uc81c\ucc98 \ub300\uc2dc\ubcf4\ub4dc(6155)\uac00 \ucf1c\uc838 \uc788\uc5b4\uc57c \ud569\ub2c8\ub2e4.');
+    setLabel('\u6f22');
+  }).then(function(){ busy=false; });
+}
+function ui(){
+  btn=document.createElement('button');
+  btn.type='button'; btn.textContent='\u6f22';
+  btn.title='gold\ud55c\uc790 \u2014 \ubb38\uc11c\ub97c \uad6d\ud55c\ubb38 \ud63c\uc6a9\uc73c\ub85c (\ub2e4\uc2dc \ub204\ub974\uba74 \ud55c\uae00)';
+  btn.style.cssText='position:fixed;z-index:2147483646;'
+    +'right:calc(10px + env(safe-area-inset-right,0px));'
+    +'bottom:calc(60px + env(safe-area-inset-bottom,0px));'
+    +'width:44px;height:44px;border-radius:22px;border:1px solid rgba(255,255,255,.28);'
+    +'background:rgba(20,22,30,.9);color:#eee;font:15px/1 "Malgun Gothic",serif;cursor:pointer;'
+    +'box-shadow:0 2px 10px rgba(0,0,0,.35);touch-action:manipulation';
+  btn.addEventListener('click',function(e){e.preventDefault();toggle();});
+  (document.documentElement||document.body).appendChild(btn);
+}
+if(document.body)ui();else addEventListener('DOMContentLoaded',ui);
+})();
+</script>"""
+
+
 @app.route("/readables_index")
 def readables_index() -> Response:
     """읽을것들 전체 목록(제목 나열) — 요청 시마다 폴더를 읽어 생성하므로 항상 최신.
@@ -3471,10 +3547,17 @@ def readables_file(relpath: str) -> Response:
             txt = target.read_text(encoding="utf-8", errors="replace")
         except Exception:
             return send_file(str(target))
+        # 두 위젯은 각각 독립으로 판단한다 — 회사 PC가 글자크기 위젯을 파일에 박아 넣은
+        # 문서에도 gold한자 토글은 붙어야 하므로 가드를 하나로 묶지 않는다.
+        add = ""
         if "__fontWidget" not in txt and "__zoomWidget" not in txt:
+            add += _ZOOM_WIDGET
+        if "__hanjaToggle" not in txt:
+            add += _HANJA_WIDGET
+        if add:
             low = txt.lower()
             i = low.rfind("</body>")
-            txt = txt[:i] + _ZOOM_WIDGET + txt[i:] if i >= 0 else txt + _ZOOM_WIDGET
+            txt = txt[:i] + add + txt[i:] if i >= 0 else txt + add
         resp = Response(txt, mimetype="text/html; charset=utf-8")
         resp.headers["Cache-Control"] = "no-store"
         return resp
