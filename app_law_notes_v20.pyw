@@ -5479,6 +5479,11 @@ def _load_hanja_engine():
         from convert import convert_text as _ct  # noqa
         _ct("초기화")  # kiwi/사전 웜업
         _HJ_ENGINE["fn"] = _ct
+        try:
+            from convert import convert_many as _cm  # noqa (구버전 엔진엔 없음)
+            _HJ_ENGINE["many"] = _cm
+        except Exception:
+            _HJ_ENGINE["many"] = None
     except Exception as e:  # 엔진 미설치 등 — 대시보드 본기능엔 영향 없음
         _HJ_ENGINE["err"] = str(e)
 
@@ -5492,7 +5497,29 @@ def api_hanja_convert() -> Response:
         return jsonify({"ok": False, "error": f"엔진 로드 실패: {_HJ_ENGINE['err']}"}), 500
     payload = request.get_json(force=True, silent=True) or {}
     texts = payload.get("texts") or []
+    # window: 동형이의어 단서를 찾을 이웃 세그먼트 수(앞뒤 각각). **기본 0(끔)**.
+    # 2026-08-16 실측(_eval_window.py, gold 10,572조항): window=2 는 오변환을 8,872→10,039자로
+    # 13.2% **악화**시켰다. 이웃 조문의 약한 단서가 잘못 발화하는 쪽이, 문맥이 도움 되는 쪽보다
+    # 많았다(조특법 +283, 법인세법 시행령 +93). 옵션으로만 남기고 기본은 조각 단독 판단.
+    # 항·호 단위로 잘게 쪼갠 조각에는 단서가 없어 기본값으로 굳는 일이 잦다 —
+    # '② 신문은 재판장이 먼저 한다'는 단독이면 新聞, 앞 항('증인을 신문할')과 함께 보면 訊問.
+    try:
+        window = max(0, min(6, int(payload.get("window", 0))))
+    except Exception:
+        window = 0
+    many = _HJ_ENGINE.get("many")
     outputs, flagged = [], []
+    if window and many and len(texts) > 1:
+        try:
+            for t, r in zip(texts, many(texts, window=window)):
+                outputs.append(r["output"])
+                if r.get("homographs") or r.get("unknown"):
+                    flagged.append({"text": str(t)[:60], "homographs": r.get("homographs", []),
+                                    "unknown": r.get("unknown", [])})
+            return jsonify({"ok": True, "outputs": outputs, "flagged": flagged[:50],
+                            "window": window})
+        except Exception:
+            outputs, flagged = [], []          # 실패 시 아래 단건 경로로 폴백
     for t in texts:
         try:
             r = _HJ_ENGINE["fn"](str(t))
