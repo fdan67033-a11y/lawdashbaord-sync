@@ -775,7 +775,10 @@ body.compact section.case{padding:20px 24px 16px;margin:12px 0 16px}
 </tbody></table>
 <div class="calc"><b>계산 예시</b><br>2026.5.1. 부친이 아들에게 아파트 증여. 시가표준액(공동주택가격) 400,000,000원. 같은 단지·같은 평형·같은 층 구간의 2026.2.10. 매매사례가액 700,000,000원(평가기간 내).<br>→ 과세표준 = 시가인정액 <b>700,000,000원</b><br>→ 취득세 = 700,000,000 × 3.5% = <b>24,500,000원</b><br>→ 지방교육세 = 700,000,000 × (3.5% − 2%) × 20% = 700,000,000 × 1.5% × 20% = <b>2,100,000원</b><br>(전용면적 85㎡ 초과이면 농어촌특별세 = 700,000,000 × 2% × 10% = 1,400,000원 추가)<br>※ 개편 전 방식이었다면 과표 4억 × 3.5% = 14,000,000원 → 개편으로 취득세만 1,050만원 증가.</div>
 <div class="warn"><b>실수 포인트</b> ① <b>취득일 후 3개월</b>까지가 평가기간이므로, 취득 직후에 발생한 매매사례도 시가인정액이 될 수 있다. 신고 당시엔 사례가 없었더라도 사후에 나타나면 경정 대상이 된다. ② 감정가액을 근거로 신고했는데 감정평가 기준시점이 평가기간을 벗어난 경우 인정되지 않는다. ③ 부담부증여에서 채무인수분은 유상이므로 <u>사실상취득가격</u>, 나머지는 무상이므로 <u>시가인정액</u>을 적용한다. 하나의 물건에 두 개의 과표 산정 방식이 공존한다. ④ 원시취득 과표에 포함되는 비용의 범위(설계비·감리비·건설자금이자·각종 부담금 등)는 시행령 제18조를 반드시 대조한다. 취득 이후에 발생한 비용, 부가가치세, 할부이자·연체료 등은 제외된다.</div>
+<<<<<<< Updated upstream
 <p class="popbtn-row"><button type="button" class="popbtn" data-pop="val">📐 심화 팝업 — 시가인정액 평가: 평가기간 계산 · 판단 기준일 · 여러 가액일 때 · 사후 경정 · 재산세와 대비</button></p>
+=======
+>>>>>>> Stashed changes
 <div class="tip"><b>실무 팁</b> 증여 신고 접수 시 국토교통부 실거래가 공개시스템에서 <b>취득일 전 6개월~후 3개월</b> 구간을 조회한 화면을 캡처해 결재문서에 편철한다. 납세자가 "왜 이 가격이냐"고 물을 때 화면 그대로 보여 주면 설득이 빠르고, 사후 불복 시에도 산정 근거가 명확해진다.</div>
 <div class="cite"><b>근거</b> 지방세법 제10조, 제10조의2~제10조의7, 같은 법 시행령 제14조(시가인정액의 산정 등)·제18조(사실상취득가격의 범위), 2023.1.1. 시행 개정, 2026.1.1. 시행 배우자·직계존비속 간 유상거래 증여 간주 규정</div>
 </section>
@@ -4959,6 +4962,7 @@ function fs(d){var cur=parseFloat(getComputedStyle(document.documentElement).get
   document.documentElement.style.setProperty('--fs',v);try{localStorage.setItem('acqfs',v)}catch(e){}}
 function toggleCompact(){var on=document.body.classList.toggle('compact');
   document.getElementById('cbtn').classList.toggle('on',on);}
+<<<<<<< Updated upstream
 /* 조문 → 법제처 대시보드(/open) 링크 — 본문 전체 자동 링크 (2026-09 확장).
    · 법명 명시(민법 제590조)·약칭(지특법)·'같은 법 (시행령)'·맨 조문(제15조 제1항 제1호) 인식
    · 맨 조문의 기본 법령은 지방세법, 같은 문단 앞에 법명이 나오면 그 법령을 승계
@@ -5031,6 +5035,25 @@ function toggleCompact(){var on=document.body.classList.toggle('compact');
         setTimeout(function(){a.style.backgroundColor=old;},400);
       })
       .catch(function(){window.open(a.href,'lawviewer');});
+=======
+/* 근거 조문 → 법제처 대시보드(/open) 링크 — 조문 옆에 바로 메모를 남기기 위함.
+   집컴 터널 주소로 바꾸려면 DASH 한 줄만 수정. 대시보드가 꺼져 있으면 링크가 안 열리니
+   그때는 국가법령정보센터에서 직접 확인. */
+(function(){
+  var DASH='http://localhost:6155';
+  var LAWS=['지방세특례제한법 시행령','지방세특례제한법','지방세법 시행규칙','지방세법 시행령','지방세법',
+            '지방세기본법 시행령','지방세기본법','지방세징수법','농어촌특별세법','지방교육세법',
+            '부동산 거래신고 등에 관한 법률','부동산등기 특별조치법','부동산등기법','건축법 시행령','건축법',
+            '신탁법','상속세 및 증여세법','수도권정비계획법 시행령','수도권정비계획법',
+            '민간임대주택에 관한 특별법','농지법'];
+  var re=new RegExp('('+LAWS.join('|')+')\\s*(제\\d+조(?:의\\d+)?)','g');
+  document.querySelectorAll('#main .cite').forEach(function(el){
+    if(el.querySelector('a'))return;
+    el.innerHTML=el.innerHTML.replace(re,function(m,law,jo){
+      var u=DASH+'/open?law='+encodeURIComponent(law)+'&jo='+encodeURIComponent(jo);
+      return '<a class="lawlink" href="'+u+'" target="_blank" rel="noopener" title="'+law+' '+jo+' — 법제처 대시보드에서 열기(노트 가능)">'+m+'</a>';
+    });
+>>>>>>> Stashed changes
   });
 })();
 /* 표 가로 스크롤 래핑 */
@@ -5095,6 +5118,93 @@ var io=new IntersectionObserver(function(es){
 },{rootMargin:'-80px 0px -72% 0px'});
 cases.forEach(function(s){io.observe(s)});
 </script>
+<<<<<<< Updated upstream
+=======
+<!-- font-size-widget v4 — 이 파일이 원본. _gather.py / _pull_company.py 가 모든 열람용 HTML 에 이 내용을 넣는다.
+     v3(zoom) 문제: body.style.zoom 은 글자가 아니라 레이아웃 전체를 확대해서
+       · 문서 폭이 375 -> 507px 로 늘어 폰에서 가로로 드래그됨
+       · 표·열이 같이 커지며 정렬이 어긋남
+       · computed font-size 는 그대로라 '글자 크기'로도 부정확
+     v4: 스타일시트의 px 글자크기만 다시 계산해 넣는다(문서 폭 불변) + 긴 문자열 줄바꿈 보정. -->
+<script>
+(function(){
+if(window.__fontWidget)return;window.__fontWidget=4;
+var KEY='pageFont:'+location.host+location.pathname;
+function load(){try{return parseFloat(localStorage.getItem(KEY))||1;}catch(e){return 1;}}
+function save(v){try{localStorage.setItem(KEY,v);}catch(e){}}
+var z=load(),disp,box,rules=null,bodyBase=0;
+function collect(){
+ rules=[];
+ function walk(list){
+  for(var i=0;i<list.length;i++){var r=list[i];
+   if(r.style&&r.style.fontSize&&/px$/.test(r.style.fontSize))
+    rules.push([r,parseFloat(r.style.fontSize),r.style.getPropertyPriority('font-size')]);
+   if(r.cssRules){try{walk(r.cssRules);}catch(e){}}}}
+ for(var i=0;i<document.styleSheets.length;i++){
+  var cr;try{cr=document.styleSheets[i].cssRules;}catch(e){continue;}
+  if(cr)walk(cr);}
+ bodyBase=parseFloat(getComputedStyle(document.body).fontSize)||16;
+ /* 확대하면 「2026년 세제개편안」처럼 긴 덩어리가 상자를 넘어 가로 스크롤을 만든다.
+    break-word 는 넘칠 때만 끊어서 표 폭(min-content)에는 영향이 없다 — anywhere 는 표를 줄여버림. */
+ var st=document.createElement('style');
+ st.setAttribute('data-fontwidget','1');
+ st.textContent='body *{overflow-wrap:break-word}';
+ document.head.appendChild(st);
+}
+function apply(){
+ if(!document.body)return;
+ if(rules===null)collect();
+ for(var i=0;i<rules.length;i++)
+  rules[i][0].style.setProperty('font-size',(rules[i][1]*z).toFixed(2)+'px',rules[i][2]);
+ document.body.style.setProperty('font-size',(bodyBase*z).toFixed(2)+'px','important');
+ save(z);if(disp)disp.textContent=Math.round(z*100)+'%';
+}
+function clamp(v){return Math.min(2.5,Math.max(0.6,Math.round(v*100)/100));}
+function nudge(d){z=clamp(z+d);apply();}
+function ui(){
+ box=document.createElement('div');
+ box.setAttribute('role','group');box.setAttribute('aria-label','글자 크기');
+ box.style.cssText='position:fixed;right:calc(10px + env(safe-area-inset-right,0px));'
+  +'bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:2147483647;display:flex;gap:2px;'
+  +'align-items:center;background:rgba(20,22,30,.9);border:1px solid rgba(255,255,255,.28);'
+  +'border-radius:24px;padding:3px 5px;font:14px/1 "Segoe UI",system-ui,sans-serif;color:#eee;'
+  +'user-select:none;-webkit-user-select:none;touch-action:manipulation;box-shadow:0 2px 10px rgba(0,0,0,.35)';
+ function btn(t,f,ttl){
+  var e=document.createElement('button');
+  e.type='button';e.textContent=t;e.title=ttl;e.setAttribute('aria-label',ttl);
+  e.style.cssText='background:none;border:none;color:#eee;font:inherit;font-size:20px;width:40px;'
+   +'height:40px;line-height:40px;cursor:pointer;padding:0;border-radius:20px;touch-action:manipulation;'
+   +'-webkit-tap-highlight-color:rgba(255,255,255,.25)';
+  e.addEventListener('click',function(ev){ev.preventDefault();f();});
+  return e;}
+ box.appendChild(btn('−',function(){nudge(-0.1);},'글자 작게'));
+ disp=document.createElement('button');
+ disp.type='button';disp.title='기본 크기(100%)로';disp.setAttribute('aria-label','기본 크기로');
+ disp.style.cssText='background:none;border:none;color:#eee;font:inherit;min-width:48px;height:40px;'
+  +'text-align:center;cursor:pointer;padding:0;touch-action:manipulation';
+ disp.addEventListener('click',function(ev){ev.preventDefault();z=1;apply();});
+ box.appendChild(disp);
+ box.appendChild(btn('＋',function(){nudge(0.1);},'글자 크게'));
+ /* 마우스 있는 기기에서만 옅게 — 폰(hover 없음)에서는 항상 또렷하게 */
+ if(window.matchMedia&&matchMedia('(hover:hover)').matches){
+  box.style.opacity='.35';box.style.transition='opacity .15s';
+  box.addEventListener('mouseenter',function(){box.style.opacity='1';});
+  box.addEventListener('mouseleave',function(){box.style.opacity='.35';});}
+ (document.documentElement||document.body).appendChild(box);
+ apply();
+ addEventListener('wheel',function(e){if(!e.ctrlKey)return;e.preventDefault();nudge(e.deltaY<0?0.1:-0.1);},{passive:false});
+ addEventListener('keydown',function(e){if(!e.ctrlKey||e.altKey)return;
+  if(e.key==='='||e.key==='+'){e.preventDefault();nudge(0.1);}
+  else if(e.key==='-'){e.preventDefault();nudge(-0.1);}
+  else if(e.key==='0'){e.preventDefault();z=1;apply();}});}
+function boot(){
+ /* 폰 리더(?m=1)가 주입하는 모바일 쉼에는 이미 우하단 A-/A+ 가 있다 → 겹치지 않게 물러난다 */
+ if(document.querySelector('[data-mshim]'))return;
+ ui();}
+if(document.readyState==='loading')addEventListener('DOMContentLoaded',boot);else boot();
+})();
+</script>
+>>>>>>> Stashed changes
 <!-- cmp-popup:begin -->
 <style id="cmpPopupCss">
 .popbtn-row{margin:6px 0 10px}
@@ -5111,6 +5221,11 @@ cases.forEach(function(s){io.observe(s)});
 .pophead{display:flex;align-items:center;gap:10px;padding:13px 18px;border-bottom:1px solid var(--line);background:var(--side);flex:0 0 auto}
 .pophead h2{margin:0;padding:0;border:0;font-size:15.5px;color:var(--fg);line-height:1.4;scroll-margin-top:0}
 .pophead .sub{font-size:11.5px;color:var(--faint);font-weight:600}
+<<<<<<< Updated upstream
+=======
+.pophead .pp-hint{color:var(--pc)}
+.pophead .pp-hint .u{text-decoration:underline dotted;text-decoration-thickness:1px;text-underline-offset:3px}
+>>>>>>> Stashed changes
 .pophead .x{margin-left:auto;flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--muted);
  border-radius:9px;width:34px;height:34px;font-size:16px;cursor:pointer;font-family:inherit}
 .pophead .x:hover{color:var(--warn);border-color:var(--warn)}
@@ -5119,6 +5234,12 @@ cases.forEach(function(s){io.observe(s)});
  letter-spacing:-.02em;font-weight:800;scroll-margin-top:10px}
 .popbody h3:first-of-type{margin-top:18px}
 .popbody p{margin:.8em 0}.popbody li{margin:.35em 0}
+<<<<<<< Updated upstream
+=======
+.popbody a.pp-law{color:var(--pc);font-weight:inherit;border-bottom:0;text-decoration:underline dotted;
+ text-decoration-thickness:1px;text-underline-offset:3px}
+.popbody a.pp-law:hover{background:color-mix(in srgb,var(--pc) 12%,transparent);border-radius:3px}
+>>>>>>> Stashed changes
 .pp-lead{background:var(--box);border-left:3px solid var(--pc);border-radius:0 12px 12px 0;padding:14px 18px;margin:0 0 14px;font-size:14.2px}
 .pp-lead>b:first-child{display:block;font-size:12px;letter-spacing:.04em;color:var(--pc);margin-bottom:5px}
 .pp-toc{display:flex;flex-wrap:wrap;gap:5px;align-items:center;margin:0 0 10px;padding:10px 12px;border:1px solid var(--line2);border-radius:12px;background:var(--side)}
@@ -5134,15 +5255,19 @@ cases.forEach(function(s){io.observe(s)});
 .pp-cites{font-size:13px;color:var(--muted)}
 .pp-cites a{color:var(--accent);font-weight:600;text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 35%,transparent)}
 .pp-cites a:hover{background:var(--chip);border-radius:4px}
+<<<<<<< Updated upstream
 .popbody a.pp-law{color:inherit;text-decoration:none;border-bottom:1.5px dotted var(--accent);cursor:pointer}
 .popbody a.pp-law:hover{background:var(--chip);border-bottom-style:solid;color:var(--accent)}
 .popbody .pp-hint{font-size:11.5px;color:var(--faint);margin:0 0 8px}
+=======
+>>>>>>> Stashed changes
 html.pop-open{overflow:hidden}
 @media(max-width:700px){.popwrap{padding:0}.popcard{width:100%;height:100vh;max-height:100vh;border-radius:0}
  .popbody{padding:14px 14px 60px}.popbtn{font-size:12.6px}}
 @media print{.popwrap,.popbtn-row{display:none!important}}
 </style>
 
+<<<<<<< Updated upstream
 <div id="pop-cmp" class="popwrap" hidden role="dialog" aria-modal="true" aria-labelledby="pop-cmp-title">
 <div class="popbg"></div>
 <div class="popcard">
@@ -5154,6 +5279,19 @@ html.pop-open{overflow:hidden}
 <!-- 팝업 본문 조각. _inject_popup.py 가 사례집에 주입한다. 링크의 DASH 는 스크립트가 치환. -->
 <div class="pp-lead">
 <b>한 줄 결론</b> 2026년 신설 규정은 "3억·30%"라는 선을 취득세에 새로 그은 것이 아니라, <b>증여세(<a class="lawlink pp-law" href="DASH/open?law=상속세 및 증여세법&jo=제35조" title="상속세 및 증여세법 제35조 — 법제처 대시보드에서 열기(노트 가능)">상증세법 제35조</a>)가 이미 쓰던 선을 취득세로 가져온 것</b>이다. 그 선 안쪽(할인 30% 미만·3억 미만)은 여전히 취득세도 유상 세율, 증여세도 0원이다. 다만 취득세 과세표준은 5% 이상만 벗어나도 시가인정액으로 올라가고, 부모의 양도세는 시가 기준으로 계산되며, 자녀는 대금을 실제로 치를 자금이 있어야 한다. 그래서 "29% 할인 매매"는 새로 생긴 구멍이 아니라 <b>세 세목이 모두 허용해 온 좁은 통로</b>이고, 그 통로의 실익은 취득세 절감이 아니라 "증여세 없이 시가의 30% 미만을 이전하는 것"이다.
+=======
+<div id="popcmp" class="popwrap" hidden role="dialog" aria-modal="true" aria-labelledby="popcmpTitle">
+<div class="popbg"></div>
+<div class="popcard">
+<div class="pophead"><div><h2 id="popcmpTitle">심화 — 배우자·직계존비속 간 저가거래: 취득세·증여세·양도세 종합비교</h2>
+<div class="sub">2026.1.1. 시행 지방세법 제7조 제11항 제4호 단서 · 시행령 제11조의3 기준 · 금액은 예시 가정에 따른 개산
+ <span class="pp-hint">· 🔗 <span class="u">밑줄 친 조문</span>을 누르면 법제처 대시보드에서 열립니다</span></div></div>
+<button type="button" class="x" aria-label="닫기">✕</button></div>
+<div class="popbody">
+<!-- 팝업 본문 조각. _inject_popup.py 가 사례집에 주입한다. 링크의 DASH 는 스크립트가 치환. -->
+<div class="pp-lead">
+<b>한 줄 결론</b> 2026년 신설 규정은 "3억·30%"라는 선을 취득세에 새로 그은 것이 아니라, <b>증여세(<a class="lawlink pp-law" href="DASH/open?law=상속세 및 증여세법&amp;jo=제35조" title="상속세 및 증여세법 제35조 — 법제처 대시보드에서 열기(노트 가능)">상증세법 제35조</a>)가 이미 쓰던 선을 취득세로 가져온 것</b>이다. 그 선 안쪽(할인 30% 미만·3억 미만)은 여전히 취득세도 유상 세율, 증여세도 0원이다. 다만 취득세 과세표준은 5% 이상만 벗어나도 시가인정액으로 올라가고, 부모의 양도세는 시가 기준으로 계산되며, 자녀는 대금을 실제로 치를 자금이 있어야 한다. 그래서 "29% 할인 매매"는 새로 생긴 구멍이 아니라 <b>세 세목이 모두 허용해 온 좁은 통로</b>이고, 그 통로의 실익은 취득세 절감이 아니라 "증여세 없이 시가의 30% 미만을 이전하는 것"이다.
+>>>>>>> Stashed changes
 </div>
 
 <nav class="pp-toc"><b>차례</b>
@@ -5162,6 +5300,7 @@ html.pop-open{overflow:hidden}
 <a href="#pp3">3. 기본 가정</a>
 <a href="#pp4">4. 시나리오 A~L 종합비교</a>
 <a href="#pp5">5. 6억 이하 주택이면 달라지는 것</a>
+<<<<<<< Updated upstream
 <a href="#ppA">6. 상증세법 제35조의 '기준금액 공제'</a>
 <a href="#ppB">7. 군청 판정과 세무서 판정은 따로 간다</a>
 <a href="#ppC">8. 이월과세 — 증여세가 양도세로 바뀌는 것이 아니다</a>
@@ -5172,14 +5311,26 @@ html.pop-open{overflow:hidden}
 <a href="#pp8">13. 신고기한 비교</a>
 <a href="#pp9">14. 아직 확정되지 않은 것·유의점</a>
 <a href="#pp10">15. 근거 조문</a>
+=======
+<a href="#pp6">6. 29% 할인 매매가 횡행할까</a>
+<a href="#pp7">7. 창구 판정 순서</a>
+<a href="#pp8">8. 신고기한 비교</a>
+<a href="#pp9">9. 아직 확정되지 않은 것·유의점</a>
+<a href="#pp10">10. 근거 조문</a>
+>>>>>>> Stashed changes
 </nav>
 
 <h3 id="pp1">1. 부가세란 무엇인가 — 부가가치세가 아니다</h3>
 <p>여기서 말하는 부가세는 <b>부가세(附加稅, surtax)</b>다. 어떤 세금(본세)에 얹어서 함께 걷는 별도의 세금을 뜻하고, 상품에 붙는 <b>부가가치세(VAT)와는 이름만 비슷할 뿐 전혀 다른 것</b>이다. 세금에 부가가치세가 붙는 일은 없다.</p>
 <p>취득세에는 두 가지 부가세가 붙는다. 창구에서 "취득세 1%"라고 안내해도 고지서에는 세 줄이 찍히는 이유다.</p>
 <ul>
+<<<<<<< Updated upstream
 <li><b>지방교육세</b>(<a class="lawlink pp-law" href="DASH/open?law=지방세법&jo=제150조" title="지방세법 제150조 — 법제처 대시보드에서 열기(노트 가능)">지방세법 제150조</a>·<a class="lawlink pp-law" href="DASH/open?law=지방세법&jo=제151조" title="지방세법 제151조 — 법제처 대시보드에서 열기(노트 가능)">제151조</a>). 지방교육재정을 위한 지방세로, 취득세 납세의무자가 취득세와 함께 신고·납부한다. 계산식은 취득 유형에 따라 다르다. 유상 주택은 <b>취득세율의 1/2에 20%</b>를 곱한 것(1%면 0.1%, 3%면 0.3%), 그 외는 <b>(표준세율 − 2%) × 20%</b>(증여 3.5%면 0.3%, 토지·상가 4%면 0.4%), 8%·12% 중과는 0.4% 고정이다.</li>
 <li><b>농어촌특별세</b>(<a class="lawlink pp-law" href="DASH/open?law=농어촌특별세법&jo=제5조" title="농어촌특별세법 제5조 — 법제처 대시보드에서 열기(노트 가능)">농어촌특별세법 제5조</a>). 농어촌 지원 재원을 위한 <b>국세</b>인데, 시·군이 취득세와 함께 받아 국고로 넘긴다. 기본은 <b>표준세율을 2%로 보고 계산한 취득세액의 10%</b>, 즉 과세표준의 0.2%다. <b>전용면적 85㎡ 이하 국민주택규모 주택은 비과세</b>라 소형 아파트에는 안 붙는다. 12% 중과 시 중과분에 대해 추가돼 합계 1.0%가 된다. 취득세를 감면받으면 감면세액의 20%가 농특세로 따로 붙기도 한다(감면분 농특세).</li>
+=======
+<li><b>지방교육세</b>(<a class="lawlink pp-law" href="DASH/open?law=지방세법&amp;jo=제150조" title="지방세법 제150조 — 법제처 대시보드에서 열기(노트 가능)">지방세법 제150조</a>·<a class="lawlink pp-law" href="DASH/open?law=지방세법&amp;jo=제151조" title="지방세법 제151조 — 법제처 대시보드에서 열기(노트 가능)">제151조</a>). 지방교육재정을 위한 지방세로, 취득세 납세의무자가 취득세와 함께 신고·납부한다. 계산식은 취득 유형에 따라 다르다. 유상 주택은 <b>취득세율의 1/2에 20%</b>를 곱한 것(1%면 0.1%, 3%면 0.3%), 그 외는 <b>(표준세율 − 2%) × 20%</b>(증여 3.5%면 0.3%, 토지·상가 4%면 0.4%), 8%·12% 중과는 0.4% 고정이다.</li>
+<li><b>농어촌특별세</b>(<a class="lawlink pp-law" href="DASH/open?law=농어촌특별세법&amp;jo=제5조" title="농어촌특별세법 제5조 — 법제처 대시보드에서 열기(노트 가능)">농어촌특별세법 제5조</a>). 농어촌 지원 재원을 위한 <b>국세</b>인데, 시·군이 취득세와 함께 받아 국고로 넘긴다. 기본은 <b>표준세율을 2%로 보고 계산한 취득세액의 10%</b>, 즉 과세표준의 0.2%다. <b>전용면적 85㎡ 이하 국민주택규모 주택은 비과세</b>라 소형 아파트에는 안 붙는다. 12% 중과 시 중과분에 대해 추가돼 합계 1.0%가 된다. 취득세를 감면받으면 감면세액의 20%가 농특세로 따로 붙기도 한다(감면분 농특세).</li>
+>>>>>>> Stashed changes
 </ul>
 <div class="ptbl"><table>
 <thead><tr><th>취득 유형</th><th class="c">취득세</th><th class="c">지방교육세</th><th class="c">농특세</th><th class="c">합계(85㎡ 초과)</th><th class="c">합계(85㎡ 이하)</th></tr></thead>
@@ -5200,12 +5351,21 @@ html.pop-open{overflow:hidden}
 <div class="ptbl"><table>
 <thead><tr><th>규정</th><th>누가·무엇</th><th>기준선</th><th>기준의 분모</th><th>효과</th></tr></thead>
 <tbody>
+<<<<<<< Updated upstream
 <tr><td><a class="lawlink pp-law" href="DASH/open?law=지방세법&jo=제7조" title="지방세법 제7조 — 법제처 대시보드에서 열기(노트 가능)">지방세법 제7조</a> 제11항 제4호 단서<br><span class="pp-mini">2026.1.1. 시행</span></td><td>취득자(자녀)의 취득세</td><td>차액 <b>3억 이상</b> 또는 <b>30% 이상</b></td><td>시가인정액<br>(산정 곤란 시 시가표준액)</td><td>취득 전체가 <b>증여</b>로 전환. 세율 3.5%(중과 12%), 과표 시가인정액</td></tr>
 <tr><td><a class="lawlink pp-law" href="DASH/open?law=지방세법&jo=제10조의3" title="지방세법 제10조의3 — 법제처 대시보드에서 열기(노트 가능)">지방세법 제10조의3</a> 제2항<br><a class="lawlink pp-law" href="DASH/open?law=지방세법 시행령&jo=제18조의2" title="지방세법 시행령 제18조의2 — 법제처 대시보드에서 열기(노트 가능)">시행령 제18조의2</a></td><td>취득자의 취득세</td><td>차액 <b>3억 이상</b> 또는 <b>5% 이상</b></td><td>시가인정액</td><td>유상은 유지하되 <b>과표만 시가인정액</b>으로. 세율 구간도 그 과표로 판정</td></tr>
 <tr><td><a class="lawlink pp-law" href="DASH/open?law=상속세 및 증여세법&jo=제35조" title="상속세 및 증여세법 제35조 — 법제처 대시보드에서 열기(노트 가능)">상속세및증여세법 제35조</a> 제1항</td><td>양수자(자녀)의 증여세</td><td>차액 ≥ <b>min(3억, 시가×30%)</b></td><td>상증세법상 시가</td><td>차액에서 min(3억, 30%)를 <b>뺀 금액</b>이 증여재산가액</td></tr>
 <tr><td><a class="lawlink pp-law" href="DASH/open?law=소득세법&jo=제101조" title="소득세법 제101조 — 법제처 대시보드에서 열기(노트 가능)">소득세법 제101조</a> 제1항</td><td>양도자(부모)의 양도세</td><td>차액 <b>3억 이상</b> 또는 <b>5% 이상</b></td><td>소득세법상 시가</td><td>양도가액을 <b>시가</b>로 계산(1세대1주택 비과세면 결과 0)</td></tr>
 <tr><td><a class="lawlink pp-law" href="DASH/open?law=소득세법&jo=제97조의2" title="소득세법 제97조의2 — 법제처 대시보드에서 열기(노트 가능)">소득세법 제97조의2</a>(이월과세)</td><td>수증자가 나중에 팔 때</td><td>증여 후 <b>10년</b> 이내 양도(2023.1.1. 이후 증여분, 그 전은 5년)</td><td>—</td><td>취득가액을 <b>증여자의 당초 취득가액</b>으로 계산, 낸 증여세는 필요경비. 세금이 줄어드는 경우엔 미적용(8·10번 참조)</td></tr>
 <tr><td><a class="lawlink pp-law" href="DASH/open?law=상속세 및 증여세법&jo=제53조" title="상속세 및 증여세법 제53조 — 법제처 대시보드에서 열기(노트 가능)">상증세법 제53조</a>(증여재산공제)</td><td>수증자의 증여세</td><td>10년 합산 배우자 6억 · 직계존비속 5천만(미성년 2천만) · 기타친족 1천만</td><td>—</td><td>이 금액까지는 증여세 0</td></tr>
+=======
+<tr><td><a class="lawlink pp-law" href="DASH/open?law=지방세법&amp;jo=제7조" title="지방세법 제7조 — 법제처 대시보드에서 열기(노트 가능)">지방세법 제7조</a> 제11항 제4호 단서<br><span class="pp-mini">2026.1.1. 시행</span></td><td>취득자(자녀)의 취득세</td><td>차액 <b>3억 이상</b> 또는 <b>30% 이상</b></td><td>시가인정액<br>(산정 곤란 시 시가표준액)</td><td>취득 전체가 <b>증여</b>로 전환. 세율 3.5%(중과 12%), 과표 시가인정액</td></tr>
+<tr><td><a class="lawlink pp-law" href="DASH/open?law=지방세법&amp;jo=제10조의3" title="지방세법 제10조의3 — 법제처 대시보드에서 열기(노트 가능)">지방세법 제10조의3</a> 제2항<br><a class="lawlink pp-law" href="DASH/open?law=지방세법 시행령&amp;jo=제18조의2" title="지방세법 시행령 제18조의2 — 법제처 대시보드에서 열기(노트 가능)">시행령 제18조의2</a></td><td>취득자의 취득세</td><td>차액 <b>3억 이상</b> 또는 <b>5% 이상</b></td><td>시가인정액</td><td>유상은 유지하되 <b>과표만 시가인정액</b>으로. 세율 구간도 그 과표로 판정</td></tr>
+<tr><td><a class="lawlink pp-law" href="DASH/open?law=상속세 및 증여세법&amp;jo=제35조" title="상속세 및 증여세법 제35조 — 법제처 대시보드에서 열기(노트 가능)">상속세및증여세법 제35조</a> 제1항</td><td>양수자(자녀)의 증여세</td><td>차액 ≥ <b>min(3억, 시가×30%)</b></td><td>상증세법상 시가</td><td>차액에서 min(3억, 30%)를 <b>뺀 금액</b>이 증여재산가액</td></tr>
+<tr><td><a class="lawlink pp-law" href="DASH/open?law=소득세법&amp;jo=제101조" title="소득세법 제101조 — 법제처 대시보드에서 열기(노트 가능)">소득세법 제101조</a> 제1항</td><td>양도자(부모)의 양도세</td><td>차액 <b>3억 이상</b> 또는 <b>5% 이상</b></td><td>소득세법상 시가</td><td>양도가액을 <b>시가</b>로 계산(1세대1주택 비과세면 결과 0)</td></tr>
+<tr><td><a class="lawlink pp-law" href="DASH/open?law=소득세법&amp;jo=제97조의2" title="소득세법 제97조의2 — 법제처 대시보드에서 열기(노트 가능)">소득세법 제97조의2</a>(이월과세)</td><td>수증자가 나중에 팔 때</td><td>증여 후 <b>10년</b> 이내 양도</td><td>—</td><td>취득가액을 <b>증여자의 당초 취득가액</b>으로 계산</td></tr>
+<tr><td><a class="lawlink pp-law" href="DASH/open?law=상속세 및 증여세법&amp;jo=제53조" title="상속세 및 증여세법 제53조 — 법제처 대시보드에서 열기(노트 가능)">상증세법 제53조</a>(증여재산공제)</td><td>수증자의 증여세</td><td>10년 합산 배우자 6억 · 직계존비속 5천만(미성년 2천만) · 기타친족 1천만</td><td>—</td><td>이 금액까지는 증여세 0</td></tr>
+>>>>>>> Stashed changes
 </tbody></table></div>
 <p>정리하면 할인율을 축으로 세 구간이 생긴다.</p>
 <div class="ptbl"><table>
@@ -5232,7 +5392,11 @@ html.pop-open{overflow:hidden}
 <tbody>
 <tr><td><b>A. 정상가 매매</b><br>10억에 매수</td><td>유상 3%<br>과표 10억<br><b>3,500만</b></td><td>0</td><td>0 / 약 1억 8,160만</td><td>3,500만 / 2억 1,660만</td><td>자녀에게 현금 10억이 있어야 한다. 부모가 받은 돈을 되돌려주면 그 자체가 증여</td></tr>
 <tr><td><b>B. 살짝 저가</b><br>9.6억(차액 4천만, 4%)</td><td>유상 3%<br>과표 9.6억<br><b>3,360만</b></td><td>0</td><td>0 / 약 1억 6,750만</td><td>3,360만 / 2억 110만</td><td>5% 미만이라 어느 규정에도 안 걸린다. 취득세·양도세 모두 실제 거래가</td></tr>
+<<<<<<< Updated upstream
 <tr><td><b>C. 29% 구간</b><br>7.5억(차액 2.5억, 25%)</td><td>유상이지만 부당행위계산 부인<br>과표 <b>10억</b>, 세율 3%<br><b>3,500만</b></td><td>0<br><span class="pp-mini">2.5억 − 3억 &lt; 0</span></td><td>0 / 약 1억 8,160만<br><span class="pp-mini"><a class="lawlink pp-law" href="DASH/open?law=소득세법&jo=제101조" title="소득세법 제101조 — 법제처 대시보드에서 열기(노트 가능)">소득세법 101조</a>로 양도가액 10억</span></td><td>3,500만 / 2억 1,660만</td><td>취득세는 A와 동일. 얻는 것은 <b>증여세 없이 2.5억 이전</b>뿐. 자녀의 장래 취득가액은 7.5억이라 나중에 팔 때 차익이 커진다</td></tr>
+=======
+<tr><td><b>C. 29% 구간</b><br>7.5억(차액 2.5억, 25%)</td><td>유상이지만 부당행위계산 부인<br>과표 <b>10억</b>, 세율 3%<br><b>3,500만</b></td><td>0<br><span class="pp-mini">2.5억 − 3억 &lt; 0</span></td><td>0 / 약 1억 8,160만<br><span class="pp-mini"><a class="lawlink pp-law" href="DASH/open?law=소득세법&amp;jo=제101조" title="소득세법 제101조 — 법제처 대시보드에서 열기(노트 가능)">소득세법 제101조</a>로 양도가액 10억</span></td><td>3,500만 / 2억 1,660만</td><td>취득세는 A와 동일. 얻는 것은 <b>증여세 없이 2.5억 이전</b>뿐. 자녀의 장래 취득가액은 7.5억이라 나중에 팔 때 차익이 커진다</td></tr>
+>>>>>>> Stashed changes
 <tr><td><b>D. 30% 이상 할인</b><br>6억(차액 4억, 40%)</td><td><b>증여 간주</b> 3.5%<br>과표 10억<br><b>4,000만</b></td><td>증여재산가액 4억 − 3억 = 1억<br>공제 5천만<br><b>485만</b></td><td>0 / 약 1억 8,160만</td><td>4,485만 / 2억 2,645만</td><td>2025년까지는 C처럼 3,500만이었다. <b>개정 효과는 이 가격대에서 500만</b>. 자녀의 장래 취득가액은 6억 + 증여 과세된 1억 = 7억</td></tr>
 <tr><td><b>E. 고가·소폭 할인</b><br>시가 30억 → 27.5억<br>(차액 2.5억, 8.3%)</td><td>유상, 부당행위 부인<br>과표 30억, 3%<br><b>1억 500만</b></td><td>0</td><td>시가 30억 기준(12억 초과분 과세)</td><td>—</td><td>3억 미만이라 유상 유지. 고가 물건은 <b>3억 상한 때문에 허용 할인폭이 10% 미만</b></td></tr>
 <tr><td><b>F. 고가·3억 초과 할인</b><br>시가 30억 → 26억<br>(차액 4억, 13.3%)</td><td><b>증여 간주</b><br>과표 30억, 3.5%<br><b>1억 2,000만</b></td><td>4억 − 3억 = 1억<br><b>485만</b></td><td>시가 30억 기준</td><td>—</td><td>13%만 깎아도 증여. 30% 기준이 아니라 3억 기준이 잡는다</td></tr>
@@ -5241,7 +5405,11 @@ html.pop-open{overflow:hidden}
 <tr><td><b>I. 배우자 간</b><br>① 10억 증여 / ② 7.5억 매매</td><td>① 증여 <b>4,000만</b><br>② 유상, 과표 10억 <b>3,500만</b></td><td>① 10억 − 6억 = 4억 → <b>6,790만</b><br>② 0</td><td>① 0<br>② 세대 기준 1주택이면 0</td><td>① 1억 790만<br>② 3,500만</td><td>배우자 공제 6억이 커서 증여세가 적다. 매매는 배우자 <b>본인 자금</b>이어야 하고, 부부 간 자금 흐름은 국세청이 가장 엄격히 본다. 배우자도 이월과세 10년</td></tr>
 <tr><td><b>J. 조정대상지역</b><br>서울 아파트 시가 10억, 시가표준액 3억 이상<br>부모 2주택자, 6억 매매 또는 증여</td><td><b>증여 중과 12%</b><br>과표 10억<br><b>1억 3,400만</b></td><td>D·G와 동일</td><td>D·G와 동일<br>(다주택 중과 여부는 양도 시점 규정 확인)</td><td>—</td><td>부모가 <b>1세대1주택자</b>이면 배우자·직계존비속 증여는 중과 제외 → 4,000만. 유상이었다면 자녀 무주택 기준 3,500만. 여기서는 개정 효과가 <b>1억</b></td></tr>
 <tr><td><b>K. 남남 간 저가</b><br>10억짜리를 타인에게 6억</td><td>유상 1%<br>과표 <b>6억</b>(부당행위 없음)<br><b>780만</b></td><td>비특수관계인 30% 이상·정당한 사유 없으면<br>4억 − 3억 = 1억, 공제 없음<br><b>970만</b></td><td>실거래가 6억 기준<br>약 4,390만</td><td>—</td><td>특수관계가 아니면 취득세 과표는 실제 거래가 그대로. 대신 국세청이 "정당한 사유"를 따진다</td></tr>
+<<<<<<< Updated upstream
 <tr><td><b>L. 경매·공매·교환·파산</b><br>가족 물건을 경락</td><td>유상 확정<br>(<a class="lawlink pp-law" href="DASH/open?law=지방세법&jo=제7조" title="지방세법 제7조 — 법제처 대시보드에서 열기(노트 가능)">제7조</a> 제11항 제1~3호)</td><td>경매는 원칙 없음<br>교환 저가는 35조 가능</td><td>정상</td><td>—</td><td>단서는 <b>제4호에만</b> 붙어 있어 조문상 경매·공매·교환은 증여 간주 대상이 아니다. 교환은 과표 특례(양쪽 시가인정액 중 높은 쪽)와 부당행위 부인은 별도</td></tr>
+=======
+<tr><td><b>L. 경매·공매·교환·파산</b><br>가족 물건을 경락</td><td>유상 확정<br>(<a class="lawlink pp-law" href="DASH/open?law=지방세법&amp;jo=제7조" title="지방세법 제7조 — 법제처 대시보드에서 열기(노트 가능)">지방세법 제7조</a> 제11항 제1~3호)</td><td>경매는 원칙 없음<br>교환 저가는 <a class="lawlink pp-law" href="DASH/open?law=상속세 및 증여세법&amp;jo=제35조" title="상속세 및 증여세법 제35조 — 법제처 대시보드에서 열기(노트 가능)">상증세법 제35조</a> 적용 가능</td><td>정상</td><td>—</td><td>단서는 <b>제4호에만</b> 붙어 있어 조문상 경매·공매·교환은 증여 간주 대상이 아니다. 교환은 과표 특례(양쪽 시가인정액 중 높은 쪽)와 부당행위 부인은 별도</td></tr>
+>>>>>>> Stashed changes
 </tbody></table></div>
 <p><b>표에서 읽을 것.</b> 10억 아파트에서 개정으로 달라진 금액은 D의 500만뿐이다. 유상 9억 초과 세율이 이미 3%라 증여 3.5%와 차이가 작기 때문이다. 개정의 진짜 무게는 두 곳에 있다. 하나는 <b>6억 이하 주택</b>(다음 절), 다른 하나는 <b>조정대상지역 다주택자의 증여 중과 12%</b>(J)다.</p>
 
@@ -5258,6 +5426,7 @@ html.pop-open{overflow:hidden}
 </tbody></table></div>
 <p>여기서는 30% 선을 넘는 순간 취득세가 <b>650만에서 2,000만으로 세 배</b>가 되고, 증여세는 그 선에서 겨우 0을 벗어난다. 사례집이 "세율 페널티"라고 부른 지점은 바로 이 가격대다. 반대로 토지·상가는 유상 4.6%, 증여 4.0%라 증여 간주가 되면 오히려 내려간다. 그러니 이 규정의 세율 효과는 <b>주택, 그중 6억 이하 주택과 조정대상지역 주택에 집중</b>된다.</p>
 
+<<<<<<< Updated upstream
 <h3 id="ppA">6. <a class="lawlink pp-law" href="DASH/open?law=상속세 및 증여세법&jo=제35조" title="상속세 및 증여세법 제35조 — 법제처 대시보드에서 열기(노트 가능)">상증세법 제35조</a>의 '기준금액 공제' — 취지, 그리고 취득세에는 왜 없는가</h3>
 <p><a class="lawlink pp-law" href="DASH/open?law=상속세 및 증여세법&jo=제35조" title="상속세 및 증여세법 제35조 — 법제처 대시보드에서 열기(노트 가능)">상증세법 제35조</a> 제1항은 "차액이 기준을 넘으면 차액 전부를 증여로 본다"가 아니다. <b>차액에서 기준금액(시가의 30%와 3억 중 적은 금액)을 뺀 나머지</b>를 증여재산가액으로 한다. 허용 범위의 끝점 가격(시가의 70% 또는 시가 − 3억 중 높은 쪽)에 거래한 것으로 보고, 그보다 더 내려간 부분만 증여로 잡는 구조다.</p>
 <div class="ptbl"><table>
@@ -5359,23 +5528,45 @@ html.pop-open{overflow:hidden}
 <li><b>3억 상한이 폭을 좁힌다.</b> 29%가 통하는 물건은 시가인정액 약 10억까지다. 20억이면 15% 미만, 30억이면 10% 미만만 가능하다(E·F).</li>
 <li><b>자녀 자금이 진짜여야 한다.</b> <a class="lawlink pp-law" href="DASH/open?law=지방세법&jo=제7조" title="지방세법 제7조 — 법제처 대시보드에서 열기(노트 가능)">제7조</a> 제11항 제4호는 소득·재산 처분·기수증 재산으로 대가 지급을 입증하라고 한다. 7.5억을 실제로 이체할 수 있는 자녀는 많지 않고, 부모가 되돌려주면 그 돈이 증여다. 국세청 자금출처조사(<a class="lawlink pp-law" href="DASH/open?law=상속세 및 증여세법&jo=제45조" title="상속세 및 증여세법 제45조 — 법제처 대시보드에서 열기(노트 가능)">상증세법 제45조</a>)와 배우자·직계존비속 간 양도 시 증여추정(<a class="lawlink pp-law" href="DASH/open?law=상속세 및 증여세법&jo=제44조" title="상속세 및 증여세법 제44조 — 법제처 대시보드에서 열기(노트 가능)">제44조</a>)이 같이 작동한다.</li>
 <li><b>부모 양도세는 시가로 계산된다.</b> 1세대1주택 비과세가 아니라면 <a class="lawlink pp-law" href="DASH/open?law=소득세법&jo=제101조" title="소득세법 제101조 — 법제처 대시보드에서 열기(노트 가능)">소득세법 제101조</a>로 양도가액 10억이 된다. 싸게 팔았다고 양도세가 줄지 않는다.</li>
+=======
+<h3 id="pp6">6. 29% 할인 매매가 횡행할까</h3>
+<p>시도는 늘 것이다. 다만 "새로운 구멍"은 아니다. <a class="lawlink pp-law" href="DASH/open?law=상속세 및 증여세법&amp;jo=제35조" title="상속세 및 증여세법 제35조 — 법제처 대시보드에서 열기(노트 가능)">상증세법 제35조</a>가 오래전부터 min(3억, 30%)까지 증여세를 묻지 않아 왔고, 자산가 가족 사이에서 "30% 낮춰 파는 것"은 이미 알려진 절세 기법이다. 지방세법은 이번에 <b>같은 선을 채택해 취득세도 그 안쪽은 건드리지 않겠다고 정리</b>한 것이다. 실제 실익은 다음 이유로 생각보다 작다.</p>
+<ol>
+<li><b>취득세는 못 줄인다.</b> 5%만 벗어나도 부당행위계산 부인으로 과표가 시가인정액이 된다(시나리오 C). 29% 할인해도 취득세는 정상가 매매와 같다.</li>
+<li><b>3억 상한이 폭을 좁힌다.</b> 29%가 통하는 물건은 시가인정액 약 10억까지다. 20억이면 15% 미만, 30억이면 10% 미만만 가능하다(E·F).</li>
+<li><b>자녀 자금이 진짜여야 한다.</b> <a class="lawlink pp-law" href="DASH/open?law=지방세법&amp;jo=제7조" title="지방세법 제7조 — 법제처 대시보드에서 열기(노트 가능)">지방세법 제7조</a> 제11항 제4호는 소득·재산 처분·기수증 재산으로 대가 지급을 입증하라고 한다. 7.5억을 실제로 이체할 수 있는 자녀는 많지 않고, 부모가 되돌려주면 그 돈이 증여다. 국세청 자금출처조사(<a class="lawlink pp-law" href="DASH/open?law=상속세 및 증여세법&amp;jo=제45조" title="상속세 및 증여세법 제45조 — 법제처 대시보드에서 열기(노트 가능)">상증세법 제45조</a>)와 배우자·직계존비속 간 양도 시 증여추정(<a class="lawlink pp-law" href="DASH/open?law=상속세 및 증여세법&amp;jo=제44조" title="상속세 및 증여세법 제44조 — 법제처 대시보드에서 열기(노트 가능)">제44조</a>)이 같이 작동한다.</li>
+<li><b>부모 양도세는 시가로 계산된다.</b> 1세대1주택 비과세가 아니라면 <a class="lawlink pp-law" href="DASH/open?law=소득세법&amp;jo=제101조" title="소득세법 제101조 — 법제처 대시보드에서 열기(노트 가능)">소득세법 제101조</a>로 양도가액 10억이 된다. 싸게 팔았다고 양도세가 줄지 않는다.</li>
+>>>>>>> Stashed changes
 <li><b>자녀의 취득가액이 낮아진다.</b> 7.5억에 산 자녀가 나중에 팔면 차익이 2.5억 더 잡힌다. 자녀가 1세대1주택 비과세를 받지 못하면 미뤄진 세금이 돌아온다.</li>
 </ol>
 <p>그래서 이 구조가 실제로 효율적인 조합은 하나다. <b>부모가 1세대1주택 비과세, 자녀에게 실제 자금이 있고, 시가 10억 안팎</b>. 이 조합에서는 총 3,500만으로 2.5억을 무상 이전한 효과가 나며(C), 같은 금액을 증여하면 취득세·증여세 합계가 2억 5,825만(G)이다. 창구 담당자 입장에서 할 일은 이 구조를 막는 것이 아니라 <b>선 안쪽인지 바깥쪽인지를 시가인정액으로 정확히 판정하고, 판정 근거를 남기는 것</b>이다.</p>
 
+<<<<<<< Updated upstream
 <h3 id="pp7">12. 창구 판정 순서</h3>
+=======
+<h3 id="pp7">7. 창구 판정 순서</h3>
+>>>>>>> Stashed changes
 <ol>
 <li><b>관계 확인.</b> 가족관계증명서로 배우자·직계존비속 여부 확인. 아니면 일반 유상 절차(단, 사위·며느리·형제 등 다른 특수관계인은 부당행위계산 부인 5%·3억만 적용).</li>
 <li><b>제1~3호 해당 여부.</b> 경매·공매, 파산 처분, 교환이면 유상 확정. 단서 적용 없음.</li>
 <li><b>대가 지급 입증(제4호 가~라목).</b> 이체내역·소득증빙·재산처분·기수증재산 자료. 입증 실패 → 증여 처리, 끝.</li>
+<<<<<<< Updated upstream
 <li><b>시가인정액 산정.</b> 취득일 전 6개월~후 3개월 매매사례·감정·유사매매사례(<a class="lawlink pp-law" href="DASH/open?law=지방세법 시행령&jo=제14조" title="지방세법 시행령 제14조 — 법제처 대시보드에서 열기(노트 가능)">시행령 제14조</a>). 산정이 어려우면 시가표준액.</li>
 <li><b>차액 ≥ 3억 또는 ≥ 30%?</b> 지분 취득이면 전체 지분 기준, 부속토지만이면 전체 주택 기준으로 환산(<a class="lawlink pp-law" href="DASH/open?law=지방세법 시행령&jo=제11조의3" title="지방세법 시행령 제11조의3 — 법제처 대시보드에서 열기(노트 가능)">시행령 제11조의3</a>). 해당 → <b>증여 취득</b>. 세율 3.5%, 조정대상지역·시가표준액 3억 이상 주택이면 12%(부모가 1세대1주택자면 제외), 과표 시가인정액(시가표준액 1억 이하는 납세자 선택).</li>
+=======
+<li><b>시가인정액 산정.</b> 취득일 전 6개월~후 3개월 매매사례·감정·유사매매사례(<a class="lawlink pp-law" href="DASH/open?law=지방세법 시행령&amp;jo=제14조" title="지방세법 시행령 제14조 — 법제처 대시보드에서 열기(노트 가능)">시행령 제14조</a>). 산정이 어려우면 시가표준액.</li>
+<li><b>차액 ≥ 3억 또는 ≥ 30%?</b> 지분 취득이면 전체 지분 기준, 부속토지만이면 전체 주택 기준으로 환산(<a class="lawlink pp-law" href="DASH/open?law=지방세법 시행령&amp;jo=제11조의3" title="지방세법 시행령 제11조의3 — 법제처 대시보드에서 열기(노트 가능)">시행령 제11조의3</a>). 해당 → <b>증여 취득</b>. 세율 3.5%, 조정대상지역·시가표준액 3억 이상 주택이면 12%(부모가 1세대1주택자면 제외), 과표 시가인정액(시가표준액 1억 이하는 납세자 선택).</li>
+>>>>>>> Stashed changes
 <li><b>차액 ≥ 3억 또는 ≥ 5%?</b> 해당 → 유상 세율, <b>과표 시가인정액</b>, 세율 구간도 그 과표로.</li>
 <li>둘 다 아니면 유상, 과표 사실상취득가격.</li>
 <li><b>안내.</b> 증여세·양도세·자금출처는 세무서 소관이지만, 증여로 처리되는 건은 증여세 신고(3개월) 대상이 될 수 있음을 알려 준다. 판정 근거(시가인정액 산정표·차액 계산)를 결정문에 남긴다.</li>
 </ol>
 
+<<<<<<< Updated upstream
 <h3 id="pp8">13. 신고기한 비교</h3>
+=======
+<h3 id="pp8">8. 신고기한 비교</h3>
+>>>>>>> Stashed changes
 <div class="ptbl"><table>
 <thead><tr><th>세목</th><th>기산일</th><th>기한</th><th>제출처</th></tr></thead>
 <tbody>
@@ -5385,19 +5576,34 @@ html.pop-open{overflow:hidden}
 <tr><td>양도소득세 예정신고</td><td>양도일이 속하는 달의 말일</td><td>2개월</td><td>양도자 주소지 세무서</td></tr>
 <tr><td>지방소득세(양도소득분)</td><td>양도세 예정신고기한과 동일</td><td>2개월</td><td>양도자 주소지 시·군·구</td></tr>
 </tbody></table></div>
+<<<<<<< Updated upstream
 <p class="pp-mini">증여로 간주된 매매의 취득세 기산일을 계약일로 볼지 잔금일로 볼지는 아직 명확한 해석이 없다. 무상취득의 취득시기가 계약일(<a class="lawlink pp-law" href="DASH/open?law=지방세법 시행령&jo=제20조" title="지방세법 시행령 제20조 — 법제처 대시보드에서 열기(노트 가능)">시행령 제20조</a> 제1항)이므로 보수적으로는 계약일부터 60일로 안내하고, 다툼이 있으면 상급기관 질의를 남긴다.</p>
 
 <h3 id="pp9">14. 아직 확정되지 않은 것·유의점</h3>
 <ul>
 <li><b>부담부증여와 단서의 관계.</b> <a class="lawlink pp-law" href="DASH/open?law=지방세법&jo=제7조" title="지방세법 제7조 — 법제처 대시보드에서 열기(노트 가능)">제7조</a> 제12항 단서는 배우자·직계존비속 간 부담부증여에 제11항을 적용하라고 한다. 그런데 부담부증여의 "대가"인 채무액은 언제나 시가인정액보다 훨씬 낮으므로, 제4호 단서를 문면대로 적용하면 가족 간 부담부증여의 유상 부분이 사라진다는 해석이 가능하다. 그것이 입법 의도인지는 해석례가 나와야 안다. 당분간은 <b>사례 26의 종전 처리(채무 입증분 유상)</b>를 유지하되 행안부 해석을 확인한다.</li>
+=======
+<p class="pp-mini">증여로 간주된 매매의 취득세 기산일을 계약일로 볼지 잔금일로 볼지는 아직 명확한 해석이 없다. 무상취득의 취득시기가 계약일(<a class="lawlink pp-law" href="DASH/open?law=지방세법 시행령&amp;jo=제20조" title="지방세법 시행령 제20조 — 법제처 대시보드에서 열기(노트 가능)">시행령 제20조</a> 제1항)이므로 보수적으로는 계약일부터 60일로 안내하고, 다툼이 있으면 상급기관 질의를 남긴다.</p>
+
+<h3 id="pp9">9. 아직 확정되지 않은 것·유의점</h3>
+<ul>
+<li><b>부담부증여와 단서의 관계.</b> <a class="lawlink pp-law" href="DASH/open?law=지방세법&amp;jo=제7조" title="지방세법 제7조 — 법제처 대시보드에서 열기(노트 가능)">지방세법 제7조</a> 제12항 단서는 배우자·직계존비속 간 부담부증여에 제11항을 적용하라고 한다. 그런데 부담부증여의 "대가"인 채무액은 언제나 시가인정액보다 훨씬 낮으므로, 제4호 단서를 문면대로 적용하면 가족 간 부담부증여의 유상 부분이 사라진다는 해석이 가능하다. 그것이 입법 의도인지는 해석례가 나와야 안다. 당분간은 <b>사례 26의 종전 처리(채무 입증분 유상)</b>를 유지하되 행안부 해석을 확인한다.</li>
+>>>>>>> Stashed changes
 <li><b>교환.</b> 사례집 사례 24 이하 ③교환 부분은 "2026 규정에 걸릴 수 있다"고 적었지만, 단서는 제4호에만 있고 교환은 제3호다. 조문상 교환은 증여 간주 대상이 아니라고 읽힌다. 다만 교환 차금이 크면 과표 특례와 부당행위 부인은 별도로 본다.</li>
 <li><b>시가인정액과 상증세법 시가는 다를 수 있다.</b> 산정 주체(지자체 vs 국세청)와 감정평가 실시 여부가 다르다. 취득세는 증여인데 증여세는 0인 조합, 그 반대 조합이 모두 생길 수 있다.</li>
 <li><b>조정대상지역 현황.</b> 2025.10.15. 대책으로 서울 전역과 경기 12곳이 규제지역으로 묶였다. 12% 중과 판정은 취득일 기준 지정 현황을 반드시 확인한다.</li>
 <li><b>다주택 양도세 중과.</b> 유예 연장 여부에 따라 [과세] 금액이 크게 달라진다. 위 금액은 중과 없음 가정이다.</li>
+<<<<<<< Updated upstream
 <li><b>지분 쪼개기.</b> <a class="lawlink pp-law" href="DASH/open?law=지방세법 시행령&jo=제11조의3" title="지방세법 시행령 제11조의3 — 법제처 대시보드에서 열기(노트 가능)">시행령 제11조의3</a>이 전체 지분 기준으로 환산하므로 3억 밑으로 나눠 사는 방식은 통하지 않는다.</li>
 </ul>
 
 <h3 id="pp10">15. 근거 조문</h3>
+=======
+<li><b>지분 쪼개기.</b> <a class="lawlink pp-law" href="DASH/open?law=지방세법 시행령&amp;jo=제11조의3" title="지방세법 시행령 제11조의3 — 법제처 대시보드에서 열기(노트 가능)">시행령 제11조의3</a>이 전체 지분 기준으로 환산하므로 3억 밑으로 나눠 사는 방식은 통하지 않는다.</li>
+</ul>
+
+<h3 id="pp10">10. 근거 조문</h3>
+>>>>>>> Stashed changes
 <p class="pp-mini">조문 링크는 법제처 대시보드로 연결된다(메모 가능). 대시보드가 꺼져 있으면 열리지 않는다.</p>
 <ul class="pp-cites">
 <li><a href="DASH/open?law=지방세법&jo=제7조">지방세법 제7조</a> 제11항 제4호 단서(2025.12.31. 개정, 2026.1.1. 시행) · 제12항</li>
@@ -5406,6 +5612,7 @@ html.pop-open{overflow:hidden}
 <li><a href="DASH/open?law=지방세법&jo=제11조">지방세법 제11조</a>(세율) · <a href="DASH/open?law=지방세법&jo=제13조의2">제13조의2</a> 제2항(증여 중과) · <a href="DASH/open?law=지방세법 시행령&jo=제28조의6">시행령 제28조의6</a>(중과 제외)</li>
 <li><a href="DASH/open?law=지방세법&jo=제151조">지방세법 제151조</a>(지방교육세 세율) · <a href="DASH/open?law=농어촌특별세법&jo=제5조">농어촌특별세법 제5조</a></li>
 <li><a href="DASH/open?law=상속세 및 증여세법&jo=제35조">상속세 및 증여세법 제35조</a>(저가양수) · <a href="DASH/open?law=상속세 및 증여세법&jo=제44조">제44조</a>(배우자 등 양도 시 증여추정) · <a href="DASH/open?law=상속세 및 증여세법&jo=제45조">제45조</a>(자금출처) · <a href="DASH/open?law=상속세 및 증여세법&jo=제53조">제53조</a>(증여재산공제) · <a href="DASH/open?law=상속세 및 증여세법&jo=제56조">제56조</a>(세율)</li>
+<<<<<<< Updated upstream
 <li><a href="DASH/open?law=소득세법&jo=제97조의2">소득세법 제97조의2</a>(이월과세 — 제1항 적용 요건·필요경비, 제2항 적용 제외) · <a href="DASH/open?law=소득세법&jo=제101조">제101조</a>(제1항 부당행위계산, 제2항 우회양도) · <a href="DASH/open?law=소득세법&jo=제95조">제95조</a>(장기보유특별공제) · <a href="DASH/open?law=소득세법&jo=제89조">제89조</a>(1세대1주택 비과세) · <a href="DASH/open?law=소득세법 시행령&jo=제163조">시행령 제163조</a>(제10항 저가양수 시 취득가액에 증여재산가액 가산)</li>
 <li><a href="DASH/open?law=상속세 및 증여세법&jo=제4조의2">상속세 및 증여세법 제4조의2</a>(증여세 납부의무·연대납세의무) · <a href="DASH/open?law=상속세 및 증여세법&jo=제47조">제47조</a>(증여세 과세가액, 10년 합산)</li>
 </ul>
@@ -5555,6 +5762,9 @@ html.pop-open{overflow:hidden}
 <li><a href="DASH/open?law=지방세법 시행규칙&jo=제4조의3">지방세법 시행규칙 제4조의3</a>(시가인정액의 산정 기준 및 절차 등 — 감정기관, 심의요청 기한, 유사부동산 판단기준)</li>
 <li><a href="DASH/open?law=지방세기본법&jo=제23조">지방세기본법 제23조</a>(기간의 계산) · <a href="DASH/open?law=지방세기본법&jo=제147조">제147조</a>(지방세심의위원회)</li>
 <li><a href="DASH/open?law=상속세 및 증여세법 시행령&jo=제49조">상속세 및 증여세법 시행령 제49조</a>(평가의 원칙 등 — 국세 쪽 평가기간 비교용)</li>
+=======
+<li><a href="DASH/open?law=소득세법&jo=제97조의2">소득세법 제97조의2</a>(이월과세) · <a href="DASH/open?law=소득세법&jo=제101조">제101조</a>(부당행위계산) · <a href="DASH/open?law=소득세법 시행령&jo=제163조">시행령 제163조</a>(취득가액에 증여재산가액 가산)</li>
+>>>>>>> Stashed changes
 </ul>
 </div>
 </div>
@@ -5562,6 +5772,7 @@ html.pop-open{overflow:hidden}
 
 <script id="cmpPopupJs">
 (function(){
+<<<<<<< Updated upstream
 /* 대시보드(6155)나 그 /readables/ 경로에서 열렸으면 같은 서버(터널 주소 포함), 파일로 열었으면 로컬 6155 */
 var DASH=(location.port==='6155'||location.pathname.indexOf('/readables/')===0)?'':'http://localhost:6155';
 var wraps=document.querySelectorAll('.popwrap'); if(!wraps.length) return;
@@ -5588,6 +5799,28 @@ wraps.forEach(function(wrap){
   e.preventDefault();var t=wrap.querySelector(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'});});});
  if(location.hash==='#pop-'+id) open();
 });
+=======
+var DASH='http://localhost:6155';
+var wrap=document.getElementById('popcmp'); if(!wrap) return;
+var body=wrap.querySelector('.popbody'), xbtn=wrap.querySelector('.x');
+wrap.querySelectorAll('a[href^="DASH/"]').forEach(function(a){
+ a.href=DASH+a.getAttribute('href').slice(4); a.target='_blank'; a.rel='noopener'; a.classList.add('lawlink');});
+function setHash(on){
+ if(!history.replaceState) return;
+ var base=location.pathname+location.search;
+ if(on) history.replaceState(null,'',base+'#pop-cmp');
+ else if(location.hash==='#pop-cmp') history.replaceState(null,'',base);}
+function open(){wrap.hidden=false;document.documentElement.classList.add('pop-open');body.scrollTop=0;setHash(true);
+ try{xbtn.focus({preventScroll:true});}catch(e){}}
+function close(){wrap.hidden=true;document.documentElement.classList.remove('pop-open');setHash(false);}
+document.querySelectorAll('.popbtn[data-pop="cmp"]').forEach(function(b){b.addEventListener('click',open);});
+wrap.querySelector('.popbg').addEventListener('click',close);
+xbtn.addEventListener('click',close);
+addEventListener('keydown',function(e){if(e.key==='Escape'&&!wrap.hidden){e.preventDefault();close();}});
+wrap.querySelectorAll('.pp-toc a').forEach(function(a){a.addEventListener('click',function(e){
+ e.preventDefault();var t=wrap.querySelector(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'});});});
+if(location.hash==='#pop-cmp') open();
+>>>>>>> Stashed changes
 })();
 </script>
 
